@@ -16,12 +16,17 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def canonical_text(path: Path) -> bytes:
+    """Return repository text in the manifest's UTF-8/LF representation."""
+    return path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n").encode()
+
+
 def verify_packet(packet_dir: Path) -> dict[str, Any]:
     manifest = json.loads((packet_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     actual: dict[str, str] = {}
     combined = bytearray()
     for name, expected in sorted(manifest["allowed_files"].items()):
-        data = (packet_dir / name).read_bytes()
+        data = canonical_text(packet_dir / name)
         actual[name] = digest(data)
         if actual[name] != expected:
             raise ValueError(f"hash mismatch: {name}")
@@ -58,9 +63,9 @@ def preflight_inventory(packet_dir: Path, inventory: dict[str, Any]) -> dict[str
 
 def build_packet(packet_dir: Path, output: Path) -> dict[str, Any]:
     verified = verify_packet(packet_dir)
-    manifest_data = (packet_dir / "MANIFEST.json").read_bytes()
+    manifest_data = canonical_text(packet_dir / "MANIFEST.json")
     entries = [("MANIFEST.json", manifest_data)] + [
-        (name, (packet_dir / name).read_bytes()) for name in sorted(verified["files"])
+        (name, canonical_text(packet_dir / name)) for name in sorted(verified["files"])
     ]
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w") as archive:

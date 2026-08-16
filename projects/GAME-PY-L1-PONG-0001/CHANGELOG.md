@@ -18,3 +18,4 @@ All notable changes to this learning product are recorded here. The project foll
 - Added `BENCH-GAME-10-0001`: ten L1–L10 game tasks, three evidence checkpoints per task, transparent role weights and six evaluator tests.
 - Recorded the contaminated-context control: Breakout baseline must execute in a fresh context without Pong code or patterns.
 - Added the sealed `EXP-BREAKOUT-A1` baseline packet, fixed execution budget, result schema, context inventory, hash verifier and contamination preflight tests.
+- Fixed `DEF-EXP-PACKET-0001`: packet text is canonicalized to UTF-8/LF so Linux and Windows verify the same sealed context.

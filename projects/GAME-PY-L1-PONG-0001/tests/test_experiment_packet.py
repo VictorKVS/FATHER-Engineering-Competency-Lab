@@ -49,6 +49,15 @@ class ExperimentPacketTests(unittest.TestCase):
             second = build_packet(PACKET, Path(directory) / "second.zip")
         self.assertEqual(first["sha256"], second["sha256"])
 
+    def test_crlf_checkout_has_same_sealed_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)
+            for name in ("TASK.md", "result-template.json", "MANIFEST.json"):
+                text = (PACKET / name).read_text(encoding="utf-8")
+                (target / name).write_bytes(text.replace("\n", "\r\n").encode())
+            result = verify_packet(target)
+        self.assertEqual(result["decision"], "packet_valid")
+
     def test_changed_task_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)

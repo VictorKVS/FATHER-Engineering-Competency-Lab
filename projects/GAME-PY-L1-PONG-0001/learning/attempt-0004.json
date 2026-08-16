@@ -13,6 +13,7 @@
   "routing_policy_changed": true,
   "parameter_training_performed": false,
   "local_evidence": {"tests": "passed_29_of_29", "packet_validation": "passed", "tamper_detection": "passed", "contamination_marker_detection": "passed", "repeat_build_same_hash": true, "packet_sha256": "72d6f338fdcb4a51ec07480f160c561b8c08a3f82a29113d4005a671c2dc223c"},
+  "ci_finding": {"id": "DEF-EXP-PACKET-0001", "symptom": "Windows verification rejected the valid TASK.md hash", "cause": "Git checkout used CRLF while the manifest recorded LF bytes", "fix": "FIX-EXP-PACKET-0001 canonicalizes text to UTF-8/LF before hashing and packaging", "lesson": "LESSON-EXP-PACKET-0001: content-addressed text artifacts need an explicit canonical representation"},
   "limitations": ["controls supplied context, not provider pretraining", "requires fresh context and operator attestation", "baseline not executed"],
   "competence_delta": "not_scored_until_experiment_execution",
   "result": "baseline packet sealed locally; CI evidence pending"
