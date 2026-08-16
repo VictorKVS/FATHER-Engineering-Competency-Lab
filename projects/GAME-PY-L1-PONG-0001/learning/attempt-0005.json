@@ -14,7 +14,8 @@
   "parameter_training_performed": false,
   "competence_delta": "not_scored_until_pair_execution",
   "local_evidence": {"tests": "passed_33_of_33", "pair_diff": "passed", "task_sha256": "92cd263ef04470564206bdbfa690de5b21af099eb9c8fe9ec5f76fd4fe2c3f42", "baseline_packet_sha256": "72d6f338fdcb4a51ec07480f160c561b8c08a3f82a29113d4005a671c2dc223c", "treatment_packet_sha256": "5c253b5d95c15c8adc91104c3d4d8e6357a6101fc7c1c8c607bc6dee7ce7d3ff", "repeat_build_same_hash": true},
+  "ci_evidence": {"run_id": 31963672172, "head_commit": "783e0b6289c8c8e498fc1a2e05f31e31f9aebd45", "linux": "passed_33_of_33_on_3.11_3.12_3.13", "windows": "passed_33_of_33_on_3.12_plus_tkinter_import", "pair_diff_and_build": "passed", "sealed_pair_artifact_id": 9267888756, "pong_product_artifact_id": 9267888489},
   "finding": {"id": "DEF-EXP-PAIR-0001", "cause": "the canonical PAT source contained a redundant terminal blank line absent from its sealed snapshot", "fix": "FIX-EXP-PAIR-0001 normalizes line endings and terminal blank lines before identity checks", "lesson": "LESSON-EXP-PAIR-0001: pair attribution requires one explicit canonicalization rule for source and snapshot"},
   "limitations": ["pair not executed", "provider pretraining uncontrolled", "requires three pairs before directional conclusion"],
-  "result": "paired packets pass local reproducibility and controlled-difference gates; CI pending"
+  "result": "paired packets pass local and CI reproducibility, source identity and controlled-difference gates; execution remains pending"
 }
