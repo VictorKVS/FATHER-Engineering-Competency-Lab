@@ -172,6 +172,88 @@ Instantiate multiple compatible specialists with known handoff contracts.
 ### R5 — Organization-pattern reproduction
 Reuse proven team/process patterns across products while preserving context and access boundaries.
 
+## Later maturation: deep learning and reinforcement learning
+
+After contextual memory, evidence, skill reproduction and evaluation become stable, the platform may add a **parameter-training layer** for models that can legally and technically be trained (for example open-weight models, adapters or organization-owned models).
+
+This is a later stage, not a prerequisite for the first MVP.
+
+Proposed progression:
+
+`EXTERNAL MEMORY → EVALUATION → SUPERVISED FINE-TUNING → PREFERENCE/CRITIC TRAINING → REINFORCEMENT LEARNING → REPLICATION → TRANSFER → PROMOTION`
+
+### Training data source
+
+Training examples must come only from reviewed traces such as:
+
+`TASK → STATE → ACTION/DECISION → RESULT → REVIEW → DEFECT/FIX → REWARD SIGNAL → TRANSFER RESULT`
+
+Positive examples alone are insufficient. The corpus should preserve failed attempts, rejected alternatives, regressions and security violations so the training system can distinguish desirable behavior from merely plausible behavior.
+
+### Reward model / reward function
+
+Reinforcement signals should be multi-objective and evidence-backed. Candidate components include:
+
+- task correctness;
+- acceptance-test pass rate;
+- architecture compliance;
+- security compliance;
+- review finding count/severity;
+- repeated-defect penalties;
+- time-to-green;
+- cost/token/tool budget;
+- reproducibility;
+- transfer success on unseen tasks;
+- policy compliance;
+- rollback/recovery quality;
+- human or independent evaluator approval.
+
+A single scalar reward must not hide safety failures. Critical security or policy violations should act as hard gates or strong penalties rather than be compensated by speed or task success.
+
+### Training modes
+
+Possible future modes include:
+
+1. **Supervised fine-tuning (SFT)** on gold traces and corrected solutions.
+2. **Preference optimization** using reviewer/critic comparisons between alternatives.
+3. **RL from verifiable rewards** where tests, static checks, simulations or deterministic validators can score outcomes.
+4. **Offline RL / replay learning** from historical FATHER traces before any online adaptation.
+5. **Curriculum RL** where task difficulty increases only after stable performance at the previous level.
+6. **Multi-agent reinforcement** for handoffs between Analyst, Architect, Programmer, QA and Security, but only after individual role evaluation is reliable.
+
+### Safety gates for parameter training
+
+No candidate model/policy should be promoted merely because reward improves. Promotion should require:
+
+- held-out evaluation improvement;
+- no regression on safety/security suites;
+- no catastrophic forgetting of core tasks;
+- no reward hacking on known metrics;
+- transfer to unseen tasks;
+- comparison against the previous production baseline;
+- reproducible training/evaluation configuration;
+- rollback to the previous model/policy;
+- documented data lineage and licenses;
+- independent reviewer approval for consequential deployments.
+
+### Separation of learning layers
+
+FATHER must always distinguish:
+
+- **Contextual learning** — memory, retrieval, patterns, cases and external state;
+- **Policy/routing adaptation** — changing which tools, specialists or procedures are selected;
+- **Parameter training** — actually changing model/adaptor weights.
+
+A result from one layer must not be reported as if it came from another.
+
+### Strategic objective
+
+The long-term goal is not merely to fine-tune a model. It is to create a closed but auditable competence loop:
+
+`EXPERIENCE → EVIDENCE → MEMORY → SKILL PACKAGE → EVALUATION → TRAINING → NEW MODEL/POLICY → TRANSFER TEST → VERIFIED IMPROVEMENT → PROTECTED KNOW-HOW`
+
+Only improvements that survive replication and transfer should be considered organizational learning.
+
 ## MVP boundary
 
 A first MVP does not need to train model weights. It must prove that one specialist can be reconstructed reproducibly from versioned externalized state.
@@ -235,6 +317,8 @@ A Knowledge Curator/Analyst must be able to explain why an item was routed to a 
 - LLM Red Team
 - QA / Evaluation Engineer
 - Auditor
+- ML / Training Engineer (later parameter-training phase)
+- Reward/Evaluation Engineer (later reinforcement-learning phase)
 
 ## Protection model
 
@@ -248,7 +332,10 @@ The most valuable parts of this product are likely to become commercial secrets 
 - transfer data;
 - role/team composition rules;
 - effectiveness curves;
-- security detection thresholds.
+- security detection thresholds;
+- reward design and weighting that demonstrates repeatable gains;
+- high-value training/evaluation corpora;
+- model/adaptor checkpoints that encode proprietary competence.
 
 Public surfaces should expose aggregate evidence of capability, not the complete internal mechanism.
 
@@ -260,7 +347,8 @@ Possible future forms:
 - specialist-agent replication/restoration service;
 - protected organizational AI memory layer;
 - competence-as-a-package for internal digital employees;
-- migration layer allowing agents to change underlying LLM providers while retaining controlled organizational memory and skills.
+- migration layer allowing agents to change underlying LLM providers while retaining controlled organizational memory and skills;
+- organization-specific training and reinforcement layer for open/owned models.
 
 ## Showcase concept
 
@@ -270,11 +358,14 @@ A future public demo should avoid exposing protected memory. It can show two fre
 
 and compare first-pass quality, defects, time-to-green, policy compliance and transfer success with auditable evidence.
 
+A later training demo may compare `baseline model → memory-enabled model → trained model` on held-out tasks, but only when the training process is actually implemented and reproducible.
+
 ## Promotion rule
 
 `Memory != raw chat history.`  
 `Knowledge != collected documents.`  
 `Skill != self-declared score.`  
-`Reproduction != copying model weights.`
+`Reproduction != copying model weights.`  
+`Reward improvement != verified competence improvement.`
 
-Promotion requires demonstrated restoration of useful professional behavior from versioned, inspectable, externalized competence state.
+Promotion requires demonstrated restoration of useful professional behavior from versioned, inspectable, externalized competence state. Parameter-training promotion later requires held-out, security-gated and transfer-verified improvement.
