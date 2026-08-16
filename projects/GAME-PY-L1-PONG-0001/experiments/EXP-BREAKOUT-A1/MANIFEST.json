@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "EXP-BREAKOUT-A1",
+  "arm": "baseline",
+  "status": "sealed_not_executed",
+  "allowed_files": {
+    "TASK.md": "92cd263ef04470564206bdbfa690de5b21af099eb9c8fe9ec5f76fd4fe2c3f42",
+    "result-template.json": "b3ba689a9dd26acb097e5c4cc2faf383524936fd7a120fae98c71bc15d8a98f8"
+  },
+  "allowed_context_sha256": "651af701d6ff92f013c3304fb3222ea600bd7c342ec2aa50ab2c9da37ee04e6a",
+  "blocked_markers": ["pong", "PAT-GAME-0001", "ANTI-GAME-0001", "XFER-PY-PONG-0001", "father-pong", "pong/core.py", "pong/app.py"],
+  "controls": {"network_enabled": false, "external_retrieval": false, "max_iterations": 3, "wall_clock_minutes": 45},
+  "decision": "Run only after packet hash and clean context inventory pass preflight."
+}

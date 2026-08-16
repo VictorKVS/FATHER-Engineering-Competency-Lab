@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "EXP-BREAKOUT-A1",
+  "arm": "baseline",
+  "status": "not_started",
+  "runner": {"provider": null, "model": null, "version": null, "context_instance_id": null},
+  "budget": {"wall_clock_minutes": 45, "max_iterations": 3, "network_enabled": false, "token_input": null, "token_output": null},
+  "preflight": {"inventory_sha256": null, "contamination_check": null, "packet_sha256": null},
+  "timing": {"started_at": null, "first_test_run_at": null, "green_at": null, "time_to_green_minutes": null},
+  "metrics": {"first_pass_acceptance": null, "critical_defects": null, "defects_before_green": null, "repeated_anti_patterns": null, "architecture_deviations": null, "security_findings": null, "test_completeness": null, "required_transition_coverage": null, "non_test_source_lines": null},
+  "evidence": {"source_commit": null, "test_command": "python -m unittest discover -s tests -v", "tests_passed": null, "tests_total": null, "compileall": null, "build_artifact": null, "review_ids": []},
+  "learning_claim": "baseline observation only",
+  "parameter_training_performed": false,
+  "decision": "pending"
+}

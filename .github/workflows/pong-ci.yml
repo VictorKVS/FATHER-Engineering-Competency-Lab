@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Compile
-        run: python -m compileall -q pong tests
+        run: python -m compileall -q pong factory tests scripts
       - name: Test deterministic core
         run: python -m unittest discover -s tests -v
 
@@ -52,7 +52,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Compile
-        run: python -m compileall -q pong tests
+        run: python -m compileall -q pong factory tests scripts
       - name: Test deterministic core
         run: python -m unittest discover -s tests -v
       - name: Verify Tkinter and application imports
@@ -92,4 +92,31 @@ jobs:
           path: |
             projects/GAME-PY-L1-PONG-0001/dist/father-pong.pyz
             projects/GAME-PY-L1-PONG-0001/dist/build-manifest.json
+          if-no-files-found: error
+
+  baseline-experiment-packet:
+    name: Seal and verify Breakout baseline packet
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: projects/GAME-PY-L1-PONG-0001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify allowed context hashes
+        run: python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
+      - name: Build sealed baseline packet
+        run: python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
+      - name: Test packet controls
+        run: python -m unittest discover -s tests -p "test_experiment_packet.py" -v
+      - name: Upload sealed experiment packet
+        uses: actions/upload-artifact@v4
+        with:
+          name: EXP-BREAKOUT-A1-sealed
+          path: projects/GAME-PY-L1-PONG-0001/dist/EXP-BREAKOUT-A1.zip
           if-no-files-found: error

@@ -16,6 +16,8 @@ python -m unittest discover -s tests -v
 python -m pong.app
 python scripts/build_zipapp.py
 python dist/father-pong.pyz --self-check
+python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
+python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
 ```
 
 Управление: `W/S` — левая ракетка, `↑/↓` — правая, `Space` — пауза, `R` — новая партия. Первый игрок до 5 очков побеждает.
@@ -60,6 +62,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Transfer experiment: [`factory-assets/XFER-PY-PONG-0001-breakout.md`](factory-assets/XFER-PY-PONG-0001-breakout.md)
 - L1–L10 benchmark and three-level gates: [`docs/BENCHMARK_PASSPORT.md`](docs/BENCHMARK_PASSPORT.md)
 - Machine-readable benchmark catalog: [`benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json`](benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json)
+- Sealed Breakout baseline protocol: [`docs/EXPERIMENT_BREAKOUT_A1_PASSPORT.md`](docs/EXPERIMENT_BREAKOUT_A1_PASSPORT.md)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)

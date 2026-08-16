@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "record_id": "LRN-PY-PONG-0001-A04",
+  "previous_record_id": "LRN-PY-PONG-0001-A03",
+  "project_id": "GAME-PY-L1-PONG-0001",
+  "milestone": "sealed-transfer-baseline",
+  "problem": "A transfer baseline produced in a context that saw Pong patterns would not measure the value of supplied factory memory.",
+  "alternatives": ["reuse contaminated context", "verbal isolation claim", "cryptographically sealed packet plus declared context inventory"],
+  "decision": "EXP-BREAKOUT-A1 sealed baseline protocol",
+  "artifacts": ["EXP-BREAKOUT-A1", "TEST-EXP-PACKET-0001", "EVID-EXP-PACKET-LOCAL-0001"],
+  "learning_mode": "routing_policy_adaptation",
+  "contextual_learning_changed": false,
+  "routing_policy_changed": true,
+  "parameter_training_performed": false,
+  "local_evidence": {"tests": "passed_29_of_29", "packet_validation": "passed", "tamper_detection": "passed", "contamination_marker_detection": "passed", "repeat_build_same_hash": true, "packet_sha256": "72d6f338fdcb4a51ec07480f160c561b8c08a3f82a29113d4005a671c2dc223c"},
+  "limitations": ["controls supplied context, not provider pretraining", "requires fresh context and operator attestation", "baseline not executed"],
+  "competence_delta": "not_scored_until_experiment_execution",
+  "result": "baseline packet sealed locally; CI evidence pending"
+}
