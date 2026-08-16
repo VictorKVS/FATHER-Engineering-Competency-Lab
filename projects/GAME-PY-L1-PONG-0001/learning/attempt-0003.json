@@ -15,5 +15,7 @@
   "competence_delta": "not_scored_until_independent_attempts",
   "risks": ["contaminated baseline", "benchmark gaming", "small sample size"],
   "evidence_required_next": ["EXP-BREAKOUT-A1", "EXP-BREAKOUT-B1", "REV-ARCH-INDEPENDENT-0001", "REV-SEC-INDEPENDENT-0001", "REV-QA-INDEPENDENT-0001"],
+  "local_evidence": {"tests": "passed_22_of_22", "catalog_validation": "passed", "compileall": "passed", "product_self_check": "passed", "product_sha256_unchanged": true},
+  "ci_evidence": {"run_id": 31946026747, "head_commit": "669118a049f3ebc9a1cefbe05090500cd8faf029", "linux": "passed_on_3.11_3.12_3.13", "windows": "passed_on_3.12", "product_build_and_upload": "passed", "artifact_id": 9263289850},
   "result": "benchmark machinery accepted locally; baseline execution deliberately deferred to a clean context"
 }
