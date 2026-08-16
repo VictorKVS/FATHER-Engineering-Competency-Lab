@@ -14,6 +14,7 @@
   "parameter_training_performed": false,
   "competence_delta": "not_scored_until_real_pair_execution",
   "local_evidence": {"tests": "passed_43_of_43", "compileall": "passed", "result_contract": "valid", "sealed_pair_regression": "passed", "pong_product_self_check": "passed"},
+  "ci_evidence": {"run_id": 31972306484, "head_commit": "e8348aa08e49d50e4932efddf81f2819f391d7e6", "linux": "passed_43_of_43_on_3.11_3.12_3.13", "windows": "passed_43_of_43_on_3.12_plus_tkinter_import", "result_contract_and_pair_gates": "passed", "sealed_pair_artifact_id": 9270111206, "pong_product_artifact_id": 9270111138},
   "limitations": ["valid structure does not prove truthful execution", "pair not executed", "independent review remains mandatory"],
-  "result": "result-intake and pair-compatibility gates pass locally; CI pending"
+  "result": "result-intake and pair-compatibility gates pass locally and in CI; execution remains pending"
 }
