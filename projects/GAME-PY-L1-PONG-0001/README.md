@@ -1,6 +1,6 @@
 # GAME-PY-L1-PONG-0001 — Pong / Понг
 
-> Status: `0.1.0-pre-alpha`, milestone M0. The deterministic game core is tested; the Tkinter UI still requires manual runtime evidence before RC1.
+> Status: `0.1.0-pre-alpha`, milestone M1 candidate. The deterministic core is tested; CI and the Tkinter UI still require runtime evidence before alpha.
 
 ## RU
 
@@ -36,7 +36,8 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 
 ## Evidence and limitations
 
-- Automated evidence: deterministic unit tests for wall bounce, paddle collision, scoring, clamping and win state.
+- Automated evidence: deterministic unit tests for symmetric wall/paddle collisions, scoring, clamping, pause/reset, win state and invalid input boundaries.
+- CI definition: Python 3.11–3.13 with read-only repository permissions. A committed workflow is not itself proof that the run passed.
 - Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and packaged executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
@@ -45,7 +46,9 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 
 - Product/course decision record: [`docs/CYCLE_PASSPORT.md`](docs/CYCLE_PASSPORT.md)
 - Learning record: [`learning/attempt-0001.json`](learning/attempt-0001.json)
+- Second learning record: [`learning/attempt-0002.json`](learning/attempt-0002.json)
+- Release gates: [`docs/RELEASE_GATES.md`](docs/RELEASE_GATES.md)
+- Build evidence: [`evidence/EVID-PY-PONG-M1-local.json`](evidence/EVID-PY-PONG-M1-local.json)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)
-

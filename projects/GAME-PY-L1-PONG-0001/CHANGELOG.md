@@ -8,3 +8,6 @@ All notable changes to this learning product are recorded here. The project foll
 - Added five headless unit tests.
 - Added M0 decision passport, learning record, security policy and proposed factory pattern.
 - Explicitly blocked release-candidate status pending GUI/build evidence and CI.
+- Expanded deterministic coverage to symmetric collisions, pause/reset and input contracts.
+- Rejected unknown paddle identifiers and bounded direction values.
+- Added Python 3.11–3.13 CI definition, MIT license, evidence manifest and explicit M0–RC1 gates.

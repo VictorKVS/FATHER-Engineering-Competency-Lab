@@ -1,0 +1,41 @@
+name: Pong reference cycle CI
+
+on:
+  push:
+    paths:
+      - "projects/GAME-PY-L1-PONG-0001/**"
+      - ".github/workflows/pong-ci.yml"
+  pull_request:
+    paths:
+      - "projects/GAME-PY-L1-PONG-0001/**"
+      - ".github/workflows/pong-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  core-tests:
+    name: Python ${{ matrix.python-version }} core evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: projects/GAME-PY-L1-PONG-0001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: projects/GAME-PY-L1-PONG-0001/pyproject.toml
+      - name: Compile
+        run: python -m compileall -q pong tests
+      - name: Test deterministic core
+        run: python -m unittest discover -s tests -v
+

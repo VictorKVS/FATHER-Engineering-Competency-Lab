@@ -64,7 +64,10 @@ class GameState:
         self.reset_ball(direction=1)
 
     def move_paddle(self, side: str, direction: float, dt: float) -> None:
+        if side not in {"left", "right"}:
+            raise ValueError("side must be 'left' or 'right'")
         paddle = self.left if side == "left" else self.right
+        direction = min(1.0, max(-1.0, direction))
         maximum = self.config.height - self.config.paddle_height
         paddle.y = min(maximum, max(0.0, paddle.y + direction * self.config.paddle_speed * dt))
 
@@ -108,4 +111,3 @@ class GameState:
             self.paused = True
         else:
             self.reset_ball(direction)
-

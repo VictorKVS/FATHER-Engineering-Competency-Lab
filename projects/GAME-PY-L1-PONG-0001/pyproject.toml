@@ -1,0 +1,13 @@
+[project]
+name = "father-pong-reference"
+version = "0.1.0"
+description = "Traceable Pong reference cycle for FATHER Engineering Competency Lab"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = []
+
+[tool.father]
+project-id = "GAME-PY-L1-PONG-0001"
+product-status = "pre-alpha"
+release-gate = "M1-pending"
+

@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0",
+  "evidence_id": "EVID-PY-PONG-M1-LOCAL-0001",
+  "project_id": "GAME-PY-L1-PONG-0001",
+  "recorded_at": "2026-08-16T05:58:46+03:00",
+  "environment": {"os": "linux", "python": "3.12.13", "headless": true},
+  "source_base_commit": "104ed09bc8b31b2adb1621ae724070a17ec9bfd9",
+  "commands": [
+    "python -m unittest discover -s tests -v",
+    "python -m compileall -q pong tests"
+  ],
+  "expected_test_count": 12,
+  "results": {"unit_tests": "passed_12_of_12", "compileall": "passed"},
+  "scope": ["deterministic core", "input boundary validation"],
+  "excluded": ["Tkinter display", "Windows keyboard smoke", "packaged executable", "frame pacing"],
+  "decision": "Local headless evidence passes. M1 remains blocked until CI finishes on all matrix versions and Windows GUI smoke evidence exists."
+}
