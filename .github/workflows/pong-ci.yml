@@ -114,12 +114,16 @@ jobs:
           python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-B1
       - name: Prove controlled A/B difference
         run: python -m factory.experiment_packet compare experiments/EXP-BREAKOUT-A1 experiments/EXP-BREAKOUT-B1
+      - name: Validate experiment result contract
+        run: python -m factory.result_validator contract experiments/EXP-RESULT-CONTRACT-0001.json
       - name: Build reproducible paired packets
         run: |
           python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
           python -m factory.experiment_packet build experiments/EXP-BREAKOUT-B1 dist/EXP-BREAKOUT-B1.zip
       - name: Test packet controls
-        run: python -m unittest discover -s tests -p "test_experiment_packet.py" -v
+        run: |
+          python -m unittest discover -s tests -p "test_experiment_packet.py" -v
+          python -m unittest discover -s tests -p "test_result_validator.py" -v
       - name: Upload sealed experiment pair
         uses: actions/upload-artifact@v4
         with:

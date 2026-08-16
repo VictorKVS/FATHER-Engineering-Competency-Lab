@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "record_id": "LRN-PY-PONG-0001-A06",
+  "previous_record_id": "LRN-PY-PONG-0001-A05",
+  "project_id": "GAME-PY-L1-PONG-0001",
+  "milestone": "experiment-result-intake-gate",
+  "problem": "Sealed inputs did not yet prevent incomplete or incomparable execution outputs from reaching transfer scoring.",
+  "alternatives": ["manual review", "trust JSON", "machine validation plus independent review"],
+  "decision": "EXP-RESULT-VALIDATOR-0001",
+  "artifacts": ["EXP-RESULT-CONTRACT-0001", "EXP-RESULT-VALIDATOR-0001", "TEST-EXP-RESULT-0001"],
+  "learning_mode": "routing_policy_adaptation",
+  "contextual_learning_changed": false,
+  "routing_policy_changed": true,
+  "parameter_training_performed": false,
+  "competence_delta": "not_scored_until_real_pair_execution",
+  "local_evidence": {"tests": "passed_43_of_43", "compileall": "passed", "result_contract": "valid", "sealed_pair_regression": "passed", "pong_product_self_check": "passed"},
+  "limitations": ["valid structure does not prove truthful execution", "pair not executed", "independent review remains mandatory"],
+  "result": "result-intake and pair-compatibility gates pass locally; CI pending"
+}

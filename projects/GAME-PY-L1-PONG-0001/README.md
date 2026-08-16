@@ -19,6 +19,7 @@ python dist/father-pong.pyz --self-check
 python -m factory.experiment_packet compare experiments/EXP-BREAKOUT-A1 experiments/EXP-BREAKOUT-B1
 python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
 python -m factory.experiment_packet build experiments/EXP-BREAKOUT-B1 dist/EXP-BREAKOUT-B1.zip
+python -m factory.result_validator contract experiments/EXP-RESULT-CONTRACT-0001.json
 ```
 
 Управление: `W/S` — левая ракетка, `↑/↓` — правая, `Space` — пауза, `R` — новая партия. Первый игрок до 5 очков побеждает.
@@ -65,6 +66,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Machine-readable benchmark catalog: [`benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json`](benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json)
 - Sealed Breakout baseline: [`docs/EXPERIMENT_BREAKOUT_A1_PASSPORT.md`](docs/EXPERIMENT_BREAKOUT_A1_PASSPORT.md)
 - Sealed Breakout treatment: [`docs/EXPERIMENT_BREAKOUT_B1_PASSPORT.md`](docs/EXPERIMENT_BREAKOUT_B1_PASSPORT.md)
+- Experiment result validator: [`docs/EXPERIMENT_RESULT_VALIDATOR_PASSPORT.md`](docs/EXPERIMENT_RESULT_VALIDATOR_PASSPORT.md)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Reusable anti-pattern: [`factory-assets/ANTI-GAME-0001-discrete-collision.md`](factory-assets/ANTI-GAME-0001-discrete-collision.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)

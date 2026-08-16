@@ -22,3 +22,5 @@ All notable changes to this learning product are recorded here. The project foll
 - Added sealed `EXP-BREAKOUT-B1`; automated A/B diff proves identical task, budgets and result schema with only versioned PAT/ANTI knowledge added to treatment.
 - Added standalone `ANTI-GAME-0001` passport and source-snapshot drift checks.
 - Fixed `DEF-EXP-PAIR-0001`: canonical text identity now ignores redundant terminal blank lines as well as CRLF/LF differences.
+- Added `EXP-RESULT-VALIDATOR-0001`: strict completed-result and paired-run compatibility gates with ten negative/positive tests.
+- Explicitly separated machine-valid evidence structure from proof that an execution truthfully occurred.

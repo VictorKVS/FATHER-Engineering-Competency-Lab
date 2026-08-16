@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "contract_id": "EXP-RESULT-CONTRACT-0001",
+  "status": "accepted_for_breakout_trials",
+  "passport": {
+    "problem": "Incomplete or incomparable runner reports can create false A/B conclusions.",
+    "why": "A sealed input does not prove that execution identity, budget, timing, metrics and evidence were recorded consistently.",
+    "alternatives": ["manual spreadsheet review", "trust runner claims", "machine validation before evaluation"],
+    "choice": "strict result and pair validator with hard completeness and compatibility gates",
+    "constraints": ["completed records only", "same provider/model/version", "distinct context IDs", "fixed budget", "no parameter training in contextual arms"],
+    "risks": ["self-reported timing", "fabricated evidence IDs", "provider version ambiguity", "metric gaming"],
+    "evidence": ["TEST-EXP-RESULT-0001", "future EXP-BREAKOUT-A1/B1 completed records", "REV-*"],
+    "version": "0.1.0",
+    "links": ["EXP-BREAKOUT-A1", "EXP-BREAKOUT-B1", "XFER-PY-PONG-0001"],
+    "decision": "Reject invalid/incomparable records before transfer scoring; validation is not evidence that the claimed run actually occurred."
+  },
+  "expected_arms": {"baseline": "EXP-BREAKOUT-A1", "treatment": "EXP-BREAKOUT-B1"},
+  "fixed_budget": {"wall_clock_minutes": 45, "max_iterations": 3, "network_enabled": false},
+  "required_runner_fields": ["provider", "model", "version", "context_instance_id"],
+  "required_metrics": ["first_pass_acceptance", "critical_defects", "defects_before_green", "repeated_anti_patterns", "architecture_deviations", "security_findings", "test_completeness", "required_transition_coverage", "non_test_source_lines"],
+  "required_evidence": ["source_commit", "tests_passed", "tests_total", "compileall", "review_ids"],
+  "pair_invariants": ["provider", "model", "version", "wall_clock_minutes", "max_iterations", "network_enabled"],
+  "pair_must_differ": ["experiment_id", "arm", "context_instance_id", "packet_sha256"],
+  "interpretation": "One valid pair is an observation only; minimum three pairs and independent reviews are required for a directional transfer conclusion.",
+  "parameter_training_performed": false
+}
