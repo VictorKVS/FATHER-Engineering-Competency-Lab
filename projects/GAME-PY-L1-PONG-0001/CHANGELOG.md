@@ -19,3 +19,6 @@ All notable changes to this learning product are recorded here. The project foll
 - Recorded the contaminated-context control: Breakout baseline must execute in a fresh context without Pong code or patterns.
 - Added the sealed `EXP-BREAKOUT-A1` baseline packet, fixed execution budget, result schema, context inventory, hash verifier and contamination preflight tests.
 - Fixed `DEF-EXP-PACKET-0001`: packet text is canonicalized to UTF-8/LF so Linux and Windows verify the same sealed context.
+- Added sealed `EXP-BREAKOUT-B1`; automated A/B diff proves identical task, budgets and result schema with only versioned PAT/ANTI knowledge added to treatment.
+- Added standalone `ANTI-GAME-0001` passport and source-snapshot drift checks.
+- Fixed `DEF-EXP-PAIR-0001`: canonical text identity now ignores redundant terminal blank lines as well as CRLF/LF differences.

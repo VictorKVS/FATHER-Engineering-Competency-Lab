@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "EXP-BREAKOUT-B1",
+  "arm": "treatment",
+  "status": "sealed_not_executed",
+  "allowed_files": {
+    "ANTI-GAME-0001.md": "db23411b1c34c0c8944984961b43f7377ed6394412454af8b23de0abcd0e0a06",
+    "PAT-GAME-0001.md": "788ab1b1d53eb898e76c67db14e02b58deda5101f3988ec1e56f21c467f40e62",
+    "TASK.md": "92cd263ef04470564206bdbfa690de5b21af099eb9c8fe9ec5f76fd4fe2c3f42",
+    "result-template.json": "afe768a7383cfa0b3ed93d75e089616845737a53fd0bf6592dc5e22517a947b6"
+  },
+  "allowed_context_sha256": "81fbaf0df281f8a5563483e1a528a3763576fe257de580c8dd68a238e05044c9",
+  "knowledge_sources": {
+    "PAT-GAME-0001.md": "factory-assets/PAT-GAME-0001-functional-core.md",
+    "ANTI-GAME-0001.md": "factory-assets/ANTI-GAME-0001-discrete-collision.md"
+  },
+  "blocked_markers": ["pong/core.py", "pong/app.py", "father-pong", "XFER-PY-PONG-0001", "reference-solution.py"],
+  "controls": {"network_enabled": false, "external_retrieval": false, "max_iterations": 3, "wall_clock_minutes": 45},
+  "decision": "Run only as the treatment paired with a verified A1 packet using the same model/version and budgets."
+}

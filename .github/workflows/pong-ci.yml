@@ -94,8 +94,8 @@ jobs:
             projects/GAME-PY-L1-PONG-0001/dist/build-manifest.json
           if-no-files-found: error
 
-  baseline-experiment-packet:
-    name: Seal and verify Breakout baseline packet
+  paired-experiment-packets:
+    name: Seal and compare Breakout A/B packets
     runs-on: ubuntu-latest
     timeout-minutes: 5
     defaults:
@@ -108,15 +108,23 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Verify allowed context hashes
-        run: python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
-      - name: Build sealed baseline packet
-        run: python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
+      - name: Verify both packet allowlists and hashes
+        run: |
+          python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
+          python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-B1
+      - name: Prove controlled A/B difference
+        run: python -m factory.experiment_packet compare experiments/EXP-BREAKOUT-A1 experiments/EXP-BREAKOUT-B1
+      - name: Build reproducible paired packets
+        run: |
+          python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
+          python -m factory.experiment_packet build experiments/EXP-BREAKOUT-B1 dist/EXP-BREAKOUT-B1.zip
       - name: Test packet controls
         run: python -m unittest discover -s tests -p "test_experiment_packet.py" -v
-      - name: Upload sealed experiment packet
+      - name: Upload sealed experiment pair
         uses: actions/upload-artifact@v4
         with:
-          name: EXP-BREAKOUT-A1-sealed
-          path: projects/GAME-PY-L1-PONG-0001/dist/EXP-BREAKOUT-A1.zip
+          name: EXP-BREAKOUT-A1-B1-sealed
+          path: |
+            projects/GAME-PY-L1-PONG-0001/dist/EXP-BREAKOUT-A1.zip
+            projects/GAME-PY-L1-PONG-0001/dist/EXP-BREAKOUT-B1.zip
           if-no-files-found: error

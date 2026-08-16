@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "EXP-BREAKOUT-B1",
+  "context_instance_id": null,
+  "resources": ["TASK.md", "result-template.json", "PAT-GAME-0001.md", "ANTI-GAME-0001.md"],
+  "prior_topics": [],
+  "network_enabled": false,
+  "operator_attestation": null
+}
