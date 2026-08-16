@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "record_id": "LRN-PY-PONG-0001-A03",
+  "previous_record_id": "LRN-PY-PONG-0001-A02",
+  "project_id": "GAME-PY-L1-PONG-0001",
+  "milestone": "benchmark-foundation",
+  "problem": "Operational weights existed in prose but could not consistently gate task evidence.",
+  "alternatives": ["subjective score", "Pong-only gate", "ten-task executable ladder"],
+  "decision": "BENCH-GAME-10-0001 with three checkpoints and role-specific weights",
+  "artifacts": ["BENCH-GAME-10-0001", "BENCH-EVAL-0001", "TEST-BENCH-0001"],
+  "learning_mode": "routing_policy_adaptation",
+  "contextual_learning_changed": true,
+  "routing_policy_changed": true,
+  "parameter_training_performed": false,
+  "competence_delta": "not_scored_until_independent_attempts",
+  "risks": ["contaminated baseline", "benchmark gaming", "small sample size"],
+  "evidence_required_next": ["EXP-BREAKOUT-A1", "EXP-BREAKOUT-B1", "REV-ARCH-INDEPENDENT-0001", "REV-SEC-INDEPENDENT-0001", "REV-QA-INDEPENDENT-0001"],
+  "result": "benchmark machinery accepted locally; baseline execution deliberately deferred to a clean context"
+}

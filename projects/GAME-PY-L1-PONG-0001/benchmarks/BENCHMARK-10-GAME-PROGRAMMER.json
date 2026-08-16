@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1.0",
+  "benchmark_id": "BENCH-GAME-10-0001",
+  "title": "Game Factory engineering maturity ladder",
+  "status": "accepted_for_trials",
+  "passport": {
+    "problem": "Measure whether accumulated factory experience improves work from small deterministic games to secure distributed systems.",
+    "why": "Repository growth and document count do not prove competence or transfer.",
+    "alternatives": ["one repeated task", "subjective senior rating", "unversioned score"],
+    "choice": "ten distinct tasks with minimum, standard and stretch evidence checkpoints",
+    "constraints": ["same task contract per compared arm", "no reference implementation in baseline", "licensed inputs only", "critical defects cannot be averaged away"],
+    "risks": ["model contamination", "evaluator gaming", "task complexity mismatch", "small sample size"],
+    "evidence": ["BENCH-EVAL-0001", "EXP-*", "XFER-*", "REV-*", "TEST-*", "BUILD-*"],
+    "version": "0.1.0",
+    "links": ["FATHER-TRAIN-0001", "XFER-PY-PONG-0001", "PAT-GAME-0001"],
+    "decision": "Use for controlled trials; do not infer role promotion or parameter learning from one task."
+  },
+  "learning_layers": {
+    "contextual_learning": "patterns, lessons and retrieved evidence supplied to an arm",
+    "routing_policy_adaptation": "task routing and review depth may change from measured results",
+    "parameter_training": "false unless a separately evidenced SFT/RL run changed model parameters"
+  },
+  "dimensions": ["correctness", "reasoning_quality", "architecture_alignment", "security_alignment", "testability", "reproducibility", "maintainability", "efficiency", "defect_escape", "transfer"],
+  "role_weights": {
+    "programmer": {"correctness": 0.22, "reasoning_quality": 0.03, "architecture_alignment": 0.10, "security_alignment": 0.10, "testability": 0.16, "reproducibility": 0.10, "maintainability": 0.12, "efficiency": 0.08, "defect_escape": 0.06, "transfer": 0.03},
+    "architect": {"correctness": 0.10, "reasoning_quality": 0.15, "architecture_alignment": 0.25, "security_alignment": 0.12, "testability": 0.08, "reproducibility": 0.07, "maintainability": 0.10, "efficiency": 0.05, "defect_escape": 0.04, "transfer": 0.04},
+    "security_engineer": {"correctness": 0.12, "reasoning_quality": 0.12, "architecture_alignment": 0.10, "security_alignment": 0.28, "testability": 0.10, "reproducibility": 0.06, "maintainability": 0.04, "efficiency": 0.03, "defect_escape": 0.10, "transfer": 0.05}
+  },
+  "checkpoint_thresholds": {"minimum": 0.55, "standard": 0.70, "stretch": 0.85},
+  "tasks": [
+    {"level": 1, "task_id": "GAME-PY-L1-PONG-0001", "challenge": "Deterministic local Pong", "skills": ["state transitions", "boundaries", "headless tests"], "checkpoints": {"minimum": ["requirements_pass", "core_tests_pass"], "standard": ["ci_matrix_pass", "package_self_check_pass"], "stretch": ["real_gui_smoke_pass", "independent_review_pass"]}},
+    {"level": 2, "task_id": "GAME-PY-L2-BREAKOUT-0002", "challenge": "Breakout with changing collision topology", "skills": ["collections", "collision ordering", "transfer"], "checkpoints": {"minimum": ["brick_transitions_pass", "win_loss_tests_pass"], "standard": ["pong_pattern_transfer_measured", "architecture_review_pass"], "stretch": ["three_paired_trials_pass", "performance_budget_pass"]}},
+    {"level": 3, "task_id": "GAME-PY-L3-SNAKE-0003", "challenge": "Seeded Snake with replay", "skills": ["determinism", "serialization", "property tests"], "checkpoints": {"minimum": ["seeded_core_pass", "collision_tests_pass"], "standard": ["replay_roundtrip_pass", "malformed_input_tests_pass"], "stretch": ["property_invariants_pass", "cross_version_replay_pass"]}},
+    {"level": 4, "task_id": "GAME-PY-L4-TETRIS-0004", "challenge": "Tetris rules engine", "skills": ["rotation systems", "state invariants", "test oracles"], "checkpoints": {"minimum": ["piece_rules_pass", "line_clear_tests_pass"], "standard": ["rotation_kicks_pass", "state_invariants_pass"], "stretch": ["differential_oracle_pass", "soak_test_pass"]}},
+    {"level": 5, "task_id": "GAME-PY-L5-PLATFORMER-0005", "challenge": "Data-driven platformer", "skills": ["continuous collision", "content validation", "profiling"], "checkpoints": {"minimum": ["movement_physics_pass", "level_load_pass"], "standard": ["continuous_collision_pass", "content_schema_pass"], "stretch": ["frame_budget_pass", "accessibility_review_pass"]}},
+    {"level": 6, "task_id": "GAME-PY-L6-ROGUELIKE-0006", "challenge": "Procedural roguelike with saves", "skills": ["generation", "persistence", "migration"], "checkpoints": {"minimum": ["seeded_generation_pass", "turn_engine_pass"], "standard": ["save_validation_pass", "migration_tests_pass"], "stretch": ["fuzz_campaign_pass", "generation_quality_gate_pass"]}},
+    {"level": 7, "task_id": "GAME-SVC-L7-COOP-0007", "challenge": "Authenticated cooperative game service", "skills": ["protocols", "authorization", "observability"], "checkpoints": {"minimum": ["protocol_contract_pass", "session_tests_pass"], "standard": ["authorization_negative_tests_pass", "telemetry_slo_pass"], "stretch": ["fault_injection_pass", "abuse_case_review_pass"]}},
+    {"level": 8, "task_id": "GAME-ECS-L8-SIM-0008", "challenge": "Deterministic ECS simulation", "skills": ["data-oriented design", "parallelism", "replay"], "checkpoints": {"minimum": ["ecs_contract_pass", "deterministic_tick_pass"], "standard": ["parallel_safety_pass", "snapshot_restore_pass"], "stretch": ["million_entity_benchmark_pass", "cross_platform_determinism_pass"]}},
+    {"level": 9, "task_id": "GAME-NET-L9-ARENA-0009", "challenge": "Authoritative multiplayer arena", "skills": ["prediction", "rollback", "anti-cheat"], "checkpoints": {"minimum": ["authoritative_server_pass", "latency_simulation_pass"], "standard": ["rollback_consistency_pass", "anti_cheat_tests_pass"], "stretch": ["load_slo_pass", "red_team_review_pass"]}},
+    {"level": 10, "task_id": "GAME-FACTORY-L10-PLATFORM-0010", "challenge": "Secure moddable multi-tenant game factory", "skills": ["distributed architecture", "sandboxing", "supply chain", "operations"], "checkpoints": {"minimum": ["tenant_isolation_pass", "signed_build_pass"], "standard": ["sandbox_escape_tests_pass", "disaster_recovery_pass"], "stretch": ["independent_security_assessment_pass", "portable_factory_transfer_pass"]}}
+  ],
+  "promotion_policy": {
+    "minimum_evidence_window": 3,
+    "requires_unseen_transfer": true,
+    "requires_independent_reviews": ["architect", "security_engineer", "qa"],
+    "critical_defects_allowed": 0,
+    "repeated_anti_pattern_rule": "third recurrence blocks promotion until two consecutive clean transfer tasks",
+    "single_task_promotion": false
+  }
+}

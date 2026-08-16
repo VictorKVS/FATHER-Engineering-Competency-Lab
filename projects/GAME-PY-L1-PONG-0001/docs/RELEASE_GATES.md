@@ -21,3 +21,5 @@
 | RC1 | clean package install/launch; release checklist complete | competence gates evaluated from multiple attempts | golden-pattern decision recorded | signed release notes, checksums and limitations | BLOCKED |
 
 No percentage or document count can override a failed mandatory gate.
+
+Competence maturity is evaluated separately by `BENCH-GAME-10-0001`; passing a product release gate does not promote a role, and passing a role checkpoint does not promote the product.

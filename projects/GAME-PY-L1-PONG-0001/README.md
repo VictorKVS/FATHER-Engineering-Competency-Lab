@@ -58,6 +58,8 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Product build passport: [`docs/BUILD_PASSPORT.md`](docs/BUILD_PASSPORT.md)
 - Pre-alpha release notes: [`docs/RELEASE_NOTES_0.1.0-pre-alpha.md`](docs/RELEASE_NOTES_0.1.0-pre-alpha.md)
 - Transfer experiment: [`factory-assets/XFER-PY-PONG-0001-breakout.md`](factory-assets/XFER-PY-PONG-0001-breakout.md)
+- L1–L10 benchmark and three-level gates: [`docs/BENCHMARK_PASSPORT.md`](docs/BENCHMARK_PASSPORT.md)
+- Machine-readable benchmark catalog: [`benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json`](benchmarks/BENCHMARK-10-GAME-PROGRAMMER.json)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)

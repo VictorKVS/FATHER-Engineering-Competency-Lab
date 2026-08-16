@@ -15,3 +15,5 @@ All notable changes to this learning product are recorded here. The project foll
 - Added Windows hosted import/core smoke, an operator-attested real GUI procedure and the first paired A/B transfer specification for Breakout.
 - Added deterministic Python zipapp packaging, checksum manifest, packaged self-check and CI artifact upload.
 - Added an executable paired-transfer evaluator with four tests; it can promote only a pattern candidate, never infer parameter training or golden status.
+- Added `BENCH-GAME-10-0001`: ten L1–L10 game tasks, three evidence checkpoints per task, transparent role weights and six evaluator tests.
+- Recorded the contaminated-context control: Breakout baseline must execute in a fresh context without Pong code or patterns.
