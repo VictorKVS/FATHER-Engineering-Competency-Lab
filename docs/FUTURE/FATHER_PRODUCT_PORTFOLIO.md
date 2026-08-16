@@ -57,6 +57,10 @@ Multi-source research with provenance, counter-evidence, bounded loops and evide
 **Status:** PRESERVED.  
 Specialize evidence-backed OSINT for security intelligence, advisories, vulnerabilities, threat context, organizational applicability and decision support. Depends on OSINT evidence quality and Security KB mappings.
 
+### FATHER-LLM-SEC-0001 — LLM Red Team & Runtime Shield
+**Status:** PRESERVED / RESEARCH / HIGH STRATEGIC VALUE.  
+Authorized adversarial testing plus runtime protection for LLM/agent applications. Red side: prompt/indirect injection, jailbreak, leakage, poisoned context, tool abuse and agent trust-boundary tests. Blue side: provenance, policy gates, allow/block/review, leakage detection, safe-mode and regression replay. Detailed seed: `docs/FUTURE/FATHER_LLM_SECURITY_0001.md`. This is a defensive dual-use platform; exploit/testing activity must be bounded to authorized targets.
+
 ### FATHER-LIB-0001 — Librarian / Knowledge Factory
 **Status:** EXISTING LINEAGE / FUTURE CONSOLIDATION.  
 Ingest, normalize, deduplicate, provenance-link, classify and maintain knowledge. Target role: production system for evidence-backed domain KBs rather than a generic document chatbot.
