@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "record_id": "LRN-PY-PONG-0001-A01",
+  "project_id": "GAME-PY-L1-PONG-0001",
+  "milestone": "M0",
+  "learning_mode": "contextual_learning",
+  "parameter_training_performed": false,
+  "routing_policy_changed": false,
+  "artifacts": ["REQ-PY-PONG-0001", "ADR-PY-PONG-0001", "ARCH-PY-PONG-0001", "SEC-PY-PONG-0001", "TEST-PY-PONG-0001", "CODE-PY-PONG-0001", "REV-PY-PONG-0001", "DEF-PY-PONG-0001", "FIX-PY-PONG-0001", "LESSON-PY-PONG-0001", "PAT-GAME-0001"],
+  "roles": {
+    "programmer": {"gate": "L1-candidate", "scores": {"correctness": 0.70, "testability": 0.80, "architecture_alignment": 0.80, "security_alignment": 0.70, "reproducibility": 0.60}, "evidence": ["TEST-PY-PONG-0001"], "promotion_blocked_by": ["XFER-PY-PONG-0001", "EVID-GUI-WIN-0001"]},
+    "architect": {"gate": "L1-candidate", "scores": {"boundary_definition": 0.80, "alternatives_analysis": 0.75, "risk_visibility": 0.75}, "evidence": ["ADR-PY-PONG-0001", "ARCH-PY-PONG-0001"], "promotion_blocked_by": ["XFER-PY-PONG-0001"]},
+    "security_engineer": {"gate": "L1-candidate", "scores": {"attack_surface_identification": 0.75, "control_proportionality": 0.80, "residual_risk": 0.70}, "evidence": ["SEC-PY-PONG-0001"], "promotion_blocked_by": ["SEC-REVIEW-INDEPENDENT-0001"]}
+  },
+  "anti_patterns_observed": ["ANTI-GAME-0001"],
+  "defects": [{"id": "DEF-PY-PONG-0001", "type": "test_fixture", "cause": "winning-score test did not control ball direction", "fix": "FIX-PY-PONG-0001", "lesson": "LESSON-PY-PONG-0001", "escaped": false}],
+  "patterns_proposed": ["PAT-GAME-0001"],
+  "transfer_tests_required": ["XFER-PY-PONG-0001"],
+  "notes": "Scores are operational evidence weights, not LLM parameter weights. No role is promoted from a single attempt."
+}
