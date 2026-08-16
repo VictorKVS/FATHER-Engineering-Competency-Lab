@@ -14,7 +14,9 @@
   "parameter_training_performed": false,
   "local_evidence": {"tests": "passed_29_of_29", "packet_validation": "passed", "tamper_detection": "passed", "contamination_marker_detection": "passed", "repeat_build_same_hash": true, "packet_sha256": "72d6f338fdcb4a51ec07480f160c561b8c08a3f82a29113d4005a671c2dc223c"},
   "ci_finding": {"id": "DEF-EXP-PACKET-0001", "symptom": "Windows verification rejected the valid TASK.md hash", "cause": "Git checkout used CRLF while the manifest recorded LF bytes", "fix": "FIX-EXP-PACKET-0001 canonicalizes text to UTF-8/LF before hashing and packaging", "lesson": "LESSON-EXP-PACKET-0001: content-addressed text artifacts need an explicit canonical representation"},
+  "ci_attempt_1": {"run_id": 31954676613, "head_commit": "869f04306871773f731c2f8044a13f53ea882182", "linux_and_packet_jobs": "passed", "windows": "failed_DEF-EXP-PACKET-0001", "conclusion": "failed"},
+  "ci_attempt_2": {"run_id": 31954746495, "head_commit": "ea38640c503581612841b72e9db758270141e540", "linux": "passed_30_of_30_on_3.11_3.12_3.13", "windows": "passed_30_of_30_on_3.12_plus_tkinter_import", "sealed_packet_job": "passed", "sealed_packet_artifact_id": 9265625916, "pong_product_artifact_id": 9265626061, "conclusion": "success"},
   "limitations": ["controls supplied context, not provider pretraining", "requires fresh context and operator attestation", "baseline not executed"],
   "competence_delta": "not_scored_until_experiment_execution",
-  "result": "baseline packet sealed locally; CI evidence pending"
+  "result": "baseline packet sealed and independently reproduced by CI; experiment execution remains pending"
 }
