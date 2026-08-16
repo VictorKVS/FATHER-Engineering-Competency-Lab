@@ -42,6 +42,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - CI evidence: 12/12 tests and compilation passed on Python 3.11–3.13 with read-only repository permissions ([run #2](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31923318347)).
 - Windows hosted CI verifies compilation, 12 core tests, Tkinter/application import and smoke-script syntax ([run #4](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31930397152)). It does not replace the real-window checklist.
 - The PRODUCT pipeline builds a deterministic Python zipapp, executes its headless self-check and verifies its SHA-256 manifest. This is not a standalone executable and still requires Python/Tkinter.
+- Packaging evidence: 16/16 tests across Linux 3.11–3.13 and Windows 3.12, plus build/self-check/checksum/upload, passed in [run #6](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31938141556).
 - Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and standalone executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
