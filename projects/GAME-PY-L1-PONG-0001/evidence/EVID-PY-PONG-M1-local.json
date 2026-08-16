@@ -11,6 +11,7 @@
   ],
   "expected_test_count": 12,
   "results": {"unit_tests": "passed_12_of_12", "compileall": "passed"},
+  "ci_attempt_1": {"run_id": 31923257264, "core_tests": "passed_on_3.11_3.12_3.13", "job_conclusion": "failed", "defect": "DEF-CI-PONG-0001", "cause": "dependency-free project enabled pip cache but no cache directory existed", "fix": "FIX-CI-PONG-0001 removes unnecessary cache configuration"},
   "scope": ["deterministic core", "input boundary validation"],
   "excluded": ["Tkinter display", "Windows keyboard smoke", "packaged executable", "frame pacing"],
   "decision": "Local headless evidence passes. M1 remains blocked until CI finishes on all matrix versions and Windows GUI smoke evidence exists."

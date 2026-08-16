@@ -8,7 +8,7 @@
   "parameter_training_performed": false,
   "routing_policy_changed": false,
   "changes": ["symmetric physics coverage", "pause/reset coverage", "invalid-side rejection", "bounded direction", "CI matrix", "release gates"],
-  "artifacts": ["TEST-PY-PONG-0002", "SEC-PY-PONG-0002", "CODE-PY-PONG-0002", "BUILD-PY-PONG-0001", "EVID-PY-PONG-M1-LOCAL-0001", "GATE-PY-PONG-0001"],
+  "artifacts": ["TEST-PY-PONG-0002", "SEC-PY-PONG-0002", "CODE-PY-PONG-0002", "BUILD-PY-PONG-0001", "EVID-PY-PONG-M1-LOCAL-0001", "DEF-CI-PONG-0001", "FIX-CI-PONG-0001", "LESSON-CI-PONG-0001", "GATE-PY-PONG-0001"],
   "roles": {
     "programmer": {"gate": "L1-candidate", "delta": {"correctness": 0.05, "testability": 0.05, "input_contracts": 0.10}, "promotion_blocked_by": ["XFER-PY-PONG-0001", "EVID-GUI-WIN-0001"]},
     "architect": {"gate": "L1-candidate", "delta": {"boundary_definition": 0.05, "release_governance": 0.10}, "promotion_blocked_by": ["XFER-PY-PONG-0001"]},
@@ -16,6 +16,6 @@
     "qa": {"gate": "L1-candidate", "delta": {"symmetry_coverage": 0.15, "state_transition_coverage": 0.10}, "promotion_blocked_by": ["EVID-GUI-WIN-0001"]}
   },
   "new_finding": {"id": "SEC-PY-PONG-0002", "severity": "low", "cause": "unknown paddle side previously defaulted to right paddle", "resolution": "CODE-PY-PONG-0002 rejects unknown sides and bounds direction"},
+  "ci_finding": {"id": "DEF-CI-PONG-0001", "cause": "pip caching was enabled for a dependency-free project", "fix": "FIX-CI-PONG-0001 removes cache setup", "lesson": "LESSON-CI-PONG-0001: optimize CI only after a real dependency/cache need exists"},
   "notes": "Deltas are operational competence evidence, not model-weight changes. They remain provisional until independent review and transfer testing."
 }
-
