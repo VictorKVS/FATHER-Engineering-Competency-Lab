@@ -13,7 +13,8 @@
   "results": {"unit_tests": "passed_12_of_12", "compileall": "passed"},
   "ci_attempt_1": {"run_id": 31923257264, "core_tests": "passed_on_3.11_3.12_3.13", "job_conclusion": "failed", "defect": "DEF-CI-PONG-0001", "cause": "dependency-free project enabled pip cache but no cache directory existed", "fix": "FIX-CI-PONG-0001 removes unnecessary cache configuration"},
   "ci_attempt_2": {"run_id": 31923318347, "head_commit": "6bd25ca108584a744bb3191d48818253dd877abd", "core_tests": "passed_12_of_12_on_3.11_3.12_3.13", "compileall": "passed_on_3.11_3.12_3.13", "job_conclusion": "success"},
+  "ci_attempt_4": {"run_id": 31930397152, "head_commit": "ab9546cc2a53fecb2e14305b1f51380b434a5c53", "linux_matrix": "passed_3.11_3.12_3.13", "windows_3_12": {"core_tests": "passed_12_of_12", "compileall": "passed", "tkinter_import": "passed", "application_import": "passed", "manual_script_syntax": "passed"}, "job_conclusion": "success"},
   "scope": ["deterministic core", "input boundary validation"],
   "excluded": ["Tkinter display", "Windows keyboard smoke", "packaged executable", "frame pacing"],
-  "decision": "Local and Linux CI headless evidence pass. M1 remains blocked only by Windows GUI smoke evidence and its recorded review."
+  "decision": "Local, Linux matrix and Windows hosted headless/import evidence pass. M1 remains blocked by real-window keyboard/visual evidence and its recorded review."
 }

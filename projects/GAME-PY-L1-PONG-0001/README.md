@@ -38,7 +38,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 
 - Automated evidence: deterministic unit tests for symmetric wall/paddle collisions, scoring, clamping, pause/reset, win state and invalid input boundaries.
 - CI evidence: 12/12 tests and compilation passed on Python 3.11–3.13 with read-only repository permissions ([run #2](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31923318347)).
-- Windows hosted CI verifies compilation, core tests, Tkinter availability and application import. It does not replace the real-window checklist.
+- Windows hosted CI verifies compilation, 12 core tests, Tkinter/application import and smoke-script syntax ([run #4](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31930397152)). It does not replace the real-window checklist.
 - Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and packaged executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
