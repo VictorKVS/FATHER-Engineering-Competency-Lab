@@ -2,7 +2,7 @@
 
 ## Passport
 
-- Version/status: 0.1.0 / specified, not executed.
+- Version/status: 0.2.0 / evaluator available, trials not executed.
 - Problem: one successful Pong implementation cannot prove that `PAT-GAME-0001` is reusable.
 - Decision: give a fresh Programmer context a small Breakout task while exposing the pattern passport but not Pong implementation code.
 - Alternatives: clone/refactor Pong; repeat Pong; transfer directly to a complex game.
@@ -34,7 +34,8 @@ The candidate receives requirements plus `PAT-GAME-0001`, but not `pong/core.py`
 
 Primary metrics: first-pass acceptance rate, defects before green, repeated anti-pattern count, time-to-green, architecture violations, security findings and test coverage of required transitions. No competence promotion follows from a single pair.
 
+The executable evaluator in `factory/transfer_eval.py` operationalizes five gate metrics: critical defects, time-to-green minutes, architecture deviations, first-pass acceptance and test completeness. The wider metric set remains diagnostic context.
+
 ## Pass rule
 
 `PAT-GAME-0001` remains proposed unless treatment is no worse on critical defects and improves at least two of: first-pass acceptance, time-to-green, test completeness, architecture deviations. An independent Architect and QA must confirm that the functional boundary is real rather than cosmetic.
-

@@ -14,6 +14,8 @@
 cd projects/GAME-PY-L1-PONG-0001
 python -m unittest discover -s tests -v
 python -m pong.app
+python scripts/build_zipapp.py
+python dist/father-pong.pyz --self-check
 ```
 
 Управление: `W/S` — левая ракетка, `↑/↓` — правая, `Space` — пауза, `R` — новая партия. Первый игрок до 5 очков побеждает.
@@ -39,7 +41,8 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Automated evidence: deterministic unit tests for symmetric wall/paddle collisions, scoring, clamping, pause/reset, win state and invalid input boundaries.
 - CI evidence: 12/12 tests and compilation passed on Python 3.11–3.13 with read-only repository permissions ([run #2](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31923318347)).
 - Windows hosted CI verifies compilation, 12 core tests, Tkinter/application import and smoke-script syntax ([run #4](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31930397152)). It does not replace the real-window checklist.
-- Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and packaged executable.
+- The PRODUCT pipeline builds a deterministic Python zipapp, executes its headless self-check and verifies its SHA-256 manifest. This is not a standalone executable and still requires Python/Tkinter.
+- Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and standalone executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
 
@@ -51,6 +54,8 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Release gates: [`docs/RELEASE_GATES.md`](docs/RELEASE_GATES.md)
 - Build evidence: [`evidence/EVID-PY-PONG-M1-local.json`](evidence/EVID-PY-PONG-M1-local.json)
 - Windows GUI procedure: [`docs/WINDOWS_SMOKE_PASSPORT.md`](docs/WINDOWS_SMOKE_PASSPORT.md)
+- Product build passport: [`docs/BUILD_PASSPORT.md`](docs/BUILD_PASSPORT.md)
+- Pre-alpha release notes: [`docs/RELEASE_NOTES_0.1.0-pre-alpha.md`](docs/RELEASE_NOTES_0.1.0-pre-alpha.md)
 - Transfer experiment: [`factory-assets/XFER-PY-PONG-0001-breakout.md`](factory-assets/XFER-PY-PONG-0001-breakout.md)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)

@@ -3,7 +3,7 @@
   "transfer_id": "XFER-PY-PONG-0001",
   "source_project": "GAME-PY-L1-PONG-0001",
   "target_project": "GAME-PY-L1-BREAKOUT-0002",
-  "status": "specified_not_executed",
+  "status": "evaluator_available_trials_not_executed",
   "pattern_under_test": "PAT-GAME-0001",
   "anti_pattern_under_test": "ANTI-GAME-0001",
   "design": {
@@ -14,9 +14,11 @@
     "controlled_variables": ["model_version", "prompt_budget", "tool_access", "time_budget"]
   },
   "metrics": ["first_pass_acceptance", "defects_before_green", "repeated_anti_patterns", "time_to_green", "architecture_violations", "security_findings", "required_transition_coverage"],
+  "evaluator_metrics": ["critical_defects", "time_to_green_minutes", "architecture_deviations", "first_pass_acceptance", "test_completeness"],
+  "operational_evaluator": "factory/transfer_eval.py",
+  "evaluator_decision_values": ["insufficient_data", "reject", "promote_candidate"],
   "promotion_rule": "No golden-pattern or role promotion from one pair; independent Architect and QA review required.",
   "learning_mode": "contextual_learning_evaluation",
   "routing_policy_changed": false,
   "parameter_training_performed": false
 }
-

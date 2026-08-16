@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import argparse
+import json
 import time
 import tkinter as tk
 
@@ -56,6 +58,22 @@ class PongApp:
         cv.create_text(c.width/2, c.height/2, text=label, fill="white", font=("Arial", 18, "bold"))
 
 
-if __name__ == "__main__":
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="FATHER Lab Pong")
+    parser.add_argument(
+        "--self-check",
+        action="store_true",
+        help="run a headless deterministic product check and exit",
+    )
+    args = parser.parse_args(argv)
+    if args.self_check:
+        state = GameState()
+        state.step(1 / 60)
+        print(json.dumps({"project": "GAME-PY-L1-PONG-0001", "self_check": "passed"}))
+        return 0
     PongApp().run()
+    return 0
 
+
+if __name__ == "__main__":
+    raise SystemExit(main())

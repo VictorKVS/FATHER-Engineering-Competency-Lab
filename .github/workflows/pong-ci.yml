@@ -64,3 +64,32 @@ jobs:
         shell: pwsh
         run: |
           $null = [scriptblock]::Create((Get-Content -Raw scripts/windows_smoke.ps1))
+
+  product-zipapp:
+    name: Build and verify Python zipapp
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: projects/GAME-PY-L1-PONG-0001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build deterministic archive
+        run: python scripts/build_zipapp.py
+      - name: Run packaged self-check
+        run: python dist/father-pong.pyz --self-check
+      - name: Verify manifest checksum
+        run: python -c "import hashlib,json,pathlib; p=pathlib.Path('dist/father-pong.pyz'); m=json.loads(pathlib.Path('dist/build-manifest.json').read_text()); assert hashlib.sha256(p.read_bytes()).hexdigest()==m['sha256']"
+      - name: Upload pre-alpha product artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: father-pong-python-zipapp
+          path: |
+            projects/GAME-PY-L1-PONG-0001/dist/father-pong.pyz
+            projects/GAME-PY-L1-PONG-0001/dist/build-manifest.json
+          if-no-files-found: error
