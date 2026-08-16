@@ -1,6 +1,6 @@
 # GAME-PY-L1-PONG-0001 — Pong / Понг
 
-> Status: `0.1.0-pre-alpha`, milestone M1 candidate. The deterministic core is tested; CI and the Tkinter UI still require runtime evidence before alpha.
+> Status: `0.1.0-pre-alpha`, milestone M1 candidate. The deterministic core is green in CI; the Tkinter UI still requires Windows runtime evidence before alpha.
 
 ## RU
 
@@ -37,7 +37,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 ## Evidence and limitations
 
 - Automated evidence: deterministic unit tests for symmetric wall/paddle collisions, scoring, clamping, pause/reset, win state and invalid input boundaries.
-- CI definition: Python 3.11–3.13 with read-only repository permissions. A committed workflow is not itself proof that the run passed.
+- CI evidence: 12/12 tests and compilation passed on Python 3.11–3.13 with read-only repository permissions ([run #2](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31923318347)).
 - Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and packaged executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
