@@ -36,3 +36,31 @@ jobs:
         run: python -m compileall -q pong tests
       - name: Test deterministic core
         run: python -m unittest discover -s tests -v
+
+  windows-import-smoke:
+    name: Windows 3.12 import and core smoke
+    runs-on: windows-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: projects/GAME-PY-L1-PONG-0001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile
+        run: python -m compileall -q pong tests
+      - name: Test deterministic core
+        run: python -m unittest discover -s tests -v
+      - name: Verify Tkinter and application imports
+        shell: pwsh
+        run: |
+          python -c "import tkinter; print('Tk', tkinter.TkVersion)"
+          python -c "from pong.app import PongApp; print('PongApp import OK')"
+      - name: Validate manual smoke script syntax
+        shell: pwsh
+        run: |
+          $null = [scriptblock]::Create((Get-Content -Raw scripts/windows_smoke.ps1))

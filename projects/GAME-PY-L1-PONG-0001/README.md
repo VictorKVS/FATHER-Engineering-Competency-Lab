@@ -38,6 +38,7 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 
 - Automated evidence: deterministic unit tests for symmetric wall/paddle collisions, scoring, clamping, pause/reset, win state and invalid input boundaries.
 - CI evidence: 12/12 tests and compilation passed on Python 3.11–3.13 with read-only repository permissions ([run #2](https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab/actions/runs/31923318347)).
+- Windows hosted CI verifies compilation, core tests, Tkinter availability and application import. It does not replace the real-window checklist.
 - Not yet evidenced: Windows launch, frame pacing, keyboard behavior, visual quality and packaged executable.
 - No screenshot/GIF is published until a real build is launched and captured.
 - This is not a release candidate. M1 requires manual smoke evidence on Windows plus CI.
@@ -49,6 +50,8 @@ The functional core owns physics and scoring; the UI adapter owns input, time an
 - Second learning record: [`learning/attempt-0002.json`](learning/attempt-0002.json)
 - Release gates: [`docs/RELEASE_GATES.md`](docs/RELEASE_GATES.md)
 - Build evidence: [`evidence/EVID-PY-PONG-M1-local.json`](evidence/EVID-PY-PONG-M1-local.json)
+- Windows GUI procedure: [`docs/WINDOWS_SMOKE_PASSPORT.md`](docs/WINDOWS_SMOKE_PASSPORT.md)
+- Transfer experiment: [`factory-assets/XFER-PY-PONG-0001-breakout.md`](factory-assets/XFER-PY-PONG-0001-breakout.md)
 - Reusable pattern: [`factory-assets/PAT-GAME-0001-functional-core.md`](factory-assets/PAT-GAME-0001-functional-core.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)

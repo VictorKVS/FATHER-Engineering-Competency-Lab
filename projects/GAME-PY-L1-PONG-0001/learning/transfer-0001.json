@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1.0",
+  "transfer_id": "XFER-PY-PONG-0001",
+  "source_project": "GAME-PY-L1-PONG-0001",
+  "target_project": "GAME-PY-L1-BREAKOUT-0002",
+  "status": "specified_not_executed",
+  "pattern_under_test": "PAT-GAME-0001",
+  "anti_pattern_under_test": "ANTI-GAME-0001",
+  "design": {
+    "type": "paired_ab",
+    "minimum_pairs": 3,
+    "baseline_context": ["breakout_requirements"],
+    "treatment_context": ["breakout_requirements", "PAT-GAME-0001", "ANTI-GAME-0001"],
+    "controlled_variables": ["model_version", "prompt_budget", "tool_access", "time_budget"]
+  },
+  "metrics": ["first_pass_acceptance", "defects_before_green", "repeated_anti_patterns", "time_to_green", "architecture_violations", "security_findings", "required_transition_coverage"],
+  "promotion_rule": "No golden-pattern or role promotion from one pair; independent Architect and QA review required.",
+  "learning_mode": "contextual_learning_evaluation",
+  "routing_policy_changed": false,
+  "parameter_training_performed": false
+}
+
