@@ -117,6 +117,10 @@ Historical/market data, strategy hypotheses, backtesting/simulation, agents and 
 **Status:** PRESERVED / CORE DIRECTION.  
 Create measurable specialist agents from role passports, competency gates, knowledge routing, tools, tests and learning records. Agents graduate by demonstrated competence and transfer, not labels.
 
+### FATHER-AGENT-MEM-0001 — Agent Memory, Knowledge & Skill Reproduction Platform
+**Status:** PRESERVED / RESEARCH / CORE STRATEGIC DIRECTION.  
+Reproduce a specialist agent from versioned externalized competence state rather than an ad hoc prompt: role contract + canonical knowledge references + episodic/procedural memory + patterns/anti-patterns + competency profile + policy/routing + tool contracts + evaluation suite + security profile. OSINT provides evidence; Analyst/Knowledge Curator routes admitted information into appropriate knowledge stores; the Agent Factory instantiates specialists; the LLM Runtime Shield protects ingestion and execution; this product preserves and restores the memory, knowledge and demonstrated skills that make those specialists useful. Detailed seed: `docs/FUTURE/FATHER_AGENT_MEMORY_SKILL_0001.md`.
+
 ### FATHER-KGRAPH-0001 — Enterprise Knowledge Graph / GraphRAG Layer
 **Status:** PRESERVED.  
 Shared evidence/provenance graph connecting domain KBs while preserving stable IDs and access boundaries. Must not collapse protected KB ownership into one uncontrolled repository.
