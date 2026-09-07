@@ -79,7 +79,8 @@ jobs:
         with:
           name: test-evidence-father-pong-core-py${{ matrix.python-version }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
           path: projects/GAME-PY-L1-PONG-0001/.test-results/core-${{ matrix.python-version }}
-          if-no-files-found: warn
+          if-no-files-found: error
+          include-hidden-files: true
           retention-days: 90
 
   windows-import-smoke:
@@ -162,7 +163,8 @@ jobs:
         with:
           name: test-evidence-father-pong-windows-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
           path: projects/GAME-PY-L1-PONG-0001/.test-results/windows-smoke
-          if-no-files-found: warn
+          if-no-files-found: error
+          include-hidden-files: true
           retention-days: 90
 
   product-zipapp:
@@ -230,7 +232,8 @@ jobs:
         with:
           name: test-evidence-father-pong-zipapp-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
           path: projects/GAME-PY-L1-PONG-0001/.test-results/zipapp
-          if-no-files-found: warn
+          if-no-files-found: error
+          include-hidden-files: true
           retention-days: 90
       - name: Upload pre-alpha product artifact
         uses: actions/upload-artifact@v4
@@ -325,7 +328,8 @@ jobs:
         with:
           name: test-evidence-father-pong-experiments-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
           path: projects/GAME-PY-L1-PONG-0001/.test-results/experiments
-          if-no-files-found: warn
+          if-no-files-found: error
+          include-hidden-files: true
           retention-days: 90
       - name: Upload sealed experiment pair
         uses: actions/upload-artifact@v4
