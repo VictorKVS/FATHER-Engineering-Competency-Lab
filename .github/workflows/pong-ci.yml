@@ -33,9 +33,54 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Compile
-        run: python -m compileall -q pong factory tests scripts
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .test-results/core-${{ matrix.python-version }}/logs
+          python -m compileall -q pong factory tests scripts 2>&1 | tee .test-results/core-${{ matrix.python-version }}/logs/compile.log
       - name: Test deterministic core
-        run: python -m unittest discover -s tests -v
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -v 2>&1 | tee .test-results/core-${{ matrix.python-version }}/logs/unittest.log
+      - name: Write core manifest
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          PY_MATRIX: ${{ matrix.python-version }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          root = Path('.test-results') / f"core-{os.environ['PY_MATRIX']}"
+          root.mkdir(parents=True, exist_ok=True)
+          files = [str(p.relative_to(root)).replace('\\','/') for p in root.rglob('*') if p.is_file()]
+          data = {
+            'schema_version': '1.0',
+            'project': 'FATHER-Engineering-Competency-Lab/GAME-PY-L1-PONG-0001',
+            'repository': os.environ.get('GITHUB_REPOSITORY'),
+            'commit_sha': os.environ.get('GITHUB_SHA'),
+            'ref': os.environ.get('GITHUB_REF'),
+            'workflow': os.environ.get('GITHUB_WORKFLOW'),
+            'run_id': os.environ.get('GITHUB_RUN_ID'),
+            'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+            'status': os.environ.get('JOB_STATUS','unknown').upper(),
+            'runtime': {'python': sys.version, 'platform': platform.platform()},
+            'commands': ['python -m compileall -q pong factory tests scripts', 'python -m unittest discover -s tests -v'],
+            'result_files': sorted(files)
+          }
+          (root / 'manifest.json').write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive core test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-father-pong-core-py${{ matrix.python-version }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: projects/GAME-PY-L1-PONG-0001/.test-results/core-${{ matrix.python-version }}
+          if-no-files-found: warn
+          retention-days: 90
 
   windows-import-smoke:
     name: Windows 3.12 import and core smoke
@@ -51,19 +96,74 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Prepare evidence directory
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force .test-results\windows-smoke\logs | Out-Null
       - name: Compile
-        run: python -m compileall -q pong factory tests scripts
+        shell: pwsh
+        run: |
+          python -m compileall -q pong factory tests scripts 2>&1 | Tee-Object -FilePath .test-results\windows-smoke\logs\compile.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Test deterministic core
-        run: python -m unittest discover -s tests -v
+        shell: pwsh
+        run: |
+          python -m unittest discover -s tests -v 2>&1 | Tee-Object -FilePath .test-results\windows-smoke\logs\unittest.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Verify Tkinter and application imports
         shell: pwsh
         run: |
-          python -c "import tkinter; print('Tk', tkinter.TkVersion)"
-          python -c "from pong.app import PongApp; print('PongApp import OK')"
+          python -c "import tkinter; print('Tk', tkinter.TkVersion)" 2>&1 | Tee-Object -FilePath .test-results\windows-smoke\logs\tkinter.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -c "from pong.app import PongApp; print('PongApp import OK')" 2>&1 | Tee-Object -FilePath .test-results\windows-smoke\logs\app-import.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Validate manual smoke script syntax
         shell: pwsh
         run: |
-          $null = [scriptblock]::Create((Get-Content -Raw scripts/windows_smoke.ps1))
+          try {
+            $null = [scriptblock]::Create((Get-Content -Raw scripts/windows_smoke.ps1))
+            'windows_smoke.ps1 syntax: OK' | Tee-Object -FilePath .test-results\windows-smoke\logs\powershell-syntax.log
+          } catch {
+            $_ | Out-String | Tee-Object -FilePath .test-results\windows-smoke\logs\powershell-syntax.log
+            throw
+          }
+      - name: Write Windows smoke manifest
+        if: always()
+        shell: pwsh
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          @'
+          import json, os, platform, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          root = Path('.test-results/windows-smoke')
+          root.mkdir(parents=True, exist_ok=True)
+          files = [str(p.relative_to(root)).replace('\\','/') for p in root.rglob('*') if p.is_file()]
+          data = {
+            'schema_version': '1.0',
+            'project': 'FATHER-Engineering-Competency-Lab/GAME-PY-L1-PONG-0001',
+            'repository': os.environ.get('GITHUB_REPOSITORY'),
+            'commit_sha': os.environ.get('GITHUB_SHA'),
+            'ref': os.environ.get('GITHUB_REF'),
+            'workflow': os.environ.get('GITHUB_WORKFLOW'),
+            'run_id': os.environ.get('GITHUB_RUN_ID'),
+            'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+            'status': os.environ.get('JOB_STATUS','unknown').upper(),
+            'runtime': {'python': sys.version, 'platform': platform.platform()},
+            'commands': ['compileall', 'unittest discover', 'Tkinter import', 'PongApp import', 'PowerShell smoke syntax validation'],
+            'result_files': sorted(files)
+          }
+          (root / 'manifest.json').write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          '@ | python -
+      - name: Archive Windows smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-father-pong-windows-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: projects/GAME-PY-L1-PONG-0001/.test-results/windows-smoke
+          if-no-files-found: warn
+          retention-days: 90
 
   product-zipapp:
     name: Build and verify Python zipapp
@@ -80,11 +180,58 @@ jobs:
         with:
           python-version: "3.12"
       - name: Build deterministic archive
-        run: python scripts/build_zipapp.py
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .test-results/zipapp/logs
+          python scripts/build_zipapp.py 2>&1 | tee .test-results/zipapp/logs/build.log
       - name: Run packaged self-check
-        run: python dist/father-pong.pyz --self-check
+        shell: bash
+        run: |
+          set -o pipefail
+          python dist/father-pong.pyz --self-check 2>&1 | tee .test-results/zipapp/logs/self-check.log
       - name: Verify manifest checksum
-        run: python -c "import hashlib,json,pathlib; p=pathlib.Path('dist/father-pong.pyz'); m=json.loads(pathlib.Path('dist/build-manifest.json').read_text()); assert hashlib.sha256(p.read_bytes()).hexdigest()==m['sha256']"
+        shell: bash
+        run: |
+          set -o pipefail
+          python -c "import hashlib,json,pathlib; p=pathlib.Path('dist/father-pong.pyz'); m=json.loads(pathlib.Path('dist/build-manifest.json').read_text()); assert hashlib.sha256(p.read_bytes()).hexdigest()==m['sha256']; print('checksum: OK', m['sha256'])" 2>&1 | tee .test-results/zipapp/logs/checksum.log
+      - name: Write zipapp verification manifest
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          root = Path('.test-results/zipapp')
+          root.mkdir(parents=True, exist_ok=True)
+          files = [str(p.relative_to(root)).replace('\\','/') for p in root.rglob('*') if p.is_file()]
+          data = {
+            'schema_version': '1.0',
+            'project': 'FATHER-Engineering-Competency-Lab/GAME-PY-L1-PONG-0001',
+            'repository': os.environ.get('GITHUB_REPOSITORY'),
+            'commit_sha': os.environ.get('GITHUB_SHA'),
+            'ref': os.environ.get('GITHUB_REF'),
+            'workflow': os.environ.get('GITHUB_WORKFLOW'),
+            'run_id': os.environ.get('GITHUB_RUN_ID'),
+            'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+            'status': os.environ.get('JOB_STATUS','unknown').upper(),
+            'runtime': {'python': sys.version, 'platform': platform.platform()},
+            'commands': ['python scripts/build_zipapp.py', 'python dist/father-pong.pyz --self-check', 'verify build-manifest SHA-256'],
+            'result_files': sorted(files)
+          }
+          (root / 'manifest.json').write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive zipapp verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-father-pong-zipapp-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: projects/GAME-PY-L1-PONG-0001/.test-results/zipapp
+          if-no-files-found: warn
+          retention-days: 90
       - name: Upload pre-alpha product artifact
         uses: actions/upload-artifact@v4
         with:
@@ -109,21 +256,77 @@ jobs:
         with:
           python-version: "3.12"
       - name: Verify both packet allowlists and hashes
+        shell: bash
         run: |
-          python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
-          python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-B1
+          set -o pipefail
+          mkdir -p .test-results/experiments/logs
+          {
+            python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-A1
+            python -m factory.experiment_packet verify experiments/EXP-BREAKOUT-B1
+          } 2>&1 | tee .test-results/experiments/logs/verify-packets.log
       - name: Prove controlled A/B difference
-        run: python -m factory.experiment_packet compare experiments/EXP-BREAKOUT-A1 experiments/EXP-BREAKOUT-B1
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m factory.experiment_packet compare experiments/EXP-BREAKOUT-A1 experiments/EXP-BREAKOUT-B1 2>&1 | tee .test-results/experiments/logs/compare.log
       - name: Validate experiment result contract
-        run: python -m factory.result_validator contract experiments/EXP-RESULT-CONTRACT-0001.json
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m factory.result_validator contract experiments/EXP-RESULT-CONTRACT-0001.json 2>&1 | tee .test-results/experiments/logs/result-contract.log
       - name: Build reproducible paired packets
+        shell: bash
         run: |
-          python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
-          python -m factory.experiment_packet build experiments/EXP-BREAKOUT-B1 dist/EXP-BREAKOUT-B1.zip
+          set -o pipefail
+          {
+            python -m factory.experiment_packet build experiments/EXP-BREAKOUT-A1 dist/EXP-BREAKOUT-A1.zip
+            python -m factory.experiment_packet build experiments/EXP-BREAKOUT-B1 dist/EXP-BREAKOUT-B1.zip
+          } 2>&1 | tee .test-results/experiments/logs/build-packets.log
       - name: Test packet controls
+        shell: bash
         run: |
-          python -m unittest discover -s tests -p "test_experiment_packet.py" -v
-          python -m unittest discover -s tests -p "test_result_validator.py" -v
+          set -o pipefail
+          {
+            python -m unittest discover -s tests -p "test_experiment_packet.py" -v
+            python -m unittest discover -s tests -p "test_result_validator.py" -v
+          } 2>&1 | tee .test-results/experiments/logs/unittest.log
+      - name: Write experiment verification manifest
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          root = Path('.test-results/experiments')
+          root.mkdir(parents=True, exist_ok=True)
+          files = [str(p.relative_to(root)).replace('\\','/') for p in root.rglob('*') if p.is_file()]
+          data = {
+            'schema_version': '1.0',
+            'project': 'FATHER-Engineering-Competency-Lab/GAME-PY-L1-PONG-0001',
+            'repository': os.environ.get('GITHUB_REPOSITORY'),
+            'commit_sha': os.environ.get('GITHUB_SHA'),
+            'ref': os.environ.get('GITHUB_REF'),
+            'workflow': os.environ.get('GITHUB_WORKFLOW'),
+            'run_id': os.environ.get('GITHUB_RUN_ID'),
+            'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+            'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+            'status': os.environ.get('JOB_STATUS','unknown').upper(),
+            'runtime': {'python': sys.version, 'platform': platform.platform()},
+            'commands': ['verify A/B packets', 'compare A/B packets', 'validate result contract', 'build packets', 'run packet-control unittest suites'],
+            'result_files': sorted(files)
+          }
+          (root / 'manifest.json').write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive experiment test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-father-pong-experiments-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: projects/GAME-PY-L1-PONG-0001/.test-results/experiments
+          if-no-files-found: warn
+          retention-days: 90
       - name: Upload sealed experiment pair
         uses: actions/upload-artifact@v4
         with:
