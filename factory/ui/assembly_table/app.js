@@ -14,7 +14,7 @@ function renderTabs(layers){
   const el=document.getElementById("layerTabs");
   el.innerHTML="";
   layers.forEach((l)=>{
-    const enabled=["business","bpmn","api"].includes(l.id);
+    const enabled=["business","bpmn","api","engine"].includes(l.id);
     const b=document.createElement("button");
     b.className="tab "+(currentLayer===l.id?"active":enabled?"":"locked");
     b.textContent=l.name;
@@ -25,6 +25,7 @@ function renderTabs(layers){
       if(l.id==="business") renderBusiness();
       if(l.id==="bpmn") renderBpmnLayer();
       if(l.id==="api") renderApiLayer();
+      if(l.id==="engine") renderEngineLayer();
     };
     el.appendChild(b);
   });
@@ -59,6 +60,13 @@ function renderApiLayer(){
   document.getElementById("modelStatus").textContent="MODEL: FATHER-FACTORY-API-LAYER";
   document.getElementById("modeStatus").textContent="MODE: API / EVENT DESIGN";
   resetInspector("Выберите контракт передачи между цехами.");
+}
+
+function renderEngineLayer(){
+  renderEngine();
+  document.getElementById("modelStatus").textContent="MODEL: FATHER-ENGINE";
+  document.getElementById("modeStatus").textContent="MODE: AGENT RUNTIME";
+  resetInspector("Выберите слой двигателя FATHER.");
 }
 
 function renderWorkshop01Layer(){
