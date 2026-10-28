@@ -1,0 +1,27 @@
+program_binding:
+  namespace: FATHER_00_100
+  rule: every executable or analytical module can bind to one or more model elements
+
+  binding:
+    program_id: "00-100"
+    name: ""
+    type: service|tool|agent|test|analyzer|runtime|pipeline|ui|security|data|other
+    repository_path: ""
+    version: ""
+    target_elements: []
+    target_flows: []
+    provides: []
+    consumes: []
+    tests: []
+    metrics: []
+    evidence: []
+    status: draft|implemented|verified|polygon_verified|production_proven
+
+  ui_behavior:
+    node_badge: true
+    click_opens_program_card: true
+    show_tests: true
+    show_metrics: true
+    show_dependencies: true
+    show_version: true
+    show_evidence: true
