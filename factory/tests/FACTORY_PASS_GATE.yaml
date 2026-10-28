@@ -1,0 +1,35 @@
+gate:
+  id: FACTORY_PASS
+  owner: FATHER_FACTORY
+  required:
+    - FACTORY_SKELETON_READY
+    - AGENT_RUNTIME_CONTRACT_READY
+    - HANDOFF_ENGINE_VERIFIED
+    - FACTORY_E2E_VERIFIED
+    - FACTORY_REWORK_VERIFIED
+    - FACTORY_UI_EVIDENCE_VERIFIED
+
+  hard_fail:
+    - broken_agent_registry
+    - invalid_handoff_schema
+    - lost_evidence
+    - untraceable_state_transition
+    - rework_loop_not_supported
+    - product_state_not_reproducible
+
+  on_pass:
+    next: AGENT_QUALIFICATION
+
+  qualification_order:
+    - AG-000
+    - AG-001
+    - AG-010
+    - AG-005
+    - WORKCELL_ALINA_OSINT_PIONEER
+    - AG-002
+    - AG-004
+    - AG-006
+    - AG-003
+    - AG-007
+    - AG-008
+    - AG-009
