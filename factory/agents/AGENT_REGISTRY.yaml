@@ -336,3 +336,56 @@ agents:
       - standard_api_handoff
       - rc_manifest_binding
       - evidence_model_consolidation
+
+  - agent_id: AG-010
+    name: OSINT_EXPERT
+    aliases: [FATHER OSINT, OSINT Worker, Evidence Supplier]
+    owner_domain: open_source_intelligence
+    role: search_collection_provenance_and_evidence_owner
+    status: canonical_existing
+    maturity: M4_FROZEN_DEV_BASELINE
+    canonical_repository: VictorKVS/OSINT_deepseek
+    canonical_paths:
+      - README.md
+      - father_osint/
+      - docs/03_architecture/06_ROLE_MATRIX_ANALYST_OSINT_V1.md
+      - docs/03_architecture/07_ANALYST_OSINT_INTERACTION_PROTOCOL_V1.md
+      - docs/04_testing/
+      - docs/06_verification/
+      - tests/
+    capabilities:
+      - search_planning
+      - source_class_selection
+      - collection
+      - provenance_preservation
+      - normalization
+      - deduplication
+      - evidence_preparation
+      - contradiction_capture
+      - counter_evidence
+      - coverage_assessment
+      - sufficiency_assessment
+      - telegram_collection
+      - tdlib_poc
+      - acquisition_reporting
+    prohibitions:
+      - no_final_analytical_conclusions
+      - no_hidden_contradictions
+      - no_provenance_destruction
+      - no_invented_confidence_without_named_method
+    intelligence:
+      prompt: EMBEDDED_IN_ACCEPTED_ROLE_PROTOCOLS
+      algorithm: STRONG_EXISTING
+      rag_manifest: NEEDS_FACTORY_WRAPPER
+      knowledge_base: SEARCH_INTELLIGENCE_KB_PRESENT_DISTRIBUTED
+      experience_store: DEVELOPMENT_JOURNAL_AND_TEST_REPORTS
+      evals: STRONG_EXISTING
+    interfaces:
+      primary_peer: AG-001
+      protocol: ANALYST_OSINT_INTERACTION_PROTOCOL_V1
+      output: EVIDENCE_PACKAGE
+    gaps:
+      - factory_standard_wrapper
+      - explicit_rag_manifest_index
+      - standard_api_handoff_adapter
+      - productized_test_pack_set
