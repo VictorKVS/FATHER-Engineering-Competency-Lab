@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>FATHER Assembly Table — Business Model</title>
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">FATHER <span>Assembly Table</span></div>
+    <nav id="layerTabs" class="tabs"></nav>
+  </header>
+
+  <main class="workspace">
+    <section class="canvas-wrap">
+      <div class="canvas-title">
+        <div>
+          <h1>Слой 1. Бизнес-модель фабрики</h1>
+          <p>От идеи заказчика до выпуска продукта. Нажмите на цех или поток.</p>
+        </div>
+        <div class="legend">
+          <span><i class="dot draft"></i>Draft</span>
+          <span><i class="dot ready"></i>Ready</span>
+          <span><i class="dot gate"></i>Gate</span>
+        </div>
+      </div>
+
+      <div id="factoryCanvas" class="factory-canvas"></div>
+    </section>
+
+    <aside id="inspector" class="inspector">
+      <div class="inspector-empty">
+        <h2>Инспектор</h2>
+        <p>Выберите цех или поток на сборочном столе.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="statusbar">
+    <div>MODEL: FATHER-FACTORY-L0</div>
+    <div>MODE: BUSINESS DESIGN</div>
+    <div id="selectedStatus">SELECTED: —</div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
