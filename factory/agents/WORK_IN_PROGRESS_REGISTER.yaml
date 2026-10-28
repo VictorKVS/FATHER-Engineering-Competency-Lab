@@ -1,0 +1,71 @@
+work_in_progress:
+  - id: WIP-001
+    agent: AG-001
+    name: ALINA
+    objective: consolidate_existing_analyst_assets_into_factory_standard
+    status: ACTIVE
+    existing_strength:
+      - process_engine
+      - result_evidence_model
+      - knowledge_protocols
+      - visual_and_trend_analyst_patterns
+    next:
+      - canonical_prompt
+      - rag_manifest
+      - api_handoff_wrapper
+      - three_test_packs
+
+  - id: WIP-002
+    agent: AG-010
+    name: OSINT_EXPERT
+    objective: wrap_frozen_osint_dev_baseline_into_factory_agent_standard
+    status: ACTIVE
+    existing_strength:
+      - accepted_role_matrix
+      - accepted_interaction_protocol
+      - search_planning
+      - evidence_quality
+      - counter_evidence
+      - research_sufficiency
+      - provenance
+      - telegram_transport_boundary
+      - tdlib_poc
+      - executable_tests
+    next:
+      - explicit_prompt_wrapper
+      - rag_manifest_index
+      - knowledge_base_manifest
+      - standard_api_adapter
+      - three_test_packs
+
+  - id: WIP-003
+    agent: AG-005
+    name: PIONEER
+    objective: wrap_existing_pioneer_into_factory_agent_standard
+    status: ACTIVE
+    existing_strength:
+      - architecture_model
+      - topology
+      - dependency_graph
+      - security_model
+      - gate1
+      - tima_receiver_contract
+      - tests
+    next:
+      - canonical_prompt
+      - rag_manifest
+      - knowledge_base_manifest
+      - standard_input_output
+      - three_test_packs
+
+workcell:
+  id: WIP-CELL-001
+  agents: [AG-001, AG-010, AG-005]
+  sequence:
+    - ANALYZE
+    - RESEARCH
+    - ANALYZE_EVIDENCE
+    - ARCHITECT
+    - RESEARCH_MORE_IF_NEEDED
+    - GATE1
+  goal: first_cross_agent_father_regression_line
