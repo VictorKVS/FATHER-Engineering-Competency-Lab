@@ -1,0 +1,82 @@
+engine:
+  id: FATHER-ENGINE
+  version: 0.1.0
+  role: agent_runtime
+  layers:
+    interface_channels:
+      capabilities:
+        - chat
+        - rest_api
+        - telegram
+        - slack
+        - email
+        - webhook
+    planning_orchestration:
+      capabilities:
+        - task_interpretation
+        - planning
+        - workflow_execution
+        - multi_agent
+        - checkpoint_resume
+        - retry
+        - human_approval
+    memory_context:
+      capabilities:
+        - working_memory
+        - long_term_memory
+        - retrieval
+        - vector_search
+        - prompt_cache
+        - context_builder
+        - provenance
+    model_fabric:
+      capabilities:
+        - llm
+        - slm
+        - vlm
+        - embeddings
+        - reranking
+        - model_routing
+        - fallback
+        - evaluation
+    tools_actions:
+      capabilities:
+        - github
+        - browser
+        - code
+        - sql
+        - api
+        - files
+        - mcp
+        - domain_tools
+      boundary:
+        - policy_check
+        - capability_token
+        - sandbox
+        - audit
+    state_data:
+      capabilities:
+        - relational_db
+        - cache
+        - object_storage
+        - vector_store
+        - graph_store
+        - artifact_registry
+        - event_store
+    observability_safety_evals:
+      capabilities:
+        - tracing
+        - metrics
+        - logs
+        - audit
+        - evals
+        - guardrails
+        - regression
+        - cost_accounting
+    deployment:
+      progression:
+        - single_process
+        - local_services
+        - docker_compose
+        - worker_nodes
+        - kubernetes
