@@ -3,20 +3,48 @@ script.src="./model.js";
 script.onload=init;
 document.head.appendChild(script);
 
+let currentLayer="business";
+
 function init(){
   const model=window.FATHER_MODEL;
   renderTabs(model.layers);
-  renderCanvas(model.nodes,model.flows);
+  renderBusiness();
 }
 function renderTabs(layers){
   const el=document.getElementById("layerTabs");
-  layers.forEach((l,i)=>{
+  el.innerHTML="";
+  layers.forEach((l)=>{
     const b=document.createElement("button");
-    b.className="tab "+(l.active?"active":"locked");
+    const enabled=["business","bpmn"].includes(l.id);
+    b.className="tab "+(currentLayer===l.id?"active":enabled?"":"locked");
     b.textContent=l.name;
-    b.onclick=()=>{ if(!l.active) showLayerPlaceholder(l); };
+    b.onclick=()=>{
+      if(!enabled){showLayerPlaceholder(l);return;}
+      currentLayer=l.id;
+      renderTabs(layers);
+      if(l.id==="business") renderBusiness();
+      if(l.id==="bpmn") renderBpmnLayer();
+    };
     el.appendChild(b);
   });
+}
+function renderBusiness(){
+  const model=window.FATHER_MODEL;
+  const c=document.getElementById("factoryCanvas");
+  c.className="factory-canvas";
+  document.querySelector(".canvas-title h1").textContent="Слой 1. Бизнес-модель фабрики";
+  document.querySelector(".canvas-title p").textContent="От идеи заказчика до выпуска продукта. Нажмите на цех или поток.";
+  document.getElementById("modelStatus").textContent="MODEL: FATHER-FACTORY-L0";
+  document.getElementById("modeStatus").textContent="MODE: BUSINESS DESIGN";
+  document.getElementById("selectedStatus").textContent="SELECTED: —";
+  document.getElementById("inspector").innerHTML='<div class="inspector-empty"><h2>Инспектор</h2><p>Выберите цех или поток на сборочном столе.</p></div>';
+  renderCanvas(model.nodes,model.flows);
+}
+function renderBpmnLayer(){
+  renderBpmn();
+  document.getElementById("modelStatus").textContent="MODEL: FATHER-FACTORY-BPMN-L1";
+  document.getElementById("modeStatus").textContent="MODE: PROCESS DESIGN";
+  document.getElementById("selectedStatus").textContent="SELECTED: —";
 }
 function renderCanvas(nodes,flows){
   const c=document.getElementById("factoryCanvas");
