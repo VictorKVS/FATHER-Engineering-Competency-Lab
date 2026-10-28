@@ -1,0 +1,52 @@
+specialists:
+  - id: business_analyst
+    name: Business Analyst
+    order: 1
+  - id: system_analyst
+    name: System Analyst
+    order: 2
+  - id: architect
+    name: Solution/System Architect
+    order: 3
+  - id: data_knowledge_engineer
+    name: Data & Knowledge Engineer
+    order: 4
+  - id: ai_llm_architect
+    name: AI / LLM Architect
+    order: 5
+  - id: security_specialist
+    name: Security Specialist
+    order: 6
+  - id: programmer
+    name: FATHER Programmer
+    order: 7
+  - id: test_engineer
+    name: FATHER Test Engineer
+    order: 8
+  - id: qa_evals
+    name: QA / Evals Engineer
+    order: 9
+  - id: devsecops_tima
+    name: DevSecOps / TIMA
+    order: 10
+  - id: optimization_engine
+    name: Optimization / Experiment Engineer
+    order: 11
+  - id: polygon
+    name: Polygon / Adversarial Verification
+    order: 12
+
+standard_package:
+  required:
+    - ROLE.md
+    - PROMPT.md
+    - ALGORITHM.md
+    - RAG_MANIFEST.yaml
+    - KNOWLEDGE_BASE.md
+    - INPUT_CONTRACT.yaml
+    - OUTPUT_CONTRACT.yaml
+    - CHECKLIST.md
+    - STATUS.yaml
+    - EVALS/
+    - EXPERIENCE/
+    - API_HANDOFF.yaml
