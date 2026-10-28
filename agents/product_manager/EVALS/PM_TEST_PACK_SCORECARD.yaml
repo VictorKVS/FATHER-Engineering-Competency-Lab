@@ -1,0 +1,44 @@
+scorecard:
+  id: PM_TEST_PACK_SCORECARD
+  dimensions:
+    - id: problem_clarity
+      weight: 10
+    - id: stakeholder_user_coverage
+      weight: 8
+    - id: facts_vs_hypotheses
+      weight: 10
+    - id: doubt_quality
+      weight: 10
+    - id: interview_survey_design
+      weight: 8
+    - id: competitor_alternative_analysis
+      weight: 8
+    - id: economic_model
+      weight: 12
+    - id: scenario_analysis
+      weight: 8
+    - id: success_metrics
+      weight: 7
+    - id: discovery_experiments
+      weight: 7
+    - id: stop_conditions
+      weight: 5
+    - id: evidence_traceability
+      weight: 7
+
+  hard_fail:
+    - invented_critical_fact
+    - economic_conclusion_without_assumptions_or_evidence
+    - no_reasons_not_to_build
+    - no_do_nothing_scenario
+    - no_stop_condition
+    - hides_critical_unknowns
+
+  result:
+    pass_score: 75
+    excellent_score: 90
+
+  note: >
+    Recommendation itself is not graded as correct merely because it matches an
+    expected label. The reasoning, evidence, assumptions and economic model are
+    graded.
