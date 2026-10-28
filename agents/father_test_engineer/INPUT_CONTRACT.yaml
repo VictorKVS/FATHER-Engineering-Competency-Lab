@@ -1,0 +1,11 @@
+input:
+  target_scope:
+    type: node|edge|chain|subgraph|system
+    ids: []
+  requirement_ids: []
+  algorithm_step_ids: []
+  contract_ids: []
+  risk_ids: []
+  sla_ids: []
+  known_defects: []
+  environment_profile: ""
