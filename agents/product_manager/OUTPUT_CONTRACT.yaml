@@ -1,0 +1,24 @@
+output:
+  product_discovery_package:
+    customer_intent: {}
+    stakeholders: []
+    user_segments: []
+    problem_statements: []
+    jobs_to_be_done: []
+    facts: []
+    hypotheses: []
+    assumptions: []
+    unknowns: []
+    research_results: []
+    competitor_analysis: []
+    value_proposition: {}
+    product_outcomes: []
+    success_metrics: []
+    product_risks: []
+    scope: []
+    non_scope: []
+    experiments: []
+    decisions: []
+    evidence: []
+    unresolved_questions: []
+    gate_status: HOLD|PASS
