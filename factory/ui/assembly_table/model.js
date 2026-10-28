@@ -12,7 +12,8 @@ window.FATHER_MODEL = {
     {id:"tests",name:"8. Тесты / Полигон"},
     {id:"monitoring",name:"9. Мониторинг"},
     {id:"release",name:"10. Релиз / Продажа"},
-    {id:"engine",name:"11. FATHER Engine"}
+    {id:"engine",name:"11. FATHER Engine"},
+    {id:"automation",name:"12. Automation Canvas"}
   ],
   nodes: [
     {id:"CUSTOMER",step:"00",name:"Заказчик / Идея",kind:"customer",status:"READY",purpose:"Формирует потребность, бизнес-цель, ограничения и ожидаемую ценность.",output:"Customer Intent"},
