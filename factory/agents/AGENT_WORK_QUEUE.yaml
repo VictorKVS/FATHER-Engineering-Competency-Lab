@@ -1,0 +1,28 @@
+work_queue:
+  priority_1:
+    - agent: AG-001
+      task: consolidate_alina_standard_package_without_replacing_existing_assets
+    - agent: AG-003
+      task: import_tima_full_existing_profile_prompt_kb_and_lab_evidence
+    - agent: AG-004
+      task: inventory_and_merge_legacy_father_codex_documents
+    - agent: AG-005
+      task: wrap_pioneer_existing_assets_in_standard_specialist_package
+    - agent: AG-002
+      task: consolidate_security_specialist_from_secgraph_regulatory_and_security_kb
+
+  priority_2:
+    - agent: AG-006
+      task: build_executable_test_runtime_and_reference_patterns
+    - agent: AG-007
+      task: create_full_standard_package
+    - agent: AG-008
+      task: create_full_standard_package
+    - agent: AG-009
+      task: merge_existing_polygon_repositories_into_canonical_package
+
+  rule:
+    - do_not_duplicate_existing_agent
+    - preserve_original_repository_and_provenance
+    - migrate_by_adapter_and_manifest_first
+    - improve_only_after_evidence
