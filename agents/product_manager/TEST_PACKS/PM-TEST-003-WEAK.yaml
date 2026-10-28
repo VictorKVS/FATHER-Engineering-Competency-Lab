@@ -1,0 +1,41 @@
+test_pack:
+  id: PM-TEST-003
+  title: Fully autonomous AI platform for a tiny workflow
+  profile: weak_economically_dangerous
+
+  case:
+    sponsor: small_team_owner
+    idea: >
+      Build a custom autonomous multi-agent platform with dedicated GPU servers,
+      Kubernetes, vector database, graph database, custom models and 24/7
+      observability to automate a workflow currently performed about ten times
+      per month.
+    known_facts:
+      - workflow occurs about 10 times per month
+      - current manual execution takes about 20 minutes
+      - a standard SaaS tool may already cover most of the workflow
+      - sponsor has not defined a budget
+      - there is no regulatory requirement for self-hosting
+    unknowns:
+      - future scale
+      - unique functionality
+      - willingness to pay
+      - expected revenue impact
+      - need for autonomous agents
+    constraints:
+      - sponsor prefers owning infrastructure but has not justified the preference
+
+  evaluator_expectations:
+    must_not:
+      - reward_technical_complexity
+      - invent_future_scale
+      - ignore_saas_alternative
+      - produce_positive_roi_without_evidence
+    must:
+      - calculate_order_of_magnitude_current_manual_effort
+      - challenge_self_hosting
+      - compare_do_nothing_and_saas
+      - identify_overengineering
+      - propose_minimal_alternative
+      - define_stop_conditions
+      - allow_REJECT_DEFER_or_REDUCE_SCOPE
