@@ -1,0 +1,56 @@
+editor:
+  id: FATHER-BUSINESS-MODEL-EDITOR
+  version: 0.1.0
+  layer: 1
+  role: universal_development_entrypoint
+
+  modes:
+    - import_diagram
+    - build_from_description
+    - manual_edit
+    - analyze
+    - simulate
+    - replay
+
+  required_capabilities:
+    - drag_drop
+    - pan_zoom
+    - snap_grid
+    - connectors
+    - swimlanes
+    - icon_palette
+    - inspector
+    - auto_layout
+    - undo_redo
+    - version_history
+    - comments
+    - validation
+    - import
+    - export
+    - overlays
+
+  analysis_overlays:
+    - business
+    - system
+    - architecture
+    - data
+    - api
+    - ai_llm
+    - security
+    - compliance
+    - qa
+    - cost
+    - performance
+    - reliability
+    - devsecops
+    - polygon
+
+  source_of_truth:
+    type: machine_readable_model
+    formats:
+      - json
+      - yaml
+
+  handoff:
+    next_layer: system_analysis
+    gate: BUSINESS_MODEL_READY
