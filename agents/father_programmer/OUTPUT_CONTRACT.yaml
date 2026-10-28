@@ -1,0 +1,18 @@
+output:
+  implementation:
+    files: []
+    modules: []
+    dependencies: []
+  traceability:
+    requirement_to_code: []
+    algorithm_to_code: []
+    contract_to_code: []
+    security_to_code: []
+  tests:
+    required_test_contracts: []
+  evidence:
+    static_checks: []
+    unit_results: []
+    integration_results: []
+    security_results: []
+  status: IMPLEMENTED|HOLD|RETURN_TO_ANALYST|RETURN_TO_ARCHITECT|RETURN_TO_SECURITY
