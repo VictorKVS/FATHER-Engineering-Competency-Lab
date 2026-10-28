@@ -1,0 +1,24 @@
+rag:
+  id: FATHER_PRODUCT_MANAGER_RAG
+  version: 0.1.0
+  collections:
+    - id: product_discovery_methods
+      purpose: interviews, surveys, JTBD, discovery, hypothesis testing
+    - id: research_methods
+      purpose: qualitative and quantitative research design
+    - id: market_research
+      purpose: market, competitors, alternatives, trends
+    - id: product_strategy
+      purpose: value proposition, segmentation, prioritization, product outcomes
+    - id: metrics
+      purpose: product metrics, funnels, adoption, retention, outcome metrics
+    - id: experiment_patterns
+      purpose: discovery experiments, prototypes, concierge tests, fake-door tests
+    - id: factory_experience
+      purpose: prior discovery outcomes, rejected hypotheses and lessons learned
+
+  retrieval:
+    mode: hybrid
+    rerank: true
+    provenance_required: true
+    recency_sensitive_for_market_data: true
