@@ -39,6 +39,46 @@ registry:
       - last_reviewed
 
 agents:
+  - agent_id: AG-000
+    name: PRODUCT_MANAGER
+    aliases: [Product Manager, Product Discovery Agent, PM]
+    owner_domain: product_discovery
+    role: product_discovery_and_customer_intent_owner
+    status: factory_core_role
+    maturity: M2_STANDARD_PACKAGE_DEFINED
+    capabilities:
+      - customer_interviews
+      - stakeholder_interviews
+      - problem_discovery
+      - jobs_to_be_done
+      - market_research
+      - competitor_research
+      - user_segmentation
+      - persona_hypotheses
+      - value_proposition
+      - product_hypotheses
+      - prioritization
+      - discovery_experiments
+      - success_metrics
+      - product_risks
+      - scope_non_scope
+      - acceptance_outcomes
+    intelligence:
+      prompt: DEFINED
+      algorithm: DEFINED
+      rag_manifest: DEFINED
+      knowledge_base: DEFINED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    interfaces:
+      sends_to: [AG-001]
+      handoff: PRODUCT_DISCOVERY_PACKAGE
+    gaps:
+      - executable_research_connectors
+      - reusable_interview_question_banks
+      - accumulated_market_research_experience
+      - discovery_experiment_runtime
+
   - agent_id: AG-001
     name: ALINA
     aliases: [Alina Analyst, Knowledge Worker, Analytical Core]
