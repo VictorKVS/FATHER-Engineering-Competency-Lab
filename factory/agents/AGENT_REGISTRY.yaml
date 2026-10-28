@@ -1,0 +1,298 @@
+registry:
+  id: FATHER_AGENT_REGISTRY
+  version: 0.1.0
+  principle: reuse_wrap_adapt_before_build
+
+  fields:
+    identity:
+      - agent_id
+      - name
+      - aliases
+      - owner_domain
+      - role
+      - status
+      - maturity
+    intelligence:
+      - prompt
+      - algorithm
+      - rag_manifest
+      - knowledge_base
+      - experience_store
+      - evals
+    interfaces:
+      - input_contract
+      - output_contract
+      - api_handoff
+      - tools
+      - permissions
+      - human_approval
+    assurance:
+      - tests
+      - security_constraints
+      - evidence
+      - known_limits
+      - gaps
+    provenance:
+      - canonical_repository
+      - canonical_paths
+      - legacy_assets
+      - last_reviewed
+
+agents:
+  - agent_id: AG-001
+    name: ALINA
+    aliases: [Alina Analyst, Knowledge Worker, Analytical Core]
+    owner_domain: analysis_knowledge_process
+    role: analytical_supervisor_and_knowledge_architect
+    status: canonical_existing
+    maturity: M4_WORKING_ASSETS
+    canonical_repository: VictorKVS/alina-knowledge-worker
+    canonical_paths:
+      - AGENTS.md
+      - README.md
+      - alina.py
+      - process_engine.py
+      - processes/
+      - docs/knowledge/
+    capabilities:
+      - source_ingestion
+      - knowledge_normalization
+      - process_design
+      - evidence_traceability
+      - business_analysis_support
+      - system_analysis_support
+      - specialist_training
+      - knowledge_quality_control
+      - visual_analysis
+      - trend_analysis
+      - security_audit_process_support
+    intelligence:
+      prompt: PARTIAL_EXISTING
+      algorithm: STRONG_EXISTING
+      rag_manifest: PARTIAL_EXISTING
+      knowledge_base: STRONG_EXISTING
+      experience_store: PARTIAL_EXISTING
+      evals: EXISTING_TESTS
+    interfaces:
+      input_contract: EXISTING_PROCESS_CONTRACTS
+      output_contract: EXISTING_RESULT_EVIDENCE_MODEL
+      api_handoff: NEEDS_FACTORY_STANDARDIZATION
+      tools: [document_extractors, process_engine, sqlite_fts5, visual_review]
+    gaps:
+      - unify_prompt_package
+      - formal_factory_api_handoff
+      - explicit_rag_manifest
+      - canonical_experience_promotion_rules
+
+  - agent_id: AG-002
+    name: SECURITY_SPECIALIST
+    aliases: [IB Specialist, Security Architect]
+    owner_domain: information_security
+    role: security_decision_owner
+    status: canonical_existing
+    maturity: M3_DISTRIBUTED_KNOWLEDGE
+    canonical_repository: VictorKVS/SecGraph
+    related_assets:
+      - security_kb
+      - legal_registry
+      - regulatory_core
+    capabilities:
+      - applicability
+      - data_classification
+      - threat_modeling
+      - risk_assessment
+      - control_selection
+      - compliance_mapping
+      - security_architecture
+      - security_acceptance
+    intelligence:
+      prompt: NEEDS_CONSOLIDATION
+      algorithm: PARTIAL_EXISTING
+      rag_manifest: NEEDS_CONSOLIDATION
+      knowledge_base: STRONG_DISTRIBUTED
+      experience_store: PARTIAL
+      evals: PARTIAL
+    gaps:
+      - canonical_agent_package
+      - unified_prompt
+      - unified_rag_manifest
+      - explicit_input_output_contracts
+      - factory_api_handoff
+
+  - agent_id: AG-003
+    name: TIMA
+    aliases: [Timofey, DevOps Sec Infrastructure Agent]
+    owner_domain: infrastructure_devsecops_runtime
+    role: approved_infrastructure_executor
+    status: canonical_existing
+    maturity: M3_PROFILE_AND_LABS
+    capabilities:
+      - windows_linux
+      - docker
+      - kubernetes
+      - git
+      - cicd
+      - devsecops
+      - infrastructure_audit
+      - deployment
+      - observability
+      - sre
+      - ai_security_runtime
+      - evidence_collection
+      - lean_container_engineering
+    intelligence:
+      prompt: EXISTING_PROFILE_NEEDS_IMPORT
+      algorithm: PARTIAL_EXISTING
+      rag_manifest: NEEDS_CONSOLIDATION
+      knowledge_base: PARTIAL_EXISTING
+      experience_store: LAB_EVIDENCE_EXISTS
+      evals: PARTIAL
+    interfaces:
+      receives_from: [AG-005]
+      rule: no_silent_architecture_redesign
+    gaps:
+      - import_full_profile_into_registry
+      - formal_prompt_package
+      - rag_manifest
+      - knowledge_base_index
+      - standard_api_handoff
+
+  - agent_id: AG-004
+    name: FATHER_CODEX
+    aliases: [Programmer, Programmer Agent]
+    owner_domain: software_engineering
+    role: traceable_implementation
+    status: canonical_existing
+    maturity: M2_ARCHITECTURE_DEFINED
+    canonical_repository: VictorKVS/FATHER_CODEX
+    capabilities:
+      - requirements_to_code
+      - architecture_to_code
+      - secure_coding
+      - api_mcp_rag_workflows
+      - tests
+      - static_analysis
+      - provenance
+      - release_artifacts
+      - code_signature
+    intelligence:
+      prompt: FACTORY_PACKAGE_ADDED_NEEDS_MERGE_WITH_LEGACY
+      algorithm: EXISTING_PLUS_FACTORY
+      rag_manifest: FACTORY_PACKAGE_ADDED
+      knowledge_base: FACTORY_PACKAGE_ADDED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    gaps:
+      - inventory_legacy_programming_docs
+      - merge_without_losing_provenance
+      - sandbox_execution
+      - code_runtime_adapter
+      - full_devsecops_gate
+
+  - agent_id: AG-005
+    name: PIONEER
+    aliases: [Infrastructure Architect]
+    owner_domain: infrastructure_architecture
+    role: infrastructure_designer
+    status: canonical_existing
+    maturity: M4_PROTOTYPE_WITH_TESTS
+    canonical_repository: VictorKVS/CyberED
+    canonical_paths:
+      - PIONEER-00/README.md
+      - PIONEER-00/agent.yaml
+      - PIONEER-00/GATE1.md
+      - PIONEER-00/pioneer.py
+      - PIONEER-00/topology.py
+      - PIONEER-00/dependency_graph.py
+      - PIONEER-00/security/
+      - PIONEER-00/tests/
+    capabilities:
+      - infrastructure_architecture
+      - topology
+      - asset_dependency_graph
+      - addressing_plan
+      - bill_of_materials
+      - threat_model_input
+      - acceptance_test_plan
+      - gate1
+      - handoff_to_tima
+    permissions:
+      infrastructure_write: false
+      cloud_credentials: false
+      physical_network_write: false
+    intelligence:
+      prompt: NEEDS_STANDARD_PACKAGE
+      algorithm: STRONG_EXISTING
+      rag_manifest: NEEDS_STANDARD_PACKAGE
+      knowledge_base: PARTIAL_EXISTING
+      experience_store: TEST_EVIDENCE_EXISTS
+      evals: EXISTING_TESTS
+    gaps:
+      - prompt
+      - rag_manifest
+      - knowledge_base_manifest
+      - standard_input_output_contracts
+      - factory_api_adapter
+
+  - agent_id: AG-006
+    name: FATHER_TEST_ENGINEER
+    aliases: [Test Engineer]
+    owner_domain: testing_verification
+    role: explainable_test_designer
+    status: factory_new
+    maturity: M2_PACKAGE_DEFINED
+    capabilities:
+      - node_tests
+      - edge_tests
+      - chain_tests
+      - subgraph_tests
+      - system_tests
+      - test_rationale
+      - test_oracles
+      - regression
+      - evidence
+    intelligence:
+      prompt: DEFINED
+      algorithm: DEFINED
+      rag_manifest: DEFINED
+      knowledge_base: DEFINED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    gaps:
+      - executable_test_runtime
+      - richer_reference_test_patterns
+      - integration_with_program_00_100
+      - accumulated_real_experience
+
+  - agent_id: AG-007
+    name: QA_EVALS
+    owner_domain: quality_evaluation
+    role: independent_quality_gate
+    status: factory_role
+    maturity: M1_ROLE_DEFINED
+    gaps:
+      - full_standard_package
+
+  - agent_id: AG-008
+    name: OPTIMIZATION_ENGINE
+    owner_domain: optimization_experiments
+    role: ab_and_multiobjective_optimizer
+    status: factory_role
+    maturity: M1_ROLE_DEFINED
+    gaps:
+      - full_standard_package
+
+  - agent_id: AG-009
+    name: POLYGON
+    owner_domain: adversarial_verification
+    role: independent_rc_verifier
+    status: existing_platform_contour
+    maturity: M2_CONCEPT_AND_REPOS_EXIST
+    related_repositories:
+      - VictorKVS/-olygon
+      - VictorKVS/mindforge-polygon-framework
+    gaps:
+      - canonical_package_merge
+      - standard_api_handoff
+      - rc_manifest_binding
+      - evidence_model_consolidation
