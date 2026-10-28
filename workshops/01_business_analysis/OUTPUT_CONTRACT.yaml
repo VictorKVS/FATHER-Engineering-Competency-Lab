@@ -1,0 +1,30 @@
+contract:
+  id: BA-OUTPUT-v0.1
+  package: BUSINESS_DESIGN_PACKAGE
+  required_artifacts:
+    - executive_description
+    - customer_intent
+    - terminology_register
+    - scope
+    - sipoc
+    - process_model
+    - role_catalog
+    - activity_catalog
+    - information_flow_catalog
+    - artifact_catalog
+    - application_catalog
+    - business_rules
+    - quality_matrix
+    - exceptions
+    - risks
+    - security_handoff
+    - acceptance_criteria
+    - open_questions
+    - assumptions
+  gate:
+    critical_ambiguities: 0
+    process_owner_required: true
+    every_input_has_source: true
+    every_output_has_consumer: true
+    every_flow_has_producer_and_consumer: true
+    traceability_required: true
