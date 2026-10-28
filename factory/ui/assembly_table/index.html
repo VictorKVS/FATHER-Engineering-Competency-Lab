@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>FATHER Assembly Table — Business Model</title>
+  <title>FATHER Assembly Table</title>
   <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./bpmn.css"/>
 </head>
 <body>
   <header class="topbar">
@@ -38,11 +39,13 @@
   </main>
 
   <footer class="statusbar">
-    <div>MODEL: FATHER-FACTORY-L0</div>
-    <div>MODE: BUSINESS DESIGN</div>
+    <div id="modelStatus">MODEL: FATHER-FACTORY-L0</div>
+    <div id="modeStatus">MODE: BUSINESS DESIGN</div>
     <div id="selectedStatus">SELECTED: —</div>
   </footer>
 
+  <script src="./bpmn-model.js"></script>
+  <script src="./bpmn.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
