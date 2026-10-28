@@ -1,0 +1,183 @@
+specialist_panels:
+  base_model: FATHER_BUSINESS_MODEL
+
+  panels:
+    - id: business_analysis
+      owner: BUSINESS_ANALYST
+      adds:
+        - business_goal
+        - actor
+        - role
+        - activity
+        - document
+        - business_rule
+        - decision
+        - kpi
+        - sla
+        - ambiguity
+        - assumption
+      calculations:
+        - process_completeness
+        - flow_completeness
+        - traceability
+        - ambiguity_rate
+
+    - id: system_analysis
+      owner: SYSTEM_ANALYST
+      adds:
+        - functional_requirement
+        - nonfunctional_requirement
+        - use_case
+        - interface
+        - system_boundary
+        - integration
+        - data_contract
+        - state
+        - dependency
+      calculations:
+        - requirement_coverage
+        - interface_coverage
+        - dependency_risk
+        - nfr_coverage
+
+    - id: architecture
+      owner: ARCHITECT
+      adds:
+        - component
+        - service
+        - runtime
+        - datastore
+        - event_bus
+        - api_gateway
+        - deployment_unit
+        - architecture_decision
+        - technology
+      calculations:
+        - coupling
+        - cohesion
+        - availability
+        - scalability
+        - resource_estimate
+        - technical_debt
+
+    - id: data_knowledge
+      owner: DATA_KNOWLEDGE_ENGINEER
+      adds:
+        - schema
+        - dataset
+        - source
+        - vector_store
+        - graph_store
+        - rag
+        - lineage
+        - retention
+        - quality_rule
+      calculations:
+        - completeness
+        - freshness
+        - accuracy
+        - lineage_coverage
+        - retrieval_quality
+
+    - id: ai_llm
+      owner: AI_LLM_ARCHITECT
+      adds:
+        - model
+        - prompt
+        - context
+        - memory
+        - router
+        - evaluator
+        - fallback
+        - tool_binding
+      calculations:
+        - quality
+        - confidence
+        - latency
+        - token_cost
+        - hallucination_rate
+        - fallback_rate
+
+    - id: security
+      owner: SECURITY_SPECIALIST
+      adds:
+        - trust_boundary
+        - asset
+        - threat
+        - vulnerability
+        - control
+        - attack_path
+        - compliance_requirement
+        - security_gate
+      calculations:
+        - risk
+        - attack_surface
+        - control_coverage
+        - residual_risk
+        - compliance_coverage
+
+    - id: qa_evals
+      owner: QA_ENGINEER
+      adds:
+        - test
+        - test_suite
+        - assertion
+        - coverage
+        - defect
+        - regression
+        - evaluation
+      calculations:
+        - pass_rate
+        - coverage
+        - regression_rate
+        - defect_density
+        - eval_score
+
+    - id: devsecops
+      owner: TIMA
+      adds:
+        - pipeline
+        - container
+        - sbom
+        - scan
+        - image
+        - deployment
+        - environment
+        - monitor
+      calculations:
+        - build_time
+        - image_size
+        - critical_cve
+        - startup_time
+        - deployment_frequency
+        - recovery_time
+
+    - id: optimization
+      owner: OPTIMIZATION_ENGINE
+      adds:
+        - experiment
+        - variant
+        - objective
+        - constraint
+        - winner
+        - bkc
+      calculations:
+        - utility
+        - pareto_rank
+        - experiment_win_rate
+        - cost_quality_ratio
+
+    - id: polygon
+      owner: POLYGON
+      adds:
+        - adversarial_test
+        - chaos_test
+        - failure_test
+        - load_test
+        - recovery_test
+        - verdict
+      calculations:
+        - resilience_score
+        - recovery_time
+        - failure_rate
+        - security_failures
