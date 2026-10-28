@@ -93,10 +93,13 @@ function renderCanvas(nodes,flows){
     const card=document.createElement("article");
     card.className="node "+n.kind;
     card.dataset.id=n.id;
-    card.innerHTML=`<div class="step">${n.step}</div><h3>${n.name}</h3><p>${n.purpose}</p><span class="badge ${n.status}">${n.status}</span>`;
+    card.innerHTML=`<div class="step">${n.step}</div><h3>${n.name}</h3><p>${n.purpose}</p><span class="badge ${n.status}">${n.status}</span><div class="quick-stats"><span class="stat"><b>IN</b>data</span><span class="stat"><b>ALG</b>steps</span><span class="stat"><b>OUT</b>pkg</span></div>`;
     card.onclick=()=>{
-      if(n.id==="W01"){ renderWorkshop01Layer(); return; }
       inspectNode(n,card);
+      openBusinessPopover(n);
+    };
+    card.ondblclick=()=>{
+      if(n.id==="W01") renderWorkshop01Layer();
     };
     c.appendChild(card);
 
