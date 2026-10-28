@@ -1,0 +1,74 @@
+palette:
+  categories:
+    actors:
+      - customer
+      - employee
+      - specialist
+      - manager
+      - analyst
+      - architect
+      - security_specialist
+      - developer
+      - qa_engineer
+      - devops_engineer
+      - ai_agent
+      - multi_agent_team
+    channels:
+      - telegram
+      - email
+      - chat
+      - web
+      - mobile
+      - phone
+      - webhook
+      - api
+    systems:
+      - application
+      - crm
+      - erp
+      - github
+      - database
+      - vector_db
+      - graph_db
+      - file_storage
+      - cloud
+      - local_server
+    ai:
+      - llm
+      - slm
+      - vlm
+      - embeddings
+      - reranker
+      - rag
+      - memory
+      - model_router
+      - tool_router
+    artifacts:
+      - document
+      - pdf
+      - spreadsheet
+      - report
+      - task
+      - ticket
+      - dataset
+      - knowledge_pack
+      - evidence
+    process:
+      - start_event
+      - end_event
+      - task
+      - subprocess
+      - exclusive_gateway
+      - parallel_gateway
+      - timer
+      - error
+      - approval
+      - gate
+    assurance:
+      - metric
+      - test
+      - ab_test
+      - security
+      - risk
+      - audit
+      - evidence
