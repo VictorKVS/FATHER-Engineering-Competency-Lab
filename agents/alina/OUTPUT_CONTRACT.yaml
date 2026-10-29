@@ -1,0 +1,36 @@
+output:
+  case_id: ""
+  run_id: ""
+  observations: []
+  hypotheses:
+    - hypothesis_id: ""
+      status: SUPPORTED|REJECTED|RETAINED|UNRESOLVED
+      evidence_refs: []
+      reason: ""
+  claims:
+    - claim_id: ""
+      statement: ""
+      evidence_refs: []
+      counter_evidence_refs: []
+      limitations: []
+      status: ACCEPTED|REJECTED|PROVISIONAL
+  contradictions: []
+  sufficiency:
+    requested: MINIMUM|GOOD|DESIRABLE
+    achieved: MINIMUM|GOOD|DESIRABLE
+    accepted: false
+    reason: ""
+  research_gaps: []
+  conclusions:
+    - conclusion_id: ""
+      statement: ""
+      supporting_claims: []
+      limitations: []
+      sufficiency: ""
+      decision_record_ref: ""
+  handoff:
+    target_agent: ""
+    reason: ""
+    artifact_refs: []
+  evidence_index: []
+  run_status: DONE|BLOCKED|REVIEW_REQUIRED
