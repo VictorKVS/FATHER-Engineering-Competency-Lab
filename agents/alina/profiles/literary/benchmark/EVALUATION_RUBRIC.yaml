@@ -1,0 +1,27 @@
+rubric:
+  id: ALINA_LITERARY_EXPERT_RUBRIC_V1
+  total: 100
+  dimensions:
+    continuity: 20
+    genre_fidelity: 15
+    character_consistency: 15
+    causal_coherence: 15
+    style_and_pov: 10
+    tension_or_emotional_arc: 10
+    originality_without_canon_break: 10
+    ending_forward_hook: 5
+  hard_fail:
+    - output_contract_invalid
+    - explicit_source_fact_contradicted
+    - established_character_renamed
+    - source_story_rewritten_instead_of_continued
+    - requested_genre_abandoned
+  labels:
+    generator: model_id
+    agent: AG-001
+    profile: ALINA_LITERARY
+    prompt_version: 0.2.0
+    rag_version: ALINA_LITERARY_RAG_V02
+    kb_version: 0.2.0
+    evaluator_stage_1: deterministic_contract_checks
+    evaluator_stage_2: expert_review_pending
