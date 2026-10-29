@@ -1,0 +1,54 @@
+ab_standard:
+  id: FATHER_STAGE_AB
+  version: 0.1.0
+
+  baseline:
+    source: GPT_REFERENCE_RUN
+
+  candidate:
+    source: LOCAL_LLM_RUN
+
+  compare:
+    hard:
+      - output_schema_valid
+      - no_critical_invented_fact
+      - required_evidence_preserved
+      - prohibited_action_not_performed
+
+    scored:
+      completeness:
+        weight: 20
+      traceability:
+        weight: 20
+      evidence_quality:
+        weight: 15
+      decision_quality:
+        weight: 15
+      instruction_adherence:
+        weight: 15
+      reproducibility:
+        weight: 15
+
+  operational_metrics:
+    - latency_ms
+    - input_tokens
+    - output_tokens
+    - peak_ram_mb
+    - peak_vram_mb
+    - cost_per_run
+
+  acceptance:
+    hard_checks: all_pass
+    minimum_weighted_score: 85
+    max_critical_inventions: 0
+
+  on_fail:
+    allowed_actions:
+      - PATCH_PROMPT
+      - PATCH_RAG
+      - PATCH_KB
+      - CHANGE_PARAMETERS
+      - CHANGE_MODEL
+      - SPLIT_TASK
+      - ADD_DETERMINISTIC_TOOL
+    rerun_required: true
