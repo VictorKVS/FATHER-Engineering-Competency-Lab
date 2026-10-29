@@ -78,3 +78,25 @@ The next maturity step is to automate preflight and immediately validate the gen
 - execute Stage 000 against the generated factory;
 - persist run evidence under the generated instance;
 - compare at least two model candidates through the same stage contract.
+
+## 2026-10-29 — Incident 004: model inventory returned empty
+
+Observed:
+- `father-factory inventory-models` returned empty Ollama and GGUF lists on the target Windows host.
+
+Interpretation:
+This does not prove that no models exist. It proves the first inventory implementation had insufficient discovery coverage.
+
+Root cause:
+- Ollama was detected only through PATH;
+- GGUF discovery scanned only project-relative or explicitly configured directories;
+- LM Studio API and common Windows model locations were not checked.
+
+Decision:
+Expand discovery to Ollama API, LM Studio API, common Windows model directories and configurable model roots.
+
+Lesson:
+Absence of discovery evidence must not be interpreted as evidence of absence.
+
+New canon:
+Inventory systems must report what was scanned, what was reachable and why an asset may be missing.
