@@ -1,0 +1,30 @@
+migration_matrix:
+  version: 0.1.0
+  items:
+    - concept: CharacterCard
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: LocationCard
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: SceneCard
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: StoryEvent
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: RelationshipState
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: CanonState
+      decision: ADAPT
+      target: DOMAIN_MODEL.yaml
+    - concept: continuity_engine
+      decision: REBUILD_AFTER_RECOVERY_REVIEW
+      target: runtime/continuity.py
+    - concept: provenance
+      decision: REUSE_FATHER_EVIDENCE_MODEL
+      target: FATHER evidence/provenance plane
+    - concept: minimal_story_runtime_created_as_AG_STORY_001
+      decision: WRAP_THEN_ABSORB
+      target: AG-001 ALINA literary profile
