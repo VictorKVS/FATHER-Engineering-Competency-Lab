@@ -205,3 +205,27 @@ Migration pack now records:
 
 Efficiency lesson:
 When a capability already exists in the product lineage, first migrate and normalize it before creating a new agent identity.
+
+
+## 2026-10-29 — Milestone 009: canonical ALINA Literary CLI installed successfully
+
+Observed on target Windows host:
+- editable reinstall of father-factory-runtime completed successfully;
+- previous installation was cleanly replaced;
+- installed CLI exposes:
+  - create
+  - run-stage
+  - inventory-models
+  - model-preflight
+  - alina-literary-continue
+  - story-continue
+- canonical ALINA Literary runtime is now importable through the installed package.
+
+What is proven:
+PACKAGE -> INSTALL -> CLI ENTRYPOINT -> CANONICAL AG-001 LITERARY COMMAND.
+
+Decision:
+The next gate is no longer packaging. It is local model runtime readiness and first end-to-end inference evidence.
+
+Temporary note:
+story-continue remains legacy/vertical-slice compatibility only and must not receive new domain features.
