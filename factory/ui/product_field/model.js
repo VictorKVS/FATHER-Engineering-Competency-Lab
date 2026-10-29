@@ -1,3 +1,12 @@
+window.FATHER_STAGES = Array.from({length:101},(_,i)=>({
+  id:String(i).padStart(3,"0"),
+  name:i===0?"IDEA":i===1?"PRODUCT DISCOVERY":i===2?"ANALYSIS":i===3?"OSINT RESEARCH":i===4?"ARCHITECTURE":"STAGE "+String(i).padStart(3,"0"),
+  state:i===0?"active":"locked",
+  proofs:{reference:false,emulation:false,local:false,ab:false}
+}));
+
+window.FATHER_STAGES[0].proofs.reference=true;
+
 window.FATHER_PRODUCT = {
   id:"PRODUCT-001",
   name:"OSINT Reference Product",
