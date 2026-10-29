@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Until local LLMs are connected to FATHER, ChatGPT may temporarily execute the role of a registered specialist agent.
+Until local LLMs are connected to FATHER, reference runtime may temporarily execute the role of a registered specialist agent.
 
 This is an execution substitution, not a change of agent identity.
 
