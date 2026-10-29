@@ -1,0 +1,49 @@
+agent_template:
+  template_id: AGENT-TEMPLATE-001
+  version: 1.0.0
+  name: VERIFIED_AGENT_BASE
+
+  identity:
+    stable_id: __ASSIGN_ON_CLONE__
+    public_name: __EDIT__
+    code_name: __EDIT__
+    purpose: __EDIT__
+    domain: __EDIT__
+
+  composition:
+    input_contract: INHERIT_AND_REVIEW
+    role: EDIT
+    prompt: EDIT_IN_KNOWLEDGE_REASONING_ENGINEER
+    rag: EDIT_IN_KNOWLEDGE_REASONING_ENGINEER
+    knowledge_base: EDIT_IN_KNOWLEDGE_REASONING_ENGINEER
+    model_slot: SELECT_FROM_MODEL_ZOO
+    tools: SELECT_FROM_TOOL_ZOO
+    output_contract: INHERIT_AND_REVIEW
+    evals: EDIT_AND_EXTEND
+    evidence: INHERIT
+
+  lifecycle:
+    - CLONED_DRAFT
+    - CONFIGURED
+    - INTELLIGENCE_READY
+    - TESTING
+    - EVIDENCE_READY
+    - PASS
+    - RELEASE_CANDIDATE
+
+  required_handoffs:
+    knowledge_engineering: ROLE-001
+    osint_research: EXT-001
+    security: REQUIRED
+    qa: REQUIRED
+    polygon: REQUIRED_FOR_RELEASE
+
+  ready_definition:
+    - all_required_contracts_valid
+    - prompt_rag_kb_traceable
+    - training_targets_met
+    - eval_thresholds_met
+    - no_hard_fail
+    - security_pass
+    - regression_pass
+    - evidence_complete
