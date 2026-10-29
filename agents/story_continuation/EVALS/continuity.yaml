@@ -1,0 +1,15 @@
+eval:
+  id: STORY_CONTINUITY_V1
+  hard_fail:
+    - changes_explicit_character_name
+    - contradicts_explicit_source_fact
+    - rewrites_instead_of_continues
+    - output_contract_invalid
+  score:
+    continuity: 30
+    style_match: 20
+    character_consistency: 20
+    causal_coherence: 15
+    instruction_following: 10
+    forward_hook: 5
+  pass_threshold: 80
