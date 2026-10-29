@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import yaml
 from pathlib import Path
 
 from .adapters import ChatCompletionsHTTPAdapter, GigaChatRESTAdapter, ReferenceStage000Adapter
@@ -32,6 +33,7 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument('--evidence-dir', default='.father/runs')
 
     sub.add_parser('inventory-models')
+    sub.add_parser('model-catalog')
     sub.add_parser('model-preflight')
 
     bench = sub.add_parser('literary-benchmark')
@@ -94,6 +96,12 @@ def main() -> int:
 
     if args.command == 'model-preflight':
         print(json.dumps(model_preflight(), ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == 'model-catalog':
+        catalog_path = Path('factory/model_fabric/LOCAL_MODEL_CATALOG.yaml')
+        catalog = yaml.safe_load(catalog_path.read_text(encoding='utf-8'))['catalog']
+        print(json.dumps(catalog, ensure_ascii=False, indent=2))
         return 0
 
     if args.command == 'inventory-models':
