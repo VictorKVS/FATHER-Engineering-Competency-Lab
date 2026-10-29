@@ -153,3 +153,31 @@ Decision:
 
 Efficiency lesson:
 Preflight must distinguish process presence, HTTP readiness, model readiness and inference readiness rather than reporting one boolean.
+
+## 2026-10-29 — Incident 007: model loaded but chat-template initialization failed
+
+Observed:
+- GGUF model file was found and began loading;
+- llama.cpp initialized context and slots;
+- server failed during chat-template parsing;
+- error suggested `--no-jinja` or a custom `--chat-template`.
+
+Interpretation:
+The model artifact can be valid while the conversation protocol layer is incompatible.
+
+Lesson:
+Model readiness has multiple layers:
+FILE_FOUND -> MODEL_LOADABLE -> TEMPLATE_COMPATIBLE -> API_READY -> INFERENCE_READY -> CONTRACT_READY.
+
+Decision:
+Do not increase system complexity yet.
+Adopt progressive ramp-up:
+1 agent + 1 LLM + 1 contract + 1 test + 1 evidence record;
+then same agent with multiple models;
+then additional agents;
+then handoffs;
+then tools/RAG;
+then orchestration and full factory.
+
+Efficiency lesson:
+Change one variable at a time. This makes failures attributable and reduces debugging cost.
