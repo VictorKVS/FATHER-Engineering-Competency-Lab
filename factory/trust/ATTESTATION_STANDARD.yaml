@@ -1,0 +1,81 @@
+attestation_standard:
+  id: FATHER_ATTESTATION_STANDARD
+  version: 0.1.0
+
+  types:
+    - SOURCE_ATTESTATION
+    - BUILD_ATTESTATION
+    - TEST_ATTESTATION
+    - SECURITY_ATTESTATION
+    - LICENSE_ATTESTATION
+    - RELEASE_ATTESTATION
+
+  common_fields:
+    - attestation_id
+    - type
+    - subject
+    - subject_digest
+    - producer
+    - producer_identity
+    - created_at
+    - source_commit
+    - configuration_refs
+    - evidence_refs
+    - policy_version
+    - signature_status
+
+  requirements:
+    SOURCE_ATTESTATION:
+      - repository
+      - commit_sha
+      - parent_sha
+      - author_or_generator
+      - requirement_refs
+      - algorithm_or_adr_refs
+      - provenance_status
+
+    BUILD_ATTESTATION:
+      - builder_identity
+      - build_environment
+      - build_definition
+      - dependency_lock_refs
+      - source_digest
+      - artifact_digest
+      - sbom_ref
+      - reproducibility_status
+
+    TEST_ATTESTATION:
+      - test_suite_version
+      - test_environment
+      - passed
+      - failed
+      - skipped
+      - result_refs
+
+    SECURITY_ATTESTATION:
+      - sast_result
+      - sca_result
+      - secret_scan_result
+      - container_scan_result
+      - policy_result
+      - accepted_exceptions
+
+    LICENSE_ATTESTATION:
+      - license_inventory_ref
+      - obligations_status
+      - notices_status
+      - compatibility_status
+
+    RELEASE_ATTESTATION:
+      - release_id
+      - release_manifest_ref
+      - artifact_digest
+      - required_attestations
+      - trust_gate_result
+      - approval_refs
+
+  invariants:
+    - every_attestation_is_versioned
+    - subject_digest_is_immutable
+    - evidence_refs_are_traceable
+    - signature_or_verified_identity_required_for_release
