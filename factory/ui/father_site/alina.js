@@ -9,6 +9,31 @@ if(naming){
 const params=new URLSearchParams(location.search);
 const target=params.get("block")||"prompt";
 const targets={
+ role:{
+  label:"ROLE",path:"agents/alina/profiles/literary/README.md",version:"0.2.0",
+  title:"Role Engineering",eyebrow:"ROLE ENGINEERING",
+  content:`role:
+  agent_id: AG-001
+  profile: ALINA_LITERARY
+  purpose: Continue stories while preserving canon and continuity.
+  responsibilities:
+    - preserve established facts
+    - maintain character consistency
+    - use declared knowledge and tools
+    - return output through contract
+  boundaries:
+    - do_not_invent_hidden_context
+    - do_not_override_security_policy
+    - escalate_when_information_is_insufficient`,
+  structure:[
+   ["Purpose","Why this agent exists"],
+   ["Responsibilities","What the agent is accountable for"],
+   ["Boundaries","What the agent must not do"],
+   ["Decision rights","What it may decide autonomously"],
+   ["Escalation","When human/other-agent handoff is required"],
+   ["Traceability","Role rules must map to tests and evidence"]
+  ]
+ },
  prompt:{
   label:"PROMPT",path:"agents/alina/profiles/literary/PROMPT.md",version:"0.2.0",
   title:"Prompt Engineering",eyebrow:"PROMPT LAB",
