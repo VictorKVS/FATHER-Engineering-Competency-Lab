@@ -1,0 +1,42 @@
+license_compliance:
+  id: FATHER_LICENSE_GATE
+  version: 0.1.0
+
+  inventory:
+    required:
+      - component_name
+      - component_version
+      - source
+      - license
+      - license_text_or_reference
+      - usage_type
+      - modification_status
+      - redistribution_status
+      - obligations
+      - compatibility_decision
+      - owner
+
+  sources:
+    - source_code_dependencies
+    - containers_and_base_images
+    - models_and_weights
+    - datasets
+    - fonts_and_assets
+    - prompts_and_templates
+    - documentation_and_code_snippets
+
+  gate:
+    hard_fail:
+      - unknown_license_for_redistributed_component
+      - incompatible_license
+      - missing_required_notice
+      - prohibited_commercial_use
+      - unverified_model_or_dataset_terms
+
+  evidence:
+    - sbom
+    - model_manifest
+    - dataset_manifest
+    - third_party_notices
+    - license_scan_report
+    - approval_record
