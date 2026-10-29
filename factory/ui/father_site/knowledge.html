@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Knowledge Architecture Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./knowledge.css">
+</head>
+<body class="knowledge-page">
+<div class="knowledge-shell">
+  <aside class="knowledge-nav">
+    <a href="./alina.html?block=kb" class="back-link">← Knowledge & Reasoning Engineer</a>
+    <div class="knowledge-brand">
+      <div class="knowledge-mark">K</div>
+      <div><strong>Knowledge Architecture</strong><small>INTELLIGENCE ENGINEERING</small></div>
+    </div>
+
+    <div class="section-label">KNOWLEDGE LAYERS</div>
+    <button class="layer-btn active" data-layer="common_foundation">01 · Common Foundation</button>
+    <button class="layer-btn" data-layer="corporate_common">02 · Corporate Common</button>
+    <button class="layer-btn" data-layer="profession_core">03 · Profession Core</button>
+    <button class="layer-btn" data-layer="specialist_domain">04 · Specialist Domain</button>
+    <button class="layer-btn" data-layer="research_acquired">05 · OSINT Acquired</button>
+    <button class="layer-btn" data-layer="operational_dynamic">06 · Dynamic / RAG</button>
+
+    <div class="knowledge-nav-foot">
+      <div class="health"><span></span>KNOWLEDGE STUDIO ONLINE</div>
+      <small>Internal owner: ALINA</small>
+    </div>
+  </aside>
+
+  <main class="knowledge-main">
+    <header class="knowledge-top">
+      <div>
+        <div class="eyebrow">KNOWLEDGE ENGINEERING · AGENT INTELLIGENCE</div>
+        <h1>Knowledge Architecture Studio</h1>
+        <p>Проектирование, происхождение, структура и превращение знаний в проверяемые навыки агента</p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="analyzeKnowledge">Провести инженерный анализ</button>
+        <button class="ghost" id="buildGraph">Перестроить граф</button>
+        <button class="primary" id="saveKbProposal">Сохранить Knowledge Proposal</button>
+      </div>
+    </header>
+
+    <section class="knowledge-status">
+      <div><span>Agent</span><b>AG-001</b></div>
+      <div><span>Model Slot</span><b>ALINA_MODEL_SLOT</b></div>
+      <div><span>Layer</span><b id="activeLayerLabel">Common Foundation</b></div>
+      <div><span>Nodes</span><b id="nodeCount">6</b></div>
+      <div><span>Gate</span><b class="hold" id="knowledgeGate">HOLD</b></div>
+    </section>
+
+    <section class="knowledge-grid">
+      <aside class="knowledge-left">
+        <div class="studio-card">
+          <div class="card-head">Knowledge Source Mix</div>
+          <div class="source-stack">
+            <button data-source="early_roles">Early Roles</button>
+            <button data-source="corporate">Corporate Docs</button>
+            <button data-source="standards">Professional Standards</button>
+            <button data-source="regulation">Primary Regulation</button>
+            <button data-source="training">Training Materials</button>
+            <button data-source="osint">OSINT Evidence</button>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Ingestion Pipeline</div>
+          <div class="pipeline">
+            <span>Classify</span><i>→</i>
+            <span>Normalize</span><i>→</i>
+            <span>Deduplicate</span><i>→</i>
+            <span>Provenance</span><i>→</i>
+            <span>Contradictions</span><i>→</i>
+            <span>Layer</span><i>→</i>
+            <span>Graph</span><i>→</i>
+            <span>Competency</span><i>→</i>
+            <span>Tests</span>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Knowledge Metrics</div>
+          <div class="metric-list">
+            <span>Source coverage <b>82%</b></span>
+            <span>Provenance <b>91%</b></span>
+            <span>Competency coverage <b>74%</b></span>
+            <span>Stale knowledge <b>4%</b></span>
+            <span>Contradictions <b>3</b></span>
+            <span>Orphan nodes <b>7</b></span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="knowledge-center">
+        <div class="knowledge-toolbar">
+          <button class="studio-tab active" data-view="catalog">Knowledge Catalog</button>
+          <button class="studio-tab" data-view="graph">Graph</button>
+          <button class="studio-tab" data-view="skills">Skill Formation</button>
+          <button class="studio-tab" data-view="ab">A/B & Quality</button>
+        </div>
+        <div id="knowledgeStage" class="knowledge-stage"></div>
+      </section>
+
+      <aside class="knowledge-right">
+        <div class="studio-card">
+          <div class="card-head">Selected Knowledge Node</div>
+          <div id="nodeInspector"></div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Skill Binding</div>
+          <div id="skillBinding" class="skill-binding">
+            <p>Выберите узел знания.</p>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">OSINT Research Gaps</div>
+          <div class="gap-list">
+            <button>RQ-018 · missing case law</button>
+            <button>RQ-024 · tool practice</button>
+            <button>RQ-031 · current market data</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./knowledge.js"></script>
+</body>
+</html>
