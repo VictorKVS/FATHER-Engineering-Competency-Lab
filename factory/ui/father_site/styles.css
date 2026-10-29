@@ -23,3 +23,20 @@ button,select,input,textarea{font:inherit}
 .toast{position:fixed;right:18px;bottom:18px;background:#0b2232;border:1px solid #2f7597;color:#d8f4ff;padding:11px 14px;border-radius:10px;font-size:11px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:20}.toast.show{opacity:1;transform:none}
 @media(max-width:1180px){.workspace{grid-template-columns:190px 1fr}.inspector{grid-column:1/-1;min-height:260px;border-top:1px solid var(--line)}.bottom{grid-template-columns:1fr}.shell{grid-template-columns:200px 1fr}}
 @media(max-width:760px){.shell{display:block}.nav{display:none}.top{position:relative;height:auto;gap:12px;align-items:flex-start;flex-direction:column}.workspace{grid-template-columns:1fr}.palette{display:none}.canvas{height:520px}.statusbar{overflow:auto}.bottom{grid-template-columns:1fr}}
+
+/* Magnetic proximity connections */
+.wire-group{transition:opacity .22s ease;will-change:opacity}
+.wire{stroke:#18aee9;stroke-width:2.1;fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px #33c7ff66)}
+.wire-group.magnetic .wire{stroke:#38e7ff;stroke-width:2.8;filter:drop-shadow(0 0 8px #42e9ff)}
+.wire-pulse{fill:none;stroke:#b7f6ff;stroke-width:3;stroke-linecap:round;stroke-dasharray:1 24;opacity:0;filter:drop-shadow(0 0 6px #8cf4ff)}
+.wire-pulse.active{opacity:.95;animation:wireFlow 1.15s linear infinite}
+.wire-port{fill:#6eeeff;opacity:.82;filter:drop-shadow(0 0 5px #6eeeff)}
+@keyframes wireFlow{to{stroke-dashoffset:-50}}
+.node{touch-action:none;user-select:none}
+.node.dragging{cursor:grabbing;transform:scale(1.02);z-index:4;border-color:#6be7ff;box-shadow:0 0 34px #31cfff44}
+.node.processing{animation:nodePulse 1.35s ease-in-out infinite}
+@keyframes nodePulse{0%,100%{box-shadow:0 12px 28px #0007}50%{box-shadow:0 0 28px #2cd8ff38}}
+@media (prefers-reduced-motion:reduce){
+ .wire-group,.node{transition:none}
+ .wire-pulse.active,.node.processing{animation:none}
+}
