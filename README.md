@@ -78,3 +78,23 @@ Canonical demo:
 - Optional publication: `father-factory literary-benchmark --publish`
 
 The published review bundle preserves who generated each result and which agent/prompt/RAG/KB configuration was used, enabling later expert review from GitHub.
+
+
+## FATHER website — Field 01 Agent Designer
+
+The first active engineering workspace is now implemented as a static website prototype under:
+
+`factory/ui/father_site/`
+
+Field 01 assembles one executable agent from:
+`INPUT + ROLE + PROMPT + RAG + KB + MODEL SLOT + OUTPUT CONTRACT + EVAL + EVIDENCE`.
+
+Embedded demo: `AG-001 ALINA / LITERARY`.
+
+Local run:
+
+```powershell
+python -m http.server 8090 --directory factory/ui/father_site
+```
+
+Then open `http://127.0.0.1:8090`.
