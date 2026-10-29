@@ -335,7 +335,7 @@ function renderEditor(){
 }
 
 document.querySelectorAll(".editor-tab").forEach(b=>b.onclick=()=>{currentEditor=b.dataset.editor;document.querySelectorAll(".editor-tab").forEach(x=>x.classList.toggle("active",x===b));renderEditor()});
-document.querySelectorAll(".tool-nav").forEach(b=>b.onclick=()=>{if(b.dataset.tool==="kb"){location.href="./knowledge.html";return}loadArtifact(b.dataset.tool)});
+document.querySelectorAll(".tool-nav").forEach(b=>b.onclick=()=>{const k=b.dataset.tool;if(k==="kb"){location.href="./knowledge.html";return}location.href="./artifact.html?artifact="+encodeURIComponent(k)});
 document.querySelectorAll("[data-action]").forEach(b=>b.onclick=()=>toolAction(b.dataset.action));
 
 const modelSel=document.getElementById("alinaModelSelect");
