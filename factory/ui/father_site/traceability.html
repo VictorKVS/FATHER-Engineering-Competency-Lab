@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Traceability Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./traceability.css">
+</head>
+<body class="trace-page">
+<div class="trace-shell">
+  <aside class="trace-nav">
+    <a href="./index.html" class="back-link">← Agent Designer</a>
+    <div class="trace-brand"><div class="trace-mark">T</div><div><strong>Traceability Studio</strong><small>CANONICAL ENGINEERING MODEL</small></div></div>
+    <div class="section-label">VIEWS</div>
+    <button class="trace-nav-btn active" data-view="chain">01 · Requirement Chain</button>
+    <button class="trace-nav-btn" data-view="gaps">02 · Traceability Gaps</button>
+    <button class="trace-nav-btn" data-view="evidence">03 · Evidence Paths</button>
+    <button class="trace-nav-btn" data-view="owners">04 · Ownership</button>
+    <div class="trace-foot"><div class="health"><span></span>MODEL ONLINE</div><small>PROJECT · shared entities</small></div>
+  </aside>
+  <main class="trace-main">
+    <header class="trace-top">
+      <div><div class="eyebrow">CORE ENGINEERING MODEL</div><h1>Traceability Graph</h1><p>Единая цепочка от требования до теста, метрики и доказательства.</p></div>
+      <div class="top-actions"><button class="ghost" id="validateGraph">Проверить граф</button><button class="primary" id="exportGraph">Экспорт Evidence Map</button></div>
+    </header>
+    <section class="trace-status">
+      <div><span>Project</span><b>PRJ-001</b></div>
+      <div><span>Model</span><b>CANONICAL_ENGINEERING_MODEL</b></div>
+      <div><span>Nodes</span><b id="traceNodes">9</b></div>
+      <div><span>Edges</span><b id="traceEdges">8</b></div>
+      <div><span>Gate</span><b class="hold" id="traceGate">HOLD</b></div>
+    </section>
+    <section class="trace-grid">
+      <aside class="trace-left">
+        <div class="trace-card"><div class="card-head">Canonical Node Types</div><div id="nodeTypes" class="token-list"></div></div>
+        <div class="trace-card"><div class="card-head">Hard Rules</div><div class="hard-list"><span>Requirement → test/evidence <b>REQ</b></span><span>Knowledge → source <b>REQ</b></span><span>Skill → eval <b>REQ</b></span><span>Release → evidence <b>REQ</b></span></div></div>
+      </aside>
+      <section class="trace-center">
+        <div class="trace-toolbar"><button class="trace-tab active" data-tab="graph">Graph</button><button class="trace-tab" data-tab="matrix">Matrix</button><button class="trace-tab" data-tab="issues">Issues</button></div>
+        <div id="traceStage" class="trace-stage"></div>
+      </section>
+      <aside class="trace-right">
+        <div class="trace-card"><div class="card-head">Selected Node</div><div id="traceInspector"><p>Выберите узел.</p></div></div>
+        <div class="trace-card"><div class="card-head">Validation</div><div id="traceValidation"><p>Проверка ещё не запускалась.</p></div></div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./traceability.js"></script>
+</body>
+</html>
