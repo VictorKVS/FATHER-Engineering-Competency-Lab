@@ -1,0 +1,21 @@
+agent_set:
+  schema: father.factory_agent_set.v1
+
+  agents:
+    - agent_id: ""
+      role: ""
+      required: true
+      package_ref: ""
+      model_slots: []
+      tool_scopes: []
+      input_contract_ref: ""
+      output_contract_ref: ""
+      handoff_targets: []
+      approval_requirements: []
+      maturity_required: M3
+
+  rules:
+    - agents_are_replaceable_only_through_contract_compatible_packages
+    - no_agent_can_self_grant_tools
+    - no_agent_can_bypass_stage_gate
+    - high_impact_actions_require_declared_approval
