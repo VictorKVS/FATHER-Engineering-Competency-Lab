@@ -261,3 +261,25 @@ This allows ChatGPT/human expert review from GitHub without losing attribution.
 
 Efficiency principle:
 When comparing models, change only the model. Keep story, agent, prompt, RAG, KB, contracts and rubric fixed.
+
+
+## 2026-10-29 — Milestone 011: full local model catalog and one-agent sweep
+
+Correction:
+The initial literary benchmark selected only four convenient models. This was too narrow for the stated factory goal.
+
+Target-host inventory is now normalized into a complete local asset catalog:
+- 15 discovered GGUF/support assets;
+- 7 text-generative models eligible for one-agent literary testing;
+- multimodal, embedding, speech and support assets remain catalogued with explicit non-generator roles.
+
+One-agent experiment:
+AG-001 ALINA Literary now reads the catalog rather than a hard-coded shortlist.
+It sequentially launches each ELIGIBLE / ELIGIBLE_EXPERIMENTAL model, keeps Prompt/RAG/KB/contracts fixed, records launch template and provenance, and continues after model-specific failures.
+
+Launch policy:
+FILE -> TEMPLATE PROFILE -> SERVER READY -> INFERENCE -> CONTRACT -> EVIDENCE.
+
+Important lesson:
+A Model Zoo catalog and an experiment candidate set are different things.
+The catalog must contain everything discovered; the agent experiment filters by declared capability and records why an asset is included or excluded.
