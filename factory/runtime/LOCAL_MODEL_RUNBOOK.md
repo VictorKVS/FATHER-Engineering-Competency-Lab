@@ -47,3 +47,29 @@ After startup verify:
 
 Then execute Stage 000:
 `father-factory run-stage --stage factory/stages/STAGE_000_IDEA.yaml --input examples/father_stage000_input.yaml --adapter local-http --endpoint http://127.0.0.1:8080/v1/chat/completions --model local-gigachat3-10b --run-type LOCAL_LLM --evidence-dir .father/runs`
+
+
+## Runtime security baseline
+
+The first target-host launch exposed a llama.cpp warning:
+- CORS allowed all origins;
+- no API key was configured.
+
+For FATHER local same-machine use, the baseline must therefore be:
+
+`--host 127.0.0.1 --cors-origins localhost`
+
+Authentication should be added with one of:
+- `--api-key <secret>`
+- `--api-key-file <path>`
+
+Secrets must never be committed to Git.
+
+A 503 response from `/v1/models` with message `Loading model` means the HTTP server is alive but model initialization is incomplete. This state is `STARTING`, not `FAILED`.
+
+State mapping:
+- connection refused -> SERVER_DOWN
+- HTTP 503 Loading model -> STARTING
+- HTTP 200 /v1/models -> READY
+- model request schema failure -> RUNTIME_CONTRACT_FAIL
+- inference failure -> MODEL_RUNTIME_FAIL
