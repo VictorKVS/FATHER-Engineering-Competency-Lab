@@ -22,8 +22,8 @@ Each stage is a reproducible engineering unit with its own:
 
 ## Four proof layers
 
-### P1 — GPT Reference Run
-ChatGPT temporarily executes the agent according to the stage Prompt/RAG/KB.
+### P1 — Reference Agent Run
+Reference Agent Runtime temporarily executes the agent according to the stage Prompt/RAG/KB.
 
 Purpose:
 - validate instructions;
@@ -43,7 +43,7 @@ Run the same stage as if a local model were executing it:
 - no hidden conversational context.
 
 Purpose:
-prove that the stage does not depend on ChatGPT-specific implicit context.
+prove that the stage does not depend on Reference Agent Runtime-specific implicit context.
 
 ### P3 — Local LLM Runtime
 Execute on the actual local model.
