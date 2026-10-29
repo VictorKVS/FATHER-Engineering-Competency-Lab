@@ -41,7 +41,7 @@ configuration:
   model_policy:
     default_mode: replaceable
     baseline: LOCAL
-    reference: GPT_REFERENCE
+    reference: REFERENCE_AGENT_ENSEMBLE
     challenger_slots_allowed: true
     all_models_must_use_model_slot_contract: true
 
