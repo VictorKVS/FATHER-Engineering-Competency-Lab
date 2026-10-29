@@ -1,0 +1,36 @@
+rag:
+  id: ALINA_FACTORY_RAG
+  version: 0.1.0
+
+  collections:
+    - id: process_engine
+      sources:
+        - VictorKVS/alina-knowledge-worker/AGENTS.md
+        - VictorKVS/alina-knowledge-worker/docs/knowledge/ALINA_ANALYST_PROCESS_ENGINE_V1.md
+        - VictorKVS/alina-knowledge-worker/docs/knowledge/process-contract.v1.json
+      purpose: executable process and evidence rules
+
+    - id: analyst_osint_protocol
+      sources:
+        - VictorKVS/OSINT_deepseek/docs/03_architecture/06_ROLE_MATRIX_ANALYST_OSINT_V1.md
+        - VictorKVS/OSINT_deepseek/docs/03_architecture/07_ANALYST_OSINT_INTERACTION_PROTOCOL_V1.md
+      purpose: analyst and OSINT role boundaries and handoff objects
+
+    - id: factory_handoffs
+      sources:
+        - factory/specialists/ALINA_OSINT_PIONEER_HANDOFFS.yaml
+      purpose: FATHER standard machine-readable handoffs
+
+    - id: factory_experience
+      sources:
+        - agents/alina/EXPERIENCE/
+      purpose: accepted and rejected analytical patterns
+
+  retrieval:
+    mode: hybrid
+    provenance_required: true
+    authority_priority:
+      - canonical_process_contract
+      - accepted_role_protocol
+      - factory_contract
+      - experience
