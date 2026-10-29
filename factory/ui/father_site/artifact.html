@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Intelligence Engineering Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./artifact.css">
+</head>
+<body class="artifact-page">
+<div class="artifact-shell">
+  <aside class="artifact-nav">
+    <a href="./alina.html" class="back-link">← Knowledge & Reasoning Engineer</a>
+    <div class="artifact-brand">
+      <div class="artifact-mark">A</div>
+      <div><strong id="studioName">Engineering Studio</strong><small id="studioCode">ALINA ARTIFACT</small></div>
+    </div>
+    <div class="section-label">WORKFLOW</div>
+    <button class="artifact-step active" data-step="editor">01 · Artifact Editor</button>
+    <button class="artifact-step" data-step="logic">02 · Engineering Logic</button>
+    <button class="artifact-step" data-step="metrics">03 · Metrics</button>
+    <button class="artifact-step" data-step="ab">04 · A/B Testing</button>
+    <button class="artifact-step" data-step="trace">05 · Traceability</button>
+    <button class="artifact-step" data-step="evidence">06 · Evidence</button>
+    <div class="artifact-nav-foot">
+      <div class="health"><span></span>STUDIO ONLINE</div>
+      <small>Owner: ROLE-001 / ALINA</small>
+    </div>
+  </aside>
+  <main class="artifact-main">
+    <header class="artifact-top">
+      <div>
+        <div class="eyebrow" id="artifactEyebrow">INTELLIGENCE ENGINEERING</div>
+        <h1 id="artifactTitle">Artifact Studio</h1>
+        <p id="artifactPurpose">Specialized engineering workspace</p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="assistantAction">Выполнить инженерное действие</button>
+        <button class="ghost" id="runAb">A/B test</button>
+        <button class="primary" id="saveProposal">Сохранить Proposal</button>
+      </div>
+    </header>
+    <section class="artifact-status">
+      <div><span>Agent</span><b>AG-001</b></div>
+      <div><span>Artifact</span><b id="artifactId">—</b></div>
+      <div><span>Model</span><b id="artifactModel">ALINA_MODEL_SLOT</b></div>
+      <div><span>Version</span><b id="artifactVersion">0.1.0</b></div>
+      <div><span>Gate</span><b class="hold" id="artifactGate">HOLD</b></div>
+    </section>
+    <section class="artifact-grid">
+      <aside class="artifact-left">
+        <div class="studio-card">
+          <div class="card-head">Model Slot</div>
+          <select id="artifactModelSelect"></select>
+          <div id="artifactModelMeta" class="model-slot-meta"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Template</div>
+          <code id="templatePath"></code>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Primary Action</div>
+          <button class="primary wide" id="primaryActionSide"></button>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Hard Rules</div>
+          <div class="rule-list">
+            <span>CANON auto-promotion <b>OFF</b></span>
+            <span>Source invention <b>FAIL</b></span>
+            <span>Traceability <b>REQUIRED</b></span>
+            <span>Evidence <b>REQUIRED</b></span>
+          </div>
+        </div>
+      </aside>
+      <section class="artifact-center">
+        <div class="artifact-tabs">
+          <button class="artifact-tab active" data-view="current">Current</button>
+          <button class="artifact-tab" data-view="proposal">Proposal</button>
+          <button class="artifact-tab" data-view="logic">Logic</button>
+          <button class="artifact-tab" data-view="metrics">Metrics</button>
+          <button class="artifact-tab" data-view="ab">A/B Plan</button>
+        </div>
+        <div id="artifactStage" class="artifact-stage"></div>
+      </section>
+      <aside class="artifact-right">
+        <div class="studio-card">
+          <div class="card-head">Quality Panel</div>
+          <div id="metricPanel" class="metric-panel"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Dependencies</div>
+          <div id="dependencyPanel" class="dependency-panel"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Evidence Status</div>
+          <div class="evidence-status">
+            <span>Sources <b>HOLD</b></span>
+            <span>Eval <b>HOLD</b></span>
+            <span>A/B <b>HOLD</b></span>
+            <span>Approval <b>HOLD</b></span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./artifact.js"></script>
+</body>
+</html>
