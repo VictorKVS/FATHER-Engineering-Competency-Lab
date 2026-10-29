@@ -10,6 +10,23 @@ if(naming){
 const params=new URLSearchParams(location.search);
 const deepBlock=params.get("block")||null;
 
+const primaryActions={
+ analysis:"Провести инженерный анализ",
+ requirements:"Сформировать карту требований",
+ research:"Сформировать исследовательскую программу",
+ osint:"Сформировать заказ OSINT",
+ competency:"Спроектировать компетенции",
+ graph:"Перестроить граф знаний",
+ prompt:"Сформировать Prompt Proposal",
+ rag:"Спроектировать RAG",
+ kb:"Открыть Knowledge Architecture Studio",
+ training:"Сформировать программу обучения",
+ ab:"Запустить эксперимент",
+ acceptance:"Провести внутреннюю приёмку",
+ version:"Собрать версионный пакет",
+ role:"Спроектировать роль агента"
+};
+
 const alinaModels=[
  {id:"MDL-QWEN25-14B-1M-Q4",name:"Qwen2.5 14B Instruct 1M Q4_K_M",status:"ELIGIBLE"},
  {id:"MDL-GIGACHAT20-V15-Q4",name:"GigaChat 20B A3B v1.5 Q4_K_M",status:"ELIGIBLE"},
@@ -287,6 +304,7 @@ function loadArtifact(key){
  document.getElementById("versionChip").textContent="v"+active.version;
  document.getElementById("currentVersion").textContent=active.version;
  document.querySelectorAll(".tool-nav").forEach(x=>x.classList.toggle("active",x.dataset.tool===key));
+ document.getElementById("analyzeBtn").textContent=primaryActions[key]||"Провести инженерный анализ";
  currentEditor="current";
  document.querySelectorAll(".editor-tab").forEach(x=>x.classList.toggle("active",x.dataset.editor==="current"));
  setState(artifactDraft(key).state);
@@ -317,7 +335,7 @@ function renderEditor(){
 }
 
 document.querySelectorAll(".editor-tab").forEach(b=>b.onclick=()=>{currentEditor=b.dataset.editor;document.querySelectorAll(".editor-tab").forEach(x=>x.classList.toggle("active",x===b));renderEditor()});
-document.querySelectorAll(".tool-nav").forEach(b=>b.onclick=()=>loadArtifact(b.dataset.tool));
+document.querySelectorAll(".tool-nav").forEach(b=>b.onclick=()=>{if(b.dataset.tool==="kb"){location.href="./knowledge.html";return}loadArtifact(b.dataset.tool)});
 document.querySelectorAll("[data-action]").forEach(b=>b.onclick=()=>toolAction(b.dataset.action));
 
 const modelSel=document.getElementById("alinaModelSelect");
@@ -342,6 +360,7 @@ function toolAction(action){
 }
 
 document.getElementById("analyzeBtn").onclick=()=>{
+ if(activeKey==="kb"){location.href="./knowledge.html";return}
  const d=artifactDraft(activeKey);d.state="ANALYZED";setState("ANALYZED");
  document.getElementById("analysisReport").innerHTML=
  '<p class="ok">✓ Активный артефакт: '+active.title+'</p>'+
