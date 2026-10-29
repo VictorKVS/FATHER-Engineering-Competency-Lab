@@ -1,0 +1,19 @@
+schema:
+  id: IDEA_INTAKE_INPUT_V1
+  version: 1.0.0
+
+  required:
+    - raw_idea
+
+  fields:
+    raw_idea:
+      type: string
+      min_length: 20
+    author_or_sponsor:
+      type: string
+    known_context:
+      type: list
+    known_constraints:
+      type: list
+    attachments:
+      type: list
