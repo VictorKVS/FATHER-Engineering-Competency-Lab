@@ -1,0 +1,51 @@
+ab_test:
+  schema: father.model_ab.v1
+
+  compare_unit:
+    same_agent: true
+    same_stage: true
+    same_input: true
+    same_prompt: true
+    same_rag: true
+    same_kb: true
+    same_tools: true
+    same_policy: true
+    same_output_contract: true
+    same_eval_suite: true
+
+  variable_under_test:
+    allowed:
+      - model
+      - quantization
+      - parameters
+    one_primary_variable_per_experiment: true
+
+  candidates:
+    baseline: {}
+    challenger: {}
+
+  hard_gates:
+    - output_contract_valid
+    - critical_inventions_zero
+    - evidence_not_lost
+    - security_policy_pass
+
+  scoring:
+    quality_weight: 0.45
+    traceability_weight: 0.20
+    reliability_weight: 0.15
+    performance_weight: 0.10
+    resource_efficiency_weight: 0.10
+
+  decision:
+    - PROMOTE_CHALLENGER
+    - KEEP_BASELINE
+    - RETEST
+    - REJECT_BOTH
+    - SPLIT_BY_TASK_TYPE
+
+  evidence:
+    preserve_raw_outputs: true
+    preserve_metrics: true
+    preserve_eval_results: true
+    preserve_prompt_and_context_hashes: true
