@@ -1,0 +1,53 @@
+factory_profile:
+  schema: father.factory_profile.v1
+
+  identity:
+    factory_id: ""
+    name: ""
+    class: SOFTWARE_FACTORY|AI_AGENT_FACTORY|SECURITY_FACTORY|OSINT_FACTORY|DATA_FACTORY|MEDIA_FACTORY|INFRASTRUCTURE_FACTORY|KNOWLEDGE_FACTORY|HYBRID_FACTORY
+    owner: ""
+    version: ""
+
+  purpose:
+    mission: ""
+    target_products: []
+    target_users: []
+    jurisdictions: []
+
+  product_model:
+    chassis_ref: ""
+    required_blocks: []
+    optional_blocks: []
+    domain_packs: []
+    project_specific_extension_allowed: true
+
+  intelligence:
+    agent_set_ref: ""
+    model_policy_ref: ""
+    rag_policy_ref: ""
+    tool_policy_ref: ""
+
+  assurance:
+    security_profile_ref: ""
+    trust_profile_ref: ""
+    test_profile_ref: ""
+    eval_profile_ref: ""
+    polygon_profile_ref: ""
+
+  runtime:
+    deployment_profile_ref: ""
+    observability_profile_ref: ""
+    resource_profile_ref: ""
+
+  ui:
+    ui_profile_ref: ""
+
+  lifecycle:
+    stage_map_ref: ""
+    gate_profile_ref: ""
+    evidence_profile_ref: ""
+
+  governance:
+    approval_model: ""
+    change_control: ""
+    experience_feedback: true
