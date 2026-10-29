@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Specialist Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./specialist.css">
+</head>
+<body class="specialist-page">
+<div class="specialist-shell">
+  <aside class="specialist-nav">
+    <a href="./specialists.html" class="back-link">← Engineering Roles</a>
+    <div class="specialist-brand">
+      <div class="specialist-mark" id="roleMark">S</div>
+      <div><strong id="roleName">Specialist</strong><small id="roleCode">ROLE</small></div>
+    </div>
+    <div class="section-label">WORKSPACE</div>
+    <button class="spec-nav active" data-view="inputs">01 · Input Package</button>
+    <button class="spec-nav" data-view="editor">02 · Main Editor</button>
+    <button class="spec-nav" data-view="logic">03 · Professional Logic</button>
+    <button class="spec-nav" data-view="metrics">04 · Metrics</button>
+    <button class="spec-nav" data-view="ab">05 · A/B Testing</button>
+    <button class="spec-nav" data-view="handoff">06 · Handoff</button>
+    <div class="specialist-foot">
+      <div class="health"><span></span>SPECIALIST ONLINE</div>
+      <small>Versioned role workspace</small>
+    </div>
+  </aside>
+
+  <main class="specialist-main">
+    <header class="specialist-top">
+      <div>
+        <div class="eyebrow" id="roleEyebrow">ENGINEERING ROLE</div>
+        <h1 id="roleTitle">Specialist Studio</h1>
+        <p id="rolePurpose"></p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="roleAction">Выполнить профессиональное действие</button>
+        <button class="ghost" id="roleRunAb">A/B</button>
+        <button class="primary" id="roleSave">Сохранить Proposal</button>
+      </div>
+    </header>
+
+    <section class="specialist-status">
+      <div><span>Role</span><b id="roleStableId">—</b></div>
+      <div><span>Model Slot</span><b>ROLE_MODEL_SLOT</b></div>
+      <div><span>Artifact</span><b id="roleArtifact">—</b></div>
+      <div><span>Version</span><b>0.1.0</b></div>
+      <div><span>Gate</span><b class="hold" id="roleGate">HOLD</b></div>
+    </section>
+
+    <section class="specialist-grid">
+      <aside class="specialist-left">
+        <div class="spec-card">
+          <div class="card-head">Model Slot</div>
+          <select id="roleModel"></select>
+          <div id="roleModelMeta" class="role-model-meta"></div>
+        </div>
+
+        <div class="spec-card">
+          <div class="card-head">Inputs</div>
+          <div id="inputList" class="token-list"></div>
+        </div>
+
+        <div class="spec-card">
+          <div class="card-head">Outputs</div>
+          <div id="outputList" class="token-list"></div>
+        </div>
+
+        <div class="spec-card">
+          <div class="card-head">Primary Action</div>
+          <button id="sideAction" class="primary wide"></button>
+        </div>
+      </aside>
+
+      <section class="specialist-center">
+        <div class="spec-tabs">
+          <button class="spec-tab active" data-tab="editor">Editor</button>
+          <button class="spec-tab" data-tab="sections">Sections</button>
+          <button class="spec-tab" data-tab="logic">Logic</button>
+          <button class="spec-tab" data-tab="metrics">Metrics</button>
+          <button class="spec-tab" data-tab="ab">A/B Plan</button>
+        </div>
+        <div id="specialistStage" class="specialist-stage"></div>
+      </section>
+
+      <aside class="specialist-right">
+        <div class="spec-card">
+          <div class="card-head">Quality</div>
+          <div id="qualityList" class="quality-list"></div>
+        </div>
+
+        <div class="spec-card">
+          <div class="card-head">Handoff</div>
+          <div id="handoffPanel" class="handoff-panel"></div>
+        </div>
+
+        <div class="spec-card">
+          <div class="card-head">Evidence</div>
+          <div class="evidence-list">
+            <span>Sources <b>HOLD</b></span>
+            <span>Metrics <b>HOLD</b></span>
+            <span>A/B <b>HOLD</b></span>
+            <span>Receiver ACK <b>HOLD</b></span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./specialist.js"></script>
+</body>
+</html>
