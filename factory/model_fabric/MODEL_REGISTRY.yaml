@@ -1,0 +1,129 @@
+model_registry:
+  id: FATHER_MODEL_ZOO
+  version: 0.2.0
+  rule:
+    - model_is_replaceable
+    - no_model_is_champion_without_tests
+    - confirmed_presence_is_not_equal_to_verified_quality
+    - verify_local_presence_before_runtime_use
+
+  models:
+    - id: MDL-QWEN3-VL-8B
+      display_name: qwen3-vl:8b-instruct-q4_K_M
+      provider: LOCAL_OLLAMA
+      modality: MULTIMODAL
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [vision, visual_analysis, multimodal_agent]
+
+    - id: MDL-LLAVA-7B
+      display_name: llava:7b
+      provider: LOCAL_OLLAMA
+      modality: MULTIMODAL
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [vision_control, visual_baseline]
+
+    - id: MDL-QWEN25-CODER-1P5B
+      display_name: qwen2.5-coder:1.5b
+      provider: LOCAL_OLLAMA
+      modality: TEXT_CODE
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [fast_code_helper, syntax_tasks]
+
+    - id: MDL-QWEN25-CODER-7B
+      display_name: qwen2.5-coder:7b-instruct-q4_K_M
+      provider: LOCAL_OLLAMA
+      modality: TEXT_CODE
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [father_codex, code_review, code_generation]
+
+    - id: MDL-QWEN25-7B
+      display_name: qwen2.5:7b
+      provider: LOCAL_OLLAMA
+      modality: TEXT
+      status: CONFIRMED_WORKING
+      evidence_note: previously passed structured JSON ALINA pipeline
+      candidate_roles: [alina, product_manager, osint_reasoning, structured_output]
+
+    - id: MDL-QWEN25-3B
+      display_name: qwen2.5:3b
+      provider: LOCAL_OLLAMA
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [fast_classifier, extraction, validation]
+
+    - id: MDL-DEEPSEEK-R1-7B
+      display_name: deepseek-r1:7b
+      provider: LOCAL_OLLAMA
+      modality: TEXT_REASONING
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [reasoning_challenger, analysis]
+
+    - id: MDL-LLAMA32-1B
+      display_name: llama3.2:1b
+      provider: LOCAL_OLLAMA
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [tiny_classifier, routing, smoke]
+
+    - id: MDL-MINISTRAL3-8B-Q4
+      display_name: Ministral-3-8B-Instruct-2512-Q4_K_M.gguf
+      provider: LOCAL_LLAMA_CPP
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [general_local, alina_challenger]
+
+    - id: MDL-MINISTRAL3-3B-Q4
+      display_name: Ministral-3-3B-Instruct-2512-Q4_K_M.gguf
+      provider: LOCAL_LLAMA_CPP
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_PRESENT
+      candidate_roles: [fast_local, extraction, routing]
+
+    - id: MDL-LLAMA31-8B-Q4
+      display_name: meta-llama-3.1-8b-instruct-hf-q4_k_m.gguf
+      provider: LOCAL_LLAMA_CPP
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_USED
+      candidate_roles: [regression_control, general_baseline]
+
+    - id: MDL-GPT-OSS-20B
+      display_name: gpt-oss-20b
+      provider: LOCAL_LM_STUDIO
+      modality: TEXT
+      status: CONFIRMED_PREVIOUSLY_LOADED
+      candidate_roles: [large_local_challenger]
+      constraints: [measure_vram_and_offload_before_promotion]
+
+    - id: MDL-QWEN25-14B-Q4
+      display_name: Qwen2.5 14B Q4_K_M
+      provider: LOCAL_LLAMA_CPP
+      modality: TEXT
+      status: VERIFY_LOCAL
+      candidate_roles: [deep_local_challenger]
+
+    - id: MDL-GIGACHAT-2
+      display_name: GigaChat-2
+      provider: GIGACHAT_ONLINE
+      modality: TEXT
+      status: AVAILABLE_PROVIDER
+      candidate_roles: [fast_online, russian_language]
+
+    - id: MDL-GIGACHAT-2-PRO
+      display_name: GigaChat-2-Pro
+      provider: GIGACHAT_ONLINE
+      modality: TEXT
+      status: AVAILABLE_PROVIDER
+      candidate_roles: [complex_online, russian_language, analysis]
+
+    - id: MDL-GIGACHAT-3-ULTRA
+      display_name: GigaChat-3-Ultra
+      provider: GIGACHAT_ONLINE
+      modality: TEXT
+      status: AVAILABILITY_DEPENDS_ON_ACCOUNT
+      candidate_roles: [reference_challenger, hard_tasks]
+
+  acquisition_policy:
+    - do_not_download_new_model_until_gap_is_proven_by_eval
+    - prefer_existing_verified_models
+    - download_only_for_named_capability_gap
+    - every_new_model_gets_license_manifest_and_test_pack
