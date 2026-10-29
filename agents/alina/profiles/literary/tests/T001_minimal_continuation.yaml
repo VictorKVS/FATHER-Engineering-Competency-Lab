@@ -1,0 +1,20 @@
+test:
+  id: ALINA-LIT-T001
+  purpose: canonical one-agent one-model vertical-slice smoke test
+  input:
+    story_text: >
+      Антон остановился у старой теплицы. Внутри уже третий вечер подряд
+      горел свет, хотя после смерти деда туда никто не заходил.
+      Он достал из кармана ключ, но замок оказался открыт.
+    target_length: 300
+    constraints:
+      - continue in Russian
+      - preserve third-person narration
+      - do not explain the mystery immediately
+  required_preservation:
+    characters: [Антон]
+    open_threads: [light_in_greenhouse, unlocked_lock]
+  hard_fail_if:
+    - source_scene_abandoned_without_reason
+    - Anton_renamed
+    - mystery_immediately_explained_against_constraint
