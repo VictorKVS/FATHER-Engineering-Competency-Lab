@@ -1,0 +1,33 @@
+requirements:
+  profile_id: ALINA_LITERARY
+  version: 0.1.0
+
+  functional:
+    - id: LIT-FR-001
+      text: accept a story fragment as explicit input
+    - id: LIT-FR-002
+      text: extract or preserve characters, locations, scenes and events
+    - id: LIT-FR-003
+      text: maintain CanonState separately from proposals
+    - id: LIT-FR-004
+      text: maintain RelationshipState over time
+    - id: LIT-FR-005
+      text: preserve continuity of facts, chronology, POV and tense
+    - id: LIT-FR-006
+      text: retrieve literary guidance through the profile RAG/KB
+    - id: LIT-FR-007
+      text: continue the story through a replaceable MODEL_SLOT
+    - id: LIT-FR-008
+      text: validate generated continuation against continuity rules
+    - id: LIT-FR-009
+      text: store evidence and provenance for generated outputs
+
+  constraints:
+    - id: LIT-C-001
+      text: no hidden chat context
+    - id: LIT-C-002
+      text: story source facts override general writing guidance
+    - id: LIT-C-003
+      text: model provider must be replaceable
+    - id: LIT-C-004
+      text: canon cannot be silently overwritten by generated proposals
