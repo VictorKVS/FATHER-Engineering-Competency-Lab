@@ -1,3 +1,60 @@
+const stages=window.FATHER_STAGES;
+const stageRail=document.getElementById("stageRail");
+function renderStageRail(){
+  if(!stageRail)return;
+  stageRail.innerHTML="";
+  stages.forEach((s,i)=>{
+    const el=document.createElement("button");
+    el.className="stage-node "+s.state;
+    el.disabled=s.state==="locked";
+    const proof=(key,label)=>'<i class="proof '+(s.proofs[key]?"on":"")+'">'+label+'</i>';
+    el.innerHTML='<span class="stage-num">'+s.id+'</span><span class="stage-name">'+s.name+'</span><span class="proofs">'+
+      proof("reference","R")+proof("emulation","E")+proof("local","L")+proof("ab","A")+'</span>';
+    el.addEventListener("click",()=>window.openStageInspector?.(i));
+    stageRail.appendChild(el);
+  });
+}
+renderStageRail();
+
+window.setStageProof=function(stageId,proofName,value=true){
+  const s=stages.find(x=>x.id===String(stageId).padStart(3,"0"));
+  if(!s)return;
+  s.proofs[proofName]=value;
+  if(s.proofs.reference&&s.proofs.emulation&&s.proofs.local&&s.proofs.ab){
+    s.state="pass";
+    const next=stages[Number(s.id)+1];
+    if(next&&next.state==="locked")next.state="active";
+  }
+  renderStageRail();
+};
+
+window.openStageInspector=function(i){
+  const s=stages[i];
+  openDrawer();
+  [...tabs.children].forEach(x=>x.classList.remove("active"));
+  body.innerHTML="";
+  const back=document.createElement("button");back.className="back-btn";back.textContent="← К досье продукта";
+  back.addEventListener("click",()=>renderTab("overview"));body.appendChild(back);
+  const hero=document.createElement("div");hero.className="specialist-hero";
+  hero.innerHTML='<div><div class="eyebrow">STAGE '+s.id+'</div><h3>'+s.name+'</h3><p>Последовательный этап FATHER. Следующий этап не считается открытым до прохождения необходимых доказательств.</p></div><span class="owner-badge">'+s.state.toUpperCase()+'</span>';
+  body.appendChild(hero);
+  body.appendChild(section("Proof layers",[
+    ["Reference Run",s.proofs.reference?"PASS":"PENDING"],
+    ["Local Emulation",s.proofs.emulation?"PASS":"PENDING"],
+    ["Local LLM",s.proofs.local?"PASS":"PENDING"],
+    ["A/B Compare",s.proofs.ab?"PASS":"PENDING"]
+  ]));
+  if(s.id==="000"){
+    body.appendChild(section("Stage 000 — IDEA",[
+      ["Owner","AG-000 Product Manager"],
+      ["Input","raw idea / sponsor / context / constraints"],
+      ["Output","IDEA_PACKAGE"],
+      ["Decision","START_DISCOVERY / NEED_MORE_CONTEXT / HOLD / REJECT"],
+      ["Gate","STAGE_000_PASS"]
+    ]));
+  }
+};
+
 const p=window.FATHER_PRODUCT;
 const card=document.getElementById("productCard");
 const drawer=document.getElementById("drawer");
