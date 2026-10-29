@@ -6,6 +6,7 @@ import json
 from .adapters import ChatCompletionsHTTPAdapter, GigaChatRESTAdapter, ReferenceStage000Adapter
 from .generator import create_factory
 from .inventory import inventory
+from .preflight import model_preflight
 from .runner import StageRunner
 
 
@@ -27,6 +28,7 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument('--evidence-dir', default='.father/runs')
 
     sub.add_parser('inventory-models')
+    sub.add_parser('model-preflight')
     return p
 
 
@@ -36,6 +38,10 @@ def main() -> int:
     if args.command == 'create':
         result = create_factory(args.profile, output_root=args.output_root)
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == 'model-preflight':
+        print(json.dumps(model_preflight(), ensure_ascii=False, indent=2))
         return 0
 
     if args.command == 'inventory-models':
