@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FATHER — ALINA Analyst Workspace</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./alina.css">
+</head>
+<body class="alina-page">
+<div class="alina-shell">
+  <aside class="alina-rail">
+    <a class="back-link" href="./index.html">← Agent Designer</a>
+    <div class="alina-brand">
+      <div class="alina-orb">A</div>
+      <div>
+        <strong>ALINA</strong>
+        <small>ANALYST WORKSPACE</small>
+      </div>
+    </div>
+
+    <div class="section-label">ANALYTICAL TOOLS</div>
+    <button class="tool-nav active" data-tool="analysis">01 · Анализ задачи</button>
+    <button class="tool-nav" data-tool="sources">02 · Источники</button>
+    <button class="tool-nav" data-tool="graph">03 · Граф знаний</button>
+    <button class="tool-nav" data-tool="prompt">04 · Prompt Lab</button>
+    <button class="tool-nav" data-tool="rag">05 · RAG Lab</button>
+    <button class="tool-nav" data-tool="kb">06 · Knowledge Lab</button>
+    <button class="tool-nav" data-tool="eval">07 · Evals</button>
+    <button class="tool-nav" data-tool="version">08 · Версионирование</button>
+
+    <div class="alina-rail-foot">
+      <div class="health"><span></span>ALINA ONLINE</div>
+      <small>AG-001 analytical core</small>
+    </div>
+  </aside>
+
+  <main class="alina-main">
+    <header class="alina-top">
+      <div>
+        <div class="eyebrow">AG-001 · ANALYTICAL CORE</div>
+        <h1>ALINA Analyst</h1>
+        <p>Редактор Prompt / RAG / Knowledge Base через аналитическое ядро</p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="analyzeBtn">Провести анализ</button>
+        <button class="ghost" id="compareBtn">Сравнить версии</button>
+        <button class="primary" id="saveVersionBtn">Сохранить новую версию</button>
+      </div>
+    </header>
+
+    <section class="alina-context">
+      <div><span>Agent</span><b>AG-001</b></div>
+      <div><span>Profile</span><b>ALINA_LITERARY</b></div>
+      <div><span>Editing</span><b id="editingTarget">PROMPT</b></div>
+      <div><span>Source</span><b id="editingPath">PROMPT.md</b></div>
+      <div><span>State</span><b class="hold" id="analysisState">DRAFT</b></div>
+    </section>
+
+    <section class="alina-workspace">
+      <aside class="alina-left">
+        <div class="analyst-card portrait-card">
+          <div class="portrait-orb">ALINA</div>
+          <div>
+            <strong>Analytical Core</strong>
+            <p>Не просто редактирует текст. Разбирает цель, источники, противоречия, структуру знаний и проверяемость результата.</p>
+          </div>
+        </div>
+
+        <div class="analyst-card">
+          <div class="card-head">Задача изменения</div>
+          <textarea id="changeGoal">Улучшить выбранный блок без нарушения контракта агента.</textarea>
+        </div>
+
+        <div class="analyst-card">
+          <div class="card-head">Инструменты Алины</div>
+          <div class="tool-grid">
+            <button data-action="goal">Цель</button>
+            <button data-action="claims">Claims</button>
+            <button data-action="sources">Sources</button>
+            <button data-action="contradictions">Contradictions</button>
+            <button data-action="graph">Graph</button>
+            <button data-action="coverage">Coverage</button>
+            <button data-action="eval">Eval</button>
+            <button data-action="trace">Traceability</button>
+          </div>
+        </div>
+
+        <div class="analyst-card">
+          <div class="card-head">Контроль</div>
+          <div class="mini-checks">
+            <span>Source grounding <b>ON</b></span>
+            <span>Canon protection <b>ON</b></span>
+            <span>Version trace <b>ON</b></span>
+            <span>Hard-fail rules <b>ON</b></span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="alina-center">
+        <div class="editor-head">
+          <div>
+            <div class="eyebrow" id="editorEyebrow">PROMPT LAB</div>
+            <h2 id="editorTitle">Prompt Engineering</h2>
+          </div>
+          <div class="version-chip" id="versionChip">v0.2.0</div>
+        </div>
+
+        <div class="editor-tabs">
+          <button class="editor-tab active" data-editor="current">Текущая версия</button>
+          <button class="editor-tab" data-editor="structure">Структура</button>
+          <button class="editor-tab" data-editor="analysis">Анализ Алины</button>
+          <button class="editor-tab" data-editor="proposal">Предложение</button>
+        </div>
+
+        <div class="editor-stage" id="editorStage"></div>
+      </section>
+
+      <aside class="alina-right">
+        <div class="analyst-card">
+          <div class="card-head">Knowledge Graph</div>
+          <div class="mini-graph" id="miniGraph">
+            <span class="g-node n1">GOAL</span>
+            <span class="g-node n2">PROMPT</span>
+            <span class="g-node n3">RAG</span>
+            <span class="g-node n4">KB</span>
+            <span class="g-node n5">EVAL</span>
+            <svg viewBox="0 0 260 190">
+              <path d="M65 92 C100 45 145 45 180 80"/>
+              <path d="M65 92 C105 130 145 140 190 132"/>
+              <path d="M180 80 C205 90 205 118 190 132"/>
+              <path d="M125 150 C130 120 145 100 180 80"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="analyst-card">
+          <div class="card-head">Аналитический статус</div>
+          <div id="analysisReport" class="analysis-report">
+            <p>Выберите действие или запустите анализ.</p>
+          </div>
+        </div>
+
+        <div class="analyst-card">
+          <div class="card-head">Версионный пакет</div>
+          <div class="version-list">
+            <span><b>Current</b> <i id="currentVersion">0.2.0</i></span>
+            <span><b>Draft</b> <i>workspace</i></span>
+            <span><b>Next</b> <i id="nextVersion">0.3.0</i></span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="./alina.js"></script>
+</body>
+</html>
