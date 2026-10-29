@@ -127,3 +127,29 @@ The machine already contained a substantially richer model zoo than our prior re
 
 Next experiment:
 Create a normalized Model Zoo manifest and run same-contract A/B/N tests for ALINA and FATHER_CODEX.
+
+
+## 2026-10-29 — Incident 006: HTTP alive before model ready
+
+Observed:
+- llama-server executable started successfully;
+- server accepted HTTP requests on 127.0.0.1:8080;
+- `/v1/models` returned HTTP 503 with message `Loading model`;
+- llama-server warned that CORS allowed all origins and no API key was set.
+
+Interpretation:
+HTTP availability and model readiness are different states.
+
+New runtime state model:
+SERVER_DOWN → STARTING → READY → INFERENCE_ACTIVE → DEGRADED/FAILED.
+
+Security lesson:
+Even localhost AI runtimes need an explicit browser-origin policy. Default CORS=* is not acceptable as the FATHER baseline.
+
+Decision:
+- same-machine baseline uses `--cors-origins localhost`;
+- API authentication is supported via runtime secret, not repository config;
+- 503 Loading model is treated as STARTING, not a failed model.
+
+Efficiency lesson:
+Preflight must distinguish process presence, HTTP readiness, model readiness and inference readiness rather than reporting one boolean.
