@@ -15,3 +15,17 @@ Later growth:
 - multiple writing modes;
 - model A/B/N;
 - editor/reviewer second agent.
+
+
+## Migration status
+
+This package is now TEMPORARY.
+
+Canonical identity:
+`AG-001 ALINA / profile=LITERARY / capability=STORY_CONTINUATION`
+
+Rules:
+- do not add new domain features here;
+- only bug fixes required to keep the vertical slice runnable are allowed;
+- all new literary requirements, domain concepts, prompts, RAG/KB and evals belong under `agents/alina/profiles/literary/`;
+- runtime code from this package must be absorbed into the ALINA Literary profile after the first working single-model proof.
