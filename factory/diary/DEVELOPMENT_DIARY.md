@@ -181,3 +181,27 @@ then orchestration and full factory.
 
 Efficiency lesson:
 Change one variable at a time. This makes failures attributable and reduces debugging cost.
+
+
+## 2026-10-29 — Milestone 008: Story agent reclassified as ALINA Literary vertical slice
+
+Decision:
+The newly created AG-STORY-001 is not a new long-lived agent.
+
+Canonical target:
+AG-001 ALINA + LITERARY profile + STORY_CONTINUATION capability.
+
+Reason:
+The literary/story capability already existed in the ALINA lineage. Creating another permanent agent would duplicate identity, memory, RAG and domain logic.
+
+FATHER_CODEX migration rule applied:
+REQUIREMENT -> ALGORITHM -> DOMAIN MODEL -> CONTRACT -> IMPLEMENTATION -> TEST -> EVIDENCE.
+
+Migration pack now records:
+- preserved old concepts;
+- target domain model;
+- reuse/adapt/build decisions;
+- temporary-runtime absorption plan.
+
+Efficiency lesson:
+When a capability already exists in the product lineage, first migrate and normalize it before creating a new agent identity.
