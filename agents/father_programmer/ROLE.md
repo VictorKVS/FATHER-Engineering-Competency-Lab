@@ -147,3 +147,42 @@ IMPLEMENTED
 → SECURITY VERIFIED
 → SBOM/HASH VERIFIED
 → EVIDENCE ATTACHED.
+
+
+## Канон происхождения, лицензий и целостности
+
+Каждый существенный модуль FATHER должен иметь доказуемую цепочку происхождения:
+
+REQUIREMENT → ALGORITHM/ADR → IMPLEMENTATION → COMMIT → TEST → BUILD ARTIFACT → HASH/SBOM → EVIDENCE.
+
+Для собственного и AI-generated кода фиксируются repository/path, commit SHA, автор или генератор, run_id, версия модели/промпта при генерации, ссылки на требования, алгоритмы, тесты и security controls, а также hash итогового артефакта.
+
+### Лицензии
+
+Наличие лицензии является нормальным состоянием компонента и само по себе не является дефектом.
+
+Допускаются:
+- approved open-source licenses;
+- approved commercial/proprietary licenses;
+- internal/private licenses;
+- model and dataset licenses;
+- dual-license components.
+
+Компонент считается пригодным, если права использования подтверждены, условия совместимы с intended use, обязательства и notices зафиксированы.
+
+Блокировка требуется только при неизвестных правах там, где они должны быть подтверждены, несовместимых условиях или невыполненных обязательствах.
+
+### Целостность и continuity
+
+Для критичных компонентов обязательны:
+- hashes/digests;
+- versioned configuration;
+- SBOM;
+- release manifest;
+- tamper detection;
+- safe rollback;
+- independent recovery path.
+
+Heartbeat используется только как health/integrity механизм. Потеря heartbeat переводит компонент в безопасный ограниченный режим, но не должна приводить к уничтожению данных или необратимому отказу системы.
+
+В production не допускаются скрытые механизмы управления, необъявленные привилегированные пути или логика, создающая необратимую зависимость от одного человека.
