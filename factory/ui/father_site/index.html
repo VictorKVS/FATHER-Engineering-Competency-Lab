@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FATHER — Agent Designer</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="nav">
+    <div class="brand">
+      <div class="brand-mark">F</div>
+      <div><strong>FATHER</strong><small>ENGINEERING OS</small></div>
+    </div>
+    <div class="section-label">WORKSPACES</div>
+    <button class="nav-item active"><span>01</span><b>Agent Designer</b><i>LIVE</i></button>
+    <button class="nav-item locked"><span>02</span><b>Workflow</b><i>LOCK</i></button>
+    <button class="nav-item locked"><span>03</span><b>Model Lab</b><i>LOCK</i></button>
+    <button class="nav-item locked"><span>04</span><b>RAG / Knowledge</b><i>LOCK</i></button>
+    <button class="nav-item locked"><span>05</span><b>Polygon</b><i>LOCK</i></button>
+    <div class="nav-foot">
+      <div class="health"><span></span>FACTORY ONLINE</div>
+      <small>Field 01 / MVP</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <div class="eyebrow">FIELD 01 · AGENT ENGINEERING</div>
+        <h1>Проектирование агента</h1>
+      </div>
+      <div class="top-actions">
+        <button id="loadDemo" class="ghost">Загрузить ALINA demo</button>
+        <button id="validate" class="ghost">Проверить конструкцию</button>
+        <button id="exportBtn" class="primary">Экспорт JSON</button>
+      </div>
+    </header>
+
+    <section class="statusbar">
+      <div><span class="k">Agent</span><b id="agentId">AG-001</b></div>
+      <div><span class="k">Profile</span><b id="profileName">ALINA_LITERARY</b></div>
+      <div><span class="k">Model slot</span><b id="modelStatus">7 candidates</b></div>
+      <div><span class="k">Gate</span><b id="gateStatus" class="hold">HOLD</b></div>
+    </section>
+
+    <section class="workspace">
+      <aside class="palette panel">
+        <div class="panel-head"><span>BLOCK CATALOG</span><small>FATHER CANON</small></div>
+        <div id="palette"></div>
+      </aside>
+
+      <section class="canvas-wrap">
+        <div class="canvas-toolbar">
+          <span>AGENT ASSEMBLY CANVAS</span>
+          <span class="zoom">100%</span>
+        </div>
+        <div class="canvas" id="canvas">
+          <svg class="wires" id="wires"></svg>
+          <div class="canvas-note">Один агент · сменная LLM · одинаковые контракты</div>
+          <div id="nodes"></div>
+        </div>
+      </section>
+
+      <aside class="inspector panel">
+        <div class="panel-head"><span>INSPECTOR</span><small id="inspectorType">BLOCK</small></div>
+        <div id="inspector"></div>
+      </aside>
+    </section>
+
+    <section class="bottom">
+      <div class="mini-panel">
+        <div class="panel-head"><span>MODEL SLOT</span><small>LOCAL MODEL ZOO</small></div>
+        <select id="modelSelect"></select>
+        <div id="modelMeta" class="model-meta"></div>
+      </div>
+      <div class="mini-panel">
+        <div class="panel-head"><span>READINESS</span><small>MVP-1</small></div>
+        <div id="checklist" class="checklist"></div>
+      </div>
+      <div class="mini-panel">
+        <div class="panel-head"><span>DEMO</span><small>ALINA LITERARY</small></div>
+        <p class="demo-copy">Рассказ → Prompt + RAG + KB → Model Slot → Contract → Eval → Evidence</p>
+        <button id="runDemo" class="primary wide">Подготовить demo run</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="./app.js"></script>
+</body>
+</html>
