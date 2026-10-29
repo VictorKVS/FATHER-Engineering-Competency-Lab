@@ -229,3 +229,35 @@ The next gate is no longer packaging. It is local model runtime readiness and fi
 
 Temporary note:
 story-continue remains legacy/vertical-slice compatibility only and must not receive new domain features.
+
+
+## 2026-10-29 — Milestone 010: ALINA Literary automatic benchmark designed
+
+Goal:
+Measure how efficiently the same literary agent behaves when only the model changes.
+
+Benchmark definition:
+- one canonical agent: AG-001 ALINA / LITERARY;
+- six short genres: fantasy, thriller, romance, action, science fiction, mystery;
+- target continuation length capped at approximately one page / 450 words;
+- four physically discovered local text models rotate automatically;
+- all other agent variables stay fixed;
+- up to 24 model-case runs per full suite.
+
+Provenance labels stored per result:
+- generator model_id;
+- agent;
+- profile;
+- prompt version;
+- RAG version;
+- knowledge-base version;
+- deterministic evaluation stage;
+- expert review status.
+
+Publication model:
+The benchmark writes evidence, summary and REVIEW_BUNDLE.md locally.
+Git push is available only through explicit --publish.
+This allows ChatGPT/human expert review from GitHub without losing attribution.
+
+Efficiency principle:
+When comparing models, change only the model. Keep story, agent, prompt, RAG, KB, contracts and rubric fixed.
