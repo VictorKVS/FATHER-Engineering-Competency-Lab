@@ -100,3 +100,30 @@ Absence of discovery evidence must not be interpreted as evidence of absence.
 
 New canon:
 Inventory systems must report what was scanned, what was reachable and why an asset may be missing.
+
+
+## 2026-10-29 — Milestone 005: physical Model Zoo discovered
+
+Target-host inventory successfully discovered local assets.
+
+Observed runtime state:
+- Ollama CLI reachable;
+- Ollama API reachable;
+- Ollama currently reports no registered models;
+- LM Studio API is not running;
+- GGUF files are present under the LM Studio model store;
+- OLLAMA_MODELS points to F:/FATHER_MODELS/ollama.
+
+Discovered capability classes:
+- general/reasoning LLMs: local GigaChat variants, Qwen2.5 14B;
+- coding LLMs: Qwen2.5-Coder 14B, DeepSeek-Coder-V2-Lite Q4/Q5;
+- multimodal: LLaVA variants, CogVLM;
+- embeddings: BGE-M3;
+- speech-to-text: Whisper Large V3 Turbo;
+- multimodal projector files: mmproj files, which must not be treated as standalone models.
+
+Key lesson:
+The machine already contained a substantially richer model zoo than our prior registry indicated. New downloads should therefore be driven by capability/eval gaps, not assumptions.
+
+Next experiment:
+Create a normalized Model Zoo manifest and run same-contract A/B/N tests for ALINA and FATHER_CODEX.
