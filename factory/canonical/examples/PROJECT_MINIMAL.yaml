@@ -1,0 +1,133 @@
+project_id: PRJ-001
+name: NEXUS SELF FACTORY
+version: 0.1.0
+state: DRAFT
+
+entities:
+  - id: REQ-001
+    type: REQUIREMENT
+    version: 1
+    owner: ROLE-101
+    status: ACTIVE
+    payload:
+      statement: Agent must preserve traceability from requirement to evidence.
+
+  - id: PROC-001
+    type: BUSINESS_PROCESS
+    version: 1
+    owner: ROLE-102
+    status: ACTIVE
+    payload:
+      name: Agent engineering lifecycle
+
+  - id: DEC-001
+    type: DECISION
+    version: 1
+    owner: ROLE-102
+    status: ACTIVE
+    payload:
+      statement: Promotion requires evidence.
+
+  - id: COMP-001
+    type: COMPETENCY
+    version: 1
+    owner: ROLE-105
+    status: ACTIVE
+    payload:
+      name: Traceable engineering
+
+  - id: SKILL-001
+    type: SKILL
+    version: 1
+    owner: ROLE-105
+    status: ACTIVE
+    payload:
+      name: Build requirement-to-evidence chain
+
+  - id: KN-001
+    type: KNOWLEDGE_NODE
+    version: 1
+    owner: ROLE-001
+    status: ACTIVE
+    payload:
+      title: Traceability rules
+      knowledge_type: RULE
+
+  - id: SRC-001
+    type: SOURCE
+    version: 1
+    owner: ROLE-001
+    status: ACTIVE
+    payload:
+      source_type: INTERNAL_CANON
+      locator: factory/canonical/TRACEABILITY_GRAPH.yaml
+
+  - id: EVAL-001
+    type: EVAL_CASE
+    version: 1
+    owner: ROLE-001
+    status: ACTIVE
+    payload:
+      objective: Verify complete trace chain
+
+  - id: EVD-001
+    type: EVIDENCE
+    version: 1
+    owner: ROLE-001
+    status: DRAFT
+    payload:
+      evidence_type: TEST_RESULT
+      status: HOLD
+
+edges:
+  - edge_id: E-001
+    from: REQ-001
+    to: PROC-001
+    type: DERIVED_FROM
+    version: 1
+    status: ACTIVE
+  - edge_id: E-002
+    from: PROC-001
+    to: DEC-001
+    type: PRODUCES
+    version: 1
+    status: ACTIVE
+  - edge_id: E-003
+    from: DEC-001
+    to: COMP-001
+    type: REQUIRES
+    version: 1
+    status: ACTIVE
+  - edge_id: E-004
+    from: COMP-001
+    to: SKILL-001
+    type: REQUIRES
+    version: 1
+    status: ACTIVE
+  - edge_id: E-005
+    from: SKILL-001
+    to: KN-001
+    type: REQUIRES
+    version: 1
+    status: ACTIVE
+  - edge_id: E-006
+    from: KN-001
+    to: SRC-001
+    type: DERIVED_FROM
+    version: 1
+    status: ACTIVE
+  - edge_id: E-007
+    from: SKILL-001
+    to: EVAL-001
+    type: TESTS
+    version: 1
+    status: ACTIVE
+  - edge_id: E-008
+    from: EVAL-001
+    to: EVD-001
+    type: PRODUCES
+    version: 1
+    status: ACTIVE
+
+evidence_index: []
+unresolved: []
