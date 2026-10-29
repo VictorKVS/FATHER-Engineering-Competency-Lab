@@ -1,3 +1,11 @@
+const naming=window.NEXUS_NAMING;
+if(naming){
+ const roleName=naming.name("ROLE-001","Knowledge & Reasoning Engineer");
+ const rolePublic=document.getElementById("rolePublicName");
+ const roleTitle=document.getElementById("rolePageTitle");
+ if(rolePublic)rolePublic.textContent=roleName;
+ if(roleTitle)roleTitle.textContent=roleName;
+}
 const params=new URLSearchParams(location.search);
 const target=params.get("block")||"prompt";
 const targets={
