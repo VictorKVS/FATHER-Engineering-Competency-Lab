@@ -25,3 +25,23 @@ Decision points:
 - contract conflict → RETURN TO SYSTEM/ARCHITECT
 - security conflict → RETURN TO SECURITY
 - reusable verified block exists → REUSE/WRAP before BUILD
+
+
+Extended canonical sequence:
+
+→ verify source/provenance
+→ verify license and intended-use compatibility
+→ verify dependency/security status
+→ record provenance metadata
+→ update SBOM
+→ generate artifact hash/manifest
+→ verify integrity/heartbeat behavior where applicable
+→ verify rollback/recovery
+→ attach evidence
+
+Additional decision points:
+- code origin cannot be established → HOLD / REVIEW
+- approved license with satisfied obligations → CONTINUE
+- license rights or obligations unresolved → HOLD / LICENSE REVIEW
+- integrity mechanism is not fail-safe → REJECT IMPLEMENTATION
+- recovery depends irreversibly on one person/account → HOLD
