@@ -3,7 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Protocol
 import json
+import os
+import urllib.parse
 import urllib.request
+import uuid
 
 
 @dataclass
@@ -58,8 +61,8 @@ class ReferenceStage000Adapter:
         return ModelResult(self.model_id, raw, output)
 
 
-class OpenAICompatibleHTTPAdapter:
-    """Adapter for local servers exposing /v1/chat/completions (llama.cpp, Ollama proxy, etc.)."""
+class ChatCompletionsHTTPAdapter:
+    """Vendor-neutral adapter for local servers exposing /v1/chat/completions."""
 
     def __init__(self, endpoint: str, model_id: str, timeout: int = 120) -> None:
         self.endpoint = endpoint
@@ -93,4 +96,79 @@ class OpenAICompatibleHTTPAdapter:
         parsed = json.loads(raw)
         if not isinstance(parsed, dict):
             raise ValueError("Model output must be a JSON object")
+        return ModelResult(self.model_id, raw, parsed)
+
+
+class GigaChatRESTAdapter:
+    """Native GigaChat REST adapter. Credentials are read only from environment."""
+
+    def __init__(
+        self,
+        model_id: str = "GigaChat-2-Pro",
+        auth_key_env: str = "GIGACHAT_AUTH_KEY",
+        scope_env: str = "GIGACHAT_SCOPE",
+        timeout: int = 120,
+    ) -> None:
+        self.model_id = model_id
+        self.auth_key_env = auth_key_env
+        self.scope_env = scope_env
+        self.timeout = timeout
+
+    def _access_token(self) -> str:
+        key = os.getenv(self.auth_key_env)
+        if not key:
+            raise RuntimeError(f"Missing environment secret: {self.auth_key_env}")
+        scope = os.getenv(self.scope_env, "GIGACHAT_API_PERS")
+        data = urllib.parse.urlencode({"scope": scope}).encode("utf-8")
+        req = urllib.request.Request(
+            "https://ngw.devices.sberbank.ru:9443/api/v2/oauth",
+            data=data,
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json",
+                "RqUID": str(uuid.uuid4()),
+                "Authorization": f"Basic {key}",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=self.timeout) as response:
+            body = json.loads(response.read().decode("utf-8"))
+        token = body.get("access_token")
+        if not token:
+            raise RuntimeError("GigaChat OAuth response did not contain access_token")
+        return token
+
+    def run(self, context: dict[str, Any]) -> ModelResult:
+        token = self._access_token()
+        payload = {
+            "model": self.model_id,
+            "temperature": 0,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": (
+                        "Ты исполняешь этап FATHER Factory. "
+                        "Используй только переданный контекст. "
+                        "Верни один JSON-объект без Markdown."
+                    ),
+                },
+                {"role": "user", "content": json.dumps(context, ensure_ascii=False)},
+            ],
+        }
+        req = urllib.request.Request(
+            "https://api.giga.chat/v1/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": f"Bearer {token}",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=self.timeout) as response:
+            body = json.loads(response.read().decode("utf-8"))
+        raw = body["choices"][0]["message"]["content"]
+        parsed = json.loads(raw)
+        if not isinstance(parsed, dict):
+            raise ValueError("GigaChat output must be a JSON object")
         return ModelResult(self.model_id, raw, parsed)
