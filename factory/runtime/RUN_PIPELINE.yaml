@@ -1,0 +1,30 @@
+pipeline:
+  id: FATHER_STAGE_RUN_PIPELINE
+  version: 0.1.0
+
+  steps:
+    - id: LOAD_PRODUCT
+    - id: LOAD_STAGE
+    - id: LOAD_AGENT
+    - id: LOAD_PROMPT
+    - id: LOAD_RAG_MANIFEST
+    - id: RETRIEVE_KNOWLEDGE
+    - id: BUILD_CONTEXT
+    - id: VALIDATE_INPUT
+    - id: RUN_REFERENCE
+    - id: RUN_LOCAL_LLM
+    - id: VALIDATE_OUTPUTS
+    - id: RUN_EVALS
+    - id: AB_COMPARE
+    - id: DECIDE_GATE
+    - id: SAVE_ARTIFACTS
+    - id: SAVE_EVIDENCE
+    - id: UPDATE_PRODUCT_STATE
+    - id: UPDATE_EXPERIENCE
+
+  failure_policy:
+    schema_invalid: FAIL
+    critical_invention: FAIL
+    evidence_lost: FAIL
+    local_runtime_unavailable: HOLD
+    score_below_threshold: HOLD
