@@ -1,0 +1,49 @@
+stage_run_record:
+  stage_id: ""
+  run_id: ""
+  product_id: ""
+  run_type: REFERENCE|EMULATION|LOCAL_LLM|AB_COMPARE
+
+  versions:
+    role: ""
+    prompt: ""
+    algorithm: ""
+    rag: ""
+    knowledge_base: ""
+    input_contract: ""
+    output_contract: ""
+
+  runtime:
+    model: ""
+    model_version: ""
+    parameters: {}
+    hardware: {}
+    started_at: ""
+    completed_at: ""
+
+  metrics:
+    schema_valid: false
+    completeness: null
+    traceability: null
+    evidence_quality: null
+    invention_rate: null
+    decision_quality: null
+    latency_ms: null
+    input_tokens: null
+    output_tokens: null
+    peak_ram_mb: null
+    peak_vram_mb: null
+
+  result:
+    status: PASS|FAIL|HOLD
+    output_ref: ""
+    evidence_refs: []
+    deviations: []
+    errors: []
+
+  improvement:
+    prompt_changes: []
+    rag_changes: []
+    kb_changes: []
+    parameter_changes: []
+    model_changes: []
