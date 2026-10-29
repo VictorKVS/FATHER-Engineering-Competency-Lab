@@ -13,6 +13,7 @@ from .runner import StageRunner
 from agents.story_continuation.runtime import StoryAgent
 from agents.alina.profiles.literary.runtime import AlinaLiteraryRuntime
 from agents.alina.profiles.literary.benchmark.runtime import LiteraryBenchmark
+from factory.tests.test_01_story_model_swap.runtime import StoryModelSwapTest
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -35,6 +36,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser('inventory-models')
     sub.add_parser('model-catalog')
     sub.add_parser('model-preflight')
+
+    t1 = sub.add_parser('test-01-story-model-swap')
+    t1.add_argument('--file', default='factory/tests/test_01_story_model_swap/STORY_INPUT.txt')
+    t1.add_argument('--target-length', type=int, default=500)
+    t1.add_argument('--output-root', default='benchmark_results/test_01_story_model_swap')
+    t1.add_argument('--publish', action='store_true')
 
     bench = sub.add_parser('literary-benchmark')
     bench.add_argument('--output-root', default='benchmark_results/alina_literary')
@@ -63,6 +70,23 @@ def main() -> int:
         result = create_factory(args.profile, output_root=args.output_root)
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
         return 0
+
+    if args.command == 'test-01-story-model-swap':
+        story_text = Path(args.file).read_text(encoding='utf-8')
+        run_dir, result = StoryModelSwapTest(output_root=args.output_root).run_failover(
+            story_text=story_text,
+            target_length=args.target_length,
+            publish=args.publish,
+        )
+        print(json.dumps({
+            'run_dir': str(run_dir),
+            'gate': result['gate'],
+            'selected_model': result['selected_model'],
+            'attempted_count': result['attempted_count'],
+            'quality_gate': result['quality_gate'],
+            'published': bool(args.publish),
+        }, ensure_ascii=False, indent=2))
+        return 0 if result['gate'] == 'PASS' else 2
 
     if args.command == 'literary-benchmark':
         bench = LiteraryBenchmark(output_root=args.output_root)
