@@ -28,6 +28,74 @@ const config={
  prompt_version:"0.2.0",rag_version:"ALINA_LITERARY_RAG_V02",kb_version:"0.2.0",
  selected_model:"MDL-QWEN25-14B-1M-Q4"
 };
+
+const blockDocs={
+ input:{
+  purpose:"Определяет явный вход агента: какие данные он принимает, какие поля обязательны и что считается некорректным входом.",
+  repoPath:"agents/alina/profiles/literary/INPUT_CONTRACT.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/INPUT_CONTRACT.yaml",
+  editor:"YAML contract",
+  version:"father.alina.literary.input.v1"
+ },
+ role:{
+  purpose:"Определяет идентичность, ответственность, границы и назначение агента. Это не модель, а постоянная роль изделия.",
+  repoPath:"agents/alina/profiles/literary/README.md",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/",
+  editor:"ALINA Literary profile",
+  version:"0.2.0"
+ },
+ prompt:{
+  purpose:"Версионируемая инструкция, которая управляет поведением агента при неизменных контрактах и доменной модели.",
+  repoPath:"agents/alina/profiles/literary/PROMPT.md",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/PROMPT.md",
+  editor:"Markdown prompt",
+  version:"0.2.0"
+ },
+ rag:{
+  purpose:"Определяет, откуда и по каким правилам агент извлекает релевантные знания перед вызовом LLM.",
+  repoPath:"agents/alina/profiles/literary/RAG_MANIFEST.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/RAG_MANIFEST.yaml",
+  editor:"YAML RAG manifest",
+  version:"ALINA_LITERARY_RAG_V02"
+ },
+ kb:{
+  purpose:"Доменная база знаний литературного профиля: канон, непротиворечивость, персонажи, причинность и правила продолжения.",
+  repoPath:"agents/alina/profiles/literary/KNOWLEDGE_BASE.md",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/KNOWLEDGE_BASE.md",
+  editor:"Markdown knowledge base",
+  version:"0.2.0"
+ },
+ model:{
+  purpose:"Сменный вычислительный двигатель агента. Меняется без изменения Role, Prompt, RAG, KB и контрактов.",
+  repoPath:"factory/model_fabric/LOCAL_MODEL_CATALOG.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/factory/model_fabric/LOCAL_MODEL_CATALOG.yaml",
+  editor:"Model Zoo / launch profile",
+  version:"catalog 1.0.0"
+ },
+ output:{
+  purpose:"Определяет обязательную структуру результата агента и делает разные LLM взаимозаменяемыми на одном интерфейсе.",
+  repoPath:"agents/alina/profiles/literary/OUTPUT_CONTRACT.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/OUTPUT_CONTRACT.yaml",
+  editor:"YAML contract",
+  version:"father.alina.literary.output.v1"
+ },
+ eval:{
+  purpose:"Проверяет качество результата и hard-fail условия: нарушение канона, переименование персонажа, сломанный контракт и другие дефекты.",
+  repoPath:"agents/alina/profiles/literary/EVALS/continuity.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/agents/alina/profiles/literary/EVALS/continuity.yaml",
+  editor:"YAML evaluation rubric",
+  version:"ALINA_LITERARY_CONTINUITY_V02"
+ },
+ evidence:{
+  purpose:"Фиксирует доказательства выполнения: model_id, версии Prompt/RAG/KB, latency, contract status, review status и run_id.",
+  repoPath:"benchmark_results/alina_literary/<RUN_ID>/",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/benchmark_results/alina_literary/<RUN_ID>/",
+  editor:"Generated evidence / review bundle",
+  version:"runtime evidence"
+ }
+};
+const blockDrafts={};
+
 const paletteEl=document.getElementById("palette");
 palette.forEach(([type,icon,title,desc])=>{
  const b=document.createElement("button");b.className="palette-item";
@@ -40,7 +108,7 @@ function renderNodes(){
  blocks.forEach(b=>{
   const n=document.createElement("article");n.className="node "+(b.cls||"");n.dataset.id=b.id;n.style.left=b.x+"px";n.style.top=b.y+"px";
   n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>';
-  n.onclick=()=>selectBlock(b.id);nodes.appendChild(n);
+  n.onclick=()=>selectBlock(b.id);n.ondblclick=e=>{e.stopPropagation();openBlockModal(b.id)};nodes.appendChild(n);
  });
  requestAnimationFrame(()=>{drawWires();enableNodeDragging();});
 }
@@ -169,4 +237,73 @@ document.getElementById("exportBtn").onclick=()=>{
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="father-agent-design.json";a.click();URL.revokeObjectURL(a.href);toast("Agent design JSON экспортирован");
 };
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2200)}
+
+let currentModalBlock=null,currentModalTab="about";
+const modal=document.getElementById("blockModal"),modalBody=document.getElementById("blockModalBody");
+function openBlockModal(id){
+ currentModalBlock=id;currentModalTab="about";
+ const b=blocks.find(x=>x.id===id),d=blockDocs[id]||{};
+ document.getElementById("blockModalEyebrow").textContent=b.type+" · "+id.toUpperCase();
+ document.getElementById("blockModalTitle").textContent=b.title;
+ document.getElementById("blockModalSubtitle").textContent=b.desc;
+ document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="about"));
+ renderModalTab();
+ modal.classList.add("open");modal.setAttribute("aria-hidden","false");
+}
+function closeBlockModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
+function renderModalTab(){
+ const b=blocks.find(x=>x.id===currentModalBlock),d=blockDocs[currentModalBlock]||{};
+ if(currentModalTab==="about"){
+  modalBody.innerHTML=
+   '<div class="modal-grid">'+
+    '<div class="modal-section"><h4>Назначение</h4><p>'+d.purpose+'</p></div>'+
+    '<div class="modal-section"><h4>В составе агента</h4><p><b>'+b.type+'</b> · '+b.desc+'</p></div>'+
+    '<div class="modal-section"><h4>Версия</h4><p>'+d.version+'</p></div>'+
+    '<div class="modal-section"><h4>Связи</h4><p>'+edgeSummary(currentModalBlock)+'</p></div>'+
+   '</div>';
+ }else if(currentModalTab==="location"){
+  modalBody.innerHTML=
+   '<div class="modal-section"><h4>GitHub / Repository</h4><code>'+d.repoPath+'</code></div>'+
+   '<div class="modal-section"><h4>Локальное расположение</h4><code>'+d.localPath+'</code></div>'+
+   '<div class="modal-section"><h4>Чем редактируется</h4><p>'+d.editor+'</p></div>'+
+   '<div class="modal-section"><h4>Как работает изменение</h4><p>Изменение сначала живёт как локальный draft в интерфейсе. Затем его можно экспортировать и перенести в канонический файл FATHER, после чего изменение должно пройти тесты и evidence.</p></div>';
+ }else{
+  const draft=blockDrafts[currentModalBlock]||defaultEditableValue(currentModalBlock);
+  modalBody.innerHTML=
+   '<div class="modal-section edit-section"><h4>Редактирование блока</h4>'+
+   '<label>Заголовок<input id="modalEditTitle" value="'+escapeHtml(b.title)+'"></label>'+
+   '<label>Описание<textarea id="modalEditDesc">'+escapeHtml(draft.desc)+'</textarea></label>'+
+   '<label>Конфигурация / заметки<textarea id="modalEditConfig">'+escapeHtml(draft.config)+'</textarea></label>'+
+   '<p class="edit-note">Сохранение здесь меняет только текущий UI draft. Канонический файл в GitHub изменяется отдельным инженерным коммитом после проверки.</p></div>';
+ }
+}
+function defaultEditableValue(id){
+ const b=blocks.find(x=>x.id===id),d=blockDocs[id]||{};
+ return {desc:b.desc,config:"repo: "+(d.repoPath||"")+"\nversion: "+(d.version||"")};
+}
+function edgeSummary(id){
+ const incoming=edges.filter(x=>x[1]===id).map(x=>blocks.find(b=>b.id===x[0])?.title);
+ const outgoing=edges.filter(x=>x[0]===id).map(x=>blocks.find(b=>b.id===x[1])?.title);
+ return "Входы: "+(incoming.join(", ")||"—")+"<br>Выходы: "+(outgoing.join(", ")||"—");
+}
+function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+document.getElementById("blockModalClose").onclick=closeBlockModal;
+document.getElementById("blockModalBackdrop").onclick=closeBlockModal;
+document.querySelectorAll(".modal-tab").forEach(tab=>tab.onclick=()=>{currentModalTab=tab.dataset.modalTab;document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x===tab));renderModalTab()});
+document.getElementById("blockModalSave").onclick=()=>{
+ if(currentModalTab!=="edit"){currentModalTab="edit";document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="edit"));renderModalTab();toast("Режим редактирования открыт");return}
+ const b=blocks.find(x=>x.id===currentModalBlock);
+ const title=document.getElementById("modalEditTitle")?.value?.trim()||b.title;
+ const desc=document.getElementById("modalEditDesc")?.value??b.desc;
+ const cfg=document.getElementById("modalEditConfig")?.value??"";
+ b.title=title;b.desc=desc;blockDrafts[currentModalBlock]={desc,config:cfg};
+ renderNodes();selectBlock(currentModalBlock);toast("Локальный draft блока сохранён");
+};
+document.getElementById("blockModalExport").onclick=()=>{
+ const b=blocks.find(x=>x.id===currentModalBlock),d=blockDocs[currentModalBlock]||{};
+ const payload={block_id:currentModalBlock,type:b.type,title:b.title,description:b.desc,repository_path:d.repoPath,local_path:d.localPath,version:d.version,draft:blockDrafts[currentModalBlock]||null};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="father-block-"+currentModalBlock+".json";a.click();URL.revokeObjectURL(a.href);toast("Карточка блока экспортирована");
+};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("open"))closeBlockModal()});
+
 window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");
