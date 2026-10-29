@@ -52,3 +52,8 @@ button,select,input,textarea{font:inherit}
 .edit-section label{display:block;color:#668096;font-size:9px;letter-spacing:.08em;margin:0 0 12px}.edit-section input,.edit-section textarea{display:block;width:100%;margin-top:5px;border:1px solid #26465e;background:#07131e;color:#e1eef8;border-radius:8px;padding:10px;font-size:11px}.edit-section textarea{min-height:110px;resize:vertical}.edit-note{border-left:2px solid var(--amber);padding-left:10px!important;color:#a88e61!important}
 .block-modal-foot{border-top:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;background:#07111b}.block-modal-foot>span{font-size:9px;letter-spacing:.12em;color:var(--amber)}.block-modal-foot>div{display:flex;gap:8px}
 @media(max-width:720px){.modal-grid{grid-template-columns:1fr}.block-modal-card{width:96vw;max-height:94vh}.block-modal-foot{align-items:flex-start;gap:10px;flex-direction:column}}
+
+/* ALINA editor handoff */
+.alina-edit-launch{display:grid;grid-template-columns:72px 1fr;gap:15px;align-items:start}
+.alina-launch-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;border:1px solid #8156cf;background:radial-gradient(circle,#4c347d,#151020);color:#eadfff;font-weight:800;font-size:20px;box-shadow:0 0 28px #7f50e555}
+.alina-edit-launch h4{font-size:13px;color:#d9c6ff}.alina-edit-launch p{margin:0 0 12px}.alina-launch-btn{margin:3px 0 10px}
