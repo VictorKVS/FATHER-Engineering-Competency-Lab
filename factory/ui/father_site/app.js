@@ -330,4 +330,35 @@ document.getElementById("blockModalExport").onclick=()=>{
 };
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("open"))closeBlockModal()});
 
+
+const cloneModal=document.getElementById("cloneModal");
+function openCloneModal(){cloneModal.classList.add("open");cloneModal.setAttribute("aria-hidden","false")}
+function closeCloneModal(){cloneModal.classList.remove("open");cloneModal.setAttribute("aria-hidden","true")}
+document.getElementById("cloneAgent").onclick=openCloneModal;
+document.getElementById("cloneClose").onclick=closeCloneModal;
+document.getElementById("cloneCancel").onclick=closeCloneModal;
+document.getElementById("cloneBackdrop").onclick=closeCloneModal;
+document.getElementById("cloneCreate").onclick=()=>{
+ const stableId=document.getElementById("cloneStableId").value.trim();
+ const publicName=document.getElementById("clonePublicName").value.trim();
+ const codeName=document.getElementById("cloneCodeName").value.trim();
+ const purpose=document.getElementById("clonePurpose").value.trim();
+ const domain=document.getElementById("cloneDomain").value.trim();
+ if(!stableId||!publicName||!codeName||!purpose||!domain){toast("Заполните identity, purpose и domain");return}
+ const payload={
+  schema:"AGENT_CLONE_REQUEST_V1",
+  clone_id:"CLONE-"+Date.now(),
+  source_template:{agent_id:"AGENT-TEMPLATE-001",version:"1.0.0",required_gate:"PASS"},
+  target_identity:{stable_id:stableId,public_name:publicName,code_name:codeName,purpose,domain},
+  state:"CLONED_DRAFT",
+  inherited:["package_structure","evidence_contract","handoff_contract","versioning","provenance","security_baseline","naming_registry_binding"],
+  rebuild_required:["role","prompt","rag","knowledge_base","tools","model_policy","training_program","eval_profile","acceptance"],
+  validation_required:["schema_validation","contract_tests","intelligence_package_gate","eval_suite","security_gate","regression","evidence_gate"]
+ };
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="agent-clone-"+stableId+".json";a.click();URL.revokeObjectURL(a.href);
+ closeCloneModal();
+ toast("CLONED_DRAFT создан: "+publicName);
+};
+
 window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");
