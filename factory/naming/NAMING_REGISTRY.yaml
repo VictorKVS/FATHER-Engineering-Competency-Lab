@@ -150,6 +150,69 @@ registry:
         - factory/ui/father_site/app.js
         - benchmark_results/alina_literary/
 
+    - stable_id: ROLE-101
+      entity_type: ROLE
+      public_name: AI Product Engineer
+      code_name: PRODUCT
+      aliases: [Product Engineer, Product Manager]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-102
+      entity_type: ROLE
+      public_name: Business Process Engineer
+      code_name: BA
+      aliases: [Business Analyst, Process Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-103
+      entity_type: ROLE
+      public_name: System & Domain Engineer
+      code_name: SYSTEM
+      aliases: [System Analyst, Domain Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-104
+      entity_type: ROLE
+      public_name: Security & Compliance Engineer
+      code_name: SECURITY
+      aliases: [Security Engineer, Compliance Engineer]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-105
+      entity_type: ROLE
+      public_name: Profession & Competency Engineer
+      code_name: COMPETENCY
+      aliases: [Competency Engineer, Profession Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-106
+      entity_type: ROLE
+      public_name: Corporate Knowledge Engineer
+      code_name: CORP_KNOWLEDGE
+      aliases: [Knowledge Curator, Corporate Knowledge]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-107
+      entity_type: ROLE
+      public_name: Research & Evidence Engineer
+      code_name: OSINT
+      aliases: [OSINT Research Agent, Evidence Researcher]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
     - stable_id: EXT-001
       entity_type: EXTERNAL_AGENT
       public_name: OSINT Research Agent
