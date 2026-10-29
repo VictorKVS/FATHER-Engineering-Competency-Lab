@@ -1,0 +1,75 @@
+catalog:
+  id: KNOWLEDGE_PACK_CATALOG
+  version: 1.0.0
+
+  composition_order:
+    - COMMON_FOUNDATION
+    - CORPORATE_COMMON
+    - PROFESSION_CORE
+    - SPECIALIST_DOMAIN
+    - RESEARCH_ACQUIRED
+    - OPERATIONAL_DYNAMIC
+
+  packs:
+    - pack_id: KP-COMMON-RU-PRO
+      layer: COMMON_FOUNDATION
+      public_name: Professional Russian Language
+      purpose: Professional terminology, clarity, document style, ambiguity control.
+      reusable: true
+      required_for:
+        - lawyer
+        - information_security
+        - osint
+        - analyst
+        - devops
+
+    - pack_id: KP-COMMON-CRITICAL
+      layer: COMMON_FOUNDATION
+      public_name: Critical Thinking & Source Hygiene
+      purpose: Facts, hypotheses, claims, conclusions, source authority and contradiction handling.
+      reusable: true
+
+    - pack_id: KP-CORP-BASE
+      layer: CORPORATE_COMMON
+      public_name: Corporate Base
+      purpose: Organization, internal processes, policies, terminology, data classification.
+      reusable: true
+      organization_specific: true
+
+    - pack_id: KP-PROF-LAW
+      layer: PROFESSION_CORE
+      public_name: Lawyer Core
+      purpose: Core legal concepts, source hierarchy, legal reasoning, document analysis and case structure.
+      reusable: true
+
+    - pack_id: KP-PROF-IB
+      layer: PROFESSION_CORE
+      public_name: Information Security Core
+      purpose: Assets, threats, risks, controls, architecture, incident handling, compliance and evidence.
+      reusable: true
+
+    - pack_id: KP-PROF-OSINT
+      layer: PROFESSION_CORE
+      public_name: OSINT Core
+      purpose: Search planning, collection, provenance, corroboration, counter-evidence and confidence.
+      reusable: true
+
+    - pack_id: KP-PROF-DEVOPS
+      layer: PROFESSION_CORE
+      public_name: DevOps / DevSecOps Core
+      purpose: Delivery pipelines, infrastructure, observability, security controls and operational evidence.
+      reusable: true
+
+    - pack_id: KP-PROF-ANALYST
+      layer: PROFESSION_CORE
+      public_name: Analyst Core
+      purpose: Requirements, business process, hypotheses, evidence, metrics and decisions.
+      reusable: true
+
+  rules:
+    - pack_is_not_agent
+    - reusable_pack_requires_version_and_sources
+    - specialist_domain_overrides_must_be_explicit
+    - research_acquired_knowledge_requires_provenance
+    - operational_dynamic_knowledge_should_prefer_rag_or_tool
+    - every_pack_must_define_competency_bindings_and_tests
