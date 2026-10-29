@@ -303,10 +303,10 @@ function renderModalTab(){
 
 function editorRouteForBlock(id){
  const routes={
-  role:{workspace:"ALINA",url:"./alina.html?block=role",label:"Редактировать в ALINA"},
-  prompt:{workspace:"ALINA",url:"./alina.html?block=prompt",label:"Редактировать в ALINA"},
-  rag:{workspace:"ALINA",url:"./alina.html?block=rag",label:"Редактировать в ALINA"},
-  kb:{workspace:"ALINA",url:"./alina.html?block=kb",label:"Редактировать в ALINA"}
+  role:{workspace:"ALINA",url:"./artifact.html?artifact=role",label:"Редактировать в Knowledge & Reasoning Engineer"},
+  prompt:{workspace:"ALINA",url:"./artifact.html?artifact=prompt",label:"Редактировать в Knowledge & Reasoning Engineer"},
+  rag:{workspace:"ALINA",url:"./artifact.html?artifact=rag",label:"Редактировать в Knowledge & Reasoning Engineer"},
+  kb:{workspace:"ALINA",url:"./knowledge.html",label:"Открыть Knowledge Architecture Studio"}
  };
  return routes[id]||{workspace:"LOCAL",url:null,label:"Редактировать"};
 }
