@@ -35,10 +35,10 @@ class StoryAgent:
         return [c for c in chunks if c]
 
     def _retrieve(self, story: str, limit: int=4) -> list[str]:
-        words={w.lower('.,!?;:\"\'()[]{}') for w in story.split() if len(w)>3}
+        words={w.strip('.,!?;:\"\'()[]{}').lower() for w in story.split() if len(w)>3}
         scored=[]
         for chunk in self._knowledge_sections():
-            cwords={w.lower('.,!?;:\"\'()[]{}') for w in chunk.split() if len(w)>3}
+            cwords={w.strip('.,!?;:\"\'()[]{}').lower() for w in chunk.split() if len(w)>3}
             score=len(words & cwords)
             scored.append((score, chunk))
         scored.sort(key=lambda x:x[0], reverse=True)
