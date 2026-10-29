@@ -1,13 +1,13 @@
 const blocks=[
- {id:"input",type:"INPUT",title:"Input Contract",desc:"Явный вход агента",x:55,y:120},
- {id:"role",type:"ROLE",title:"Role",desc:"Кто агент и за что отвечает",x:245,y:70},
- {id:"prompt",type:"PROMPT",title:"Prompt",desc:"Версионируемая инструкция",x:245,y:180},
- {id:"rag",type:"RAG",title:"RAG",desc:"Поиск релевантного знания",x:435,y:70},
- {id:"kb",type:"KB",title:"Knowledge Base",desc:"База знаний профиля",x:435,y:180},
- {id:"model",type:"MODEL_SLOT",title:"Model Slot",desc:"Сменная локальная LLM",x:625,y:125,cls:"model"},
- {id:"output",type:"OUTPUT",title:"Output Contract",desc:"Структурированный результат",x:815,y:70},
- {id:"eval",type:"EVAL",title:"Evals",desc:"Контракт + качество",x:815,y:180},
- {id:"evidence",type:"EVIDENCE",title:"Evidence",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
+ {id:"input",stableId:"BLK-001",type:"INPUT",title:"Input Contract",desc:"Явный вход агента",x:55,y:120},
+ {id:"role",stableId:"BLK-002",type:"ROLE",title:"Role",desc:"Кто агент и за что отвечает",x:245,y:70},
+ {id:"prompt",stableId:"BLK-003",type:"PROMPT",title:"Prompt",desc:"Версионируемая инструкция",x:245,y:180},
+ {id:"rag",stableId:"BLK-004",type:"RAG",title:"RAG",desc:"Поиск релевантного знания",x:435,y:70},
+ {id:"kb",stableId:"BLK-005",type:"KB",title:"Knowledge Base",desc:"База знаний профиля",x:435,y:180},
+ {id:"model",stableId:"BLK-006",type:"MODEL_SLOT",title:"Model Slot",desc:"Сменная локальная LLM",x:625,y:125,cls:"model"},
+ {id:"output",stableId:"BLK-007",type:"OUTPUT",title:"Output Contract",desc:"Структурированный результат",x:815,y:70},
+ {id:"eval",stableId:"BLK-008",type:"EVAL",title:"Evals",desc:"Контракт + качество",x:815,y:180},
+ {id:"evidence",stableId:"BLK-009",type:"EVIDENCE",title:"Evidence",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
 ];
 const edges=[["input","role"],["role","rag"],["role","prompt"],["prompt","model"],["rag","model"],["kb","model"],["model","output"],["output","eval"],["eval","evidence"]];
 const palette=[
@@ -95,6 +95,13 @@ const blockDocs={
  }
 };
 const blockDrafts={};
+
+const naming=window.NEXUS_NAMING;
+if(naming){
+ document.getElementById("systemName").textContent=naming.name("SYS-001","NEXUS");
+ document.getElementById("workspaceName").textContent=naming.name("WS-001","Agent Designer");
+ blocks.forEach(b=>{ if(b.stableId) b.title=naming.name(b.stableId,b.title); });
+}
 
 const paletteEl=document.getElementById("palette");
 palette.forEach(([type,icon,title,desc])=>{
