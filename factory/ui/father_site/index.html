@@ -11,10 +11,10 @@
   <aside class="nav">
     <div class="brand">
       <div class="brand-mark">N</div>
-      <div><strong>NEXUS</strong><small>AI SYSTEMS ENGINEERING</small></div>
+      <div><strong id="systemName">NEXUS</strong><small>AI SYSTEMS ENGINEERING</small></div>
     </div>
     <div class="section-label">WORKSPACES</div>
-    <button class="nav-item active"><span>01</span><b>Agent Designer</b><i>LIVE</i></button>
+    <button class="nav-item active"><span>01</span><b id="workspaceName">Agent Designer</b><i>LIVE</i></button>
     <button class="nav-item locked"><span>02</span><b>Workflow</b><i>LOCK</i></button>
     <button class="nav-item locked"><span>03</span><b>Model Lab</b><i>LOCK</i></button>
     <button class="nav-item locked"><span>04</span><b>RAG / Knowledge</b><i>LOCK</i></button>
@@ -117,6 +117,7 @@
 </div>
 
 <div class="toast" id="toast"></div>
+<script src="./naming.js"></script>
 <script src="./app.js"></script>
 </body>
 </html>
