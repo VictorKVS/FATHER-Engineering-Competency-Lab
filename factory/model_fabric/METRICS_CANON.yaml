@@ -1,0 +1,51 @@
+metrics:
+  schema: father.metrics.v1
+
+  quality:
+    - contract_validity
+    - completeness
+    - instruction_adherence
+    - traceability
+    - evidence_quality
+    - decision_quality
+    - factual_consistency
+    - contradiction_handling
+    - uncertainty_handling
+
+  safety_security:
+    - critical_inventions
+    - policy_violations
+    - unauthorized_tool_attempts
+    - provenance_loss
+    - secret_exposure
+    - unsafe_action_attempts
+
+  operational:
+    - latency_ms
+    - tokens_per_second
+    - input_tokens
+    - output_tokens
+    - context_usage
+    - peak_ram_mb
+    - peak_vram_mb
+    - cpu_usage
+    - gpu_usage
+    - energy_or_runtime_proxy
+    - cost_per_run
+
+  reliability:
+    - schema_parse_rate
+    - retry_count
+    - timeout_rate
+    - oom_rate
+    - run_reproducibility
+    - regression_pass_rate
+
+  business:
+    - successful_task_rate
+    - human_rework_rate
+    - time_to_acceptable_result
+    - cost_per_successful_task
+
+  rule:
+    - hard_security_and_contract_failures_override_weighted_score
