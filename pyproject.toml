@@ -13,4 +13,4 @@ dependencies = ["PyYAML>=6.0.1"]
 father-factory = "father_runtime.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["father_runtime*"]
+include = ["father_runtime*", "agents*"]
