@@ -69,3 +69,18 @@ h1{font-size:24px}
 .agent-row:hover{border-color:#3d709b;background:#12263c}
 .agent-row span:first-child{display:flex;flex-direction:column;gap:3px}
 .agent-row small{color:#718ba4}
+
+.stage-rail-wrap{padding:14px 20px 12px;border-bottom:1px solid var(--line);background:#08131fd9}
+.stage-rail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.stage-rail-header strong{font-size:13px}
+.proof-legend{display:flex;gap:12px;color:#738ca4;font-size:10px}
+.stage-rail{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.stage-node{min-width:132px;text-align:left;border:1px solid #223e59;background:#0d1b2c;color:#afc3d7;border-radius:10px;padding:8px;cursor:pointer}
+.stage-node.locked{opacity:.35;cursor:not-allowed}
+.stage-node.active{border-color:#2da8ff;box-shadow:0 0 18px #2da8ff24}
+.stage-node.pass{border-color:#38d98b;color:#d9ffeb}
+.stage-num{display:block;font-size:10px;letter-spacing:.12em;color:#68caff}
+.stage-name{display:block;font-size:11px;font-weight:650;margin:3px 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proofs{display:flex;gap:4px}
+.proof{font-style:normal;font-size:9px;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;border:1px solid #294159;color:#5f7890}
+.proof.on{border-color:#38d98b;color:#8ff2bd;background:#103526}
