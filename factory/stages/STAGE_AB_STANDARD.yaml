@@ -3,7 +3,7 @@ ab_standard:
   version: 0.1.0
 
   baseline:
-    source: GPT_REFERENCE_RUN
+    source: REFERENCE_AGENT_RUN
 
   candidate:
     source: LOCAL_LLM_RUN
