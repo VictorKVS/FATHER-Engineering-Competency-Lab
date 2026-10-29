@@ -1,0 +1,41 @@
+name: FATHER Factory CI
+
+on:
+  push:
+    branches:
+      - feature/father-factory-workshops
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  factory-bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime
+        run: python -m pip install -e .
+
+      - name: Unit and stage tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Execute FATHER Stage 000 reference
+        run: >
+          python -m father_runtime run-stage
+          --stage factory/stages/STAGE_000_IDEA.yaml
+          --input examples/father_stage000_input.yaml
+          --adapter reference
+          --run-type REFERENCE
+          --evidence-dir .father/runs
+
+      - name: Upload Stage 000 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: father-stage000-reference-evidence
+          path: .father/runs/
