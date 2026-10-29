@@ -1,0 +1,76 @@
+stage:
+  id: STAGE-000
+  number: 0
+  public_name: Idea Intake
+  code_name: IDEA_INTAKE
+  contract: FACTORY_STAGE_CONTRACT_V1
+
+  purpose: >
+    Register the raw idea, test whether the input is sufficient for structured analysis,
+    normalize intent without silently inventing missing facts, expose assumptions and
+    unknowns, and obtain explicit human approval before project initialization.
+
+  owner_role: ROLE-101
+
+  input:
+    schema: IDEA_INTAKE_INPUT_V1
+    fields:
+      idea_id: auto
+      raw_idea: required
+      author_or_sponsor: optional
+      known_context: optional_list
+      known_constraints: optional_list
+      attachments: optional_list
+
+  input_test:
+    checks:
+      - raw_idea_not_empty
+      - raw_idea_has_meaningful_length
+      - input_is_not_only_attachment_reference
+      - constraints_are_explicit_if_known
+    hard_fail:
+      - raw_idea_empty
+      - raw_idea_too_short
+
+  specialist_work:
+    role: ROLE-101
+    output:
+      - original_idea
+      - normalized_intent
+      - problem_statement
+      - expected_outcome
+      - facts
+      - assumptions
+      - unknowns
+      - initial_risks
+      - first_questions
+      - recommended_next_step
+
+  artifact_test:
+    checks:
+      - original_idea_preserved
+      - facts_have_source_refs
+      - assumptions_are_separate
+      - unknowns_are_explicit
+      - recommended_next_step_present
+      - no_project_created_yet
+
+  human_gate:
+    required: true
+    decisions:
+      APPROVE:
+        next: STAGE-001
+        output: PROJECT_CREATION_PROPOSAL
+      HOLD:
+        next: STAGE-000
+        reason_required: true
+      REJECT:
+        terminal_for_idea: true
+        reason_required: true
+
+  prohibition:
+    - do_not_create_github_repository
+    - do_not_create_local_project
+    - do_not_generate_agent
+    - do_not_write_product_code
+    - do_not_skip_human_gate
