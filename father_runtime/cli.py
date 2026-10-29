@@ -11,6 +11,7 @@ from .preflight import model_preflight
 from .runner import StageRunner
 from agents.story_continuation.runtime import StoryAgent
 from agents.alina.profiles.literary.runtime import AlinaLiteraryRuntime
+from agents.alina.profiles.literary.benchmark.runtime import LiteraryBenchmark
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -32,6 +33,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser('inventory-models')
     sub.add_parser('model-preflight')
+
+    bench = sub.add_parser('literary-benchmark')
+    bench.add_argument('--output-root', default='benchmark_results/alina_literary')
+    bench.add_argument('--publish', action='store_true')
 
     alina = sub.add_parser('alina-literary-continue')
     alina.add_argument('--file', required=True)
@@ -55,6 +60,14 @@ def main() -> int:
     if args.command == 'create':
         result = create_factory(args.profile, output_root=args.output_root)
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == 'literary-benchmark':
+        bench = LiteraryBenchmark(output_root=args.output_root)
+        run_dir, manifest = bench.run()
+        if args.publish:
+            bench.publish_git(run_dir)
+        print(json.dumps({'run_dir': str(run_dir), 'automatic_model_count': manifest['automatic_model_count'], 'published': bool(args.publish)}, ensure_ascii=False, indent=2))
         return 0
 
     if args.command == 'alina-literary-continue':
