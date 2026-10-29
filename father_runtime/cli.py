@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 from .adapters import ChatCompletionsHTTPAdapter, GigaChatRESTAdapter, ReferenceStage000Adapter
 from .generator import create_factory
 from .inventory import inventory
 from .preflight import model_preflight
 from .runner import StageRunner
+from agents.story_continuation.runtime import StoryAgent
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -29,6 +31,13 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser('inventory-models')
     sub.add_parser('model-preflight')
+
+    story = sub.add_parser('story-continue')
+    story.add_argument('--file', required=True)
+    story.add_argument('--endpoint', default='http://127.0.0.1:8080/v1/chat/completions')
+    story.add_argument('--model', required=True)
+    story.add_argument('--target-length', type=int, default=500)
+    story.add_argument('--evidence-dir', default='.father/story_runs')
     return p
 
 
@@ -39,6 +48,17 @@ def main() -> int:
         result = create_factory(args.profile, output_root=args.output_root)
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
         return 0
+
+    if args.command == 'story-continue':
+        story_text = Path(args.file).read_text(encoding='utf-8')
+        record = StoryAgent(evidence_dir=args.evidence_dir).run(
+            story_text=story_text,
+            endpoint=args.endpoint,
+            model_id=args.model,
+            target_length=args.target_length,
+        )
+        print(json.dumps(record, ensure_ascii=False, indent=2))
+        return 0 if record['contract_valid'] else 2
 
     if args.command == 'model-preflight':
         print(json.dumps(model_preflight(), ensure_ascii=False, indent=2))
