@@ -1,38 +1,65 @@
 # FATHER Factory
 
-FATHER Factory — схема производственного конвейера AI/agent-систем.
+FATHER Factory — производственная система для проектирования, сборки, проверки, выпуска и улучшения FATHER Platform и последующих продуктов.
 
-Цель: преобразовать неформальное пожелание заказчика в проверяемый, воспроизводимый и сопровождаемый AI-продукт.
+## Первое изделие
 
-## Производственный цикл
+Первое изделие фабрики — **FATHER-PLATFORM**.
 
-CUSTOMER INTENT
-→ BUSINESS ANALYSIS
-→ SYSTEM ANALYSIS
+FATHER должен сам пройти собственный конвейер Stage 000 → Stage 100 с контрактами, агентами, тестами, Security, DevSecOps, provenance, лицензиями, метриками, A/B, Polygon и Evidence.
+
+Только после доказанного прохождения self-factory внешние продукты, включая OSINT reference products, считаются полноценными изделиями платформы.
+
+## Формула изделия
+
+PRODUCT
+= PLATFORM CORE
++ CHASSIS
++ STANDARD BLOCKS
++ DOMAIN PACK
++ AGENTS
++ MODELS
++ TOOLS
++ DATA/RAG
++ UI/CHANNELS
++ CONFIGURATION
++ PROJECT-SPECIFIC PART
+
+Агент является одним из типов блоков, а не всей системой.
+
+## Главный принцип
+
+Ни один компонент не считается готовым, пока не доказана его работоспособность в составе конечного изделия.
+
+## Производственная последовательность
+
+INTENT
+→ PRODUCT DISCOVERY
+→ ANALYSIS
 → ARCHITECTURE
-→ DATA & KNOWLEDGE
-→ AI / LLM DESIGN
-→ SECURITY
-→ DEVELOPMENT
-→ QA
+→ DATA/KNOWLEDGE
+→ AI/MODEL
+→ SECURITY/TRUST
+→ IMPLEMENTATION
+→ TEST/EVAL
 → DEVSECOPS
-→ OPTIMIZATION
+→ OPTIMIZATION/A-B
+→ RC
 → POLYGON
+→ ACCEPTANCE
 → RELEASE
+→ PRODUCTION EXPERIENCE
+→ FACTORY EXPERIENCE
 
-Каждый цех обязан иметь:
-- ROLE.md
-- PROMPT.md
-- ALGORITHM.md
-- RAG_MANIFEST.yaml
-- INPUT_CONTRACT.yaml
-- OUTPUT_CONTRACT.yaml
-- CHECKLIST.md
-- EVALS/
-- EXPERIENCE/
+## Корневые сущности
 
-Первое эталонное изделие: `OSINT_REFERENCE_001`.
-
-## Базовый принцип
-
-Ни один цех не считается готовым, пока его результат не проверен на реальном изделии и не передан следующему цеху по формальному контракту.
+- FACTORY_MANIFEST.yaml — единая конфигурация фабрики.
+- chassis/FATHER_PLATFORM_CHASSIS.yaml — универсальное шасси FATHER.
+- blocks/BLOCK_REGISTRY.yaml — каталог стандартизованных блоков.
+- bootstrap/FATHER_SELF_PRODUCT.yaml — FATHER как первое изделие.
+- bootstrap/FATHER_000_100_MAP.yaml — производственный маршрут 000–100.
+- agents/AGENT_REGISTRY.yaml — Agent Zoo / роли и зрелость.
+- model_fabric/ — сменные модели и A/B.
+- trust/ — provenance, licenses, SBOM, integrity, attestations.
+- tests/ — factory gates.
+- ui/product_field/ — визуальное поле изделия.
