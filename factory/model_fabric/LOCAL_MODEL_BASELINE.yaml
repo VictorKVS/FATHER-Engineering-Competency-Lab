@@ -1,0 +1,46 @@
+local_model_baseline:
+  version: 0.1.0
+  hardware_target:
+    gpu: NVIDIA RTX 3060
+    vram_gb: 12
+    ram_gb: 32
+
+  primary:
+    family: Qwen3.5
+    size: 9B
+    quantization: Q6_K
+    role:
+      - product_discovery
+      - analytical_reasoning
+      - osint_reasoning
+      - structured_output
+      - rag_answering
+    runtime_preference:
+      - llama.cpp
+      - llama-cpp-python
+      - Ollama
+    initial_context_tokens: 8192
+    notes:
+      - keep enough VRAM headroom for KV cache
+      - measure actual VRAM before increasing context
+      - use deterministic structured-output settings for factory gates
+
+  challenger:
+    family: Qwen3
+    size: 14B
+    quantization: Q4_K_M
+    purpose:
+      - AB_quality_comparison
+      - harder_reasoning_cases
+    initial_context_tokens: 8192
+
+  legacy_control:
+    family: Llama3.1
+    size: 8B
+    role: regression_only
+    purpose: compare_against_existing_local_baseline
+
+  model_selection_rule:
+    - factory_contract_validity_over_raw_benchmark_score
+    - no_model_is_promoted_without_stage_AB
+    - specialist_can_override_model_only_through_model_router_policy
