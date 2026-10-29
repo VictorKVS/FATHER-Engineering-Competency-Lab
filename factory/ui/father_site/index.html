@@ -32,6 +32,7 @@
         <h1>Проектирование агента</h1>
       </div>
       <div class="top-actions">
+        <button id="cloneAgent" class="ghost">Создать агента из шаблона</button>
         <button id="loadDemo" class="ghost">Загрузить demo агента</button>
         <button id="validate" class="ghost">Проверить конструкцию</button>
         <button id="exportBtn" class="primary">Экспорт JSON</button>
@@ -112,6 +113,34 @@
         <button class="ghost" id="blockModalExport">Экспорт блока</button>
         <button class="primary" id="blockModalSave">Сохранить изменения</button>
       </div>
+    </footer>
+  </section>
+</div>
+
+
+<div class="clone-modal" id="cloneModal" aria-hidden="true">
+  <div class="clone-backdrop" id="cloneBackdrop"></div>
+  <section class="clone-card">
+    <header>
+      <div><div class="eyebrow">AGENT FACTORY</div><h2>Создать агента из шаблона</h2><p>Клонируется проверенная конструкция, а не готовый интеллект агента.</p></div>
+      <button id="cloneClose">×</button>
+    </header>
+    <div class="clone-grid">
+      <label>Template<input id="cloneTemplate" value="AGENT-TEMPLATE-001" readonly></label>
+      <label>New stable ID<input id="cloneStableId" value="AG-NEW-001"></label>
+      <label>Public name<input id="clonePublicName" placeholder="Например: Security Risk Analyst"></label>
+      <label>Code name<input id="cloneCodeName" placeholder="Внутреннее условное имя"></label>
+      <label class="span2">Purpose<textarea id="clonePurpose" placeholder="Для чего создаётся агент"></textarea></label>
+      <label>Domain<input id="cloneDomain" placeholder="security / osint / legal / ..."></label>
+      <label>Initial state<input value="CLONED_DRAFT" readonly></label>
+    </div>
+    <div class="clone-plan">
+      <span>INHERIT</span> contracts · evidence · versioning · provenance · security baseline
+      <br><span>REBUILD</span> role · prompt · RAG · KB · tools · training · evals · acceptance
+    </div>
+    <footer>
+      <button class="ghost" id="cloneCancel">Отмена</button>
+      <button class="primary" id="cloneCreate">Создать CLONED_DRAFT</button>
     </footer>
   </section>
 </div>
