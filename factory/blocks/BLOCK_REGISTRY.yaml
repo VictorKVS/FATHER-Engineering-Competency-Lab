@@ -1,0 +1,46 @@
+block_registry:
+  id: FATHER_BLOCK_REGISTRY
+  version: 0.1.0
+
+  statuses:
+    - IDEA
+    - SPECIFIED
+    - IMPLEMENTED
+    - UNIT_VERIFIED
+    - INTEGRATION_VERIFIED
+    - SECURITY_VERIFIED
+    - POLYGON_VERIFIED
+    - PRODUCTION_PROVEN
+
+  types:
+    - CORE
+    - AGENT
+    - MODEL
+    - TOOL
+    - DATA
+    - RAG
+    - UI
+    - SECURITY
+    - OBSERVABILITY
+    - DEVSECOPS
+    - STORAGE
+    - ADAPTER
+
+  blocks:
+    - {id: B-CORE-RUNTIME, type: CORE, name: Runtime, status: SPECIFIED}
+    - {id: B-CORE-STATE, type: CORE, name: State, status: SPECIFIED}
+    - {id: B-CORE-EVENTBUS, type: CORE, name: Event Bus, status: SPECIFIED}
+    - {id: B-CORE-API, type: CORE, name: API Gateway, status: SPECIFIED}
+    - {id: B-MODEL-ROUTER, type: MODEL, name: Model Router, status: SPECIFIED}
+    - {id: B-MODEL-SLOT, type: MODEL, name: Replaceable Model Slot, status: SPECIFIED}
+    - {id: B-AGENT-RUNTIME, type: AGENT, name: Agent Runtime, status: SPECIFIED}
+    - {id: B-WORKFLOW, type: CORE, name: Workflow Engine, status: SPECIFIED}
+    - {id: B-RAG, type: RAG, name: RAG / Knowledge, status: SPECIFIED}
+    - {id: B-TOOLS, type: TOOL, name: Tool / MCP Runtime, status: SPECIFIED}
+    - {id: B-EVAL, type: CORE, name: Eval Engine, status: SPECIFIED}
+    - {id: B-AB, type: CORE, name: A/B Engine, status: SPECIFIED}
+    - {id: B-OBS, type: OBSERVABILITY, name: Observability, status: SPECIFIED}
+    - {id: B-TRUST, type: SECURITY, name: Trust / Provenance / Licensing, status: SPECIFIED}
+    - {id: B-SECURITY, type: SECURITY, name: Security Policy / Guardrails, status: SPECIFIED}
+    - {id: B-EVIDENCE, type: STORAGE, name: Evidence / Artifact Registry, status: SPECIFIED}
+    - {id: B-UI-PRODUCT, type: UI, name: Product Field, status: IMPLEMENTED}
