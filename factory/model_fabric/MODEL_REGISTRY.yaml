@@ -122,6 +122,99 @@ model_registry:
       status: AVAILABILITY_DEPENDS_ON_ACCOUNT
       candidate_roles: [reference_challenger, hard_tasks]
 
+  discovered_on_target_host_2026_10_29:
+    - id: MDL-GIGACHAT-20B-A3B-Q4
+      display_name: GigaChat-20B-A3B-instruct-q4_K_M.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT
+      status: DISCOVERED_LOCAL
+      path_hint: C:/Users/1/.lmstudio/models/ai-sage/GigaChat-20B-A3B-instruct-GGUF/
+      candidate_roles: [alina, product_manager, osint_reasoning, russian_language]
+
+    - id: MDL-GIGACHAT-20B-A3B-V15-Q4
+      display_name: GigaChat-20B-A3B-instruct-v1.5-q4_K_M.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT
+      status: DISCOVERED_LOCAL
+      candidate_roles: [alina, product_manager, osint_reasoning, russian_language]
+
+    - id: MDL-GIGACHAT3-10B-A18-Q4KS
+      display_name: ai-sage_GigaChat3-10B-A1.8B-Q4_K_S.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT
+      status: DISCOVERED_LOCAL
+      candidate_roles: [alina, fast_reasoning, russian_language]
+
+    - id: MDL-DEEPSEEK-CODER-V2-LITE-Q4
+      display_name: deepseek-coder-v2-lite-instruct-q4_k_m.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT_CODE
+      status: DISCOVERED_LOCAL
+      candidate_roles: [father_codex, code_review, code_reasoning]
+
+    - id: MDL-DEEPSEEK-CODER-V2-LITE-Q5
+      display_name: deepseek-coder-v2-lite-instruct-q5_k_m.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT_CODE
+      status: DISCOVERED_LOCAL
+      candidate_roles: [father_codex, code_review, code_reasoning]
+
+    - id: MDL-QWEN25-14B-1M-Q4
+      display_name: Qwen2.5-14B-Instruct-1M-Q4_K_M.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT
+      status: DISCOVERED_LOCAL
+      candidate_roles: [alina, long_context_reasoning, product_manager, osint_reasoning]
+
+    - id: MDL-QWEN25-CODER-14B-Q4
+      display_name: qwen2.5-coder-14b-instruct-q4_k_m.gguf
+      provider: LOCAL_GGUF
+      modality: TEXT_CODE
+      status: DISCOVERED_LOCAL
+      candidate_roles: [father_codex, code_generation, code_review]
+
+    - id: MDL-LLAVA16-MISTRAL-7B-Q4
+      display_name: llava-v1.6-mistral-7b.Q4_K_M.gguf
+      provider: LOCAL_GGUF
+      modality: MULTIMODAL
+      status: DISCOVERED_LOCAL
+      candidate_roles: [visual_analysis]
+
+    - id: MDL-LLAVA-LLAMA3-8B-INT4
+      display_name: llava-llama-3-8b-v1_1-int4.gguf
+      provider: LOCAL_GGUF
+      modality: MULTIMODAL
+      status: DISCOVERED_LOCAL
+      candidate_roles: [visual_analysis]
+
+    - id: MDL-COGVLM-13B-F16
+      display_name: cogvlm-13B-chat-v1.1-F16.gguf
+      provider: LOCAL_GGUF
+      modality: MULTIMODAL
+      status: DISCOVERED_LOCAL_HEAVY
+      candidate_roles: [visual_analysis]
+      constraints: [high_memory_footprint]
+
+    - id: MDL-BGE-M3-Q8
+      display_name: bge-m3-q8_0.gguf
+      provider: LOCAL_GGUF
+      modality: EMBEDDING
+      status: DISCOVERED_LOCAL
+      candidate_roles: [rag_embeddings, multilingual_retrieval]
+
+    - id: MDL-WHISPER-LARGE-V3-TURBO-Q4
+      display_name: model_q4_k.gguf
+      provider: LOCAL_GGUF
+      modality: SPEECH_TO_TEXT
+      status: DISCOVERED_LOCAL
+      candidate_roles: [speech_ingest]
+
+  support_files:
+    - pattern: mmproj-*.gguf
+      type: MULTIMODAL_PROJECTOR
+      rule: not_a_standalone_llm_candidate
+
+
   acquisition_policy:
     - do_not_download_new_model_until_gap_is_proven_by_eval
     - prefer_existing_verified_models
