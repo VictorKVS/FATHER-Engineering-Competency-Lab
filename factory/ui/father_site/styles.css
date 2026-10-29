@@ -57,3 +57,13 @@ button,select,input,textarea{font:inherit}
 .alina-edit-launch{display:grid;grid-template-columns:72px 1fr;gap:15px;align-items:start}
 .alina-launch-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;border:1px solid #8156cf;background:radial-gradient(circle,#4c347d,#151020);color:#eadfff;font-weight:800;font-size:20px;box-shadow:0 0 28px #7f50e555}
 .alina-edit-launch h4{font-size:13px;color:#d9c6ff}.alina-edit-launch p{margin:0 0 12px}.alina-launch-btn{margin:3px 0 10px}
+
+/* Agent clone workflow */
+.clone-modal{position:fixed;inset:0;z-index:70;display:none}.clone-modal.open{display:block}
+.clone-backdrop{position:absolute;inset:0;background:#02060bd9;backdrop-filter:blur(10px)}
+.clone-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(820px,92vw);background:linear-gradient(150deg,#0b1724,#07101a);border:1px solid #2d5470;border-radius:17px;box-shadow:0 35px 100px #000d,0 0 35px #29bdf31a;overflow:hidden}
+.clone-card header{display:flex;justify-content:space-between;gap:20px;padding:18px 20px;border-bottom:1px solid var(--line)}.clone-card header h2{margin:3px 0;font-size:21px}.clone-card header p{margin:0;color:#70869a;font-size:10px}.clone-card header>button{width:34px;height:34px;border:1px solid #2b4d66;background:#0a1926;color:#d4ebfa;border-radius:9px;font-size:21px}
+.clone-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:18px 20px}.clone-grid label{font-size:9px;color:#668096;letter-spacing:.07em}.clone-grid input,.clone-grid textarea{display:block;width:100%;margin-top:5px;border:1px solid #244259;background:#07131e;color:#e3eef7;border-radius:8px;padding:9px;font-size:11px}.clone-grid textarea{min-height:85px;resize:vertical}.clone-grid .span2{grid-column:1/-1}
+.clone-plan{margin:0 20px 16px;border:1px solid #1e3a50;background:#081622;border-radius:9px;padding:11px;color:#7790a3;font-size:9px;line-height:1.7}.clone-plan span{color:#6edcff;font-weight:700;margin-right:5px}
+.clone-card footer{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--line);padding:12px 18px;background:#07111b}
+@media(max-width:700px){.clone-grid{grid-template-columns:1fr}.clone-grid .span2{grid-column:auto}}
