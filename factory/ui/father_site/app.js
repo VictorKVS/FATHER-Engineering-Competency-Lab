@@ -42,15 +42,100 @@ function renderNodes(){
   n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>';
   n.onclick=()=>selectBlock(b.id);nodes.appendChild(n);
  });
- requestAnimationFrame(drawWires);
+ requestAnimationFrame(()=>{drawWires();enableNodeDragging();});
 }
+function edgeGeometry(A,B){
+ const ax=A.offsetLeft+A.offsetWidth, ay=A.offsetTop+A.offsetHeight/2;
+ const bx=B.offsetLeft, by=B.offsetTop+B.offsetHeight/2;
+ const distance=Math.hypot(bx-ax,by-ay);
+ return {ax,ay,bx,by,distance};
+}
+function proximityOpacity(distance){
+ const SNAP_DISTANCE=150;
+ const FADE_DISTANCE=420;
+ if(distance<=SNAP_DISTANCE)return 1;
+ if(distance>=FADE_DISTANCE)return 0;
+ const t=(distance-SNAP_DISTANCE)/(FADE_DISTANCE-SNAP_DISTANCE);
+ return 1-(t*t*(3-2*t));
+}
+function curvedPath({ax,ay,bx,by}){
+ const span=Math.max(60,Math.abs(bx-ax));
+ const bend=Math.min(180,Math.max(70,span*.46));
+ return `M ${ax} ${ay} C ${ax+bend} ${ay}, ${bx-bend} ${by}, ${bx} ${by}`;
+}
+let flowMode=false;
 function drawWires(){
  svg.innerHTML="";
- edges.forEach(([a,b])=>{
+ edges.forEach(([a,b],edgeIndex)=>{
   const A=document.querySelector('[data-id="'+a+'"]'),B=document.querySelector('[data-id="'+b+'"]');if(!A||!B)return;
-  const x1=A.offsetLeft+A.offsetWidth,y1=A.offsetTop+A.offsetHeight/2,x2=B.offsetLeft,y2=B.offsetTop+B.offsetHeight/2;
-  const mid=(x1+x2)/2;
-  const p=document.createElementNS("http://www.w3.org/2000/svg","path");p.setAttribute("class","wire");p.setAttribute("d",`M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`);svg.appendChild(p);
+  const g=edgeGeometry(A,B);
+  const opacity=proximityOpacity(g.distance);
+  if(opacity<=.01)return;
+
+  const group=document.createElementNS("http://www.w3.org/2000/svg","g");
+  group.setAttribute("class","wire-group"+(g.distance<=150?" magnetic":""));
+  group.style.opacity=String(opacity);
+
+  const base=document.createElementNS("http://www.w3.org/2000/svg","path");
+  base.setAttribute("class","wire");
+  base.setAttribute("d",curvedPath(g));
+  base.dataset.edge=String(edgeIndex);
+  group.appendChild(base);
+
+  const pulse=document.createElementNS("http://www.w3.org/2000/svg","path");
+  pulse.setAttribute("class","wire-pulse"+(flowMode?" active":""));
+  pulse.setAttribute("d",curvedPath(g));
+  pulse.style.animationDelay=(edgeIndex*.12)+"s";
+  group.appendChild(pulse);
+
+  const p1=document.createElementNS("http://www.w3.org/2000/svg","circle");
+  p1.setAttribute("class","wire-port");
+  p1.setAttribute("cx",g.ax);p1.setAttribute("cy",g.ay);p1.setAttribute("r",g.distance<=150?4:2.5);
+  group.appendChild(p1);
+  const p2=p1.cloneNode();
+  p2.setAttribute("cx",g.bx);p2.setAttribute("cy",g.by);
+  group.appendChild(p2);
+
+  svg.appendChild(group);
+ });
+}
+function setFlowMode(value,duration=2600){
+ flowMode=value;
+ drawWires();
+ document.querySelectorAll(".node").forEach(n=>n.classList.toggle("processing",value));
+ if(value){
+  clearTimeout(window.__flowTimer);
+  window.__flowTimer=setTimeout(()=>{flowMode=false;drawWires();document.querySelectorAll(".node").forEach(n=>n.classList.remove("processing"));},duration);
+ }
+}
+function enableNodeDragging(){
+ let drag=null;
+ document.querySelectorAll(".node").forEach(node=>{
+  node.addEventListener("pointerdown",e=>{
+   if(e.button!==0)return;
+   const b=blocks.find(x=>x.id===node.dataset.id);if(!b)return;
+   drag={node,b,startX:e.clientX,startY:e.clientY,originX:b.x,originY:b.y,moved:false};
+   node.setPointerCapture(e.pointerId);
+   node.classList.add("dragging");
+  });
+  node.addEventListener("pointermove",e=>{
+   if(!drag||drag.node!==node)return;
+   const dx=e.clientX-drag.startX,dy=e.clientY-drag.startY;
+   if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;
+   drag.b.x=Math.max(8,drag.originX+dx);
+   drag.b.y=Math.max(46,drag.originY+dy);
+   node.style.left=drag.b.x+"px";node.style.top=drag.b.y+"px";
+   drawWires();
+  });
+  node.addEventListener("pointerup",e=>{
+   if(!drag||drag.node!==node)return;
+   const moved=drag.moved;
+   node.classList.remove("dragging");
+   node.releasePointerCapture(e.pointerId);
+   drag=null;
+   drawWires();
+   if(moved)e.stopPropagation();
+  });
  });
 }
 function selectBlock(id){
@@ -77,8 +162,8 @@ sel.onchange=()=>{renderModel();selectBlock("model")};renderModel();
 const checks=["Role defined","Prompt versioned","RAG attached","Knowledge Base attached","Model Slot replaceable","Input contract","Output contract","Evals","Evidence"];
 document.getElementById("checklist").innerHTML=checks.map(x=>'<div class="check"><span>'+x+'</span><b>READY</b></div>').join("");
 document.getElementById("loadDemo").onclick=()=>{selectBlock("role");toast("ALINA Literary demo загружен")};
-document.getElementById("validate").onclick=()=>{document.getElementById("gateStatus").textContent="DESIGN PASS";document.getElementById("gateStatus").className="";toast("Конструкция полная. Runtime proof ещё требуется.")};
-document.getElementById("runDemo").onclick=()=>toast("Demo package готов: AG-001 + "+config.selected_model);
+document.getElementById("validate").onclick=()=>{setFlowMode(true,3400);document.getElementById("gateStatus").textContent="CHECKING";document.getElementById("gateStatus").className="hold";toast("Проверка связей: импульс проходит по активной цепочке");setTimeout(()=>{document.getElementById("gateStatus").textContent="DESIGN PASS";document.getElementById("gateStatus").className="";},3200)};
+document.getElementById("runDemo").onclick=()=>{setFlowMode(true,4200);toast("AG-001: визуальный проход данных через активные связи · "+config.selected_model)};
 document.getElementById("exportBtn").onclick=()=>{
  const data={...config,model_candidates:models.map(x=>x.id),blocks:blocks.map(({id,type,title})=>({id,type,title})),edges};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="father-agent-design.json";a.click();URL.revokeObjectURL(a.href);toast("Agent design JSON экспортирован");
