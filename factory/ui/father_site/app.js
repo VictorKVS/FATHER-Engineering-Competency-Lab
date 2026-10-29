@@ -275,19 +275,19 @@ function renderModalTab(){
    '<div class="modal-section"><h4>Чем редактируется</h4><p>'+d.editor+'</p></div>'+
    '<div class="modal-section"><h4>Как работает изменение</h4><p>Изменение сначала живёт как локальный draft в интерфейсе. Затем его можно экспортировать и перенести в канонический файл FATHER, после чего изменение должно пройти тесты и evidence.</p></div>';
  }else{
-  const alinaEditable=["prompt","rag","kb"].includes(currentModalBlock);
+  const alinaEditable=["role","prompt","rag","kb"].includes(currentModalBlock);
   if(alinaEditable){
    modalBody.innerHTML=
     '<div class="modal-section alina-edit-launch">'+
     '<div class="alina-launch-orb">A</div>'+
     '<div><h4>Редактирование через ALINA Analyst</h4>'+
     '<p>Этот блок относится к интеллектуальной части агента. Его изменение выполняется через аналитическое ядро ALINA: цель → источники → граф знаний → proposal → eval → новая версия.</p>'+
-    '<button class="primary alina-launch-btn" id="openAlinaEditor">Редактировать в ALINA</button>'+
+    '<button class="primary alina-launch-btn" id="openAlinaEditor">'+editorRouteForBlock(currentModalBlock).label+'</button>'+
     '<p class="edit-note">ALINA не заменяет канон напрямую: новая редакция сначала создаётся как PROPOSAL и должна пройти проверки.</p></div>'+
     '</div>';
    requestAnimationFrame(()=>{
     const btn=document.getElementById("openAlinaEditor");
-    if(btn)btn.onclick=()=>{location.href="./alina.html?block="+encodeURIComponent(currentModalBlock)};
+    if(btn)btn.onclick=()=>{location.href=editorRouteForBlock(currentModalBlock).url};
    });
   }else{
    const draft=blockDrafts[currentModalBlock]||defaultEditableValue(currentModalBlock);
@@ -300,6 +300,17 @@ function renderModalTab(){
   }
  }
 }
+
+function editorRouteForBlock(id){
+ const routes={
+  role:{workspace:"ALINA",url:"./alina.html?block=role",label:"Редактировать в ALINA"},
+  prompt:{workspace:"ALINA",url:"./alina.html?block=prompt",label:"Редактировать в ALINA"},
+  rag:{workspace:"ALINA",url:"./alina.html?block=rag",label:"Редактировать в ALINA"},
+  kb:{workspace:"ALINA",url:"./alina.html?block=kb",label:"Редактировать в ALINA"}
+ };
+ return routes[id]||{workspace:"LOCAL",url:null,label:"Редактировать"};
+}
+
 function defaultEditableValue(id){
  const b=blocks.find(x=>x.id===id),d=blockDocs[id]||{};
  return {desc:b.desc,config:"repo: "+(d.repoPath||"")+"\nversion: "+(d.version||"")};
@@ -314,8 +325,8 @@ document.getElementById("blockModalClose").onclick=closeBlockModal;
 document.getElementById("blockModalBackdrop").onclick=closeBlockModal;
 document.querySelectorAll(".modal-tab").forEach(tab=>tab.onclick=()=>{currentModalTab=tab.dataset.modalTab;document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x===tab));renderModalTab()});
 document.getElementById("blockModalSave").onclick=()=>{
- if(currentModalTab!=="edit"){currentModalTab="edit";document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="edit"));renderModalTab();toast(["prompt","rag","kb"].includes(currentModalBlock)?"Редактирование передано в ALINA":"Режим редактирования открыт");return}
- if(["prompt","rag","kb"].includes(currentModalBlock)){location.href="./alina.html?block="+encodeURIComponent(currentModalBlock);return}
+ if(currentModalTab!=="edit"){currentModalTab="edit";document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="edit"));renderModalTab();toast(["role","prompt","rag","kb"].includes(currentModalBlock)?"Редактирование передано в ALINA":"Режим редактирования открыт");return}
+ if(["role","prompt","rag","kb"].includes(currentModalBlock)){location.href=editorRouteForBlock(currentModalBlock).url;return}
  const b=blocks.find(x=>x.id===currentModalBlock);
  const title=document.getElementById("modalEditTitle")?.value?.trim()||b.title;
  const desc=document.getElementById("modalEditDesc")?.value??b.desc;
