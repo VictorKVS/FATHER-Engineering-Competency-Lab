@@ -268,13 +268,29 @@ function renderModalTab(){
    '<div class="modal-section"><h4>Чем редактируется</h4><p>'+d.editor+'</p></div>'+
    '<div class="modal-section"><h4>Как работает изменение</h4><p>Изменение сначала живёт как локальный draft в интерфейсе. Затем его можно экспортировать и перенести в канонический файл FATHER, после чего изменение должно пройти тесты и evidence.</p></div>';
  }else{
-  const draft=blockDrafts[currentModalBlock]||defaultEditableValue(currentModalBlock);
-  modalBody.innerHTML=
-   '<div class="modal-section edit-section"><h4>Редактирование блока</h4>'+
-   '<label>Заголовок<input id="modalEditTitle" value="'+escapeHtml(b.title)+'"></label>'+
-   '<label>Описание<textarea id="modalEditDesc">'+escapeHtml(draft.desc)+'</textarea></label>'+
-   '<label>Конфигурация / заметки<textarea id="modalEditConfig">'+escapeHtml(draft.config)+'</textarea></label>'+
-   '<p class="edit-note">Сохранение здесь меняет только текущий UI draft. Канонический файл в GitHub изменяется отдельным инженерным коммитом после проверки.</p></div>';
+  const alinaEditable=["prompt","rag","kb"].includes(currentModalBlock);
+  if(alinaEditable){
+   modalBody.innerHTML=
+    '<div class="modal-section alina-edit-launch">'+
+    '<div class="alina-launch-orb">A</div>'+
+    '<div><h4>Редактирование через ALINA Analyst</h4>'+
+    '<p>Этот блок относится к интеллектуальной части агента. Его изменение выполняется через аналитическое ядро ALINA: цель → источники → граф знаний → proposal → eval → новая версия.</p>'+
+    '<button class="primary alina-launch-btn" id="openAlinaEditor">Редактировать в ALINA</button>'+
+    '<p class="edit-note">ALINA не заменяет канон напрямую: новая редакция сначала создаётся как PROPOSAL и должна пройти проверки.</p></div>'+
+    '</div>';
+   requestAnimationFrame(()=>{
+    const btn=document.getElementById("openAlinaEditor");
+    if(btn)btn.onclick=()=>{location.href="./alina.html?block="+encodeURIComponent(currentModalBlock)};
+   });
+  }else{
+   const draft=blockDrafts[currentModalBlock]||defaultEditableValue(currentModalBlock);
+   modalBody.innerHTML=
+    '<div class="modal-section edit-section"><h4>Редактирование блока</h4>'+
+    '<label>Заголовок<input id="modalEditTitle" value="'+escapeHtml(b.title)+'"></label>'+
+    '<label>Описание<textarea id="modalEditDesc">'+escapeHtml(draft.desc)+'</textarea></label>'+
+    '<label>Конфигурация / заметки<textarea id="modalEditConfig">'+escapeHtml(draft.config)+'</textarea></label>'+
+    '<p class="edit-note">Сохранение здесь меняет только текущий UI draft. Канонический файл в GitHub изменяется отдельным инженерным коммитом после проверки.</p></div>';
+  }
  }
 }
 function defaultEditableValue(id){
@@ -291,7 +307,8 @@ document.getElementById("blockModalClose").onclick=closeBlockModal;
 document.getElementById("blockModalBackdrop").onclick=closeBlockModal;
 document.querySelectorAll(".modal-tab").forEach(tab=>tab.onclick=()=>{currentModalTab=tab.dataset.modalTab;document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x===tab));renderModalTab()});
 document.getElementById("blockModalSave").onclick=()=>{
- if(currentModalTab!=="edit"){currentModalTab="edit";document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="edit"));renderModalTab();toast("Режим редактирования открыт");return}
+ if(currentModalTab!=="edit"){currentModalTab="edit";document.querySelectorAll(".modal-tab").forEach(x=>x.classList.toggle("active",x.dataset.modalTab==="edit"));renderModalTab();toast(["prompt","rag","kb"].includes(currentModalBlock)?"Редактирование передано в ALINA":"Режим редактирования открыт");return}
+ if(["prompt","rag","kb"].includes(currentModalBlock)){location.href="./alina.html?block="+encodeURIComponent(currentModalBlock);return}
  const b=blocks.find(x=>x.id===currentModalBlock);
  const title=document.getElementById("modalEditTitle")?.value?.trim()||b.title;
  const desc=document.getElementById("modalEditDesc")?.value??b.desc;
