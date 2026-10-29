@@ -88,6 +88,34 @@
   </main>
 </div>
 
+
+<div class="block-modal" id="blockModal" aria-hidden="true">
+  <div class="block-modal-backdrop" id="blockModalBackdrop"></div>
+  <section class="block-modal-card" role="dialog" aria-modal="true" aria-labelledby="blockModalTitle">
+    <header class="block-modal-head">
+      <div>
+        <div class="eyebrow" id="blockModalEyebrow">BLOCK</div>
+        <h2 id="blockModalTitle">Block</h2>
+        <p id="blockModalSubtitle"></p>
+      </div>
+      <button class="modal-close" id="blockModalClose" aria-label="Закрыть">×</button>
+    </header>
+    <div class="block-modal-tabs">
+      <button class="modal-tab active" data-modal-tab="about">Описание</button>
+      <button class="modal-tab" data-modal-tab="location">Где находится</button>
+      <button class="modal-tab" data-modal-tab="edit">Редактирование</button>
+    </div>
+    <div class="block-modal-body" id="blockModalBody"></div>
+    <footer class="block-modal-foot">
+      <span id="blockModalStatus">LOCAL DRAFT</span>
+      <div>
+        <button class="ghost" id="blockModalExport">Экспорт блока</button>
+        <button class="primary" id="blockModalSave">Сохранить изменения</button>
+      </div>
+    </footer>
+  </section>
+</div>
+
 <div class="toast" id="toast"></div>
 <script src="./app.js"></script>
 </body>
