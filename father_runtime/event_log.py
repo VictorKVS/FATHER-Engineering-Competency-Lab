@@ -107,3 +107,72 @@ def export_trace_file(
         encoding="utf-8",
     )
     return path
+
+
+def next_daily_trace_number(target_dir: Path | None = None) -> tuple[str, int]:
+    target_dir = target_dir or desktop_trace_dir()
+    date_str = datetime.now().astimezone().strftime("%Y-%m-%d")
+    prefix = f"NEXUS_TRACE_{date_str}_"
+    highest = 0
+    for path in target_dir.glob(f"{prefix}*.json"):
+        stem = path.stem
+        try:
+            suffix = stem.rsplit("_", 1)[1]
+            highest = max(highest, int(suffix))
+        except Exception:
+            continue
+    return date_str, highest + 1
+
+
+def reserve_trace_file(session_id: str) -> Path:
+    target = desktop_trace_dir()
+    date_str, number = next_daily_trace_number(target)
+    path = target / f"NEXUS_TRACE_{date_str}_{number:03d}.json"
+    payload = {
+        "schema": "NEXUS_FACTORY_TRACE_EXPORT_V1",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "session_id": session_id,
+        "trace_number": number,
+        "trace_date": date_str,
+        "status": "ACTIVE",
+        "events": [],
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
+
+
+def append_trace_snapshot(
+    *,
+    trace_path: str | Path,
+    session_id: str,
+    runtime_events: list[dict[str, Any]],
+    ui_events: list[dict[str, Any]] | None = None,
+    page: str | None = None,
+    status: str = "ACTIVE",
+) -> Path:
+    path = Path(trace_path)
+    ui_events = ui_events or []
+    merged = sorted(
+        [*ui_events, *runtime_events],
+        key=lambda e: str(e.get("timestamp", "")),
+    )
+    payload = {
+        "schema": "NEXUS_FACTORY_TRACE_EXPORT_V1",
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "session_id": session_id,
+        "page": page,
+        "status": status,
+        "ui_event_count": len(ui_events),
+        "runtime_event_count": len(runtime_events),
+        "total_event_count": len(merged),
+        "events": merged,
+    }
+    try:
+        existing=json.loads(path.read_text(encoding="utf-8"))
+        payload["trace_number"]=existing.get("trace_number")
+        payload["trace_date"]=existing.get("trace_date")
+        payload["created_at"]=existing.get("created_at")
+    except Exception:
+        pass
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
