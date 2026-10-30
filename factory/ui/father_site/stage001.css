@@ -10,3 +10,13 @@
 .execution-approved-actions{display:flex;gap:7px;flex-shrink:0}
 .execution-approved-actions button{white-space:nowrap}
 @media(max-width:800px){.execution-approved-banner,.execution-locked-banner{align-items:flex-start;flex-direction:column}.execution-approved-actions{width:100%}.execution-approved-actions button{flex:1}}
+
+.runtime-state{display:flex;justify-content:space-between;align-items:center;border-radius:9px;padding:9px 11px;margin-bottom:10px;border:1px solid #29465b;background:#08151f;font-size:9px}.runtime-state b{color:#cce8f5}.runtime-state span{font-size:8px}.runtime-state.ok{border-color:#2b6b53}.runtime-state.ok span{color:#71e0aa}.runtime-state.bad{border-color:#69423d}.runtime-state.bad span{color:#e58f84}
+.execution-controls{display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap}.execution-controls button{min-width:170px}
+.runtime-preflight-empty{color:#71889a;font-size:9px;padding:8px 0}
+.preflight-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.preflight-row{display:grid;grid-template-columns:1fr auto;gap:5px;border:1px solid #1c3447;background:#07141e;border-radius:8px;padding:8px}.preflight-row span{font-size:9px;color:#8296a6}.preflight-row b{font-size:8px}.preflight-row small{grid-column:1/-1;color:#5e778a;font-size:8px;overflow-wrap:anywhere}
+.preflight-conflicts{border:1px solid #6d3c39;background:#1b0f11;border-radius:8px;padding:9px;margin-top:8px}.preflight-conflicts b{display:block;color:#ef9188;font-size:9px;margin-bottom:5px}.preflight-conflicts span{display:block;color:#c77972;font-size:8px;margin-top:3px}
+.preflight-clear{border:1px solid #285e49;background:#0b1d16;color:#71dba7;border-radius:8px;padding:9px;margin-top:8px;font-size:9px}
+.preflight-actions{margin-top:8px;color:#73899a;font-size:8px}.preflight-actions b{color:#9fc2d5}
+.project-links{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.project-links button{border:1px solid #2a4d64;background:#091722;color:#b9d7e7;border-radius:8px;padding:8px 10px;font-size:9px}.project-links button:disabled{opacity:.35}
+@media(max-width:800px){.preflight-grid{grid-template-columns:1fr}.execution-controls button{width:100%}}
