@@ -1,0 +1,27 @@
+demo_autopilot:
+  id: NEXUS_DEMO_AUTOPILOT_V1
+  version: 1.0.0
+  purpose: >-
+    Minimal end-to-end proof that the factory can execute the complete
+    000-100 production line before individual stages are made sophisticated.
+  safety:
+    production_valid: false
+    evidence_class: DEMO_ONLY
+    gate_decision: DEMO_AUTO_APPROVED
+    may_replace_human_gate_in_production: false
+  target:
+    project_id: PRJ-STORY-001
+    local_directory: "G:\\1\\NEXUS-STORY-ENGINE"
+    github_repository: VictorKVS/NEXUS-STORY-ENGINE
+  stage_policy:
+    stages: "000-100"
+    input_test: PASS
+    specialist_work: MINIMAL_IMPLEMENTATION
+    artifact_test: PASS
+    evidence: REQUIRED
+    gate: DEMO_AUTO_APPROVED
+    stop_on_error: true
+  completion:
+    required_stage_count: 101
+    final_stage: STAGE-100
+    final_state: DEMO_PRODUCTION_PROVEN
