@@ -10,6 +10,7 @@ import sys
 import webbrowser
 
 from .project_scaffold import ProjectScaffoldGenerator
+from .event_log import FactoryEventLogger
 
 
 @dataclass
@@ -34,6 +35,7 @@ class PreflightResult:
 class ProjectInitializer:
     def __init__(self, repo_root: str | Path = ".") -> None:
         self.repo_root = Path(repo_root)
+        self.events = FactoryEventLogger()
 
     @staticmethod
     def _run(args: list[str], cwd: Path | None = None, check: bool = False) -> subprocess.CompletedProcess[str]:
@@ -95,6 +97,8 @@ class ProjectInitializer:
         }
 
     def preflight(self, proposal: dict[str, Any], execution_plan: dict[str, Any]) -> PreflightResult:
+        session_id = str(proposal.get("session_id") or "runtime")
+        self.events.emit(session_id=session_id, stage_id="STAGE-001", source="RUNTIME", event_type="PREFLIGHT_START", action="project_preflight", status="STARTED", project_id=proposal.get("project_id"), details={"repository": self._github_full_name(proposal), "local_directory": proposal.get("local_directory")})
         full_name = self._github_full_name(proposal)
         github_exists, github_url = self.github_status(full_name)
         local = self.local_status(proposal["local_directory"], full_name)
@@ -131,7 +135,7 @@ class ProjectInitializer:
             conflicts.append("GH_CLI_NOT_AVAILABLE_OR_NOT_AUTHENTICATED")
             allowed += ["INSTALL_OR_AUTHENTICATE_GH"]
 
-        return PreflightResult(
+        result = PreflightResult(
             github_repository=full_name,
             github_exists=github_exists,
             github_url=github_url,
@@ -145,6 +149,8 @@ class ProjectInitializer:
             conflicts=sorted(set(conflicts)),
             allowed_actions=sorted(set(allowed)),
         )
+        self.events.emit(session_id=session_id, stage_id="STAGE-001", source="RUNTIME", event_type="PREFLIGHT_RESULT", action="project_preflight", status="PASS" if not result.conflicts else "HOLD", project_id=proposal.get("project_id"), details=result.to_dict())
+        return result
 
     def execute(
         self,
@@ -155,9 +161,11 @@ class ProjectInitializer:
     ) -> dict[str, Any]:
         if not approved:
             raise PermissionError("STAGE-001 execution requires explicit human approval")
-
+        session_id = str(proposal.get("session_id") or "runtime")
+        self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GATE", event_type="GATE_DECISION", action="approve_execution", status="APPROVED", project_id=proposal.get("project_id"))
         preflight = self.preflight(proposal, execution_plan)
         if preflight.conflicts:
+            self.events.emit(session_id=session_id, stage_id="STAGE-001", source="RUNTIME", event_type="EXECUTION_STEP", action="execution_blocked_by_preflight", status="HOLD", project_id=proposal.get("project_id"), details=preflight.to_dict())
             return {
                 "status": "BLOCKED",
                 "reason": "PREFLIGHT_CONFLICT",
@@ -172,11 +180,13 @@ class ProjectInitializer:
         visibility = proposal.get("visibility", "private")
 
         steps: list[dict[str, Any]] = []
+        self.events.emit(session_id=session_id, stage_id="STAGE-001", source="RUNTIME", event_type="EXECUTION_START", action="project_initialization", status="STARTED", project_id=proposal.get("project_id"), details={"execution_plan": execution_plan})
 
         if github_mode == "CREATE_NEW":
             cmd = ["gh", "repo", "create", full_name, f"--{visibility}"]
             result = self._run(cmd)
             steps.append({"step": "create_github", "returncode": result.returncode, "stderr": result.stderr.strip()})
+            self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GITHUB", event_type="GITHUB_OPERATION", action="create_repository", status="PASS" if result.returncode == 0 else "ERROR", project_id=proposal.get("project_id"), target=full_name, details={"returncode": result.returncode, "stderr": result.stderr.strip()})
             if result.returncode != 0:
                 return {"status": "FAIL", "steps": steps, "preflight": preflight.to_dict()}
 
@@ -198,6 +208,7 @@ class ProjectInitializer:
                     approved=True,
                 )
                 steps.append({"step": "create_scaffold", "returncode": 0})
+                self.events.emit(session_id=session_id, stage_id="STAGE-001", source="FILESYSTEM", event_type="DIRECTORY_CREATED", action="create_project_scaffold", status="PASS", project_id=proposal.get("project_id"), target=str(local_root), details={"stage_files":101})
             else:
                 self._populate_existing_root(local_root, proposal)
                 steps.append({"step": "populate_existing_root", "returncode": 0})
@@ -205,6 +216,7 @@ class ProjectInitializer:
             if not (local_root / ".git").exists():
                 result = self._run(["git", "init", "-b", proposal.get("default_branch", "main")], cwd=local_root)
                 steps.append({"step": "git_init", "returncode": result.returncode, "stderr": result.stderr.strip()})
+                self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GIT", event_type="GIT_COMMAND", action="git_init", status="PASS" if result.returncode == 0 else "ERROR", project_id=proposal.get("project_id"), target=str(local_root), details={"returncode":result.returncode})
                 if result.returncode != 0:
                     return {"status": "FAIL", "steps": steps, "preflight": preflight.to_dict()}
 
@@ -215,6 +227,7 @@ class ProjectInitializer:
             else:
                 result = self._run(["git", "remote", "set-url", "origin", expected_https], cwd=local_root)
             steps.append({"step": "bind_origin", "returncode": result.returncode, "stderr": result.stderr.strip()})
+            self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GIT", event_type="GIT_COMMAND", action="bind_origin", status="PASS" if result.returncode == 0 else "ERROR", project_id=proposal.get("project_id"), target=expected_https, details={"returncode":result.returncode})
             if result.returncode != 0:
                 return {"status": "FAIL", "steps": steps, "preflight": preflight.to_dict()}
 
@@ -229,9 +242,11 @@ class ProjectInitializer:
             self._run(["git", "add", "."], cwd=local_root)
             commit = self._run(["git", "commit", "-m", "stage-001: initialize canonical project scaffold"], cwd=local_root)
             steps.append({"step": "initial_commit", "returncode": commit.returncode, "stderr": commit.stderr.strip()})
+            self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GIT", event_type="GIT_COMMAND", action="initial_commit", status="PASS" if commit.returncode == 0 else "ERROR", project_id=proposal.get("project_id"), details={"returncode":commit.returncode})
             if commit.returncode == 0:
                 push = self._run(["git", "push", "-u", "origin", proposal.get("default_branch", "main")], cwd=local_root)
                 steps.append({"step": "push", "returncode": push.returncode, "stderr": push.stderr.strip()})
+                self.events.emit(session_id=session_id, stage_id="STAGE-001", source="GIT", event_type="GIT_COMMAND", action="git_push", status="PASS" if push.returncode == 0 else "ERROR", project_id=proposal.get("project_id"), details={"returncode":push.returncode})
 
         verification = self.verify(proposal)
         (evidence_dir / "verification.json").write_text(
@@ -251,6 +266,7 @@ class ProjectInitializer:
                 "initial_commit_exists",
             )
         ) else "HOLD"
+        self.events.emit(session_id=session_id, stage_id="STAGE-001", source="TEST", event_type="TEST_RESULT", action="stage_001_verification", status=verification["status"], project_id=proposal.get("project_id"), details=verification)
         return {"status": verification["status"], "steps": steps, "verification": verification}
 
     def _populate_existing_root(self, root: Path, proposal: dict[str, Any]) -> None:
