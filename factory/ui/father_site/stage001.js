@@ -100,6 +100,7 @@ function preflightHtml(){
  ((p.conflicts||[]).length?'<div class="preflight-resolution">'+
    ((p.conflicts||[]).includes("GITHUB_REPOSITORY_ALREADY_EXISTS")?'<button id="useExistingGithub">Привязать существующий GitHub</button>':'')+
    ((p.conflicts||[]).includes("LOCAL_DIRECTORY_ALREADY_EXISTS")?'<button id="useExistingLocal">Использовать существующую папку</button>':'')+
+   (((p.conflicts||[]).includes("GITHUB_REPOSITORY_ALREADY_EXISTS")&&(p.conflicts||[]).includes("LOCAL_DIRECTORY_ALREADY_EXISTS")&&p.local_is_git&&p.local_origin_matches&&p.scaffold_stage_files===101&&p.project_yaml_exists)?'<button id="acceptExistingProject" class="primary">Принять найденный проект</button>':'')+
    '<button id="rerunPreflight">Перепроверить</button>'+
  '</div>':'');
 }
@@ -160,6 +161,25 @@ function render(){
   if(eg)eg.onclick=()=>{executionPlan.github_mode="BIND_EXISTING";preflightResult=null;render();runPreflight();};
   const el=document.getElementById("useExistingLocal");
   if(el)el.onclick=()=>{executionPlan.local_mode="USE_EXISTING";preflightResult=null;render();runPreflight();};
+  const ap=document.getElementById("acceptExistingProject");
+  if(ap)ap.onclick=async()=>{
+    executionPlan.github_mode="BIND_EXISTING";
+    executionPlan.local_mode="USE_EXISTING";
+    executionPlan.git_mode="INIT_AND_BIND";
+    executionApproved=true;
+    decision="APPROVE";
+    traceState("existing_project_accept_requested","REQUESTED",{
+      github:proposal.github_owner+"/"+proposal.github_repository,
+      local_directory:proposal.local_directory
+    });
+    preflightResult=null;
+    render();
+    await runPreflight();
+    if(preflightResult&&(!preflightResult.conflicts||preflightResult.conflicts.length===0)){
+      traceState("existing_project_preflight","PASS",{});
+      await verifyProject();
+    }
+  };
   const rp=document.getElementById("rerunPreflight");
   if(rp)rp.onclick=runPreflight;
  }else if(view==="tests"){
