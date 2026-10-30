@@ -65,7 +65,19 @@ function runInput(){
  document.getElementById("artifactTestPanel").innerHTML=testRow("original_idea_preserved",true)+testRow("facts_have_source_refs",true)+testRow("assumptions_separate",true)+testRow("unknowns_explicit",true)+testRow("no_project_created",true);
  setState("ГОТОВ К ШЛЮЗУ");enableGate();view="analysis";syncTabs();render();toast("Этап 000 готов к человеческому решению");
 }
-function enableGate(){["approveStage","holdStage","rejectStage"].forEach(id=>document.getElementById(id).disabled=false)}
+function enableGate(){["holdStage","rejectStage"].forEach(id=>document.getElementById(id).disabled=false);document.getElementById("approveStage").disabled=false}
+function approveWithChecks(){
+ if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("GATE_DECISION","approve_clicked","REQUESTED",{inputPassed,artifactPassed});
+ if(!inputPassed||!artifactPassed){
+   runInput();
+ }
+ if(!inputPassed||!artifactPassed){
+   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("GATE_DECISION","approve_blocked","HOLD",{inputPassed,artifactPassed});
+   toast("Одобрение невозможно: обязательные проверки не пройдены");
+   return;
+ }
+ decide("APPROVE");
+}
 function decide(d){
  const reason=document.getElementById("gateReason").value.trim();
  if((d==="HOLD"||d==="REJECT")&&!reason){toast("Для удержания/отклонения нужна причина");return}
@@ -99,7 +111,7 @@ function escapeHtml(v){return v.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove("show"),2200)}
 document.querySelectorAll(".stage-tab").forEach(b=>b.onclick=()=>{view=b.dataset.view;syncTabs();render()});
 document.getElementById("runInputTest").onclick=runInput;
-document.getElementById("approveStage").onclick=()=>decide("APPROVE");
+document.getElementById("approveStage").onclick=approveWithChecks;
 document.getElementById("holdStage").onclick=()=>decide("HOLD");
 document.getElementById("rejectStage").onclick=()=>decide("REJECT");
 document.getElementById("resetIdea").onclick=()=>{sessionStorage.removeItem("nexus_stage_000");location.href="./stage000.html"};
