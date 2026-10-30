@@ -7,7 +7,7 @@ import argparse
 import json
 
 from .project_init import ProjectInitializer
-from .event_log import FactoryEventLogger, export_trace_file
+from .event_log import FactoryEventLogger, export_trace_file, reserve_trace_file, append_trace_snapshot
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -53,6 +53,27 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         try:
             payload = self._read_json()
+            if path == "/trace/start":
+                session_id=payload.get("session_id","unknown")
+                path_obj=reserve_trace_file(session_id)
+                stem=path_obj.stem
+                trace_number=int(stem.rsplit("_",1)[1])
+                self._json(200, {"status":"started","path":str(path_obj),"trace_number":trace_number,"filename":path_obj.name})
+                return
+            if path == "/trace/snapshot":
+                session_id=payload.get("session_id","unknown")
+                trace_path=payload["trace_path"]
+                runtime_events=self.events.read_session(session_id)
+                saved=append_trace_snapshot(
+                    trace_path=trace_path,
+                    session_id=session_id,
+                    runtime_events=runtime_events,
+                    ui_events=payload.get("ui_events") or [],
+                    page=payload.get("page"),
+                    status=payload.get("status","ACTIVE"),
+                )
+                self._json(200, {"status":"saved","path":str(saved)})
+                return
             if path == "/events/export":
                 session_id=payload.get("session_id","unknown")
                 runtime_events=self.events.read_session(session_id)
