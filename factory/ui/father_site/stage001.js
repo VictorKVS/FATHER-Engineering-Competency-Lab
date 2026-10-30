@@ -45,7 +45,10 @@ function render(){
  }else if(view==="scaffold"){
   content.innerHTML='<div class="scaffold-grid">'+Array.from({length:101},(_,i)=>{const n=String(i).padStart(3,"0");return '<div class="stage-chip"><b>'+n+'</b>'+(i===0?"IDEA_INTAKE":i===1?"PROJECT_INITIALIZATION":i===100?"PRODUCTION_PROVEN":"ЗАКРЫТО")+'</div>'}).join("")+'</div>';
  }else if(view==="execution"){
-  content.innerHTML=
+  const authBanner=executionApproved
+   ? '<div class="execution-approved-banner"><div><b>✓ ВЫПОЛНЕНИЕ РАЗРЕШЕНО</b><span>Human Gate = APPROVE. Теперь разрешено создать GitHub, локальную папку, Git-связку и каркас 000–100.</span></div><div class="execution-approved-actions"><button id="downloadExecutionPlan" class="primary">Скачать план выполнения</button><button id="openVerification" class="ghost">Перейти к проверке</button></div></div>'
+   : '<div class="execution-locked-banner"><b>ВЫПОЛНЕНИЕ ЕЩЁ НЕ РАЗРЕШЕНО</b><span>Сначала проверьте предложение и нажмите APPROVE.</span></div>';
+  content.innerHTML=authBanner+
    '<div class="execution-layout">'+
     '<div class="stage-card"><div class="card-head">Выполнение GitHub</div>'+
       optionRow("github_mode","CREATE_NEW","Создать новый Репозиторий GitHub","Фабрика создаёт новый репозиторий после APPROVE.")+
@@ -65,6 +68,12 @@ function render(){
     '</div>'+
    '</div>';
   bindExecutionOptions();
+  if(executionApproved){
+    const dl=document.getElementById("downloadExecutionPlan");
+    if(dl)dl.onclick=downloadExecutionPlan;
+    const ov=document.getElementById("openVerification");
+    if(ov)ov.onclick=()=>{view="tests";sync();render();};
+  }
  }else if(view==="tests"){
   content.innerHTML='<div class="stage-card"><div class="card-head">Тесты этапа 001</div>'+testRow("Этап 000 одобрен",prereqApproved)+testRow("ID проекта present",!!proposal.project_id)+testRow("Имя проекта указано",!!proposal.public_name)+testRow("Локальный путь указан",!!proposal.local_directory)+testRow("Имя репозитория указано",!!proposal.github_repository)+testRow("Каркас 000–100 запланирован",true)+'</div>'+
   '<div class="stage-card" style="margin-top:10px"><div class="card-head">Проверка выполнения</div>'+verificationRows()+'</div>';
@@ -96,6 +105,28 @@ function validate(){
  if(validated){document.getElementById("stageState").textContent="ГОТОВ К ШЛЮЗУ";enableGate();toast("Предложение этапа 001 прошло проверку")}
  else toast("Предложение заполнено не полностью");
 }
+function downloadExecutionPlan(){
+ const payload={
+  stage_id:"STAGE-001",
+  action:"PROJECT_INITIALIZATION",
+  approved:true,
+  proposal,
+  execution_plan:executionPlan,
+  expected_results:{
+   github_repository:proposal.github_owner+"/"+proposal.github_repository,
+   local_directory:proposal.local_directory,
+   stage_files:101,
+   required_paths:["project.yaml","stages/000.yaml","stages/100.yaml","artifacts/","agents/","algorithms/","knowledge/","tests/","evidence/"]
+  }
+ };
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download="stage-001-execution-plan.json";
+ a.click();
+ URL.revokeObjectURL(a.href);
+ toast("План выполнения сохранён");
+}
 function refreshVerificationPanels(){
  document.getElementById("executionVerifyPanel").innerHTML=verificationRows();
  document.getElementById("verificationState").textContent=verificationPassed?"ПРОЙДЕНО":"НЕ ПРОЙДЕНО";
@@ -119,9 +150,11 @@ function decide(d){
  if((d==="УДЕРЖАНО"||d==="REJECT")&&!reason){toast("Для УДЕРЖАНО/REJECT нужна причина");return}
  decision=d;
  executionApproved=d==="APPROVE";
- document.getElementById("stageState").textContent=d==="APPROVE"?"ВЫПОЛНЕНИЕ ОДОБРЕНО":d==="УДЕРЖАНО"?"УДЕРЖАНО":"REJECTED";
+ document.getElementById("stageState").textContent=d==="APPROVE"?"ВЫПОЛНЕНИЕ ОДОБРЕНО":d==="УДЕРЖАНО"?"УДЕРЖАНО":"ОТКЛОНЕНО";
  const ev=evidence();sessionStorage.setItem("nexus_stage_001",JSON.stringify(ev));
- view="gate";sync();render();toast("Человеческий шлюз: "+d);
+ view=d==="APPROVE"?"execution":"gate";
+ sync();render();
+ toast(d==="APPROVE"?"Выполнение разрешено — открыт план выполнения":"Человеческий шлюз: "+d);
 }
 function evidence(){return {stage_id:"STAGE-001",state:document.getElementById("stageState").textContent,prerequisite:{stage:"STAGE-000",approved:prereqApproved},proposal,input_test:{status:validated?"ПРОЙДЕНО":"NOT_RUN"},artifact_test:{status:validated?"ПРОЙДЕНО":"ЗАКРЫТО",planned_stage_files:101},human_gate:{decision},execution:{approved:executionApproved,plan:executionPlan,verification,verification_passed:verificationPassed,requires_runtime:true}}}
 function sync(){document.querySelectorAll(".stage-tab").forEach(x=>x.classList.toggle("active",x.dataset.view===view))}
@@ -133,5 +166,4 @@ document.getElementById("approveGate").onclick=()=>decide("APPROVE");
 document.getElementById("holdGate").onclick=()=>decide("УДЕРЖАНО");
 document.getElementById("rejectGate").onclick=()=>decide("REJECT");
 document.getElementById("approveProject").onclick=()=>decide("APPROVE");
-document.getElementById("executionVerifyPanel").ondblclick=markExecutionVerifiedDemo;
 render();
