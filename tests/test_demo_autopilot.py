@@ -34,8 +34,16 @@ class DemoAutopilotTest(unittest.TestCase):
                 push=False,
             )
 
-            self.assertEqual(result["status"],"PASS")
+            self.assertEqual(result["status"],"HOLD")
             self.assertEqual(result["completed_stages"],101)
+            self.assertTrue(result["final_checks"]["stage_files_101"])
+            self.assertTrue(result["final_checks"]["artifacts_101"])
+            self.assertTrue(result["final_checks"]["evidence_101"])
+            self.assertTrue(result["final_checks"]["all_stages_approved"])
+            self.assertTrue(result["final_checks"]["stage_100_approved"])
+            self.assertTrue(result["final_checks"]["manifest_exists"])
+            self.assertFalse(result["final_checks"]["git_commit_pass"])
+            self.assertFalse(result["final_checks"]["git_push_pass"])
 
             project=yaml.safe_load((root/"project.yaml").read_text(encoding="utf-8"))
             self.assertEqual(project["state"],"DEMO_PRODUCTION_PROVEN")
