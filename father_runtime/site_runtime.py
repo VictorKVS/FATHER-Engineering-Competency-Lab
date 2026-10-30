@@ -13,7 +13,7 @@ class Handler(BaseHTTPRequestHandler):
     initializer = ProjectInitializer()
 
     def _cors(self) -> None:
-        self.send_header("Access-Control-Allow-Origin", "http://127.0.0.1:8090")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
 
