@@ -7,10 +7,12 @@ import argparse
 import json
 
 from .project_init import ProjectInitializer
+from .event_log import FactoryEventLogger
 
 
 class Handler(BaseHTTPRequestHandler):
     initializer = ProjectInitializer()
+    events = FactoryEventLogger()
 
     def _cors(self) -> None:
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -46,6 +48,23 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         try:
             payload = self._read_json()
+            if path == "/events":
+                self.events.emit(
+                    session_id=payload.get("session_id","unknown"),
+                    stage_id=payload.get("stage_id","UI"),
+                    source=payload.get("source","UI"),
+                    event_type=payload.get("event_type","UI_EVENT"),
+                    action=payload.get("action","unknown"),
+                    status=payload.get("status","INFO"),
+                    project_id=payload.get("project_id"),
+                    actor=payload.get("actor","USER"),
+                    target=payload.get("target"),
+                    details=payload.get("details") or {},
+                    parent_event_id=payload.get("parent_event_id"),
+                    correlation_id=payload.get("correlation_id"),
+                )
+                self._json(200, {"status":"logged"})
+                return
             if path == "/stage001/preflight":
                 result = self.initializer.preflight(payload["proposal"], payload["execution_plan"])
                 self._json(200, result.to_dict())
