@@ -44,6 +44,40 @@ class DemoAutopilot:
         return self.state.snapshot()
 
     @staticmethod
+    def _final_checks(root: Path, manifest_path: Path, git_result: dict[str, Any]) -> dict[str, Any]:
+        stage_files = list((root / "stages").glob("*.yaml"))
+        artifact_files = list((root / "artifacts").glob("stage_*/minimal_artifact.json"))
+        evidence_files = list((root / "evidence").glob("stage_*/demo_evidence.json"))
+        all_stage_pass = True
+        approved_count = 0
+        for path in stage_files:
+            payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            ok = (
+                payload.get("state") == "APPROVED"
+                and payload.get("input_test", {}).get("status") == "PASS"
+                and payload.get("artifact_test", {}).get("status") == "PASS"
+                and payload.get("human_gate", {}).get("decision") == "DEMO_AUTO_APPROVED"
+            )
+            all_stage_pass = all_stage_pass and ok
+            approved_count += 1 if ok else 0
+
+        stage_100 = yaml.safe_load((root / "stages" / "100.yaml").read_text(encoding="utf-8")) or {}
+        commit_ok = bool(git_result.get("commit")) and git_result["commit"].get("returncode") == 0
+        push_ok = bool(git_result.get("push")) and git_result["push"].get("returncode") == 0
+        checks = {
+            "stage_files_101": len(stage_files) == 101,
+            "artifacts_101": len(artifact_files) == 101,
+            "evidence_101": len(evidence_files) == 101,
+            "all_stages_approved": all_stage_pass and approved_count == 101,
+            "stage_100_approved": stage_100.get("state") == "APPROVED",
+            "manifest_exists": manifest_path.exists(),
+            "git_commit_pass": commit_ok,
+            "git_push_pass": push_ok,
+        }
+        checks["pass"] = all(checks.values())
+        return checks
+
+    @staticmethod
     def _run(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
         return subprocess.run(args, cwd=str(cwd) if cwd else None, text=True, capture_output=True, shell=False)
 
@@ -204,18 +238,22 @@ class DemoAutopilot:
                 pushed=self._run(["git","push"],cwd=root)
                 git_result["push"]={"returncode":pushed.returncode,"stdout":pushed.stdout.strip(),"stderr":pushed.stderr.strip()}
 
+        checks = self._final_checks(root, manifest_path, git_result)
+        final_status = "PASS" if checks["pass"] else "HOLD"
         self.state.update(
-            status="PASS",
+            status=final_status,
             current_stage="STAGE-100",
             completed_stages=101,
             manifest=str(manifest_path),
             git=git_result,
+            final_checks=checks,
+            last_error=None if checks["pass"] else "FINAL_VERIFICATION_FAILED",
         )
 
         self.events.emit(
             session_id=session_id, stage_id="STAGE-100", source="TEST",
             event_type="TEST_RESULT", action="demo_autopilot_000_100",
-            status="PASS", project_id=project_id,
-            details={"run_id":run_id,"completed_stages":101,"manifest":str(manifest_path),"git":git_result},
+            status=final_status, project_id=project_id,
+            details={"run_id":run_id,"completed_stages":101,"manifest":str(manifest_path),"git":git_result,"final_checks":checks},
         )
-        return {"status":"PASS","run_id":run_id,"completed_stages":101,"manifest":str(manifest_path),"git":git_result}
+        return {"status":final_status,"run_id":run_id,"completed_stages":101,"manifest":str(manifest_path),"git":git_result,"final_checks":checks}
