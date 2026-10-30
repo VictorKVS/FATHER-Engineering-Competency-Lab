@@ -258,6 +258,24 @@ function openBlockModal(id){
  modal.classList.add("open");modal.setAttribute("aria-hidden","false");
 }
 function closeBlockModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
+function demoLaunchpadHtml(){
+ return '<div class="modal-section demo-launchpad">'+
+  '<div class="demo-launchpad-head"><div><h4>DEMO PRODUCTS</h4><p>Один вход фабрики · один процесс 000–100 · разные изделия.</p></div><span>FACTORY PRESETS</span></div>'+
+  '<div class="demo-launchpad-grid">'+
+   '<button class="demo-product-card" data-demo-product="story"><b>DEMO 1</b><strong>Story / Model Swap</strong><small>Рассказ · сменяемая LLM · failover · eval · evidence</small><i>START 000 →</i></button>'+
+   '<button class="demo-product-card" data-demo-product="osint"><b>DEMO 2</b><strong>OSINT Research</strong><small>Research Request · sources · corroboration · evidence</small><i>START 000 →</i></button>'+
+   '<button class="demo-product-card" data-demo-product="security"><b>DEMO 3</b><strong>Security Analysis</strong><small>Assets · threats · risks · controls · acceptance</small><i>START 000 →</i></button>'+
+  '</div></div>';
+}
+function bindDemoLaunchpad(){
+ document.querySelectorAll("[data-demo-product]").forEach(btn=>{
+  btn.onclick=()=>{
+   const demo=btn.dataset.demoProduct;
+   closeBlockModal();
+   location.href="./stage000.html?demo="+encodeURIComponent(demo);
+  };
+ });
+}
 function renderModalTab(){
  const b=blocks.find(x=>x.id===currentModalBlock),d=blockDocs[currentModalBlock]||{};
  if(currentModalTab==="about"){
@@ -267,7 +285,9 @@ function renderModalTab(){
     '<div class="modal-section"><h4>В составе агента</h4><p><b>'+b.type+'</b> · '+b.desc+'</p></div>'+
     '<div class="modal-section"><h4>Версия</h4><p>'+d.version+'</p></div>'+
     '<div class="modal-section"><h4>Связи</h4><p>'+edgeSummary(currentModalBlock)+'</p></div>'+
-   '</div>';
+   '</div>'+
+   (currentModalBlock==="input"?demoLaunchpadHtml():"");
+  if(currentModalBlock==="input")requestAnimationFrame(bindDemoLaunchpad);
  }else if(currentModalTab==="location"){
   modalBody.innerHTML=
    '<div class="modal-section"><h4>GitHub / Repository</h4><code>'+d.repoPath+'</code></div>'+
