@@ -3,106 +3,106 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NEXUS — Specialist Studio</title>
+  <title>NEXUS — Рабочее место специалиста</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./specialist.css">
 </head>
 <body class="specialist-page">
 <div class="specialist-shell">
   <aside class="specialist-nav">
-    <a href="./specialists.html" class="back-link">← Engineering Roles</a>
+    <a href="./specialists.html" class="back-link">← Инженерные роли</a>
     <div class="specialist-brand">
       <div class="specialist-mark" id="roleMark">S</div>
-      <div><strong id="roleName">Specialist</strong><small id="roleCode">ROLE</small></div>
+      <div><strong id="roleName">Специалист</strong><small id="roleCode">ROLE</small></div>
     </div>
-    <div class="section-label">WORKSPACE</div>
-    <button class="spec-nav active" data-view="inputs">01 · Input Package</button>
-    <button class="spec-nav" data-view="editor">02 · Main Editor</button>
-    <button class="spec-nav" data-view="logic">03 · Professional Logic</button>
-    <button class="spec-nav" data-view="metrics">04 · Metrics</button>
-    <button class="spec-nav" data-view="ab">05 · A/B Testing</button>
-    <button class="spec-nav" data-view="handoff">06 · Handoff</button>
+    <div class="section-label">РАБОЧАЯ ОБЛАСТЬ</div>
+    <button class="spec-nav active" data-view="inputs">01 · Входной пакет</button>
+    <button class="spec-nav" data-view="editor">02 · Основной редактор</button>
+    <button class="spec-nav" data-view="logic">03 · Профессиональная логика</button>
+    <button class="spec-nav" data-view="metrics">04 · Метрики</button>
+    <button class="spec-nav" data-view="ab">05 · A/B-тестирование</button>
+    <button class="spec-nav" data-view="handoff">06 · Передача</button>
     <div class="specialist-foot">
-      <div class="health"><span></span>SPECIALIST ONLINE</div>
-      <small>Versioned role workspace</small>
+      <div class="health"><span></span>СПЕЦИАЛИСТ РАБОТАЕТ</div>
+      <small>Версионируемое рабочее место роли</small>
     </div>
   </aside>
 
   <main class="specialist-main">
     <header class="specialist-top">
       <div>
-        <div class="eyebrow" id="roleEyebrow">ENGINEERING ROLE</div>
-        <h1 id="roleTitle">Specialist Studio</h1>
+        <div class="eyebrow" id="roleEyebrow">ИНЖЕНЕРНАЯ РОЛЬ</div>
+        <h1 id="roleTitle">Специалист Studio</h1>
         <p id="rolePurpose"></p>
       </div>
       <div class="top-actions">
         <button class="ghost" id="roleAction">Выполнить профессиональное действие</button>
         <button class="ghost" id="roleRunAb">A/B</button>
-        <button class="primary" id="roleSave">Сохранить Proposal</button>
+        <button class="primary" id="roleSave">Сохранить предложение</button>
       </div>
     </header>
 
     <section class="specialist-status">
-      <div><span>Role</span><b id="roleStableId">—</b></div>
-      <div><span>Model Slot</span><b>ROLE_MODEL_SLOT</b></div>
-      <div><span>Artifact</span><b id="roleArtifact">—</b></div>
-      <div><span>Version</span><b>0.1.0</b></div>
-      <div><span>Gate</span><b class="hold" id="roleGate">HOLD</b></div>
+      <div><span>Роль</span><b id="roleStableId">—</b></div>
+      <div><span>Слот модели</span><b>ROLE_MODEL_SLOT</b></div>
+      <div><span>Артефакт</span><b id="roleАртефакт">—</b></div>
+      <div><span>Версия</span><b>0.1.0</b></div>
+      <div><span>Шлюз</span><b class="hold" id="roleШлюз">HOLD</b></div>
     </section>
 
     <section class="specialist-grid">
       <aside class="specialist-left">
         <div class="spec-card">
-          <div class="card-head">Model Slot</div>
+          <div class="card-head">Слот модели</div>
           <select id="roleModel"></select>
           <div id="roleModelMeta" class="role-model-meta"></div>
         </div>
 
         <div class="spec-card">
-          <div class="card-head">Inputs</div>
+          <div class="card-head">Входы</div>
           <div id="inputList" class="token-list"></div>
         </div>
 
         <div class="spec-card">
-          <div class="card-head">Outputs</div>
+          <div class="card-head">Выходы</div>
           <div id="outputList" class="token-list"></div>
         </div>
 
         <div class="spec-card">
-          <div class="card-head">Primary Action</div>
+          <div class="card-head">Основное действие</div>
           <button id="sideAction" class="primary wide"></button>
         </div>
       </aside>
 
       <section class="specialist-center">
         <div class="spec-tabs">
-          <button class="spec-tab active" data-tab="editor">Editor</button>
-          <button class="spec-tab" data-tab="sections">Sections</button>
-          <button class="spec-tab" data-tab="logic">Logic</button>
-          <button class="spec-tab" data-tab="metrics">Metrics</button>
-          <button class="spec-tab" data-tab="ab">A/B Plan</button>
+          <button class="spec-tab active" data-tab="editor">Редактор</button>
+          <button class="spec-tab" data-tab="sections">Разделы</button>
+          <button class="spec-tab" data-tab="logic">Логика</button>
+          <button class="spec-tab" data-tab="metrics">Метрики</button>
+          <button class="spec-tab" data-tab="ab">План A/B</button>
         </div>
         <div id="specialistStage" class="specialist-stage"></div>
       </section>
 
       <aside class="specialist-right">
         <div class="spec-card">
-          <div class="card-head">Quality</div>
+          <div class="card-head">Качество</div>
           <div id="qualityList" class="quality-list"></div>
         </div>
 
         <div class="spec-card">
-          <div class="card-head">Handoff</div>
+          <div class="card-head">Передача</div>
           <div id="handoffPanel" class="handoff-panel"></div>
         </div>
 
         <div class="spec-card">
-          <div class="card-head">Evidence</div>
+          <div class="card-head">Доказательства</div>
           <div class="evidence-list">
-            <span>Sources <b>HOLD</b></span>
-            <span>Metrics <b>HOLD</b></span>
+            <span>Источники <b>HOLD</b></span>
+            <span>Метрики <b>HOLD</b></span>
             <span>A/B <b>HOLD</b></span>
-            <span>Receiver ACK <b>HOLD</b></span>
+            <span>Подтверждение получателя <b>HOLD</b></span>
           </div>
         </div>
       </aside>
