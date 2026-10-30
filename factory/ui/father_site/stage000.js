@@ -68,20 +68,40 @@ function runInput(){
 function enableGate(){["approveStage","holdStage","rejectStage"].forEach(id=>document.getElementById(id).disabled=false)}
 function decide(d){
  const reason=document.getElementById("gateReason").value.trim();
- if((d==="УДЕРЖАНО"||d==="REJECT")&&!reason){toast("Для УДЕРЖАНО/REJECT нужна причина");return}
+ if((d==="HOLD"||d==="REJECT")&&!reason){toast("Для удержания/отклонения нужна причина");return}
  decision=d;
- setState(d==="APPROVE"?"APPROVED":d==="УДЕРЖАНО"?"УДЕРЖАНО":"REJECTED");
+ setState(d==="APPROVE"?"APPROVED":d==="HOLD"?"HOLD":"REJECTED");
  const snapshot=evidence();
  sessionStorage.setItem("nexus_stage_000",JSON.stringify(snapshot));
- view="gate";syncTabs();render();toast("Человеческий шлюз: "+d);
- if(d==="APPROVE"){
-   setTimeout(()=>{location.href="./stage001.html?demo=story"},700);
+ view="gate";syncTabs();render();
+ updateGateUi();
+ toast(d==="APPROVE"?"Этап 000 одобрен. STAGE 001 готов к переходу.":"Человеческий шлюз: "+d);
+}
+function evidence(){return {stage_id:"STAGE-000",state,input_snapshot:model,input_test:{status:inputPassed?"PASS":"NOT_RUN"},analysis,artifact_test:{status:artifactPassed?"PASS":"LOCKED"},human_gate:{decision},project_creation_proposal:decision==="APPROVE"?{stage:"STAGE-001",mode:"PROPOSAL_ONLY",github_repository:"PENDING_APPROVAL",local_directory:"PENDING_APPROVAL"}:null}}
+function setState(s){state=s;document.getElementById("stageState").textContent=s}
+function updateGateUi(){
+ const next=document.getElementById("nextStageState");
+ const panel=document.getElementById("stageAdvancePanel");
+ if(!next||!panel)return;
+ if(decision==="APPROVE"){
+  next.textContent="STAGE-001 · READY";
+  next.className="pass";
+  panel.innerHTML='<div class="stage-approved-box"><b>✓ ЭТАП 000 ОДОБРЕН</b><span>Все обязательные проверки этапа пройдены. Следующий этап разблокирован.</span><button id="goStage001" class="stage-next-button">ПЕРЕЙТИ К STAGE 001 →</button></div>';
+  document.getElementById("goStage001").onclick=()=>{const suffix=demoKey?"?demo="+encodeURIComponent(demoKey):"";location.href="./stage001.html"+suffix;};
+ }else{
+  next.textContent="STAGE-001 · LOCKED";
+  next.className="";
+  panel.innerHTML="";
  }
 }
-function evidence(){return {stage_id:"STAGE-000",state, input_snapshot:model,input_test:{status:inputPassed?"ПРОЙДЕНО":"NOT_ПРОЙДЕНО"},analysis,artifact_test:{status:artifactPassed?"ПРОЙДЕНО":"LOCKED"},human_gate:{decision},project_creation_proposal:decision==="APPROVE"?{stage:"STAGE-001",mode:"PROPOSAL_ONLY",github_repository:"PENDING_APPROVAL",local_directory:"PENDING_APPROVAL"}:null}}
-function setState(s){state=s;document.getElementById("stageState").textContent=s}
 function syncTabs(){document.querySelectorAll(".stage-tab").forEach(x=>x.classList.toggle("active",x.dataset.view===view))}
 function escapeHtml(v){return v.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove("show"),2200)}
 document.querySelectorAll(".stage-tab").forEach(b=>b.onclick=()=>{view=b.dataset.view;syncTabs();render()});
-document.getElementById("runInputTest").onclick=runInput;document.getElementById("approveStage").onclick=()=>decide("APPROVE");document.getElementById("holdStage").onclick=()=>decide("УДЕРЖАНО");document.getElementById("rejectStage").onclick=()=>decide("REJECT");document.getElementById("resetIdea").onclick=()=>{sessionStorage.removeItem("nexus_stage_000");location.href="./stage000.html"};render();
+document.getElementById("runInputTest").onclick=runInput;
+document.getElementById("approveStage").onclick=()=>decide("APPROVE");
+document.getElementById("holdStage").onclick=()=>decide("HOLD");
+document.getElementById("rejectStage").onclick=()=>decide("REJECT");
+document.getElementById("resetIdea").onclick=()=>{sessionStorage.removeItem("nexus_stage_000");location.href="./stage000.html"};
+render();
+updateGateUi();
