@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NEXUS — Stage 000 Idea Intake</title>
+  <title>NEXUS — Этап 000: Регистрация идеи</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./stage000.css">
 </head>
@@ -11,81 +11,81 @@
 <div class="stage-shell">
   <aside class="stage-rail">
     <a href="./index.html" class="back-link">← Agent Designer</a>
-    <div class="stage-brand"><div class="stage-mark">000</div><div><strong>Idea Intake</strong><small>FACTORY ENTRY GATE</small></div></div>
-    <div class="section-label">PHASES</div>
-    <button class="phase active" data-phase="input">01 · INPUT</button>
-    <button class="phase" data-phase="input-test">02 · INPUT TEST</button>
-    <button class="phase" data-phase="analysis">03 · SPECIALIST WORK</button>
-    <button class="phase" data-phase="artifact-test">04 · ARTIFACT TEST</button>
-    <button class="phase" data-phase="evidence">05 · EVIDENCE</button>
-    <button class="phase" data-phase="gate">06 · HUMAN GATE</button>
-    <div class="stage-foot"><div class="health"><span></span>STAGE 000 ONLINE</div><small>Next stage locked until APPROVE</small></div>
+    <div class="stage-brand"><div class="stage-mark">000</div><div><strong>Регистрация идеи</strong><small>ВХОДНОЙ ШЛЮЗ ФАБРИКИ</small></div></div>
+    <div class="section-label">ФАЗЫ</div>
+    <button class="phase active" data-phase="input">01 · ВХОД</button>
+    <button class="phase" data-phase="input-test">02 · ТЕСТ ВХОДА</button>
+    <button class="phase" data-phase="analysis">03 · РАБОТА СПЕЦИАЛИСТА</button>
+    <button class="phase" data-phase="artifact-test">04 · ТЕСТ АРТЕФАКТА</button>
+    <button class="phase" data-phase="evidence">05 · ДОКАЗАТЕЛЬСТВА</button>
+    <button class="phase" data-phase="gate">06 · ЧЕЛОВЕЧЕСКИЙ ШЛЮЗ</button>
+    <div class="stage-foot"><div class="health"><span></span>ЭТАП 000 РАБОТАЕТ</div><small>Следующий этап закрыт до одобрения</small></div>
   </aside>
 
   <main class="stage-main">
     <header class="stage-top">
-      <div><div class="eyebrow">FACTORY · STAGE 000</div><h1>Регистрация идеи</h1><p>Идея сначала проходит входной тест, анализ, проверку артефакта и только затем человеческое решение.</p></div>
-      <div class="top-actions"><button class="ghost" id="resetIdea">Новая идея</button><button class="primary" id="runInputTest">Запустить Input Test</button></div>
+      <div><div class="eyebrow">ФАБРИКА · ЭТАП 000</div><h1>Регистрация идеи</h1><p>Идея сначала проходит входной тест, анализ, проверку артефакта и только затем человеческое решение.</p></div>
+      <div class="top-actions"><button class="ghost" id="resetИдея">Новая идея</button><button class="primary" id="runInputTest">Запустить тест входа</button></div>
     </header>
 
     <section class="stage-status">
-      <div><span>Stage</span><b>STAGE-000</b></div>
-      <div><span>Owner</span><b>ROLE-101 · PRODUCT</b></div>
-      <div><span>State</span><b id="stageState" class="hold">DRAFT</b></div>
-      <div><span>Next</span><b>STAGE-001 · LOCKED</b></div>
+      <div><span>Этап</span><b>STAGE-000</b></div>
+      <div><span>Ответственный</span><b>ROLE-101 · PRODUCT</b></div>
+      <div><span>Состояние</span><b id="stageСостояние" class="hold">DRAFT</b></div>
+      <div><span>Следующий</span><b>STAGE-001 · LOCKED</b></div>
     </section>
 
     <section class="stage-grid">
       <aside class="stage-left">
         <div class="stage-card">
-          <div class="card-head">Factory Rule</div>
+          <div class="card-head">Правила фабрики</div>
           <div class="rule-list">
-            <span>Input Test <b>REQUIRED</b></span>
-            <span>Artifact Test <b>REQUIRED</b></span>
-            <span>Evidence <b>REQUIRED</b></span>
-            <span>Human Gate <b>REQUIRED</b></span>
-            <span>Auto approve <b>FORBIDDEN</b></span>
+            <span>Тест входа <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Тест артефакта <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Доказательства <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Человеческий шлюз <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Автоодобрение <b>ЗАПРЕЩЕНО</b></span>
           </div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Stage 000 Prohibitions</div>
+          <div class="card-head">Этап 000 Prohibitions</div>
           <div class="prohibit-list">
-            <span>NO GitHub repo creation</span>
-            <span>NO local project creation</span>
-            <span>NO agent generation</span>
-            <span>NO product code</span>
+            <span>НЕ создавать GitHub-репозиторий</span>
+            <span>НЕ создавать локальный проект</span>
+            <span>НЕ генерировать агента</span>
+            <span>НЕ писать код продукта</span>
           </div>
         </div>
       </aside>
 
       <section class="stage-center">
         <div class="stage-tabs">
-          <button class="stage-tab active" data-view="idea">Idea</button>
-          <button class="stage-tab" data-view="analysis">Analysis</button>
-          <button class="stage-tab" data-view="tests">Tests</button>
-          <button class="stage-tab" data-view="evidence">Evidence</button>
-          <button class="stage-tab" data-view="gate">Gate</button>
+          <button class="stage-tab active" data-view="idea">Идея</button>
+          <button class="stage-tab" data-view="analysis">Анализ</button>
+          <button class="stage-tab" data-view="tests">Тесты</button>
+          <button class="stage-tab" data-view="evidence">Доказательства</button>
+          <button class="stage-tab" data-view="gate">Шлюз</button>
         </div>
         <div id="stageContent" class="stage-content"></div>
       </section>
 
       <aside class="stage-right">
         <div class="stage-card">
-          <div class="card-head">Input Test</div>
+          <div class="card-head">Тест входа</div>
           <div id="inputTestPanel"><p>NOT RUN</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Artifact Test</div>
+          <div class="card-head">Тест артефакта</div>
           <div id="artifactTestPanel"><p>LOCKED</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Human Gate</div>
+          <div class="card-head">Человеческий шлюз</div>
           <div class="gate-actions">
-            <button id="approveStage" disabled>APPROVE</button>
-            <button id="holdStage" disabled>HOLD</button>
-            <button id="rejectStage" disabled>REJECT</button>
+            <button id="approveЭтап" disabled>APPROVE</button>
+            <button id="holdЭтап" disabled>HOLD</button>
+            <button id="rejectЭтап" disabled>REJECT</button>
           </div>
-          <textarea id="gateReason" placeholder="Причина HOLD / REJECT"></textarea>
+          <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
         </div>
       </aside>
     </section>
