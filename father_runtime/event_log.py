@@ -29,10 +29,12 @@ class FactoryEventLogger:
         details: dict[str, Any] | None = None,
         parent_event_id: str | None = None,
         correlation_id: str | None = None,
+        event_id: str | None = None,
+        timestamp: str | None = None,
     ) -> dict[str, Any]:
         event = {
-            "event_id": str(uuid.uuid4()),
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "event_id": event_id or str(uuid.uuid4()),
+            "timestamp": timestamp or datetime.now(timezone.utc).isoformat(),
             "session_id": session_id,
             "project_id": project_id,
             "stage_id": stage_id,
@@ -87,7 +89,7 @@ def export_trace_file(
 ) -> Path:
     ui_events = ui_events or []
     merged = sorted(
-        [*ui_events, *runtime_events],
+        _dedupe_events([*ui_events, *runtime_events]),
         key=lambda e: str(e.get("timestamp", "")),
     )
     stamp = datetime.now().astimezone().strftime("%Y-%m-%d_%H-%M-%S")
@@ -139,6 +141,19 @@ def reserve_trace_file(session_id: str) -> Path:
     }
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return path
+
+
+def _dedupe_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    result: list[dict[str, Any]] = []
+    for event in events:
+        event_id = str(event.get("event_id") or "")
+        if event_id and event_id in seen:
+            continue
+        if event_id:
+            seen.add(event_id)
+        result.append(event)
+    return result
 
 
 def append_trace_snapshot(
