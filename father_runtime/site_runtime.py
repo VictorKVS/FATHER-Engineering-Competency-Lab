@@ -7,7 +7,7 @@ import argparse
 import json
 
 from .project_init import ProjectInitializer
-from .event_log import FactoryEventLogger
+from .event_log import FactoryEventLogger, export_trace_file
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -53,6 +53,17 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         try:
             payload = self._read_json()
+            if path == "/events/export":
+                session_id=payload.get("session_id","unknown")
+                runtime_events=self.events.read_session(session_id)
+                export_path=export_trace_file(
+                    session_id=session_id,
+                    runtime_events=runtime_events,
+                    ui_events=payload.get("ui_events") or [],
+                    page=payload.get("page"),
+                )
+                self._json(200, {"status":"saved","path":str(export_path)})
+                return
             if path == "/events":
                 self.events.emit(
                     session_id=payload.get("session_id","unknown"),
