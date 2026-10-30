@@ -33,7 +33,7 @@
       <div><span>Этап</span><b>STAGE-000</b></div>
       <div><span>Ответственный</span><b>ROLE-101 · PRODUCT</b></div>
       <div><span>Состояние</span><b id="stageState" class="hold">DRAFT</b></div>
-      <div><span>Следующий</span><b>STAGE-001 · LOCKED</b></div>
+      <div><span>Следующий</span><b id="nextStageState">STAGE-001 · LOCKED</b></div>
     </section>
 
     <section class="stage-grid">
@@ -82,11 +82,12 @@
         <div class="stage-card">
           <div class="card-head">Человеческий шлюз</div>
           <div class="gate-actions">
-            <button id="approveStage" disabled>APPROVE</button>
-            <button id="holdStage" disabled>HOLD</button>
-            <button id="rejectStage" disabled>REJECT</button>
+            <button id="approveStage" disabled>ОДОБРИТЬ</button>
+            <button id="holdStage" disabled>УДЕРЖАТЬ</button>
+            <button id="rejectStage" disabled>ОТКЛОНИТЬ</button>
           </div>
           <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
+          <div id="stageAdvancePanel"></div>
         </div>
       </aside>
     </section>
