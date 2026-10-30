@@ -36,7 +36,7 @@
         <button class="ghost" onclick="location.href='./stage000.html?demo=story'">Демо: идея → проект</button>
         <button class="ghost" onclick="location.href='./specialists.html'">Специалисты</button>
         <button class="ghost" onclick="location.href='./traceability.html'">Трассируемость</button>
-        <button id="cloneАгент" class="ghost">Создать агента из шаблона</button>
+        <button id="cloneAgent" class="ghost">Создать агента из шаблона</button>
         <button id="loadDemo" class="ghost">Загрузить demo агента</button>
         <button id="validate" class="ghost">Проверить конструкцию</button>
         <button id="exportBtn" class="primary">Экспорт JSON</button>
@@ -52,7 +52,7 @@
 
     <section class="workspace">
       <aside class="palette panel">
-        <div class="panel-head"><span>BЗАКРЫТО CATALOG</span><small>ИНЖЕНЕРНЫЙ КАНОН</small></div>
+        <div class="panel-head"><span>КАТАЛОГ БЛОКОВ</span><small>ИНЖЕНЕРНЫЙ КАНОН</small></div>
         <div id="palette"></div>
       </aside>
 
@@ -69,7 +69,7 @@
       </section>
 
       <aside class="inspector panel">
-        <div class="panel-head"><span>ИНСПЕКТОР</span><small id="inspectorType">BЗАКРЫТО</small></div>
+        <div class="panel-head"><span>ИНСПЕКТОР</span><small id="inspectorType">БЛОК</small></div>
         <div id="inspector"></div>
       </aside>
     </section>
@@ -99,7 +99,7 @@
   <section class="block-modal-card" role="dialog" aria-modal="true" aria-labelledby="blockModalTitle">
     <header class="block-modal-head">
       <div>
-        <div class="eyebrow" id="blockModalEyebrow">BЗАКРЫТО</div>
+        <div class="eyebrow" id="blockModalEyebrow">БЛОК</div>
         <h2 id="blockModalTitle">Block</h2>
         <p id="blockModalSubtitle"></p>
       </div>
@@ -130,12 +130,12 @@
       <button id="cloneClose">×</button>
     </header>
     <div class="clone-grid">
-      <label>Шаблон<input id="cloneШаблон" value="AGENT-TEMPLATE-001" readonly></label>
+      <label>Шаблон<input id="cloneTemplate" value="AGENT-TEMPLATE-001" readonly></label>
       <label>Новый стабильный ID<input id="cloneStableId" value="AG-NEW-001"></label>
       <label>Публичное имя<input id="clonePublicName" placeholder="Например: Security Risk Analyst"></label>
       <label>Кодовое имя<input id="cloneCodeName" placeholder="Внутреннее условное имя"></label>
-      <label class="span2">Назначение<textarea id="cloneНазначение" placeholder="Для чего создаётся агент"></textarea></label>
-      <label>Предметная область<input id="cloneПредметная область" placeholder="security / osint / legal / ..."></label>
+      <label class="span2">Назначение<textarea id="clonePurpose" placeholder="Для чего создаётся агент"></textarea></label>
+      <label>Предметная область<input id="cloneDomain" placeholder="security / osint / legal / ..."></label>
       <label>Начальное состояние<input value="CLONED_DRAFT" readonly></label>
     </div>
     <div class="clone-plan">
