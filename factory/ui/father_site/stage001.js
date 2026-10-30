@@ -176,8 +176,16 @@ function validate(){
  if(validated){document.getElementById("stageState").textContent="ГОТОВ К ШЛЮЗУ";enableGate();toast("Предложение этапа 001 прошло проверку")}
  else toast("Предложение заполнено не полностью");
 }
-function enableGate(){["approveGate","holdGate","rejectGate","approveProject"].forEach(id=>document.getElementById(id).disabled=false)}
-function disableGate(){["approveGate","holdGate","rejectGate","approveProject"].forEach(id=>document.getElementById(id).disabled=true)}
+function enableGate(){
+ document.getElementById("approveGate").disabled=false;
+ document.getElementById("approveProject").disabled=false;
+ ["holdGate","rejectGate"].forEach(id=>document.getElementById(id).disabled=false);
+}
+function disableGate(){
+ document.getElementById("approveGate").disabled=false;
+ document.getElementById("approveProject").disabled=false;
+ ["holdGate","rejectGate"].forEach(id=>document.getElementById(id).disabled=true);
+}
 
 function decide(d){
  const reason=document.getElementById("gateReason").value.trim();
