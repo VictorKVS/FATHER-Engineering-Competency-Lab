@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 import json
+import os
+import sys
 import uuid
 
 
@@ -54,3 +56,54 @@ class FactoryEventLogger:
         if not path.exists():
             return []
         return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def desktop_trace_dir() -> Path:
+    """Return the user's real Desktop folder and ensure Desktop/Фабрика exists."""
+    desktop: Path | None = None
+    if os.name == "nt":
+        try:
+            import ctypes
+            from ctypes import wintypes
+            buf = ctypes.create_unicode_buffer(wintypes.MAX_PATH)
+            # CSIDL_DESKTOPDIRECTORY = 0x0010
+            if ctypes.windll.shell32.SHGetFolderPathW(None, 0x0010, None, 0, buf) == 0:
+                desktop = Path(buf.value)
+        except Exception:
+            desktop = None
+    if desktop is None:
+        desktop = Path.home() / "Desktop"
+    target = desktop / "Фабрика"
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+
+def export_trace_file(
+    *,
+    session_id: str,
+    runtime_events: list[dict[str, Any]],
+    ui_events: list[dict[str, Any]] | None = None,
+    page: str | None = None,
+) -> Path:
+    ui_events = ui_events or []
+    merged = sorted(
+        [*ui_events, *runtime_events],
+        key=lambda e: str(e.get("timestamp", "")),
+    )
+    stamp = datetime.now().astimezone().strftime("%Y-%m-%d_%H-%M-%S")
+    path = desktop_trace_dir() / f"NEXUS_TRACE_{stamp}.json"
+    payload = {
+        "schema": "NEXUS_FACTORY_TRACE_EXPORT_V1",
+        "exported_at": datetime.now(timezone.utc).isoformat(),
+        "session_id": session_id,
+        "page": page,
+        "ui_event_count": len(ui_events),
+        "runtime_event_count": len(runtime_events),
+        "total_event_count": len(merged),
+        "events": merged,
+    }
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return path
