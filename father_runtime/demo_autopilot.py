@@ -5,15 +5,43 @@ from pathlib import Path
 from typing import Any
 import json
 import subprocess
+import threading
 
 import yaml
 
 from .event_log import FactoryEventLogger
 
 
+class DemoRunState:
+    def __init__(self) -> None:
+        self.lock = threading.Lock()
+        self.data: dict[str, Any] = {
+            "status": "IDLE",
+            "run_id": None,
+            "current_stage": None,
+            "completed_stages": 0,
+            "total_stages": 101,
+            "last_error": None,
+            "manifest": None,
+            "git": None,
+        }
+
+    def update(self, **values: Any) -> None:
+        with self.lock:
+            self.data.update(values)
+
+    def snapshot(self) -> dict[str, Any]:
+        with self.lock:
+            return dict(self.data)
+
+
 class DemoAutopilot:
     def __init__(self) -> None:
         self.events = FactoryEventLogger()
+        self.state = DemoRunState()
+
+    def status(self) -> dict[str, Any]:
+        return self.state.snapshot()
 
     @staticmethod
     def _run(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -54,6 +82,15 @@ class DemoAutopilot:
         run_id=f"DEMO-{datetime.now().astimezone().strftime('%Y%m%d-%H%M%S')}"
         started=datetime.now(timezone.utc).isoformat()
         results=[]
+        self.state.update(
+            status="RUNNING",
+            run_id=run_id,
+            current_stage="STAGE-000",
+            completed_stages=0,
+            last_error=None,
+            manifest=None,
+            git=None,
+        )
 
         self.events.emit(
             session_id=session_id, stage_id="STAGE-000", source="RUNTIME",
@@ -64,6 +101,7 @@ class DemoAutopilot:
 
         for number in range(101):
             sid=f"{number:03d}"
+            self.state.update(current_stage=f"STAGE-{sid}", completed_stages=number)
             stage_id=f"STAGE-{sid}"
             stage_path=stages_dir/f"{sid}.yaml"
             artifact_dir=root/"artifacts"/f"stage_{sid}"
@@ -130,6 +168,7 @@ class DemoAutopilot:
                 details={"run_id":run_id,"number":number,"artifact":str(artifact_path),"evidence":str(evidence_path)},
             )
             results.append({"stage_id":stage_id,"status":"PASS"})
+            self.state.update(current_stage=stage_id, completed_stages=number+1)
 
         project=yaml.safe_load((root/"project.yaml").read_text(encoding="utf-8"))
         project["current_stage"]="100"
@@ -164,6 +203,14 @@ class DemoAutopilot:
             if push and commit.returncode==0:
                 pushed=self._run(["git","push"],cwd=root)
                 git_result["push"]={"returncode":pushed.returncode,"stdout":pushed.stdout.strip(),"stderr":pushed.stderr.strip()}
+
+        self.state.update(
+            status="PASS",
+            current_stage="STAGE-100",
+            completed_stages=101,
+            manifest=str(manifest_path),
+            git=git_result,
+        )
 
         self.events.emit(
             session_id=session_id, stage_id="STAGE-100", source="TEST",
