@@ -1,0 +1,18 @@
+contract:
+  id: STORY_INPUT_V1
+  version: 1.0.0
+  type: input
+  required:
+    - story_text
+    - target_length
+  properties:
+    story_text:
+      type: string
+      min_length: 1
+    target_length:
+      type: integer
+      minimum: 1
+    constraints:
+      type: array
+      items: string
+      default: []
