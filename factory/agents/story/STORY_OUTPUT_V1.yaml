@@ -1,0 +1,23 @@
+contract:
+  id: STORY_OUTPUT_V1
+  version: 1.0.0
+  type: output
+  required:
+    - continuation
+    - continuity
+    - canon_delta
+    - model_id
+  properties:
+    continuation:
+      type: string
+      min_length: 1
+    continuity:
+      type: object
+    canon_delta:
+      type: array
+    proposals:
+      type: array
+      default: []
+    model_id:
+      type: string
+      min_length: 1
