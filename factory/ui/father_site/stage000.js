@@ -1,5 +1,21 @@
 let state="DRAFT",view="idea",inputPassed=false,artifactPassed=false,analysis=null,decision=null;
+const demoMode=new URLSearchParams(location.search).get("demo")==="story";
 const model={raw_idea:"",author_or_sponsor:"",known_context:[],known_constraints:[]};
+if(demoMode){
+ model.raw_idea="Создать LLM-систему продолжения рассказов на одной агентной конструкции со сменяемой LLM, единым входным и выходным контрактом, автоматическими тестами результата, автоматическим переключением модели при отказе или непрохождении теста и сохранением evidence и результатов в GitHub.";
+ model.author_or_sponsor="USER";
+ model.known_context=[
+  "FATHER/NEXUS использует единый производственный каркас 000-100.",
+  "Model Slot должен позволять замену LLM без изменения алгоритма и контрактов.",
+  "Это первое демонстрационное изделие фабрики."
+ ];
+ model.known_constraints=[
+  "Каждый переход между этапами требует Human Gate.",
+  "STAGE 000 не создаёт GitHub-репозиторий и локальный проект.",
+  "Один алгоритм должен работать с несколькими совместимыми LLM.",
+  "Результаты испытаний сохраняются как evidence."
+ ];
+}
 const content=document.getElementById("stageContent");
 function render(){
  if(view==="idea"){
@@ -41,11 +57,22 @@ function runInput(){
  setState("READY_FOR_GATE");enableGate();view="analysis";syncTabs();render();toast("STAGE 000 готов к человеческому решению");
 }
 function enableGate(){["approveStage","holdStage","rejectStage"].forEach(id=>document.getElementById(id).disabled=false)}
-function decide(d){const reason=document.getElementById("gateReason").value.trim();if((d==="HOLD"||d==="REJECT")&&!reason){toast("Для HOLD/REJECT нужна причина");return}decision=d;setState(d==="APPROVE"?"APPROVED":d==="HOLD"?"HOLD":"REJECTED");view="gate";syncTabs();render();toast("Human Gate: "+d)}
+function decide(d){
+ const reason=document.getElementById("gateReason").value.trim();
+ if((d==="HOLD"||d==="REJECT")&&!reason){toast("Для HOLD/REJECT нужна причина");return}
+ decision=d;
+ setState(d==="APPROVE"?"APPROVED":d==="HOLD"?"HOLD":"REJECTED");
+ const snapshot=evidence();
+ sessionStorage.setItem("nexus_stage_000",JSON.stringify(snapshot));
+ view="gate";syncTabs();render();toast("Human Gate: "+d);
+ if(d==="APPROVE"){
+   setTimeout(()=>{location.href="./stage001.html?demo=story"},700);
+ }
+}
 function evidence(){return {stage_id:"STAGE-000",state, input_snapshot:model,input_test:{status:inputPassed?"PASS":"NOT_PASS"},analysis,artifact_test:{status:artifactPassed?"PASS":"LOCKED"},human_gate:{decision},project_creation_proposal:decision==="APPROVE"?{stage:"STAGE-001",mode:"PROPOSAL_ONLY",github_repository:"PENDING_APPROVAL",local_directory:"PENDING_APPROVAL"}:null}}
 function setState(s){state=s;document.getElementById("stageState").textContent=s}
 function syncTabs(){document.querySelectorAll(".stage-tab").forEach(x=>x.classList.toggle("active",x.dataset.view===view))}
 function escapeHtml(v){return v.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove("show"),2200)}
 document.querySelectorAll(".stage-tab").forEach(b=>b.onclick=()=>{view=b.dataset.view;syncTabs();render()});
-document.getElementById("runInputTest").onclick=runInput;document.getElementById("approveStage").onclick=()=>decide("APPROVE");document.getElementById("holdStage").onclick=()=>decide("HOLD");document.getElementById("rejectStage").onclick=()=>decide("REJECT");document.getElementById("resetIdea").onclick=()=>location.reload();render();
+document.getElementById("runInputTest").onclick=runInput;document.getElementById("approveStage").onclick=()=>decide("APPROVE");document.getElementById("holdStage").onclick=()=>decide("HOLD");document.getElementById("rejectStage").onclick=()=>decide("REJECT");document.getElementById("resetIdea").onclick=()=>{sessionStorage.removeItem("nexus_stage_000");location.href="./stage000.html"};render();
