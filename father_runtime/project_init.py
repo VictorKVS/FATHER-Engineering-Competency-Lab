@@ -6,6 +6,7 @@ from typing import Any
 import json
 import os
 import subprocess
+import sys
 import webbrowser
 
 from .project_scaffold import ProjectScaffoldGenerator
