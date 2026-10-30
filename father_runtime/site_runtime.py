@@ -110,13 +110,17 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(200, {"status":"logged"})
                 return
             if path == "/demo/autopilot/run":
-                result=self.demo_autopilot.run(
-                    root=payload.get("root","G:\\1\\NEXUS-STORY-ENGINE"),
-                    session_id=payload.get("session_id","demo"),
-                    project_id=payload.get("project_id","PRJ-STORY-001"),
-                    push=bool(payload.get("push",True)),
-                )
-                self._json(200,result)
+                try:
+                    result=self.demo_autopilot.run(
+                        root=payload.get("root","G:\\1\\NEXUS-STORY-ENGINE"),
+                        session_id=payload.get("session_id","demo"),
+                        project_id=payload.get("project_id","PRJ-STORY-001"),
+                        push=bool(payload.get("push",True)),
+                    )
+                    self._json(200,result)
+                except Exception as exc:
+                    self.demo_autopilot.state.update(status="ERROR", last_error=str(exc))
+                    raise
                 return
             if path == "/stage001/preflight":
                 result = self.initializer.preflight(payload["proposal"], payload["execution_plan"])
