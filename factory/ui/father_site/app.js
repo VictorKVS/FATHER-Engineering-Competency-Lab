@@ -1,17 +1,17 @@
 const blocks=[
- {id:"input",stableId:"BLK-001",type:"INPUT",title:"Input Contract",desc:"Явный вход агента",x:55,y:120},
- {id:"role",stableId:"BLK-002",type:"ROLE",title:"Role",desc:"Кто агент и за что отвечает",x:245,y:70},
- {id:"prompt",stableId:"BLK-003",type:"PROMPT",title:"Prompt",desc:"Версионируемая инструкция",x:245,y:180},
+ {id:"input",stableId:"BLK-001",type:"INPUT",title:"Входной контракт",desc:"Явный вход агента",x:55,y:120},
+ {id:"role",stableId:"BLK-002",type:"ROLE",title:"Роль",desc:"Кто агент и за что отвечает",x:245,y:70},
+ {id:"prompt",stableId:"BLK-003",type:"PROMPT",title:"Промпт",desc:"Версионируемая инструкция",x:245,y:180},
  {id:"rag",stableId:"BLK-004",type:"RAG",title:"RAG",desc:"Поиск релевантного знания",x:435,y:70},
- {id:"kb",stableId:"BLK-005",type:"KB",title:"Knowledge Base",desc:"База знаний профиля",x:435,y:180},
- {id:"model",stableId:"BLK-006",type:"MODEL_SLOT",title:"Model Slot",desc:"Сменная локальная LLM",x:625,y:125,cls:"model"},
- {id:"output",stableId:"BLK-007",type:"OUTPUT",title:"Output Contract",desc:"Структурированный результат",x:815,y:70},
- {id:"eval",stableId:"BLK-008",type:"EVAL",title:"Evals",desc:"Контракт + качество",x:815,y:180},
- {id:"evidence",stableId:"BLK-009",type:"EVIDENCE",title:"Evidence",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
+ {id:"kb",stableId:"BLK-005",type:"KB",title:"База знаний",desc:"База знаний профиля",x:435,y:180},
+ {id:"model",stableId:"BLK-006",type:"MODEL_SLOT",title:"Слот модели",desc:"Сменная локальная LLM",x:625,y:125,cls:"model"},
+ {id:"output",stableId:"BLK-007",type:"OUTPUT",title:"Выходной контракт",desc:"Структурированный результат",x:815,y:70},
+ {id:"eval",stableId:"BLK-008",type:"EVAL",title:"Оценки",desc:"Контракт + качество",x:815,y:180},
+ {id:"evidence",stableId:"BLK-009",type:"EVIDENCE",title:"Доказательства",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
 ];
 const edges=[["input","role"],["role","rag"],["role","prompt"],["prompt","model"],["rag","model"],["kb","model"],["model","output"],["output","eval"],["eval","evidence"]];
 const palette=[
- ["ROLE","R","Роль","Ответственность агента"],["PROMPT","P","Prompt","Версия инструкций"],["RAG","G","RAG","Извлечение знаний"],["KB","K","Knowledge Base","Доменная база знаний"],["MODEL_SLOT","M","Model Slot","Сменная LLM"],["CONTRACT","C","Contract","Вход / выход"],["EVAL","E","Eval","Проверка качества"],["EVIDENCE","V","Evidence","Доказательства"]
+ ["ROLE","R","Роль","Ответственность агента"],["PROMPT","P","Промпт","Версия инструкций"],["RAG","G","RAG","Извлечение знаний"],["KB","K","База знаний","Доменная база знаний"],["MODEL_SLOT","M","Слот модели","Сменная LLM"],["CONTRACT","C","Контракт","Вход / выход"],["EVAL","E","Оценка","Проверка качества"],["EVIDENCE","V","Доказательства","Доказательства"]
 ];
 const models=[
  {id:"MDL-GIGACHAT20-Q4",name:"GigaChat 20B A3B Q4_K_M",type:"TEXT_GENERATION",runtime:"llama.cpp",status:"ELIGIBLE"},
@@ -66,10 +66,10 @@ const blockDocs={
   version:"0.2.0"
  },
  model:{
-  purpose:"Сменный вычислительный двигатель агента. Меняется без изменения Role, Prompt, RAG, KB и контрактов.",
+  purpose:"Сменный вычислительный двигатель агента. Меняется без изменения Роль, Промпт, RAG, KB и контрактов.",
   repoPath:"factory/model_fabric/LOCAL_MODEL_CATALOG.yaml",
   localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/factory/model_fabric/LOCAL_MODEL_CATALOG.yaml",
-  editor:"Model Zoo / launch profile",
+  editor:"Зоопарк моделей / профиль запуска",
   version:"catalog 1.0.0"
  },
  output:{
@@ -87,11 +87,11 @@ const blockDocs={
   version:"ALINA_LITERARY_CONTINUITY_V02"
  },
  evidence:{
-  purpose:"Фиксирует доказательства выполнения: model_id, версии Prompt/RAG/KB, latency, contract status, review status и run_id.",
+  purpose:"Фиксирует доказательства выполнения: model_id, версии Промпт/RAG/KB, latency, contract status, review status и run_id.",
   repoPath:"benchmark_results/alina_literary/<RUN_ID>/",
   localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/benchmark_results/alina_literary/<RUN_ID>/",
-  editor:"Generated evidence / review bundle",
-  version:"runtime evidence"
+  editor:"Сгенерированные доказательства / пакет проверки",
+  version:"доказательства выполнения"
  }
 };
 const blockDrafts={};
@@ -217,15 +217,15 @@ function selectBlock(id){
  document.querySelectorAll(".node").forEach(n=>n.classList.toggle("selected",n.dataset.id===id));
  const b=blocks.find(x=>x.id===id);const ins=document.getElementById("inspector");document.getElementById("inspectorType").textContent=b.type;
  let html='<div class="info-box"><b>'+b.title+'</b><p>'+b.desc+'</p></div>';
- if(id==="role")html+=field("Agent ID",config.agent_id)+area("Role",config.role);
- else if(id==="prompt")html+=field("Prompt version",config.prompt_version)+area("Prompt","Продолжай исходный рассказ. Сохраняй канон, POV, время, персонажей и открытые сюжетные линии. Возвращай JSON по Output Contract.");
+ if(id==="role")html+=field("Agent ID",config.agent_id)+area("Роль",config.role);
+ else if(id==="prompt")html+=field("Промпт version",config.prompt_version)+area("Промпт","Продолжай исходный рассказ. Сохраняй канон, POV, время, персонажей и открытые сюжетные линии. Возвращай JSON по Выходной контракт.");
  else if(id==="rag")html+=field("RAG version",config.rag_version)+field("Mode","LOCAL_SIMPLE_RETRIEVAL");
  else if(id==="kb")html+=field("KB version",config.kb_version)+'<div class="info-box"><b>Sections</b><p><span class="tag">Canon</span><span class="tag">Continuity</span><span class="tag">Characters</span><span class="tag">Causality</span></p></div>';
- else if(id==="model")html+='<div class="info-box"><b>Replaceable engine</b><p>Модель меняется без изменения Role / Prompt / RAG / KB / Contracts.</p></div>'+field("Selected",config.selected_model);
- else if(id==="input")html+=area("Schema",'story_text: string\ntarget_length: integer\nconstraints: string[]');
- else if(id==="output")html+=area("Required",'continuation\ncontinuity\ncanon_delta\nproposals\nmodel_id');
- else if(id==="eval")html+='<div class="info-box"><b>Hard fail</b><p>contract invalid · canon contradiction · renamed character · rewrite instead of continuation</p></div>';
- else html+='<div class="info-box"><b>Provenance</b><p>model_id · agent_id · prompt/RAG/KB versions · latency · contract status · review status</p></div>';
+ else if(id==="model")html+='<div class="info-box"><b>Сменяемый движок</b><p>Модель меняется без изменения Роль / Промпт / RAG / KB / Контрактs.</p></div>'+field("Выбрано",config.selected_model);
+ else if(id==="input")html+=area("Схема",'story_text: string\ntarget_length: integer\nconstraints: string[]');
+ else if(id==="output")html+=area("Обязательные поля",'continuation\ncontinuity\ncanon_delta\nproposals\nmodel_id');
+ else if(id==="eval")html+='<div class="info-box"><b>Критический отказ</b><p>contract invalid · canon contradiction · renamed character · rewrite instead of continuation</p></div>';
+ else html+='<div class="info-box"><b>Происхождение данных</b><p>model_id · agent_id · prompt/RAG/KB versions · latency · contract status · review status</p></div>';
  ins.innerHTML=html;
 }
 function field(label,value){return '<div class="field"><label>'+label+'</label><input value="'+String(value).replaceAll('"','&quot;')+'"></div>'}
@@ -234,8 +234,8 @@ const sel=document.getElementById("modelSelect");
 models.forEach(m=>{const o=document.createElement("option");o.value=m.id;o.textContent=m.name+(m.status==="EXPERIMENTAL"?" · EXP":"");sel.appendChild(o)});sel.value=config.selected_model;
 function renderModel(){const m=models.find(x=>x.id===sel.value);config.selected_model=m.id;document.getElementById("modelMeta").innerHTML='<b>'+m.id+'</b><br>'+m.type+' · '+m.runtime+' · '+m.status;document.getElementById("modelStatus").textContent=models.length+" candidates";}
 sel.onchange=()=>{renderModel();selectBlock("model")};renderModel();
-const checks=["Role defined","Prompt versioned","RAG attached","Knowledge Base attached","Model Slot replaceable","Input contract","Output contract","Evals","Evidence"];
-document.getElementById("checklist").innerHTML=checks.map(x=>'<div class="check"><span>'+x+'</span><b>READY</b></div>').join("");
+const checks=["Роль defined","Промпт versioned","RAG подключён","База знаний attached","Слот модели replaceable","Входной контракт","Выходной контракт","Оценки","Доказательства"];
+document.getElementById("checklist").innerHTML=checks.map(x=>'<div class="check"><span>'+x+'</span><b>ГОТОВО</b></div>').join("");
 document.getElementById("loadDemo").onclick=()=>{selectBlock("role");toast("ALINA Literary demo загружен")};
 document.getElementById("validate").onclick=()=>{setFlowMode(true,3400);document.getElementById("gateStatus").textContent="CHECKING";document.getElementById("gateStatus").className="hold";toast("Проверка связей: импульс проходит по активной цепочке");setTimeout(()=>{document.getElementById("gateStatus").textContent="DESIGN PASS";document.getElementById("gateStatus").className="";},3200)};
 document.getElementById("runDemo").onclick=()=>{setFlowMode(true,4200);toast("AG-001: визуальный проход данных через активные связи · "+config.selected_model)};
@@ -260,11 +260,11 @@ function openBlockModal(id){
 function closeBlockModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
 function demoLaunchpadHtml(){
  return '<div class="modal-section demo-launchpad">'+
-  '<div class="demo-launchpad-head"><div><h4>DEMO PRODUCTS</h4><p>Один вход фабрики · один процесс 000–100 · разные изделия.</p></div><span>FACTORY PRESETS</span></div>'+
+  '<div class="demo-launchpad-head"><div><h4>ДЕМО-ПРОДУКТЫ</h4><p>Один вход фабрики · один процесс 000–100 · разные изделия.</p></div><span>ПРЕСЕТЫ ФАБРИКИ</span></div>'+
   '<div class="demo-launchpad-grid">'+
-   '<button class="demo-product-card" data-demo-product="story"><b>DEMO 1</b><strong>Story / Model Swap</strong><small>Рассказ · сменяемая LLM · failover · eval · evidence</small><i>START 000 →</i></button>'+
-   '<button class="demo-product-card" data-demo-product="osint"><b>DEMO 2</b><strong>OSINT Research</strong><small>Research Request · sources · corroboration · evidence</small><i>START 000 →</i></button>'+
-   '<button class="demo-product-card" data-demo-product="security"><b>DEMO 3</b><strong>Security Analysis</strong><small>Assets · threats · risks · controls · acceptance</small><i>START 000 →</i></button>'+
+   '<button class="demo-product-card" data-demo-product="story"><b>DEMO 1</b><strong>Рассказ / Смена модели</strong><small>Рассказ · сменяемая LLM · failover · eval · evidence</small><i>СТАРТ 000 →</i></button>'+
+   '<button class="demo-product-card" data-demo-product="osint"><b>DEMO 2</b><strong>OSINT-исследование</strong><small>Research Request · sources · corroboration · evidence</small><i>СТАРТ 000 →</i></button>'+
+   '<button class="demo-product-card" data-demo-product="security"><b>DEMO 3</b><strong>Анализ безопасности</strong><small>Assets · threats · risks · controls · acceptance</small><i>СТАРТ 000 →</i></button>'+
   '</div></div>';
 }
 function bindDemoLaunchpad(){
@@ -290,7 +290,7 @@ function renderModalTab(){
   if(currentModalBlock==="input")requestAnimationFrame(bindDemoLaunchpad);
  }else if(currentModalTab==="location"){
   modalBody.innerHTML=
-   '<div class="modal-section"><h4>GitHub / Repository</h4><code>'+d.repoPath+'</code></div>'+
+   '<div class="modal-section"><h4>GitHub / Репозиторий</h4><code>'+d.repoPath+'</code></div>'+
    '<div class="modal-section"><h4>Локальное расположение</h4><code>'+d.localPath+'</code></div>'+
    '<div class="modal-section"><h4>Чем редактируется</h4><p>'+d.editor+'</p></div>'+
    '<div class="modal-section"><h4>Как работает изменение</h4><p>Изменение сначала живёт как локальный draft в интерфейсе. Затем его можно экспортировать и перенести в канонический файл FATHER, после чего изменение должно пройти тесты и evidence.</p></div>';
