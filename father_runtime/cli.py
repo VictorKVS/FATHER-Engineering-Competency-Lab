@@ -37,6 +37,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser('model-catalog')
     sub.add_parser('model-preflight')
 
+    site = sub.add_parser('site-runtime')
+    site.add_argument('--host', default='127.0.0.1')
+    site.add_argument('--port', type=int, default=8091)
+
     t1 = sub.add_parser('test-01-story-model-swap')
     t1.add_argument('--file', default='factory/tests/test_01_story_model_swap/STORY_INPUT.txt')
     t1.add_argument('--target-length', type=int, default=500)
@@ -117,6 +121,16 @@ def main() -> int:
         )
         print(json.dumps(record, ensure_ascii=False, indent=2))
         return 0 if record['contract_valid'] else 2
+
+    if args.command == 'site-runtime':
+        from .site_runtime import main as site_runtime_main
+        import sys
+        old_argv = sys.argv[:]
+        try:
+            sys.argv = ['father-site-runtime', '--host', args.host, '--port', str(args.port)]
+            return site_runtime_main()
+        finally:
+            sys.argv = old_argv
 
     if args.command == 'model-preflight':
         print(json.dumps(model_preflight(), ensure_ascii=False, indent=2))
