@@ -99,6 +99,8 @@ class Handler(BaseHTTPRequestHandler):
                     details=payload.get("details") or {},
                     parent_event_id=payload.get("parent_event_id"),
                     correlation_id=payload.get("correlation_id"),
+                    event_id=payload.get("event_id"),
+                    timestamp=payload.get("timestamp"),
                 )
                 self._json(200, {"status":"logged"})
                 return
