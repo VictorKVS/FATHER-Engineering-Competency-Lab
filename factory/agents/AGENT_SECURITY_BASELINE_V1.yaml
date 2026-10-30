@@ -1,0 +1,45 @@
+agent_security_baseline:
+  id: FATHER_AGENT_SECURITY_BASELINE_V1
+  version: 1.0.0
+  principle: secure_by_design
+  mandatory:
+    identity_and_access:
+      - least_privilege
+      - explicit_tool_permissions
+      - deny_by_default
+      - no_embedded_secrets
+      - service_identity_required_for_external_calls
+    data_protection:
+      - input_classification
+      - pii_and_secret_detection
+      - sensitive_context_minimization
+      - encrypted_transport
+      - evidence_redaction_policy
+    llm_security:
+      - prompt_injection_defense
+      - tool_call_policy
+      - output_validation
+      - untrusted_content_boundary
+      - retrieval_source_provenance
+      - model_endpoint_allowlist
+    runtime:
+      - timeout
+      - retry_policy
+      - resource_limits
+      - network_policy
+      - sandbox_when_required
+    audit:
+      - structured_logging
+      - correlation_id
+      - model_id
+      - prompt_version
+      - rag_version
+      - knowledge_snapshot
+      - tool_calls
+      - security_decisions
+    hard_fails:
+      - secret_exposure
+      - unauthorized_tool_call
+      - contract_violation
+      - security_policy_violation
+      - untrusted_instruction_override
