@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Agent Model Tournament</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./agent-tournament.css">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body class="tournament-page">
+<div class="tournament-shell">
+  <header class="tournament-top">
+    <div>
+      <div class="eyebrow">NEXUS · AGENT CONSTRUCT V1</div>
+      <h1>Model Tournament</h1>
+      <p>Один агент. Один и тот же Prompt / RAG / KB / Contract / Eval. Меняется только LLM.</p>
+    </div>
+    <div class="top-actions">
+      <button class="ghost" onclick="location.href='./index.html'">← Главная</button>
+      <button class="ghost" id="resetTournament">Сбросить</button>
+      <button class="primary" id="runTournament">ЗАПУСТИТЬ СРАВНЕНИЕ</button>
+    </div>
+  </header>
+
+  <section class="tournament-status">
+    <div><span>Agent</span><b>AG-STORY-001</b></div>
+    <div><span>Construct</span><b>FATHER_AGENT_CONSTRUCT_V1</b></div>
+    <div><span>Mode</span><b>FIXED AGENT / SWAPPABLE LLM</b></div>
+    <div><span>Status</span><b id="tournamentState" class="hold">READY</b></div>
+  </section>
+
+  <main class="tournament-main">
+    <section class="construct-card">
+      <div class="section-title"><span>01</span><div><b>AGENT CONSTRUCT</b><small>Замороженная часть изделия</small></div></div>
+      <div class="construct-grid">
+        <div class="frozen-node"><span>ROLE</span><b>ROLE-STORY-001</b><small>фиксировано</small></div>
+        <div class="frozen-node"><span>PROMPT</span><b>PROMPT-STORY-001</b><small>фиксировано</small></div>
+        <div class="frozen-node"><span>RAG</span><b>RAG-STORY-001</b><small>фиксировано</small></div>
+        <div class="frozen-node"><span>KNOWLEDGE</span><b>KB-STORY-001</b><small>snapshot</small></div>
+        <div class="frozen-node"><span>INPUT</span><b>STORY_INPUT_V1</b><small>contract</small></div>
+        <div class="frozen-node"><span>OUTPUT</span><b>STORY_OUTPUT_V1</b><small>contract</small></div>
+        <div class="frozen-node"><span>EVAL</span><b>EVAL-STORY-001</b><small>threshold 80</small></div>
+        <div class="frozen-node"><span>TASK</span><b>STORY_CONTINUATION</b><small>одинаковый вход</small></div>
+      </div>
+    </section>
+
+    <section class="model-card">
+      <div class="section-title"><span>02</span><div><b>MODEL SLOT</b><small>Единственная изменяемая часть</small></div></div>
+      <div class="model-slot">
+        <div class="model-engine" id="activeModelEngine">
+          <span>LLM</span>
+          <b id="activeModelName">MODEL-A</b>
+          <small id="activeModelMeta">готов к тесту</small>
+        </div>
+        <div class="model-rail">
+          <button class="model-chip active" data-model="MODEL-A"><b>MODEL-A</b><span>WAITING</span></button>
+          <button class="model-chip" data-model="MODEL-B"><b>MODEL-B</b><span>WAITING</span></button>
+          <button class="model-chip" data-model="MODEL-C"><b>MODEL-C</b><span>WAITING</span></button>
+        </div>
+      </div>
+      <div class="flow-line">
+        <span>INPUT</span><i>→</i><span>AGENT</span><i>→</i><strong>MODEL SLOT</strong><i>→</i><span>VALIDATE</span><i>→</i><span>EVAL</span><i>→</i><span>EVIDENCE</span>
+      </div>
+    </section>
+
+    <section class="gates-card">
+      <div class="section-title"><span>03</span><div><b>HARD GATES</b><small>Hard fail сильнее score</small></div></div>
+      <div class="gate-list">
+        <div><span>Output contract</span><b id="gateContract">PENDING</b></div>
+        <div><span>Canon integrity</span><b id="gateCanon">PENDING</b></div>
+        <div><span>Security policy</span><b id="gateSecurity">PENDING</b></div>
+        <div><span>Runtime health</span><b id="gateRuntime">PENDING</b></div>
+      </div>
+    </section>
+
+    <section class="leaderboard-card">
+      <div class="section-title"><span>04</span><div><b>COMPARISON ENGINE</b><small>Результаты в одинаковых условиях</small></div></div>
+      <div class="leaderboard-head">
+        <span>Модель</span><span>Status</span><span>Score</span><span>Latency</span><span>Hard fail</span><span>Роль</span>
+      </div>
+      <div id="leaderboardRows" class="leaderboard-rows"></div>
+    </section>
+
+    <section class="winner-card">
+      <div class="winner-orb" id="winnerOrb">?</div>
+      <div>
+        <span>SELECTED CONFIGURATION</span>
+        <h2 id="winnerName">Победитель ещё не выбран</h2>
+        <p id="winnerReason">Запустите турнир. Победит лучшая модель, прошедшая все hard gates.</p>
+      </div>
+      <div class="winner-roles">
+        <div><span>PRIMARY</span><b id="primaryModel">—</b></div>
+        <div><span>FALLBACK</span><b id="fallbackModel">—</b></div>
+        <div><span>FAST</span><b id="fastModel">—</b></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="./agent-tournament.js"></script>
+<script src="./trace.js?v=20261030-1515"></script>
+<script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>
