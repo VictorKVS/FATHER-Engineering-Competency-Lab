@@ -1,0 +1,23 @@
+release_assurance:
+  id: NEXUS_RELEASE_ASSURANCE_V1
+  version: 1.0.0
+  status: FOUNDATION
+  purpose: Bind release evidence to source, build, SBOM and attestations.
+  required_for_production:
+    - git_commit_sha
+    - ci_workflow_run
+    - artifact_hashes
+    - sbom
+    - provenance_attestation
+    - release_candidate_id
+    - polygon_result
+    - human_acceptance
+  demo_policy:
+    production_valid: false
+    may_omit:
+      - sbom
+      - provenance_attestation
+      - polygon_result
+      - human_acceptance
+  promotion_rule:
+    production_pass_requires_all_required_for_production
