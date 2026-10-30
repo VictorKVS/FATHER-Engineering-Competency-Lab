@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NEXUS — Stage 001 Project Initialization</title>
+  <title>NEXUS — Этап 001: Инициализация проекта</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./stage001.css">
 </head>
@@ -11,32 +11,32 @@
 <div class="stage-shell">
   <aside class="stage-rail">
     <a href="./stage000.html?demo=story" class="back-link">← STAGE 000</a>
-    <div class="stage-brand"><div class="stage-mark">001</div><div><strong>Project Initialization</strong><small>PROJECT CHASSIS</small></div></div>
-    <div class="section-label">PHASES</div>
-    <button class="phase active">01 · INPUT</button>
-    <button class="phase">02 · INPUT TEST</button>
-    <button class="phase">03 · PROJECT PROPOSAL</button>
-    <button class="phase">04 · ARTIFACT TEST</button>
-    <button class="phase">05 · EVIDENCE</button>
-    <button class="phase">06 · HUMAN GATE</button>
-    <div class="stage-foot"><div class="health"><span></span>STAGE 001 ONLINE</div><small>Creation locked until APPROVE</small></div>
+    <div class="stage-brand"><div class="stage-mark">001</div><div><strong>Инициализация проекта</strong><small>КАРКАС ПРОЕКТА</small></div></div>
+    <div class="section-label">ФАЗЫ</div>
+    <button class="phase active">01 · ВХОД</button>
+    <button class="phase">02 · ТЕСТ ВХОДА</button>
+    <button class="phase">03 · ПРОЕКТНОЕ ПРЕДЛОЖЕНИЕ</button>
+    <button class="phase">04 · ТЕСТ АРТЕФАКТА</button>
+    <button class="phase">05 · ДОКАЗАТЕЛЬСТВА</button>
+    <button class="phase">06 · ЧЕЛОВЕЧЕСКИЙ ШЛЮЗ</button>
+    <div class="stage-foot"><div class="health"><span></span>ЭТАП 001 РАБОТАЕТ</div><small>Создание закрыто до одобрения</small></div>
   </aside>
   <main class="stage-main">
     <header class="stage-top">
-      <div><div class="eyebrow">FACTORY · STAGE 001</div><h1>Инициализация проекта</h1><p>Утверждаем identity, GitHub и локальный путь. После APPROVE фабрика должна создать единый каркас 000–100.</p></div>
-      <div class="top-actions"><button class="ghost" id="validateProposal">Проверить proposal</button><button class="primary" id="approveProject" disabled>APPROVE & PREPARE CREATION</button></div>
+      <div><div class="eyebrow">ФАБРИКА · ЭТАП 001</div><h1>Инициализация проекта</h1><p>Утверждаем identity, GitHub и локальный путь. После APPROVE фабрика должна создать единый каркас 000–100.</p></div>
+      <div class="top-actions"><button class="ghost" id="validateПредложение">Проверить предложение</button><button class="primary" id="approveProject" disabled>ОДОБРИТЬ И ПОДГОТОВИТЬ СОЗДАНИЕ</button></div>
     </header>
     <section class="stage-status">
-      <div><span>Prerequisite</span><b id="stage000State">STAGE-000 · UNKNOWN</b></div>
-      <div><span>Stage</span><b>STAGE-001</b></div>
-      <div><span>State</span><b id="stageState" class="hold">LOCKED</b></div>
-      <div><span>Scaffold</span><b>000–100</b></div>
-      <div><span>Verification</span><b id="verificationState">NOT RUN</b></div>
+      <div><span>Предусловие</span><b id="stage000Состояние">STAGE-000 · UNKNOWN</b></div>
+      <div><span>Этап</span><b>STAGE-001</b></div>
+      <div><span>Состояние</span><b id="stageСостояние" class="hold">LOCKED</b></div>
+      <div><span>Каркас</span><b>000–100</b></div>
+      <div><span>Проверка</span><b id="verificationСостояние">NOT RUN</b></div>
     </section>
     <section class="stage-grid">
       <aside class="stage-left">
         <div class="stage-card">
-          <div class="card-head">Canonical Scaffold</div>
+          <div class="card-head">Canonical Каркас</div>
           <div class="rule-list">
             <span>project.yaml <b>REQ</b></span>
             <span>stages/000..100 <b>101</b></span>
@@ -49,42 +49,42 @@
           </div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Rule</div>
-          <div class="prohibit-list"><span>NO creation before APPROVE</span><span>NO hidden repo naming</span><span>NO hidden local path</span></div>
+          <div class="card-head">Правило</div>
+          <div class="prohibit-list"><span>НЕ создавать до одобрения</span><span>НЕ скрывать имя репозитория</span><span>НЕ скрывать локальный путь</span></div>
         </div>
       </aside>
       <section class="stage-center">
         <div class="stage-tabs">
-          <button class="stage-tab active" data-view="proposal">Proposal</button>
+          <button class="stage-tab active" data-view="proposal">Предложение</button>
           <button class="stage-tab" data-view="scaffold">000–100</button>
-          <button class="stage-tab" data-view="execution">Execution</button>
-          <button class="stage-tab" data-view="tests">Tests</button>
-          <button class="stage-tab" data-view="evidence">Evidence</button>
-          <button class="stage-tab" data-view="gate">Gate</button>
+          <button class="stage-tab" data-view="execution">Выполнение</button>
+          <button class="stage-tab" data-view="tests">Тесты</button>
+          <button class="stage-tab" data-view="evidence">Доказательства</button>
+          <button class="stage-tab" data-view="gate">Шлюз</button>
         </div>
         <div id="stageContent" class="stage-content"></div>
       </section>
       <aside class="stage-right">
         <div class="stage-card">
-          <div class="card-head">Input Test</div>
+          <div class="card-head">Тест входа</div>
           <div id="inputTestPanel"><p>LOCKED</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Artifact Test</div>
+          <div class="card-head">Тест артефакта</div>
           <div id="artifactTestPanel"><p>LOCKED</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Execution Verification</div>
+          <div class="card-head">Выполнение Проверка</div>
           <div id="executionVerifyPanel"><p>NOT RUN</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Human Gate</div>
+          <div class="card-head">Human Шлюз</div>
           <div class="gate-actions">
-            <button id="approveGate" disabled>APPROVE</button>
-            <button id="holdGate" disabled>HOLD</button>
-            <button id="rejectGate" disabled>REJECT</button>
+            <button id="approveШлюз" disabled>APPROVE</button>
+            <button id="holdШлюз" disabled>HOLD</button>
+            <button id="rejectШлюз" disabled>REJECT</button>
           </div>
-          <textarea id="gateReason" placeholder="Причина HOLD / REJECT"></textarea>
+          <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
         </div>
       </aside>
     </section>
