@@ -1,5 +1,5 @@
 let view="proposal",validated=false,decision=null,executionApproved=false,verificationPassed=false;
-let preflightResult=null,runtimeOnline=false;
+let preflightResult=null,runtimeOnline=false,operationState="IDLE";
 const RUNTIME="http://127.0.0.1:8091";
 
 const previous=JSON.parse(sessionStorage.getItem("nexus_stage_000")||"null");
@@ -104,7 +104,8 @@ function render(){
  }else if(view==="scaffold"){
   content.innerHTML='<div class="scaffold-grid">'+Array.from({length:101},(_,i)=>{const n=String(i).padStart(3,"0");return '<div class="stage-chip"><b>'+n+'</b>'+(i===0?"IDEA_INTAKE":i===1?"PROJECT_INITIALIZATION":i===100?"PRODUCTION_PROVEN":"ЗАКРЫТО")+'</div>'}).join("")+'</div>';
  }else if(view==="execution"){
-  const runtime='<div class="runtime-state '+(runtimeOnline?"ok":"bad")+'"><b>Локальный runtime</b><span>'+(runtimeOnline?"ONLINE · 127.0.0.1:8091":"OFFLINE · запустите father-factory site-runtime")+'</span></div>';
+  const runtime='<div class="runtime-state '+(runtimeOnline?"ok":"bad")+'"><b>Локальный runtime</b><span>'+(runtimeOnline?"ONLINE · 127.0.0.1:8091":"OFFLINE · запустите father-factory site-runtime")+'</span></div>'+
+  '<div class="runtime-operation"><b>Операция</b><span>'+operationState+'</span></div>';
   const auth=executionApproved
    ? '<div class="execution-approved-banner"><div><b>✓ ВЫПОЛНЕНИЕ РАЗРЕШЕНО</b><span>Перед созданием система повторно проверит GitHub, локальную папку и Git origin.</span></div></div>'
    : '<div class="execution-locked-banner"><b>ВЫПОЛНЕНИЕ ЕЩЁ НЕ РАЗРЕШЕНО</b><span>Сначала проверьте предложение и нажмите APPROVE.</span></div>';
@@ -182,6 +183,92 @@ function decide(d){
  view=d==="APPROVE"?"execution":"gate";sync();render();
 }
 
+async function approveAndExecute(){
+ if(!prereqApproved){
+  toast("Этап 000 не одобрен");
+  return;
+ }
+ if(!validated){
+  validate();
+  if(!validated)return;
+ }
+ operationState="CHECK_RUNTIME";
+ document.getElementById("stageState").textContent="ПРОВЕРКА RUNTIME";
+ try{
+  const health=await fetch(RUNTIME+"/health");
+  runtimeOnline=health.ok;
+ }catch{
+  runtimeOnline=false;
+ }
+ if(!runtimeOnline){
+  operationState="RUNTIME_OFFLINE";
+  document.getElementById("stageState").textContent="RUNTIME OFFLINE";
+  view="execution";sync();render();
+  showRuntimeOffline();
+  return;
+ }
+
+ decision="APPROVE";
+ executionApproved=true;
+ document.getElementById("stageState").textContent="PREFLIGHT";
+ sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
+ view="execution";sync();render();
+
+ try{
+  operationState="PREFLIGHT";
+  preflightResult=await api("/stage001/preflight",{proposal,execution_plan:executionPlan});
+  render();
+
+  if(preflightResult.conflicts&&preflightResult.conflicts.length){
+   operationState="BLOCKED";
+   document.getElementById("stageState").textContent="HOLD · PREFLIGHT";
+   sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
+   toast("Создание заблокировано: найден конфликт");
+   return;
+  }
+
+  operationState="EXECUTING";
+  document.getElementById("stageState").textContent="СОЗДАНИЕ ПРОЕКТА";
+  render();
+
+  const result=await api("/stage001/execute",{proposal,execution_plan:executionPlan,approved:true});
+
+  if(result.status==="BLOCKED"){
+   operationState="BLOCKED";
+   preflightResult=result.preflight||preflightResult;
+   document.getElementById("stageState").textContent="HOLD · PREFLIGHT";
+   render();
+   toast("Создание остановлено повторной проверкой");
+   return;
+  }
+
+  operationState="VERIFYING";
+  document.getElementById("stageState").textContent="ПРОВЕРКА РЕЗУЛЬТАТА";
+  await verifyProject();
+ }catch(e){
+  operationState="ERROR";
+  document.getElementById("stageState").textContent="ОШИБКА";
+  view="execution";sync();render();
+  showExecutionError(e.message);
+ }
+}
+
+function showRuntimeOffline(){
+ const box=document.createElement("div");
+ box.className="runtime-blocking-message";
+ box.innerHTML='<b>Локальный runtime не запущен</b>'+
+  '<span>Сайт не может создавать папки на диске или GitHub-репозитории без локального runtime.</span>'+
+  '<code>Set-Location \'G:\\1\\FATHER-Engineering-Competency-Lab-git\'<br>father-factory site-runtime</code>';
+ content.prepend(box);
+}
+
+function showExecutionError(message){
+ const box=document.createElement("div");
+ box.className="runtime-blocking-message";
+ box.innerHTML='<b>Ошибка выполнения STAGE 001</b><span>'+esc(message)+'</span>';
+ content.prepend(box);
+}
+
 async function runPreflight(){
  if(!runtimeOnline){toast("Локальный runtime не запущен");return}
  try{
@@ -213,6 +300,7 @@ async function verifyProject(){
   const v=await api("/stage001/verify",{proposal});
   Object.keys(verification).forEach(k=>verification[k]=!!v[k]);
   verificationPassed=Object.values(verification).every(Boolean);
+  operationState=verificationPassed?"PASS":"HOLD";
   document.getElementById("verificationState").textContent=verificationPassed?"ПРОЙДЕНО":"НЕ ПРОЙДЕНО";
   document.getElementById("verificationState").className=verificationPassed?"pass":"fail";
   document.getElementById("stageState").textContent=verificationPassed?"ПРОЙДЕНО":"ВЫПОЛНЕНО, НО НЕ ПРОВЕРЕНО";
@@ -246,9 +334,9 @@ function evidence(){
 
 document.querySelectorAll(".stage-tab").forEach(b=>b.onclick=()=>{view=b.dataset.view;sync();render()});
 document.getElementById("validateProposal").onclick=validate;
-document.getElementById("approveGate").onclick=()=>decide("APPROVE");
+document.getElementById("approveGate").onclick=approveAndExecute;
 document.getElementById("holdGate").onclick=()=>decide("HOLD");
 document.getElementById("rejectGate").onclick=()=>decide("REJECT");
-document.getElementById("approveProject").onclick=()=>decide("APPROVE");
+document.getElementById("approveProject").onclick=approveAndExecute;
 render();
 checkRuntime();
