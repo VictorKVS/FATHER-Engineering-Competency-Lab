@@ -1,0 +1,34 @@
+agent:
+  schema: FATHER_AGENT_INSTANCE_V1
+  construct: FATHER_AGENT_CONSTRUCT_V1
+  identity:
+    agent_id: AG-STORY-001
+    public_name: NEXUS Story Continuation Agent
+    purpose: Continue a story while preserving canon and continuity.
+    domain: STORY_CONTINUATION
+  intelligence:
+    role_version: ROLE-STORY-001
+    prompt_version: PROMPT-STORY-001
+    rag_version: RAG-STORY-001
+    knowledge_snapshot: KB-STORY-001
+  contracts:
+    input_contract: STORY_INPUT_V1
+    output_contract: STORY_OUTPUT_V1
+  model_slot:
+    mode: SWAPPABLE
+    candidates:
+      - id: MODEL-A
+        adapter: MOCK
+      - id: MODEL-B
+        adapter: MOCK
+      - id: MODEL-C
+        adapter: MOCK
+  evaluation:
+    eval_profile: EVAL-STORY-001
+    pass_threshold: 80
+    hard_fail_rules:
+      - contract_invalid
+      - canon_break
+      - security_violation
+  evidence:
+    required: true
