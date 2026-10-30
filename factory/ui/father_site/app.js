@@ -280,13 +280,13 @@ function renderModalTab(){
  const b=blocks.find(x=>x.id===currentModalBlock),d=blockDocs[currentModalBlock]||{};
  if(currentModalTab==="about"){
   modalBody.innerHTML=
+   (currentModalBlock==="input"?demoLaunchpadHtml():"")+
    '<div class="modal-grid">'+
     '<div class="modal-section"><h4>Назначение</h4><p>'+d.purpose+'</p></div>'+
     '<div class="modal-section"><h4>В составе агента</h4><p><b>'+b.type+'</b> · '+b.desc+'</p></div>'+
     '<div class="modal-section"><h4>Версия</h4><p>'+d.version+'</p></div>'+
     '<div class="modal-section"><h4>Связи</h4><p>'+edgeSummary(currentModalBlock)+'</p></div>'+
-   '</div>'+
-   (currentModalBlock==="input"?demoLaunchpadHtml():"");
+   '</div>';
   if(currentModalBlock==="input")requestAnimationFrame(bindDemoLaunchpad);
  }else if(currentModalTab==="location"){
   modalBody.innerHTML=
