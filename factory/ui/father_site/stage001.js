@@ -96,7 +96,12 @@ function preflightHtml(){
  ];
  return '<div class="preflight-grid">'+rows.map(([n,ok,d])=>'<div class="preflight-row"><span>'+n+'</span><b class="'+(ok?"pass":"fail")+'">'+(ok?"ЕСТЬ":"НЕТ")+'</b><small>'+esc(d)+'</small></div>').join("")+'</div>'+
  (p.conflicts&&p.conflicts.length?'<div class="preflight-conflicts"><b>Обнаружены конфликты</b>'+p.conflicts.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>':'<div class="preflight-clear">✓ Конфликтов для выбранного сценария нет</div>')+
- (p.allowed_actions&&p.allowed_actions.length?'<div class="preflight-actions"><b>Допустимые варианты:</b> '+p.allowed_actions.map(esc).join(" · ")+'</div>':'');
+ (p.allowed_actions&&p.allowed_actions.length?'<div class="preflight-actions"><b>Допустимые варианты:</b> '+p.allowed_actions.map(esc).join(" · ")+'</div>':'')+
+ ((p.conflicts||[]).length?'<div class="preflight-resolution">'+
+   ((p.conflicts||[]).includes("GITHUB_REPOSITORY_ALREADY_EXISTS")?'<button id="useExistingGithub">Привязать существующий GitHub</button>':'')+
+   ((p.conflicts||[]).includes("LOCAL_DIRECTORY_ALREADY_EXISTS")?'<button id="useExistingLocal">Использовать существующую папку</button>':'')+
+   '<button id="rerunPreflight">Перепроверить</button>'+
+ '</div>':'');
 }
 
 function render(){
@@ -151,6 +156,12 @@ function render(){
   const og=document.getElementById("openGithub"); if(og&&!og.disabled)og.onclick=openGithub;
   const ol=document.getElementById("openLocal"); if(ol&&!ol.disabled)ol.onclick=()=>openLocal(proposal.local_directory);
   const oe=document.getElementById("openEvidence"); if(oe&&!oe.disabled)oe.onclick=()=>openLocal(proposal.local_directory+"\\evidence\\stage_001");
+  const eg=document.getElementById("useExistingGithub");
+  if(eg)eg.onclick=()=>{executionPlan.github_mode="BIND_EXISTING";preflightResult=null;render();runPreflight();};
+  const el=document.getElementById("useExistingLocal");
+  if(el)el.onclick=()=>{executionPlan.local_mode="USE_EXISTING";preflightResult=null;render();runPreflight();};
+  const rp=document.getElementById("rerunPreflight");
+  if(rp)rp.onclick=runPreflight;
  }else if(view==="tests"){
   content.innerHTML='<div class="stage-card"><div class="card-head">Тесты этапа 001</div>'+
    testRow("Этап 000 одобрен",prereqApproved)+
