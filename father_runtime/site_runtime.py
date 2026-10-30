@@ -40,6 +40,9 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/health":
             self._json(200, {"status": "ok", "service": "father-site-runtime"})
             return
+        if parsed.path == "/demo/autopilot/status":
+            self._json(200, self.demo_autopilot.status())
+            return
         if parsed.path.startswith("/events/"):
             session_id=parsed.path.split("/events/",1)[1]
             self._json(200, {"session_id":session_id,"events":self.events.read_session(session_id)})
