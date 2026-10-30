@@ -24,19 +24,19 @@
   <main class="stage-main">
     <header class="stage-top">
       <div><div class="eyebrow">ФАБРИКА · ЭТАП 001</div><h1>Инициализация проекта</h1><p>Утверждаем identity, GitHub и локальный путь. После APPROVE фабрика должна создать единый каркас 000–100.</p></div>
-      <div class="top-actions"><button class="ghost" id="validateПредложение">Проверить предложение</button><button class="primary" id="approveProject" disabled>ОДОБРИТЬ И ПОДГОТОВИТЬ СОЗДАНИЕ</button></div>
+      <div class="top-actions"><button class="ghost" id="validateProposal">Проверить предложение</button><button class="primary" id="approveProject" disabled>ОДОБРИТЬ И ПОДГОТОВИТЬ СОЗДАНИЕ</button></div>
     </header>
     <section class="stage-status">
-      <div><span>Предусловие</span><b id="stage000Состояние">STAGE-000 · UNKNOWN</b></div>
+      <div><span>Предусловие</span><b id="stage000State">STAGE-000 · UNKNOWN</b></div>
       <div><span>Этап</span><b>STAGE-001</b></div>
-      <div><span>Состояние</span><b id="stageСостояние" class="hold">LOCKED</b></div>
+      <div><span>Состояние</span><b id="stageState" class="hold">LOCKED</b></div>
       <div><span>Каркас</span><b>000–100</b></div>
-      <div><span>Проверка</span><b id="verificationСостояние">NOT RUN</b></div>
+      <div><span>Проверка</span><b id="verificationState">NOT RUN</b></div>
     </section>
     <section class="stage-grid">
       <aside class="stage-left">
         <div class="stage-card">
-          <div class="card-head">Canonical Каркас</div>
+          <div class="card-head">Канонический каркас</div>
           <div class="rule-list">
             <span>project.yaml <b>REQ</b></span>
             <span>stages/000..100 <b>101</b></span>
@@ -74,15 +74,15 @@
           <div id="artifactTestPanel"><p>LOCKED</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Выполнение Проверка</div>
+          <div class="card-head">Проверка выполнения</div>
           <div id="executionVerifyPanel"><p>NOT RUN</p></div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Human Шлюз</div>
+          <div class="card-head">Человеческий шлюз</div>
           <div class="gate-actions">
-            <button id="approveШлюз" disabled>APPROVE</button>
-            <button id="holdШлюз" disabled>HOLD</button>
-            <button id="rejectШлюз" disabled>REJECT</button>
+            <button id="approveGate" disabled>APPROVE</button>
+            <button id="holdGate" disabled>HOLD</button>
+            <button id="rejectGate" disabled>REJECT</button>
           </div>
           <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
         </div>
