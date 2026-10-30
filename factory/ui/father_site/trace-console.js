@@ -13,36 +13,31 @@
     btn.onclick=()=>{box.classList.toggle("open");render()};
     box.querySelector("#traceClose").onclick=()=>box.classList.remove("open");
     box.querySelector("#traceExport").onclick=async()=>{
+      const exportBtn=box.querySelector("#traceExport");
       const sessionId=window.NEXUS_TRACE.sessionId;
       const uiEvents=window.NEXUS_TRACE.events();
-      let runtimeEvents=[];
-      let runtimeStatus="OFFLINE_OR_UNAVAILABLE";
+      exportBtn.disabled=true;
+      exportBtn.textContent="Сохраняю...";
       try{
-        const r=await fetch("http://127.0.0.1:8091/events/"+encodeURIComponent(sessionId));
-        if(r.ok){
-          const data=await r.json();
-          runtimeEvents=data.events||[];
-          runtimeStatus="ONLINE";
-        }
-      }catch{}
-      const merged=[...uiEvents,...runtimeEvents].sort((a,b)=>String(a.timestamp).localeCompare(String(b.timestamp)));
-      const payload={
-        schema:"NEXUS_FACTORY_TRACE_EXPORT_V1",
-        exported_at:new Date().toISOString(),
-        session_id:sessionId,
-        page:location.href,
-        runtime_status:runtimeStatus,
-        ui_event_count:uiEvents.length,
-        runtime_event_count:runtimeEvents.length,
-        total_event_count:merged.length,
-        events:merged
-      };
-      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-      const a=document.createElement("a");
-      a.href=URL.createObjectURL(blob);
-      a.download="NEXUS_TRACE_"+sessionId+".json";
-      a.click();
-      URL.revokeObjectURL(a.href);
+        const r=await fetch("http://127.0.0.1:8091/events/export",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            session_id:sessionId,
+            page:location.href,
+            ui_events:uiEvents
+          })
+        });
+        const data=await r.json();
+        if(!r.ok)throw new Error(data.message||data.error||("HTTP "+r.status));
+        exportBtn.textContent="Сохранено";
+        alert("Трассировка сохранена:\n"+data.path);
+      }catch(err){
+        exportBtn.textContent="Ошибка";
+        alert("Не удалось сохранить трассировку. Проверьте runtime на 8091.\n"+err.message);
+      }finally{
+        setTimeout(()=>{exportBtn.disabled=false;exportBtn.textContent="Скачать трассировку"},1800);
+      }
     };
     window.NEXUS_TRACE.subscribe(()=>{if(box.classList.contains("open"))render()});
   }
