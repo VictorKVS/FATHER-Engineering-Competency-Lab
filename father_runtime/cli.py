@@ -13,7 +13,6 @@ from .runner import StageRunner
 from agents.story_continuation.runtime import StoryAgent
 from agents.alina.profiles.literary.runtime import AlinaLiteraryRuntime
 from agents.alina.profiles.literary.benchmark.runtime import LiteraryBenchmark
-from factory.tests.test_01_story_model_swap.runtime import StoryModelSwapTest
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -76,6 +75,7 @@ def main() -> int:
         return 0
 
     if args.command == 'test-01-story-model-swap':
+        from factory.tests.test_01_story_model_swap.runtime import StoryModelSwapTest
         story_text = Path(args.file).read_text(encoding='utf-8')
         run_dir, result = StoryModelSwapTest(output_root=args.output_root).run_failover(
             story_text=story_text,
