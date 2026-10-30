@@ -34,10 +34,15 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self) -> None:
-        if urlparse(self.path).path == "/health":
+        parsed=urlparse(self.path)
+        if parsed.path == "/health":
             self._json(200, {"status": "ok", "service": "father-site-runtime"})
-        else:
-            self._json(404, {"error": "not_found"})
+            return
+        if parsed.path.startswith("/events/"):
+            session_id=parsed.path.split("/events/",1)[1]
+            self._json(200, {"session_id":session_id,"events":self.events.read_session(session_id)})
+            return
+        self._json(404, {"error": "not_found"})
 
     def _read_json(self) -> dict:
         length = int(self.headers.get("Content-Length", "0"))
