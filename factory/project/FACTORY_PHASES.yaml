@@ -1,0 +1,30 @@
+factory_phases:
+  id: NEXUS_FACTORY_PHASES_V1
+  version: 1.0.0
+  purpose: User-facing macro phases over immutable internal stages 000-100.
+  phases:
+    - id: PHASE-01
+      name: INTENT
+      stages: "000-009"
+      user_label: "Замысел и требования"
+    - id: PHASE-02
+      name: AI_SYSTEM_DESIGN
+      stages: "010-049"
+      user_label: "Проектирование AI-системы"
+    - id: PHASE-03
+      name: TRUST_SECURITY_EVAL
+      stages: "050-069"
+      user_label: "Доверие, безопасность и оценка"
+    - id: PHASE-04
+      name: DELIVERY_RUNTIME
+      stages: "070-089"
+      user_label: "Поставка и эксплуатация"
+    - id: PHASE-05
+      name: RELEASE_PRODUCTION
+      stages: "090-100"
+      user_label: "Релиз, полигон и production"
+  rules:
+    - internal_stage_numbers_remain_immutable
+    - normal_ui_prefers_macro_phases
+    - engineering_ui_may_expand_all_101_stages
+    - diagnostics_ui_shows_raw_stage_events
