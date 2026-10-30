@@ -20,3 +20,10 @@
 .preflight-actions{margin-top:8px;color:#73899a;font-size:8px}.preflight-actions b{color:#9fc2d5}
 .project-links{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.project-links button{border:1px solid #2a4d64;background:#091722;color:#b9d7e7;border-radius:8px;padding:8px 10px;font-size:9px}.project-links button:disabled{opacity:.35}
 @media(max-width:800px){.preflight-grid{grid-template-columns:1fr}.execution-controls button{width:100%}}
+
+.runtime-operation{display:flex;justify-content:space-between;align-items:center;border:1px solid #203c50;background:#07141e;border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:9px}
+.runtime-operation b{color:#8bcde7}.runtime-operation span{color:#d8edf6;font-family:ui-monospace,Consolas,monospace}
+.runtime-blocking-message{border:1px solid #7a403b;background:#1e1012;border-radius:10px;padding:12px;margin-bottom:12px}
+.runtime-blocking-message b{display:block;color:#f09a90;font-size:10px;margin-bottom:5px}
+.runtime-blocking-message span{display:block;color:#be8580;font-size:9px;line-height:1.5;margin-bottom:8px}
+.runtime-blocking-message code{display:block;border:1px solid #4f2e2e;background:#0e090a;color:#f0c0ba;border-radius:7px;padding:9px;font:9px/1.6 ui-monospace,Consolas,monospace;white-space:normal}
