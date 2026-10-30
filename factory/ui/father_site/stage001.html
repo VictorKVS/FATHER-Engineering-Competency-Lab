@@ -31,6 +31,7 @@
       <div><span>Stage</span><b>STAGE-001</b></div>
       <div><span>State</span><b id="stageState" class="hold">LOCKED</b></div>
       <div><span>Scaffold</span><b>000–100</b></div>
+      <div><span>Verification</span><b id="verificationState">NOT RUN</b></div>
     </section>
     <section class="stage-grid">
       <aside class="stage-left">
@@ -56,6 +57,7 @@
         <div class="stage-tabs">
           <button class="stage-tab active" data-view="proposal">Proposal</button>
           <button class="stage-tab" data-view="scaffold">000–100</button>
+          <button class="stage-tab" data-view="execution">Execution</button>
           <button class="stage-tab" data-view="tests">Tests</button>
           <button class="stage-tab" data-view="evidence">Evidence</button>
           <button class="stage-tab" data-view="gate">Gate</button>
@@ -70,6 +72,10 @@
         <div class="stage-card">
           <div class="card-head">Artifact Test</div>
           <div id="artifactTestPanel"><p>LOCKED</p></div>
+        </div>
+        <div class="stage-card">
+          <div class="card-head">Execution Verification</div>
+          <div id="executionVerifyPanel"><p>NOT RUN</p></div>
         </div>
         <div class="stage-card">
           <div class="card-head">Human Gate</div>
