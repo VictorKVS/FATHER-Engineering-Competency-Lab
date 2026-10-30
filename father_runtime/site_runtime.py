@@ -7,11 +7,13 @@ import argparse
 import json
 
 from .project_init import ProjectInitializer
+from .demo_autopilot import DemoAutopilot
 from .event_log import FactoryEventLogger, export_trace_file, reserve_trace_file, append_trace_snapshot
 
 
 class Handler(BaseHTTPRequestHandler):
     initializer = ProjectInitializer()
+    demo_autopilot = DemoAutopilot()
     events = FactoryEventLogger()
 
     def _cors(self) -> None:
@@ -103,6 +105,15 @@ class Handler(BaseHTTPRequestHandler):
                     timestamp=payload.get("timestamp"),
                 )
                 self._json(200, {"status":"logged"})
+                return
+            if path == "/demo/autopilot/run":
+                result=self.demo_autopilot.run(
+                    root=payload.get("root","G:\\1\\NEXUS-STORY-ENGINE"),
+                    session_id=payload.get("session_id","demo"),
+                    project_id=payload.get("project_id","PRJ-STORY-001"),
+                    push=bool(payload.get("push",True)),
+                )
+                self._json(200,result)
                 return
             if path == "/stage001/preflight":
                 result = self.initializer.preflight(payload["proposal"], payload["execution_plan"])
