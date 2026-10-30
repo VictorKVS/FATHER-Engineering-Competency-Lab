@@ -69,6 +69,26 @@ function esc(v){return String(v).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove("show"),2600)}
 function sync(){document.querySelectorAll(".stage-tab").forEach(x=>x.classList.toggle("active",x.dataset.view===view))}
 function verificationRows(){return Object.entries(verification).map(([k,v])=>testRow(k,v)).join("")}
+function updateNextStageUi(){
+ const next=document.getElementById("nextStageState");
+ const host=document.getElementById("stageAdvancePanel");
+ if(!next||!host)return;
+ if(verificationPassed){
+  next.textContent="STAGE-002 · READY";
+  next.className="pass";
+  host.innerHTML='<div class="stage-pass-banner"><div><b>✓ STAGE 001 ПРОЙДЕН</b><span>Инициализация проекта подтверждена evidence. Следующий этап разблокирован.</span></div><button id="goStage002">ПЕРЕЙТИ К STAGE 002 →</button></div>';
+  document.getElementById("goStage002").onclick=()=>{
+    traceState("stage_transition","PASS",{from:"STAGE-001",to:"STAGE-002"});
+    sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
+    const suffix=new URLSearchParams(location.search).toString();
+    location.href="./stage002.html"+(suffix?"?"+suffix:"");
+  };
+ }else{
+  next.textContent="STAGE-002 · LOCKED";
+  next.className="";
+  host.innerHTML="";
+ }
+}
 function bindProposal(){
  Object.keys(proposal).forEach(k=>{
   const e=document.getElementById(k);
@@ -360,6 +380,7 @@ async function verifyProject(){
   sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
   render();
   traceState("verification_result",verificationPassed?"PASS":"HOLD",{verification:{...verification}});
+  updateNextStageUi();
   toast(verificationPassed?"STAGE 001 PASS":"Проверка не пройдена полностью");
  }catch(e){traceState("verification_error","ERROR",{message:e.message});toast("Verification error: "+e.message)}
 }
@@ -391,4 +412,5 @@ document.getElementById("holdGate").onclick=()=>decide("HOLD");
 document.getElementById("rejectGate").onclick=()=>decide("REJECT");
 document.getElementById("approveProject").onclick=approveAndExecute;
 render();
+updateNextStageUi();
 checkRuntime();
