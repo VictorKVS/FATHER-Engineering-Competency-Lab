@@ -1,20 +1,29 @@
 let state="DRAFT",view="idea",inputPassed=false,artifactPassed=false,analysis=null,decision=null;
-const demoMode=new URLSearchParams(location.search).get("demo")==="story";
+const demoKey=new URLSearchParams(location.search).get("demo");
 const model={raw_idea:"",author_or_sponsor:"",known_context:[],known_constraints:[]};
-if(demoMode){
- model.raw_idea="Создать LLM-систему продолжения рассказов на одной агентной конструкции со сменяемой LLM, единым входным и выходным контрактом, автоматическими тестами результата, автоматическим переключением модели при отказе или непрохождении теста и сохранением evidence и результатов в GitHub.";
+const demoPresets={
+ story:{
+  raw_idea:"Создать LLM-систему продолжения рассказов на одной агентной конструкции со сменяемой LLM, единым входным и выходным контрактом, автоматическими тестами результата, автоматическим переключением модели при отказе или непрохождении теста и сохранением evidence и результатов в GitHub.",
+  context:["FATHER/NEXUS использует единый производственный каркас 000-100.","Model Slot должен позволять замену LLM без изменения алгоритма и контрактов.","Это первое демонстрационное изделие фабрики."],
+  constraints:["Каждый переход между этапами требует Human Gate.","STAGE 000 не создаёт GitHub-репозиторий и локальный проект.","Один алгоритм должен работать с несколькими совместимыми LLM.","Результаты испытаний сохраняются как evidence."]
+ },
+ osint:{
+  raw_idea:"Создать OSINT Research Agent, который принимает формализованный исследовательский запрос, строит план поиска, собирает источники, фиксирует provenance, проверяет corroboration и counter-evidence, оценивает достаточность и возвращает проверяемый Evidence Package.",
+  context:["OSINT является поставщиком evidence для ALINA и других инженерных ролей.","Источники должны сохранять provenance, дату, юрисдикцию и confidence.","Результат должен быть пригоден для дальнейшего Knowledge Engineering."],
+  constraints:["Нельзя выдавать найденное утверждение за истину без evidence.","Research Request и Evidence Package имеют явные контракты.","Human Gate обязателен между производственными этапами."]
+ },
+ security:{
+  raw_idea:"Создать Security Analysis Agent, который по описанию продукта и системы определяет активы и данные, формирует threat model и risk register, сопоставляет controls и compliance requirements, выделяет hard-fail условия и выпускает проверяемый Security Package.",
+  context:["Security является независимым инженерным контуром фабрики.","Результаты должны трассироваться к требованиям, рискам, controls, tests и evidence.","Security Agent не имеет права самостоятельно утверждать релиз."],
+  constraints:["Hard security constraints имеют приоритет над оптимизацией.","Все critical risks требуют явного решения или HOLD.","Human Gate обязателен на каждом переходе."]
+ }
+};
+if(demoKey&&demoPresets[demoKey]){
+ const p=demoPresets[demoKey];
+ model.raw_idea=p.raw_idea;
  model.author_or_sponsor="USER";
- model.known_context=[
-  "FATHER/NEXUS использует единый производственный каркас 000-100.",
-  "Model Slot должен позволять замену LLM без изменения алгоритма и контрактов.",
-  "Это первое демонстрационное изделие фабрики."
- ];
- model.known_constraints=[
-  "Каждый переход между этапами требует Human Gate.",
-  "STAGE 000 не создаёт GitHub-репозиторий и локальный проект.",
-  "Один алгоритм должен работать с несколькими совместимыми LLM.",
-  "Результаты испытаний сохраняются как evidence."
- ];
+ model.known_context=p.context;
+ model.known_constraints=p.constraints;
 }
 const content=document.getElementById("stageContent");
 function render(){
