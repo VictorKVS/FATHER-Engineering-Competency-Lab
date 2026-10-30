@@ -1,0 +1,42 @@
+agent_construct:
+  id: FATHER_AGENT_CONSTRUCT_V1
+  version: 1.0.0
+  invariant:
+    - agent_is_not_model
+    - task_is_fixed_during_model_tournament
+    - prompt_version_is_fixed_during_model_tournament
+    - rag_version_is_fixed_during_model_tournament
+    - knowledge_snapshot_is_fixed_during_model_tournament
+    - contracts_are_fixed_during_model_tournament
+    - eval_profile_is_fixed_during_model_tournament
+    - only_model_slot_changes
+  required:
+    identity:
+      - agent_id
+      - purpose
+      - domain
+    intelligence:
+      - role_version
+      - prompt_version
+      - rag_version
+      - knowledge_snapshot
+    contracts:
+      - input_contract
+      - output_contract
+    model_slot:
+      - mode
+      - candidates
+    evaluation:
+      - eval_profile
+      - pass_threshold
+      - hard_fail_rules
+    evidence:
+      - required
+  lifecycle:
+    - DRAFT
+    - CONFIGURED
+    - READY_FOR_TOURNAMENT
+    - TOURNAMENT_RUNNING
+    - EVALUATED
+    - MODEL_SELECTED
+    - VERIFIED
