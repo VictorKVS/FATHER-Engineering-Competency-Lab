@@ -25,13 +25,13 @@
   <main class="stage-main">
     <header class="stage-top">
       <div><div class="eyebrow">ФАБРИКА · ЭТАП 000</div><h1>Регистрация идеи</h1><p>Идея сначала проходит входной тест, анализ, проверку артефакта и только затем человеческое решение.</p></div>
-      <div class="top-actions"><button class="ghost" id="resetИдея">Новая идея</button><button class="primary" id="runInputTest">Запустить тест входа</button></div>
+      <div class="top-actions"><button class="ghost" id="resetIdea">Новая идея</button><button class="primary" id="runInputTest">Запустить тест входа</button></div>
     </header>
 
     <section class="stage-status">
       <div><span>Этап</span><b>STAGE-000</b></div>
       <div><span>Ответственный</span><b>ROLE-101 · PRODUCT</b></div>
-      <div><span>Состояние</span><b id="stageСостояние" class="hold">DRAFT</b></div>
+      <div><span>Состояние</span><b id="stageState" class="hold">DRAFT</b></div>
       <div><span>Следующий</span><b>STAGE-001 · LOCKED</b></div>
     </section>
 
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="stage-card">
-          <div class="card-head">Этап 000 Prohibitions</div>
+          <div class="card-head">Запреты этапа 000</div>
           <div class="prohibit-list">
             <span>НЕ создавать GitHub-репозиторий</span>
             <span>НЕ создавать локальный проект</span>
@@ -81,9 +81,9 @@
         <div class="stage-card">
           <div class="card-head">Человеческий шлюз</div>
           <div class="gate-actions">
-            <button id="approveЭтап" disabled>APPROVE</button>
-            <button id="holdЭтап" disabled>HOLD</button>
-            <button id="rejectЭтап" disabled>REJECT</button>
+            <button id="approveStage" disabled>APPROVE</button>
+            <button id="holdStage" disabled>HOLD</button>
+            <button id="rejectStage" disabled>REJECT</button>
           </div>
           <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
         </div>
