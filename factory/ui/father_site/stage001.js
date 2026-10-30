@@ -35,6 +35,12 @@ const verification={
 };
 
 const content=document.getElementById("stageContent");
+function traceState(action,status,details={}){
+ if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("STATE_CHANGE",action,status,details);
+}
+function tracedProposal(){
+ return {...proposal,session_id:(window.NEXUS_TRACE&&window.NEXUS_TRACE.sessionId)||"ui"};
+}
 document.getElementById("stage000State").textContent="STAGE-000 · "+(prereqApproved?"APPROVED":"NOT APPROVED");
 document.getElementById("stageState").textContent=prereqApproved?"ГОТОВ":"ЗАКРЫТО";
 if(!prereqApproved)document.getElementById("stageState").classList.add("fail");
@@ -210,13 +216,16 @@ async function approveAndExecute(){
 
  decision="APPROVE";
  executionApproved=true;
+ traceState("human_gate_approved","APPROVED",{project_id:proposal.project_id});
  document.getElementById("stageState").textContent="PREFLIGHT";
  sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
  view="execution";sync();render();
 
  try{
   operationState="PREFLIGHT";
-  preflightResult=await api("/stage001/preflight",{proposal,execution_plan:executionPlan});
+  traceState("preflight_start","STARTED",{repository:proposal.github_owner+"/"+proposal.github_repository,local_directory:proposal.local_directory});
+  preflightResult=await api("/stage001/preflight",{proposal:tracedProposal(),execution_plan:executionPlan});
+  traceState("preflight_result",preflightResult.conflicts&&preflightResult.conflicts.length?"HOLD":"PASS",{conflicts:preflightResult.conflicts||[]});
   render();
 
   if(preflightResult.conflicts&&preflightResult.conflicts.length){
@@ -231,7 +240,9 @@ async function approveAndExecute(){
   document.getElementById("stageState").textContent="СОЗДАНИЕ ПРОЕКТА";
   render();
 
-  const result=await api("/stage001/execute",{proposal,execution_plan:executionPlan,approved:true});
+  traceState("execution_start","STARTED",{project_id:proposal.project_id});
+  const result=await api("/stage001/execute",{proposal:tracedProposal(),execution_plan:executionPlan,approved:true});
+  traceState("execution_result",result.status||"UNKNOWN",{steps:result.steps||[]});
 
   if(result.status==="BLOCKED"){
    operationState="BLOCKED";
@@ -276,7 +287,7 @@ async function runPreflight(){
   preflightResult=await api("/stage001/preflight",{proposal,execution_plan:executionPlan});
   render();
   toast(preflightResult.conflicts.length?"Обнаружены конфликты":"Preflight: конфликтов нет");
- }catch(e){toast("Preflight error: "+e.message)}
+ }catch(e){traceState("preflight_error","ERROR",{message:e.message});toast("Preflight error: "+e.message)}
 }
 
 async function executeProject(){
@@ -291,13 +302,14 @@ async function executeProject(){
   if(result.status==="BLOCKED"){preflightResult=result.preflight;render();toast("Создание заблокировано новым preflight");return}
   toast("Выполнение завершено: "+result.status);
   await verifyProject();
- }catch(e){toast("Execution error: "+e.message)}
+ }catch(e){traceState("execution_error","ERROR",{message:e.message});toast("Execution error: "+e.message)}
 }
 
 async function verifyProject(){
  if(!runtimeOnline)return;
  try{
-  const v=await api("/stage001/verify",{proposal});
+  traceState("verification_start","STARTED",{project_id:proposal.project_id});
+  const v=await api("/stage001/verify",{proposal:tracedProposal()});
   Object.keys(verification).forEach(k=>verification[k]=!!v[k]);
   verificationPassed=Object.values(verification).every(Boolean);
   operationState=verificationPassed?"PASS":"HOLD";
@@ -308,8 +320,9 @@ async function verifyProject(){
   preflightResult=await api("/stage001/preflight",{proposal,execution_plan:executionPlan});
   sessionStorage.setItem("nexus_stage_001",JSON.stringify(evidence()));
   render();
+  traceState("verification_result",verificationPassed?"PASS":"HOLD",{verification:{...verification}});
   toast(verificationPassed?"STAGE 001 PASS":"Проверка не пройдена полностью");
- }catch(e){toast("Verification error: "+e.message)}
+ }catch(e){traceState("verification_error","ERROR",{message:e.message});toast("Verification error: "+e.message)}
 }
 
 async function openGithub(){
