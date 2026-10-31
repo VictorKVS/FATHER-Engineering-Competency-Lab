@@ -1,0 +1,137 @@
+version: 1
+schema: FATHER_AI_AGENT_GITHUB_BOOKS_CATALOG_V1
+updated: 2026-10-31
+purpose: Curated GitHub books and companion repositories for AI agent engineering
+
+status_model:
+  - FOUND
+  - VERIFIED_SOURCE
+  - REVIEWED
+  - ADAPTED
+  - TESTED
+  - PROMOTED
+
+entries:
+  - id: GBOOK-001
+    title: AI Agents in Action, Second Edition
+    repo: cxbxmxcx/AI-Agent-Workflows
+    type: OFFICIAL_COMPANION_CODE
+    status: VERIFIED_SOURCE
+    license: Apache-2.0
+    fit_score: 10
+    strengths: [agents_sdk, mcp, handoffs, tracing, graphviz, docker, microservices, research_agents]
+    father_targets: [AGENT_LOOP, MCP, ORCHESTRATION, OBSERVABILITY, MICROSERVICE_PATTERNS]
+
+  - id: GBOOK-002
+    title: Designing AI Agents
+    repo: huangjia2019/designing-ai-agents
+    type: OFFICIAL_BOOK_CODE
+    status: VERIFIED_SOURCE
+    license: MIT
+    fit_score: 10
+    strengths: [architecture, perception, memory, reasoning, action, reflection, collaboration, governance, capstone]
+    father_targets: [AGENT_V1, AGENT_ZOO, GOVERNANCE, EXPERIENCE_REPLAY, ORCHESTRATOR]
+
+  - id: GBOOK-003
+    title: Agent Design Patterns
+    repo: huangjia2019/agent-design-patterns
+    type: PATTERN_CATALOG
+    status: VERIFIED_SOURCE
+    fit_score: 10
+    strengths: [runnable_patterns, tests, cognition_topology_matrix, observability, evals, security]
+    father_targets: [BLOCK_ZOO, PATTERN_REGISTRY, SECURITY_PATTERNS, EVAL_PATTERNS]
+
+  - id: GBOOK-004
+    title: Context Engineering
+    repo: nvenk67/context-engineering-manning-code
+    type: BOOK_COMPANION_CODE
+    status: VERIFIED_SOURCE
+    fit_score: 10
+    strengths: [ollama, rag, memory, tools, mcp, context_management, evals, observability, governance, frameworks]
+    father_targets: [ALINA, CONTEXT_ENGINE, RAG, MEMORY, MODEL_PROVIDER, EVALS]
+
+  - id: GBOOK-005
+    title: AI Agents from First Principles
+    repo: humbertomoura/ai-agents-from-first-principles
+    type: BOOK_COMPANION_CODE
+    status: VERIFIED_SOURCE
+    license: MIT
+    fit_score: 10
+    strengths: [plain_python, agent_loop, approvals, idempotency, memory, rag, offline_tests]
+    father_targets: [REFERENCE_AGENT_LOOP, TOOL_POLICY, HUMAN_GATE, RECOVERY, MEMORY]
+
+  - id: GBOOK-006
+    title: AI Agents — Designing, Orchestrating, and Governing LLM-Based Systems
+    repo: ai-agents-book/code
+    companion_appendices: ai-agents-book/appendices
+    type: OFFICIAL_BOOK_CODE
+    status: VERIFIED_SOURCE
+    license: MIT
+    fit_score: 9
+    strengths: [tools, memory, flow, integration, orchestration, governance, security, notebooks]
+    father_targets: [TOOLS, MEMORY, ORCHESTRATION, GOVERNANCE, SECURITY]
+
+  - id: GBOOK-007
+    title: The Hitchhiker's Guide to Agentic AI
+    repo: haggair/agentic-ai-book
+    type: BOOK_COMPANION_CODE
+    status: VERIFIED_SOURCE
+    license: MIT
+    fit_score: 9
+    strengths: [28_notebooks, rl, rlhf, ppo, dpo, grpo, rag, multi_agent, mcp, evals, red_team, observability, deployment, hitl]
+    father_targets: [ADVANCED_AGENT_LAB, RL_ALIGNMENT, MULTI_AGENT, RED_TEAM, DEPLOYMENT]
+
+  - id: GBOOK-008
+    title: Hands-On Large Language Models
+    repo: HandsOnLLM/Hands-On-Large-Language-Models
+    type: OFFICIAL_BOOK_CODE
+    status: VERIFIED_SOURCE
+    fit_score: 9
+    strengths: [embeddings, transformers, prompting, semantic_search, rag, notebooks, visual_explanations]
+    father_targets: [MODEL_LAB, EMBEDDINGS, RAG_BASELINE, EDUCATION]
+
+  - id: GBOOK-009
+    title: AI Engineering
+    repo: chiphuyen/aie-book
+    type: OFFICIAL_BOOK_RESOURCES
+    status: VERIFIED_SOURCE
+    fit_score: 9
+    strengths: [evaluation, prompt_engineering, rag, agents, finetuning, dataset_engineering, inference_optimization, architecture, source_graph]
+    father_targets: [RESEARCH_INDEX, EVAL_METHODOLOGY, MODEL_SELECTION, DATASET_ENGINEERING]
+
+  - id: GBOOK-010
+    title: Agentic Design Patterns
+    repo: Muhannad-Khaled/Agentic-AI-Design-Patterns
+    type: DERIVED_STUDY_GUIDE
+    status: REVIEWED
+    fit_score: 8
+    strengths: [21_patterns, framework_free_python, mermaid, ollama_compatible, safety, monitoring]
+    father_targets: [PATTERN_EXPERIMENTS, SIMPLE_REFERENCE_IMPLEMENTATIONS]
+    caution: Secondary study guide, not canonical source
+
+  - id: GBOOK-011
+    title: The Agent-Driven Architecture
+    repo: torad-labs/agent-driven-architecture
+    type: OPEN_ENGINEERING_BOOK
+    status: REVIEWED
+    fit_score: 9
+    strengths: [append_only_stream, replay, signed_commands, authority, pure_core, tests, invariants, typescript, kotlin]
+    father_targets: [FACTORY_REPLAY, AUDIT, COMMAND_BUS, AUTHORITY, RELIABILITY]
+
+selection_policy:
+  primary_sources:
+    - official_author_repository
+    - official_companion_code
+    - peer_reviewed_or_formal_publication_companion
+  secondary_sources:
+    - high_quality_study_guides
+    - independent_reference_implementations
+  reject_if:
+    - copied_book_text_without_clear_license
+    - no_provenance
+    - no_meaningful_code_or_engineering_value
+    - abandoned_or_trivial_fork
+
+site:
+  expose_as: Reference Implementations
+  fields: [title, repo, type, status, fit_score, strengths, father_targets]
