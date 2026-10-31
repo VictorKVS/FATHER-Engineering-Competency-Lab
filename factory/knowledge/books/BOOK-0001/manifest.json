@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "book_id": "BOOK-0001",
+  "source_id": "SRC-BOOK-0001",
+  "title": "Designing Large Language Model Applications: A Holistic Approach to LLMs",
+  "author": "Suhas Pai",
+  "publisher": "O'Reilly Media",
+  "edition": "First Edition",
+  "year": 2025,
+  "source_storage": "External/user-provided source; source text is not committed to this repository",
+  "processing_agent": "ALINA",
+  "processing_process": "PROC-ALINA-BOOK-KNOWLEDGE-FACTORY v1.1",
+  "required_outputs": [
+    "translation",
+    "semantic_outline",
+    "glossary",
+    "applications",
+    "examples",
+    "algorithms",
+    "author_conclusions",
+    "alina_conclusions",
+    "combinations",
+    "checklists",
+    "knowledge_atoms",
+    "father_mapping",
+    "quality_review"
+  ],
+  "chapters": [
+    {
+      "chapter": "01",
+      "title": "Introduction",
+      "status": "INITIAL_EXTRACTION_DONE",
+      "artifact": "chapters/CH01.md"
+    },
+    {
+      "chapter": "02",
+      "title": "Pre-Training Data",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH02.md"
+    },
+    {
+      "chapter": "03",
+      "title": "Vocabulary and Tokenization",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH03.md"
+    },
+    {
+      "chapter": "04",
+      "title": "Architectures and Learning Objectives",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH04.md"
+    },
+    {
+      "chapter": "05",
+      "title": "Adapting LLMs to Your Use Case",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH05.md"
+    },
+    {
+      "chapter": "06",
+      "title": "Fine-Tuning",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH06.md"
+    },
+    {
+      "chapter": "07",
+      "title": "Advanced Fine-Tuning Techniques",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH07.md"
+    },
+    {
+      "chapter": "08",
+      "title": "Alignment Training and Reasoning",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH08.md"
+    },
+    {
+      "chapter": "09",
+      "title": "Inference Optimization",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH09.md"
+    },
+    {
+      "chapter": "10",
+      "title": "Interfacing LLMs with External Tools",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH10.md"
+    },
+    {
+      "chapter": "11",
+      "title": "Representation Learning and Embeddings",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH11.md"
+    },
+    {
+      "chapter": "12",
+      "title": "Retrieval-Augmented Generation",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH12.md"
+    },
+    {
+      "chapter": "13",
+      "title": "Design Patterns and System Architecture",
+      "status": "PENDING_FULL_PASS",
+      "artifact": "chapters/CH13.md"
+    }
+  ],
+  "handoff_target": "FATHER Factory knowledge/block/chassis/policy registries"
+}
