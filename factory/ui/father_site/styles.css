@@ -125,3 +125,21 @@ button,select,input,textarea{font:inherit}
 .node-action.ghost{border:1px solid #315064;background:#0b1822;color:#b9cedb}
 .node-action:hover{filter:brightness(1.12)}
 .node.factory{min-height:132px}
+
+/* Factory block activation semantics */
+.node.factory .state{background:#334758;box-shadow:none}
+.node.factory.state-running .state{background:#f4b84a;box-shadow:0 0 11px #f4b84a}
+.node.factory.state-ready .state{background:#33c7ff;box-shadow:0 0 11px #33c7ff}
+.node.factory.state-pass .state,
+.node.factory.state-open .state{background:#3be39b;box-shadow:0 0 12px #3be39b}
+.node.factory.state-error .state{background:#ff5f70;box-shadow:0 0 12px #ff5f70}
+.node-action{border:1px solid #315064;background:#0b1822;color:#b9cedb}
+.node-action.active-tone{background:#123b52;border-color:#2d89b8;color:#e4f8ff;box-shadow:inset 0 0 0 1px #2d89b833,0 0 12px #1f9dcd22}
+.node.state-pass .node-action.active-tone,
+.node.state-open .node-action.active-tone{background:#123629;border-color:#2b7a58;color:#dff9ec;box-shadow:0 0 12px #3be39b22}
+.node.state-error .node-action.active-tone{background:#3b1a20;border-color:#8a3f4a;color:#ffdfe3}
+.agent-desc{color:#a9bdca!important;font-size:10px!important}
+.agent-how{display:grid;grid-template-columns:120px 1fr;gap:10px;margin:8px 0;padding:8px 9px;border:1px solid #183246;background:#07141e;border-radius:8px}
+.agent-how b{font-size:8px;color:#62c9ee;letter-spacing:.08em}
+.agent-how span{font-size:9px;color:#9fb3c1;line-height:1.45}
+@media(max-width:700px){.agent-how{grid-template-columns:1fr}}
