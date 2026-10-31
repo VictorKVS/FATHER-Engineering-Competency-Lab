@@ -158,9 +158,9 @@ function renderNodes(){
   const st=factoryBlockState[b.id];
   const stateClass=st ? (' state-'+st.status.toLowerCase()) : '';
   const actions=b.id==="agentDiscovery"
-    ? '<div class="node-actions"><button type="button" class="node-action '+(st?.activated?"active-tone":"")+'" data-action="run-discovery">RUN</button></div>'
+    ? '<div class="node-actions"><button type="button" class="node-action '+(st?.status==="PASS"?"done-tone":(st?.activated?"active-tone":""))+'" data-action="run-discovery" '+(st?.status==="PASS"?"disabled":"")+'>RUN</button></div>'
     : b.id==="agentCatalog"
-      ? '<div class="node-actions"><button type="button" class="node-action '+(st?.activated?"active-tone":"")+'" data-action="show-catalog">СПИСОК</button></div>'
+      ? '<div class="node-actions"><button type="button" class="node-action '+(st?.status==="READY"||st?.status==="OPEN"?"ready-tone":"")+'" data-action="show-catalog" '+((st?.status!=="READY"&&st?.status!=="OPEN")?"disabled":"")+'>СПИСОК</button></div>'
       : '';
   n.className+=" "+stateClass;
   n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>'+actions;
@@ -510,7 +510,7 @@ async function runAgentDiscoveryFromCard(){
    if(!res.ok)throw new Error("HTTP "+res.status);
    lastDiscoveryReport=await res.json();
    factoryBlockState.agentDiscovery={status:"PASS",activated:true};
-   factoryBlockState.agentCatalog={status:"READY",activated:false};
+   factoryBlockState.agentCatalog={status:"READY",activated:true};
    refreshFactoryNodes("agentDiscovery");
    document.querySelector('[data-id="agentCatalog"]')?.classList.add("processing");
    await new Promise(r=>setTimeout(r,220));
