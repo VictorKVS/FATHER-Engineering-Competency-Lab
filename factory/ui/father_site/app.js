@@ -596,3 +596,5 @@ document.getElementById("agentReportShowSources").onclick=()=>{
 };
 
 window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");renderAgentBlockOutput("ready");
+/* BOOKS_RESEARCH_LAB_LINK */
+window.addEventListener('DOMContentLoaded',()=>{const a=document.createElement('button');a.className='ghost';a.textContent='Книги / Research Lab';a.onclick=()=>location.href='./books.html';const host=document.querySelector('.top-actions');if(host)host.prepend(a);});
