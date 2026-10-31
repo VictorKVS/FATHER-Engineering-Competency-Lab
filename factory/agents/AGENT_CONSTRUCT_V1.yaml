@@ -20,6 +20,8 @@ agent_construct:
       - prompt_version
       - rag_version
       - knowledge_snapshot
+      - intelligence_package_status
+      - intelligence_package_evidence
     contracts:
       - input_contract
       - output_contract
@@ -32,6 +34,9 @@ agent_construct:
       - hard_fail_rules
     evidence:
       - required
+  pre_tournament_gate:
+    id: INTELLIGENCE_PACKAGE_VERIFIED
+    rule: model tournament cannot start while intelligence package is unverified
   lifecycle:
     - DRAFT
     - CONFIGURED
