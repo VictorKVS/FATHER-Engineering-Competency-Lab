@@ -481,3 +481,15 @@ No production claim without evidence.
 ```
 
 This page is the visual index. The registries are the machine-readable truth.
+
+
+## BOOK-0001 — Designing Large Language Model Applications
+
+FATHER processing package:
+
+- `factory/knowledge/books/BOOK-0001/`
+- source: `SRC-BOOK-0001`
+- processing agent: ALINA
+- required outputs per chapter: translation → semantic outline → glossary → applications → examples → algorithms → conclusions → combinations → checklists → knowledge atoms → FATHER mapping.
+
+Status: Chapter 1 initial extraction complete; full 13-chapter semantic pass registered.
