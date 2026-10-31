@@ -1,0 +1,89 @@
+model_base:
+  id: FATHER_MODEL_BASE_V1
+  version: 1.0.0
+  purpose: Canonical registry of discovered models and their connection options.
+
+  model_states:
+    - DISCOVERED
+    - IDENTIFIED
+    - INSPECTED
+    - CONNECTABLE
+    - COMPATIBLE
+    - TESTED
+    - VERIFIED
+    - APPROVED_FOR_AGENT
+
+  record:
+    required:
+      - model_id
+      - identity
+      - artifact
+      - runtimes
+      - connections
+      - capabilities
+      - resources
+      - security
+      - lifecycle
+
+    identity:
+      fields:
+        - family
+        - name
+        - variant
+        - quantization
+        - architecture
+
+    artifact:
+      fields:
+        - path
+        - format
+        - size_bytes
+        - sha256
+        - modified_at
+
+    runtimes:
+      examples:
+        - OLLAMA
+        - LLAMA_CPP
+        - LM_STUDIO
+        - OPENAI_COMPATIBLE
+        - PROVIDER_API
+
+    connections:
+      fields:
+        - connection_id
+        - protocol
+        - endpoint
+        - adapter
+        - model_name
+        - health
+        - restrictions
+
+    capabilities:
+      fields:
+        - text_generation
+        - embeddings
+        - vision
+        - structured_output
+        - tool_calling
+        - context_window
+
+    resources:
+      fields:
+        - ram_estimate
+        - vram_estimate
+        - gpu_required
+
+    security:
+      fields:
+        - provenance
+        - trusted_source
+        - hash_verified
+        - license_status
+
+    lifecycle:
+      fields:
+        - state
+        - last_probe_at
+        - tournament_eligible
+        - approved_agent_classes
