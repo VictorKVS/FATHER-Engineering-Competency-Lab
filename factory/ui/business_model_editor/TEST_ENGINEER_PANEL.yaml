@@ -1,0 +1,52 @@
+specialist_panel:
+  id: test_engineer
+  owner: FATHER_TEST_ENGINEER
+  purpose: explainable_traceable_testing_of_nodes_flows_chains_and_systems
+
+  adds:
+    - test_case
+    - test_suite
+    - test_oracle
+    - fixture
+    - mock
+    - simulator
+    - coverage_marker
+    - defect
+    - regression_marker
+    - test_evidence
+    - test_rationale
+
+  test_scopes:
+    - node
+    - edge
+    - chain
+    - subgraph
+    - whole_system
+
+  required_for_every_test:
+    - test_id
+    - target_id
+    - test_type
+    - source_requirement
+    - source_algorithm_step
+    - source_contract
+    - risk_or_failure_mode
+    - why_this_test_here
+    - preconditions
+    - input_data
+    - execution_steps
+    - expected_result
+    - pass_fail_oracle
+    - metrics
+    - evidence
+    - regression_binding
+
+  calculations:
+    - requirement_coverage
+    - algorithm_step_coverage
+    - contract_coverage
+    - path_coverage
+    - risk_coverage
+    - negative_test_coverage
+    - boundary_coverage
+    - regression_coverage

@@ -1,0 +1,52 @@
+factory_generation_pipeline:
+  schema: father.factory_generation.v1
+
+  input:
+    - factory_intent
+    - target_product_classes
+    - constraints
+    - jurisdictions
+    - deployment_environment
+
+  steps:
+    - NORMALIZE_INTENT
+    - SELECT_FACTORY_CLASS
+    - BUILD_CAPABILITY_MODEL
+    - SELECT_CHASSIS
+    - MATCH_BLOCKS
+    - RESOLVE_REUSE_WRAP_ADAPT_BUILD
+    - SELECT_AGENT_SET
+    - SELECT_MODEL_POLICY
+    - SELECT_TOOL_POLICY
+    - SELECT_DATA_RAG_POLICY
+    - APPLY_SECURITY_TRUST_PROFILE
+    - APPLY_TEST_EVAL_PROFILE
+    - APPLY_DEVSECOPS_PROFILE
+    - APPLY_UI_PROFILE
+    - GENERATE_INSTANCE_MANIFEST
+    - VALIDATE_CONTRACTS
+    - RUN_FACTORY_BOOTSTRAP_TESTS
+    - CREATE_EVIDENCE
+    - REGISTER_FACTORY_INSTANCE
+
+  output:
+    - factory_profile
+    - factory_instance_manifest
+    - capability_matrix
+    - selected_blocks
+    - selected_agents
+    - model_policy
+    - trust_profile
+    - stage_map
+    - test_plan
+    - evidence_index
+
+  gate:
+    id: FACTORY_INSTANCE_READY
+    requires:
+      - contracts_valid
+      - mandatory_capabilities_present
+      - trust_profile_present
+      - stage_map_present
+      - agent_model_tool_bindings_valid
+      - bootstrap_test_pass

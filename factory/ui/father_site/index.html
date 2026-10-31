@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Инженерная фабрика ИИ</title>
+  <link rel="stylesheet" href="./styles.css?v=20261030-1247">
+  <link rel="stylesheet" href="./i18n.css?v=20261030-1300">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body>
+<div class="shell">
+  <aside class="nav">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div><strong id="systemName">NEXUS</strong><small>ИНЖЕНЕРИЯ ИИ-СИСТЕМ</small></div>
+    </div>
+    <div class="section-label">РАБОЧИЕ ОБЛАСТИ</div>
+    <button class="nav-item active"><span>01</span><b id="workspaceName">Конструктор агентов</b><i>АКТИВНО</i></button>
+    <button class="nav-item locked"><span>02</span><b>Процессы</b><i>ЗАКРЫТО</i></button>
+    <button class="nav-item locked"><span>03</span><b>Лаборатория моделей</b><i>ЗАКРЫТО</i></button>
+    <button class="nav-item locked"><span>04</span><b>RAG / Знания</b><i>ЗАКРЫТО</i></button>
+    <button class="nav-item locked"><span>05</span><b>Полигон</b><i>ЗАКРЫТО</i></button>
+    <div class="nav-foot">
+      <div class="health"><span></span>ИНЖЕНЕРНАЯ СИСТЕМА РАБОТАЕТ</div>
+      <small>Поле 01 / MVP</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <div class="eyebrow">ПОЛЕ 01 · ПРОЕКТИРОВАНИЕ АГЕНТА</div>
+        <h1>Проектирование агента</h1>
+      </div>
+      <div class="top-actions">
+        <button class="primary" onclick="location.href='./stage000.html'">Новая идея · STAGE 000</button>
+        <button class="ghost" onclick="location.href='./stage000.html?demo=story'">Демо: идея → проект</button><button class="primary" onclick="location.href='./demo-autopilot.html'">DEMO AUTOPILOT 000→100</button>
+        <button class="ghost" onclick="location.href='./specialists.html'">Специалисты</button><button class="primary" onclick="location.href='./agent-tournament.html'">AGENT MODEL TOURNAMENT</button>
+        <button class="ghost" onclick="location.href='./traceability.html'">Трассируемость</button>
+        <button id="cloneAgent" class="ghost">Создать агента из шаблона</button>
+        <button id="loadDemo" class="ghost">Загрузить demo агента</button>
+        <button id="validate" class="ghost">Проверить конструкцию</button>
+        <button id="exportBtn" class="primary">Экспорт JSON</button>
+      </div>
+    </header>
+
+    <section class="statusbar">
+      <div><span class="k">Агент</span><b id="agentId">AG-001</b></div>
+      <div><span class="k">Профиль</span><b id="profileName">ALINA_LITERARY</b></div>
+      <div><span class="k">Слот модели</span><b id="modelStatus">7 candidates</b></div>
+      <div><span class="k">Шлюз</span><b id="gateStatus" class="hold">HOLD</b></div>
+    </section>
+
+    <section class="workspace">
+      <aside class="palette panel">
+        <div class="panel-head"><span>КАТАЛОГ БЛОКОВ</span><small>ИНЖЕНЕРНЫЙ КАНОН</small></div>
+        <div id="palette"></div>
+      </aside>
+
+      <section class="canvas-wrap">
+        <div class="canvas-toolbar">
+          <span>ПОЛЕ СБОРКИ АГЕНТА</span>
+          <span class="zoom">100%</span>
+        </div>
+        <div class="canvas" id="canvas">
+          <svg class="wires" id="wires"></svg>
+          <div class="canvas-note">Один агент · сменная LLM · одинаковые контракты</div>
+          <div id="nodes"></div>
+        </div>
+      </section>
+
+      <aside class="inspector panel">
+        <div class="panel-head"><span>ИНСПЕКТОР</span><small id="inspectorType">БЛОК</small></div>
+        <div id="inspector"></div>
+      </aside>
+    </section>
+
+    <section class="agent-block-output panel" id="agentBlockOutput"></section>
+
+    <section class="bottom">
+      <div class="mini-panel">
+        <div class="panel-head"><span>СЛОТ МОДЕЛИ</span><small>ЛОКАЛЬНЫЙ ЗООПАРК МОДЕЛЕЙ</small></div>
+        <select id="modelSelect"></select>
+        <div id="modelMeta" class="model-meta"></div>
+      </div>
+      <div class="mini-panel">
+        <div class="panel-head"><span>ГОТОВНОСТЬ</span><small>MVP-1</small></div>
+        <div id="checklist" class="checklist"></div>
+      </div>
+      <div class="mini-panel">
+        <div class="panel-head"><span>ДЕМО</span><small>KNOWLEDGE ENGINEERING ДЕМО</small></div>
+        <p class="demo-copy">Рассказ → Prompt + RAG + KB → Слот модели → Контракт → Оценка → Доказательства</p>
+        <button id="runDemo" class="primary wide">Подготовить демо-прогон</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+<div class="block-modal" id="blockModal" aria-hidden="true">
+  <div class="block-modal-backdrop" id="blockModalBackdrop"></div>
+  <section class="block-modal-card" role="dialog" aria-modal="true" aria-labelledby="blockModalTitle">
+    <header class="block-modal-head">
+      <div>
+        <div class="eyebrow" id="blockModalEyebrow">БЛОК</div>
+        <h2 id="blockModalTitle">Block</h2>
+        <p id="blockModalSubtitle"></p>
+      </div>
+      <button class="modal-close" id="blockModalClose" aria-label="Закрыть">×</button>
+    </header>
+    <div class="block-modal-tabs">
+      <button class="modal-tab active" data-modal-tab="about">Описание</button>
+      <button class="modal-tab" data-modal-tab="location">Где находится</button>
+      <button class="modal-tab" data-modal-tab="edit">Редактирование</button>
+    </div>
+    <div class="block-modal-body" id="blockModalBody"></div>
+    <footer class="block-modal-foot">
+      <span id="blockModalStatus">ЛОКАЛЬНЫЙ ЧЕРНОВИК</span>
+      <div>
+        <button class="ghost" id="blockModalExport">Экспорт блока</button>
+        <button class="primary" id="blockModalSave">Редактировать</button>
+      </div>
+    </footer>
+  </section>
+</div>
+
+
+<div class="clone-modal" id="cloneModal" aria-hidden="true">
+  <div class="clone-backdrop" id="cloneBackdrop"></div>
+  <section class="clone-card">
+    <header>
+      <div><div class="eyebrow">ФАБРИКА АГЕНТОВ</div><h2>Создать агента из шаблона</h2><p>Клонируется проверенная конструкция, а не готовый интеллект агента.</p></div>
+      <button id="cloneClose">×</button>
+    </header>
+    <div class="clone-grid">
+      <label>Шаблон<input id="cloneTemplate" value="AGENT-TEMPLATE-001" readonly></label>
+      <label>Новый стабильный ID<input id="cloneStableId" value="AG-NEW-001"></label>
+      <label>Публичное имя<input id="clonePublicName" placeholder="Например: Security Risk Analyst"></label>
+      <label>Кодовое имя<input id="cloneCodeName" placeholder="Внутреннее условное имя"></label>
+      <label class="span2">Назначение<textarea id="clonePurpose" placeholder="Для чего создаётся агент"></textarea></label>
+      <label>Предметная область<input id="cloneDomain" placeholder="security / osint / legal / ..."></label>
+      <label>Начальное состояние<input value="CLONED_DRAFT" readonly></label>
+    </div>
+    <div class="clone-plan">
+      <span>НАСЛЕДУЕТСЯ</span> contracts · evidence · versioning · provenance · security baseline
+      <br><span>ПЕРЕСОБИРАЕТСЯ</span> role · prompt · RAG · KB · tools · training · evals · acceptance
+    </div>
+    <footer>
+      <button class="ghost" id="cloneCancel">Отмена</button>
+      <button class="primary" id="cloneCreate">Создать CLONED_DRAFT</button>
+    </footer>
+  </section>
+</div>
+
+<div class="agent-report-modal" id="agentReportModal" aria-hidden="true">
+  <div class="agent-report-backdrop" id="agentReportBackdrop"></div>
+  <section class="agent-report-card" role="dialog" aria-modal="true" aria-labelledby="agentReportTitle">
+    <header>
+      <div>
+        <div class="eyebrow">BLOCK-01 · AGENT DISCOVERY REPORT</div>
+        <h2 id="agentReportTitle">Отчёт поиска агентов</h2>
+        <p id="agentReportSummary">Результаты ещё не загружены.</p>
+      </div>
+      <button id="agentReportClose" aria-label="Закрыть">×</button>
+    </header>
+    <div class="agent-report-toolbar">
+      <label>Фильтр
+        <select id="agentReportFilter">
+          <option value="ALL">Все</option>
+          <option value="CANONICAL">CANONICAL</option>
+          <option value="HIGH">HIGH</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="LOW">LOW</option>
+        </select>
+      </label>
+      <button class="ghost" id="agentReportShowSources">Диски / источники</button>
+    </div>
+    <div class="agent-report-body" id="agentReportBody"></div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="./naming.js?v=20261030-1247"></script>
+<script src="./app.js?v=20261030-1247"></script>
+  <script src="./i18n.js?v=20261030-1300"></script>
+  <script src="./trace.js?v=20261030-1515"></script>
+  <script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>

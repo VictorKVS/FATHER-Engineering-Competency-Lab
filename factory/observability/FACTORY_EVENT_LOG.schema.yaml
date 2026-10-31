@@ -1,0 +1,66 @@
+event_log:
+  id: FACTORY_EVENT_LOG_V1
+  version: 1.0.0
+
+  required:
+    - event_id
+    - timestamp
+    - session_id
+    - source
+    - event_type
+    - stage_id
+    - action
+    - status
+
+  sources:
+    - UI
+    - RUNTIME
+    - TEST
+    - GIT
+    - GITHUB
+    - FILESYSTEM
+    - GATE
+
+  event_types:
+    - BUTTON_CLICK
+    - NAVIGATION
+    - STATE_CHANGE
+    - INPUT_CHANGE
+    - PREFLIGHT_START
+    - PREFLIGHT_RESULT
+    - EXECUTION_START
+    - EXECUTION_STEP
+    - FILE_CREATED
+    - DIRECTORY_CREATED
+    - GIT_COMMAND
+    - GITHUB_OPERATION
+    - TEST_START
+    - TEST_RESULT
+    - EVIDENCE_WRITTEN
+    - GATE_DECISION
+    - STAGE_TRANSITION
+    - ERROR
+
+  fields:
+    event_id: string
+    timestamp: string
+    session_id: string
+    project_id: string
+    stage_id: string
+    source: string
+    event_type: string
+    action: string
+    status: string
+    actor: string
+    target: string
+    details: map
+    parent_event_id: string
+    correlation_id: string
+
+  rules:
+    - append_only
+    - never_silently_drop_errors
+    - every_gate_decision_is_logged
+    - every_state_change_is_logged
+    - every_external_side_effect_is_logged
+    - sensitive_values_must_be_redacted

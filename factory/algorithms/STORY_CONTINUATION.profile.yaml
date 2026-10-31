@@ -1,0 +1,37 @@
+algorithm:
+  schema: ALGORITHM_PROFILE_V1
+  algorithm_id: ALG-STORY-CONTINUATION-V1
+  capability: STORY_CONTINUATION
+
+  fixed_components:
+    prompt: agents/alina/profiles/literary/PROMPT.md
+    rag: agents/alina/profiles/literary/RAG_MANIFEST.yaml
+    knowledge_base: agents/alina/profiles/literary/KNOWLEDGE_BASE.md
+    tools: []
+    policy:
+      - source_canon_priority
+      - no_hidden_memory
+      - proposal_is_not_canon
+
+  input_contract: agents/alina/profiles/literary/INPUT_CONTRACT.yaml
+  output_contract: agents/alina/profiles/literary/OUTPUT_CONTRACT.yaml
+
+  model_policy:
+    replaceable: true
+    catalog: factory/model_fabric/LOCAL_MODEL_CATALOG.yaml
+    selection_mode: FAILOVER
+    hard_fail_action: NEXT_MODEL
+    no_pass_action: HOLD
+
+  eval_policy:
+    automatic_gate: agents/alina/profiles/literary/automatic_eval.py
+    quality_gate: agents/alina/profiles/literary/EVALS/continuity.yaml
+    pass_threshold: 80
+
+  evidence_policy:
+    output_root: benchmark_results/test_01_story_model_swap
+    record_model_id: true
+    record_component_versions: true
+    record_latency: true
+    record_test_results: true
+    record_git_commit: true

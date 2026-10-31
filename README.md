@@ -62,3 +62,39 @@ The purpose is to build a measurable competence curve for each specialist and fo
 `CURRICULUM DESIGN / PRE-EXPERIMENT`
 
 No game is claimed as completed yet. The first objective is to define the Python curriculum and run the first small exercise end-to-end.
+
+
+## Embedded demo — ALINA Literary Benchmark
+
+The repository includes a first executable FATHER demo built on the progressive rule **one agent -> replaceable models -> measured evidence**.
+
+Canonical demo:
+- Agent: `AG-001 ALINA`
+- Profile: `LITERARY`
+- Genres: fantasy, thriller, romance, action, science fiction, mystery
+- Automatic local model candidates: 4
+- Maximum continuation target: approximately one page / 450 words
+- Output: evidence JSON + summary + provenance + `REVIEW_BUNDLE.md`
+- Optional publication: `father-factory literary-benchmark --publish`
+
+The published review bundle preserves who generated each result and which agent/prompt/RAG/KB configuration was used, enabling later expert review from GitHub.
+
+
+## FATHER website — Field 01 Agent Designer
+
+The first active engineering workspace is now implemented as a static website prototype under:
+
+`factory/ui/father_site/`
+
+Field 01 assembles one executable agent from:
+`INPUT + ROLE + PROMPT + RAG + KB + MODEL SLOT + OUTPUT CONTRACT + EVAL + EVIDENCE`.
+
+Embedded demo: `AG-001 ALINA / LITERARY`.
+
+Local run:
+
+```powershell
+python -m http.server 8090 --directory factory/ui/father_site
+```
+
+Then open `http://127.0.0.1:8090`.

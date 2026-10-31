@@ -1,0 +1,29 @@
+schema:
+  id: AGENT_KNOWLEDGE_ASSEMBLY_V1
+  version: 1.0.0
+
+  agent_id: string
+  selected_packs:
+    common_foundation: []
+    corporate_common: []
+    profession_core: []
+    specialist_domain: []
+    research_acquired: []
+    operational_dynamic: []
+
+  bindings:
+    competency_model: string
+    skill_map: string
+    source_registry: string
+    rag_architecture: string
+    training_program: string
+    eval_suite: string
+
+  gates:
+    - source_provenance
+    - contradiction_resolution
+    - knowledge_coverage
+    - competency_coverage
+    - skill_evidence
+    - freshness
+    - regression

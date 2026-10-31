@@ -1,0 +1,47 @@
+wave:
+  id: WAVE_0
+  name: MAKE_THE_FACTORY_CAPABLE_OF_BUILDING_FATHER
+  stages: "000-009"
+  product: FATHER-PLATFORM
+
+  objectives:
+    - register FATHER as the self-product
+    - establish canonical platform/chassis/block/configuration model
+    - establish 000-100 stage registry
+    - establish agent registry
+    - establish block registry
+    - establish model-slot contract
+    - establish run/evidence schema
+    - establish trust and release evidence standards
+    - establish stage runner contract
+    - prove one complete Stage 000 run
+
+  deliverables:
+    - factory/FACTORY_MANIFEST.yaml
+    - factory/chassis/FATHER_PLATFORM_CHASSIS.yaml
+    - factory/blocks/BLOCK_REGISTRY.yaml
+    - factory/bootstrap/FATHER_SELF_PRODUCT.yaml
+    - factory/bootstrap/FATHER_000_100_MAP.yaml
+    - factory/agents/AGENT_REGISTRY.yaml
+    - factory/model_fabric/MODEL_SLOT_CONTRACT.yaml
+    - factory/runtime/RUN_PIPELINE.yaml
+    - factory/stages/STAGE_RUN_RECORD.schema.yaml
+    - factory/trust/RELEASE_TRUST_GATE.yaml
+
+  gate:
+    id: WAVE_0_PASS
+    required:
+      - self_product_registered
+      - chassis_defined
+      - block_registry_defined
+      - stage_registry_defined
+      - agent_registry_defined
+      - model_slot_defined
+      - run_record_defined
+      - trust_gates_defined
+      - stage_000_reference_pass
+      - stage_000_local_emulation_pass
+      - stage_000_local_llm_pass
+      - stage_000_ab_pass
+
+  status: IN_PROGRESS

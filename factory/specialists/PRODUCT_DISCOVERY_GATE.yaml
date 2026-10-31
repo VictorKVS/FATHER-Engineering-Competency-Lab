@@ -1,0 +1,30 @@
+gate:
+  id: PRODUCT_DISCOVERY_GATE
+  owner: AG-000
+  pass_conditions:
+    - problem_is_clear
+    - target_user_is_identified
+    - value_is_articulated
+    - critical_assumptions_have_validation
+    - success_metrics_exist
+    - economic_model_exists
+    - do_nothing_scenario_exists
+    - reasons_not_to_build_reviewed
+    - major_doubts_recorded
+    - critical_unknowns_resolved_or_accepted
+    - evidence_traceability_present
+
+  possible_decisions:
+    - BUILD
+    - PILOT
+    - REDUCE_SCOPE
+    - RESEARCH_MORE
+    - DEFER
+    - REJECT
+
+  hard_fail:
+    - no_identified_problem
+    - no_identified_user
+    - no_success_metric
+    - no_economic_rationale
+    - critical_unvalidated_assumption_without_plan

@@ -1,0 +1,67 @@
+agent_catalog:
+  id: FATHER_BLOCK_02_AGENT_CATALOG
+  version: 1.0.0
+  name: AGENT_CATALOG
+  user_label: "Список агентов с описанием"
+  purpose: >-
+    Normalize discovered and canonical agents into one searchable FATHER Agent
+    Base while preserving provenance, maturity and readiness gaps.
+
+  inputs:
+    - AGENT_DISCOVERY_RESULTS
+    - factory/agents/AGENT_REGISTRY.yaml
+
+  card_fields:
+    identity:
+      - agent_id
+      - name
+      - aliases
+      - owner_domain
+      - role
+    description:
+      - purpose
+      - capabilities
+      - prohibitions
+    implementation:
+      - canonical_repository
+      - canonical_paths
+      - related_repositories
+    intelligence:
+      - prompt
+      - algorithm
+      - rag_manifest
+      - knowledge_base
+      - experience_store
+      - evals
+    interfaces:
+      - input_contract
+      - output_contract
+      - tools
+      - permissions
+      - handoff
+    assurance:
+      - maturity
+      - status
+      - gaps
+      - evidence
+      - known_limits
+
+  views:
+    - ALL_AGENTS
+    - BY_DOMAIN
+    - BY_MATURITY
+    - BY_STATUS
+    - READY_FOR_ASSEMBLY
+    - NEEDS_WORK
+    - CANONICAL_EXISTING
+
+  rules:
+    - discovery_does_not_overwrite_canonical_records
+    - duplicate_candidates_are_linked_not_silently_merged
+    - provenance_is_mandatory
+    - unknown_fields_remain_unknown
+    - readiness_must_be_evidence_based
+
+  output:
+    registry: factory/registry/AGENT_CATALOG_V1.yaml
+    api_entity: AGENT_BASE

@@ -1,0 +1,23 @@
+{
+  "model_id": "FATHER-FACTORY-L0",
+  "version": "0.1.0",
+  "nodes": [
+    {"id": "CUSTOMER", "name": "Customer", "kind": "customer", "status": "VALIDATED"},
+    {"id": "W01", "name": "Business Analysis", "kind": "workshop", "status": "DRAFT"},
+    {"id": "W02", "name": "System Analysis", "kind": "workshop", "status": "NOT_DEFINED"},
+    {"id": "W03", "name": "Architecture", "kind": "workshop", "status": "NOT_DEFINED"},
+    {"id": "W06", "name": "Security Design", "kind": "workshop", "status": "NOT_DEFINED"},
+    {"id": "W08", "name": "QA / Test", "kind": "workshop", "status": "NOT_DEFINED"},
+    {"id": "W12", "name": "Polygon", "kind": "polygon", "status": "NOT_DEFINED"},
+    {"id": "W14", "name": "Release / Sale / Deployment", "kind": "workshop", "status": "NOT_DEFINED"}
+  ],
+  "flows": [
+    {"id": "F001", "name": "Customer Intent", "producer": "CUSTOMER", "consumer": "W01", "protocol": null, "payload_schema": "customer_intent.yaml", "data_classification": "business_input", "test_status": "DRAFT"},
+    {"id": "F002", "name": "Business Design Package", "producer": "W01", "consumer": "W02", "protocol": "GitHub artifact handoff", "payload_schema": "BA-OUTPUT-v0.1", "data_classification": "factory_internal", "test_status": "DRAFT"},
+    {"id": "F003", "name": "System Design Package", "producer": "W02", "consumer": "W03", "protocol": "GitHub artifact handoff", "payload_schema": null, "data_classification": "factory_internal", "test_status": "NOT_DEFINED"},
+    {"id": "F004", "name": "Security Feedback", "producer": "W06", "consumer": "W03", "protocol": "GitHub defect/rework event", "payload_schema": null, "data_classification": "factory_internal", "test_status": "NOT_DEFINED"},
+    {"id": "F005", "name": "Test Defects", "producer": "W08", "consumer": "W03", "protocol": "GitHub defect/rework event", "payload_schema": null, "data_classification": "factory_internal", "test_status": "NOT_DEFINED"},
+    {"id": "F006", "name": "Release Candidate", "producer": "W08", "consumer": "W12", "protocol": "immutable RC package", "payload_schema": null, "data_classification": "factory_release", "test_status": "NOT_DEFINED"},
+    {"id": "F007", "name": "Polygon PASS", "producer": "W12", "consumer": "W14", "protocol": "signed evidence package", "payload_schema": null, "data_classification": "factory_release", "test_status": "NOT_DEFINED"}
+  ]
+}

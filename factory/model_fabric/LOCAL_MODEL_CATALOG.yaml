@@ -1,0 +1,184 @@
+catalog:
+  id: FATHER_LOCAL_MODEL_CATALOG
+  version: 1.0.0
+  source: target_host_inventory_2026_10_29
+  host_notes:
+    ollama_cli_found: true
+    ollama_api_reachable: true
+    ollama_registered_models: 0
+    lm_studio_api_reachable: false
+    ollama_models_path: F:/FATHER_MODELS/ollama
+    lm_studio_model_root: C:/Users/1/.lmstudio/models
+
+  assets:
+    - id: MDL-GIGACHAT20-Q4
+      file: GigaChat-20B-A3B-instruct-q4_K_M.gguf
+      path: C:/Users/1/.lmstudio/models/ai-sage/GigaChat-20B-A3B-instruct-GGUF/GigaChat-20B-A3B-instruct-q4_K_M.gguf
+      size_bytes: 12494807488
+      class: TEXT_GENERATION
+      family: GIGACHAT
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE
+      launch:
+        primary_template: gigachat
+        fallback_templates: [metadata, chatml]
+        no_jinja_fallback: true
+
+    - id: MDL-GIGACHAT20-V15-Q4
+      file: GigaChat-20B-A3B-instruct-v1.5-q4_K_M.gguf
+      path: C:/Users/1/.lmstudio/models/ai-sage/GigaChat-20B-A3B-instruct-v1.5-GGUF/GigaChat-20B-A3B-instruct-v1.5-q4_K_M.gguf
+      size_bytes: 12494806976
+      class: TEXT_GENERATION
+      family: GIGACHAT
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE
+      launch:
+        primary_template: gigachat
+        fallback_templates: [metadata, chatml]
+        no_jinja_fallback: true
+
+    - id: MDL-GIGACHAT3-10B-Q4KS
+      file: ai-sage_GigaChat3-10B-A1.8B-Q4_K_S.gguf
+      path: C:/Users/1/.lmstudio/models/bartowski/ai-sage_GigaChat3-10B-A1.8B-GGUF/ai-sage_GigaChat3-10B-A1.8B-Q4_K_S.gguf
+      size_bytes: 6432678048
+      class: TEXT_GENERATION
+      family: GIGACHAT3
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE
+      launch:
+        primary_template: gigachat
+        fallback_templates: [metadata, chatml]
+        no_jinja_fallback: true
+      known_issue: embedded_jinja_failed_on_target_host
+
+    - id: MDL-DEEPSEEK-CODER-V2-LITE-Q4
+      file: deepseek-coder-v2-lite-instruct-q4_k_m.gguf
+      path: C:/Users/1/.lmstudio/models/gsxrchris/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF/deepseek-coder-v2-lite-instruct-q4_k_m.gguf
+      size_bytes: 10364416896
+      class: TEXT_CODE_GENERATION
+      family: DEEPSEEK_CODER_V2
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE_EXPERIMENTAL
+      launch:
+        primary_template: deepseek2
+        fallback_templates: [metadata, deepseek, chatml]
+
+    - id: MDL-DEEPSEEK-CODER-V2-LITE-Q5
+      file: deepseek-coder-v2-lite-instruct-q5_k_m.gguf
+      path: C:/Users/1/.lmstudio/models/ijohn07/DeepSeek-Coder-V2-Lite-Instruct-Q5_K_M-GGUF/deepseek-coder-v2-lite-instruct-q5_k_m.gguf
+      size_bytes: 11851314048
+      class: TEXT_CODE_GENERATION
+      family: DEEPSEEK_CODER_V2
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE_EXPERIMENTAL
+      launch:
+        primary_template: deepseek2
+        fallback_templates: [metadata, deepseek, chatml]
+
+    - id: MDL-QWEN25-14B-1M-Q4
+      file: Qwen2.5-14B-Instruct-1M-Q4_K_M.gguf
+      path: C:/Users/1/.lmstudio/models/lmstudio-community/Qwen2.5-14B-Instruct-1M-GGUF/Qwen2.5-14B-Instruct-1M-Q4_K_M.gguf
+      size_bytes: 8988110624
+      class: TEXT_GENERATION
+      family: QWEN25
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE
+      launch:
+        primary_template: chatml
+        fallback_templates: [metadata]
+
+    - id: MDL-QWEN25-CODER-14B-Q4
+      file: qwen2.5-coder-14b-instruct-q4_k_m.gguf
+      path: C:/Users/1/.lmstudio/models/Qwen/Qwen2.5-Coder-14B-Instruct-GGUF/qwen2.5-coder-14b-instruct-q4_k_m.gguf
+      size_bytes: 8988110272
+      class: TEXT_CODE_GENERATION
+      family: QWEN25_CODER
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: ELIGIBLE_EXPERIMENTAL
+      launch:
+        primary_template: chatml
+        fallback_templates: [metadata]
+
+    - id: MDL-LLAVA16-MISTRAL7B-Q4
+      file: llava-v1.6-mistral-7b.Q4_K_M.gguf
+      path: C:/Users/1/.lmstudio/models/cjpais/llava-1.6-mistral-7b-gguf/llava-v1.6-mistral-7b.Q4_K_M.gguf
+      size_bytes: 4368439552
+      class: MULTIMODAL_GENERATION
+      family: LLAVA_MISTRAL
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: EXCLUDED_BY_DEFAULT
+      reason: requires_multimodal_projector_and_not_needed_for_text_only_fair_test
+      companion:
+        file: mmproj-model-f16.gguf
+        path: C:/Users/1/.lmstudio/models/cjpais/llava-1.6-mistral-7b-gguf/mmproj-model-f16.gguf
+
+    - id: MDL-COGVLM13B-F16
+      file: cogvlm-13B-chat-v1.1-F16.gguf
+      path: C:/Users/1/.lmstudio/models/PandaExpressPatron/cogvlm-chat-gguf/cogvlm-13B-chat-v1.1-F16.gguf
+      size_bytes: 26430130112
+      class: MULTIMODAL_GENERATION
+      family: COGVLM
+      runtime: LLAMA_CPP_OR_COMPATIBILITY_REQUIRED
+      alina_literary: EXCLUDED_BY_DEFAULT
+      reason: multimodal_and_heavy_for_12GB_vram
+
+    - id: MDL-LLAVA-LLAMA3-8B-INT4
+      file: llava-llama-3-8b-v1_1-int4.gguf
+      path: C:/Users/1/.lmstudio/models/xtuner/llava-llama-3-8b-v1_1-gguf/llava-llama-3-8b-v1_1-int4.gguf
+      size_bytes: 4921246944
+      class: MULTIMODAL_GENERATION
+      family: LLAVA_LLAMA3
+      runtime: LLAMA_CPP_SERVER
+      alina_literary: EXCLUDED_BY_DEFAULT
+      reason: requires_multimodal_projector_and_not_needed_for_text_only_fair_test
+      companion:
+        file: llava-llama-3-8b-v1_1-mmproj-f16.gguf
+        path: C:/Users/1/.lmstudio/models/xtuner/llava-llama-3-8b-v1_1-gguf/llava-llama-3-8b-v1_1-mmproj-f16.gguf
+
+    - id: MDL-BGE-M3-Q8
+      file: bge-m3-q8_0.gguf
+      path: C:/Users/1/.lmstudio/models/ggml-org/bge-m3-Q8_0-GGUF/bge-m3-q8_0.gguf
+      size_bytes: 634553760
+      class: EMBEDDING
+      family: BGE_M3
+      runtime: LLAMA_CPP_EMBEDDING
+      alina_literary: NOT_A_GENERATOR
+      use_in_agent: RAG_EMBEDDING_CANDIDATE
+
+    - id: MDL-WHISPER-LARGE-V3-TURBO-Q4
+      file: model_q4_k.gguf
+      path: C:/Users/1/.lmstudio/models/xkeyC/whisper-large-v3-turbo-gguf/model_q4_k.gguf
+      size_bytes: 475640800
+      class: SPEECH_TO_TEXT
+      family: WHISPER
+      runtime: WHISPER_CPP_OR_COMPATIBLE
+      alina_literary: NOT_A_GENERATOR
+      use_in_agent: AUDIO_INGEST_CANDIDATE
+
+    - id: SUPPORT-MMPRJ-ROOT
+      file: mmproj-model-f16.gguf
+      path: C:/Users/1/.lmstudio/models/mmproj-model-f16.gguf
+      size_bytes: 624434336
+      class: SUPPORT_FILE
+      alina_literary: NOT_STANDALONE
+
+    - id: SUPPORT-MMPRJ-LLAVA16
+      file: mmproj-model-f16.gguf
+      path: C:/Users/1/.lmstudio/models/cjpais/llava-1.6-mistral-7b-gguf/mmproj-model-f16.gguf
+      size_bytes: 624451168
+      class: SUPPORT_FILE
+      alina_literary: NOT_STANDALONE
+
+    - id: SUPPORT-MMPRJ-LLAVA3
+      file: llava-llama-3-8b-v1_1-mmproj-f16.gguf
+      path: C:/Users/1/.lmstudio/models/xtuner/llava-llama-3-8b-v1_1-gguf/llava-llama-3-8b-v1_1-mmproj-f16.gguf
+      size_bytes: 624434368
+      class: SUPPORT_FILE
+      alina_literary: NOT_STANDALONE
+
+  one_agent_eligible_classes:
+    - TEXT_GENERATION
+    - TEXT_CODE_GENERATION
+
+  one_agent_current_eligible_count: 7
+  total_discovered_assets: 15

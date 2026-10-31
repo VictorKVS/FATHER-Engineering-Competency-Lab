@@ -1,0 +1,99 @@
+chassis:
+  id: FATHER_PLATFORM_CHASSIS
+  version: 0.1.0
+  product: FATHER-PLATFORM
+
+  frame:
+    - runtime
+    - state
+    - configuration
+    - event_bus
+    - api_gateway
+    - identity
+    - rbac
+
+  control:
+    steering:
+      - goals
+      - policies
+      - orchestration
+    brakes:
+      - guardrails
+      - authorization
+      - budget_limits
+      - human_approval
+      - emergency_stop
+      - rollback
+
+  engine:
+    - model_router
+    - model_slots
+    - local_llm_adapter
+    - cloud_model_adapter
+    - fallback
+
+  transmission:
+    - workflow_engine
+    - agent_orchestrator
+    - multi_agent
+    - checkpoint_resume
+    - retry
+
+  navigation:
+    - rag
+    - knowledge_base
+    - context_builder
+    - provenance
+
+  memory:
+    - working_memory
+    - long_term_memory
+    - experience_store
+
+  actuators:
+    - tool_runtime
+    - mcp_runtime
+    - api_actions
+    - files
+    - github
+    - sql
+    - domain_tools
+
+  sensors:
+    - input_adapters
+    - events
+    - webhooks
+    - files
+    - api
+    - messenger
+    - telemetry
+
+  instruments:
+    - observability
+    - metrics
+    - logs
+    - tracing
+    - audit
+    - evidence
+
+  safety:
+    - security_policy
+    - trust_gate
+    - supply_chain_gate
+    - heartbeat
+    - tamper_detection
+    - secrets
+    - sbom
+    - attestations
+
+  body_interfaces:
+    - domain_pack
+    - ui_channel_pack
+    - agent_pack
+    - model_pack
+    - tool_pack
+
+  invariant:
+    - domain_product_must_not_bypass_chassis_controls
+    - replaceable_blocks_must_preserve_contracts
+    - no_agent_has_direct_uncontrolled_tool_access

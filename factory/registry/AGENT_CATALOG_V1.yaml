@@ -1,0 +1,74 @@
+catalog:
+  id: FATHER_AGENT_CATALOG_V1
+  version: 1.0.0
+  source_registry: factory/agents/AGENT_REGISTRY.yaml
+  generated_from: CANONICAL_EXISTING_ASSETS
+  agents:
+    - agent_id: AG-000
+      name: PRODUCT_MANAGER
+      description: Product discovery and customer-intent owner.
+      domain: product_discovery
+      maturity: M2_STANDARD_PACKAGE_DEFINED
+      status: factory_core_role
+    - agent_id: AG-001
+      name: ALINA
+      description: Analytical supervisor and knowledge architect.
+      domain: analysis_knowledge_process
+      maturity: M4_WORKING_ASSETS
+      status: canonical_existing
+    - agent_id: AG-002
+      name: SECURITY_SPECIALIST
+      description: Information-security decision owner and security architect.
+      domain: information_security
+      maturity: M3_DISTRIBUTED_KNOWLEDGE
+      status: canonical_existing
+    - agent_id: AG-003
+      name: TIMA
+      description: Approved DevOps, DevSecOps and infrastructure executor.
+      domain: infrastructure_devsecops_runtime
+      maturity: M3_PROFILE_AND_LABS
+      status: canonical_existing
+    - agent_id: AG-004
+      name: FATHER_CODEX
+      description: Traceable software implementation and secure-coding agent.
+      domain: software_engineering
+      maturity: M2_ARCHITECTURE_DEFINED
+      status: canonical_existing
+    - agent_id: AG-005
+      name: PIONEER
+      description: Infrastructure architect producing topology, dependencies and acceptance plans.
+      domain: infrastructure_architecture
+      maturity: M4_PROTOTYPE_WITH_TESTS
+      status: canonical_existing
+    - agent_id: AG-006
+      name: FATHER_TEST_ENGINEER
+      description: Explainable test designer for node, edge, chain, subgraph and system testing.
+      domain: testing_verification
+      maturity: M2_PACKAGE_DEFINED
+      status: factory_new
+    - agent_id: AG-007
+      name: QA_EVALS
+      description: Independent quality and evaluation gate.
+      domain: quality_evaluation
+      maturity: M1_ROLE_DEFINED
+      status: factory_role
+    - agent_id: AG-008
+      name: OPTIMIZATION_ENGINE
+      description: A/B and multi-objective optimization agent.
+      domain: optimization_experiments
+      maturity: M1_ROLE_DEFINED
+      status: factory_role
+    - agent_id: AG-009
+      name: POLYGON
+      description: Independent adversarial verifier for frozen release candidates.
+      domain: adversarial_verification
+      maturity: M2_CONCEPT_AND_REPOS_EXIST
+      status: existing_platform_contour
+    - agent_id: AG-010
+      name: OSINT_EXPERT
+      description: Search, collection, provenance and evidence-supply agent.
+      domain: open_source_intelligence
+      maturity: M4_FROZEN_DEV_BASELINE
+      status: canonical_existing
+  notes:
+    - Detailed capabilities, interfaces, provenance and gaps remain authoritative in factory/agents/AGENT_REGISTRY.yaml.

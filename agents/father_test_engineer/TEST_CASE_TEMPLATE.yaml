@@ -1,0 +1,49 @@
+test_case:
+  id: ""
+  name: ""
+  target:
+    type: node|edge|chain|subgraph|system
+    ids: []
+
+  rationale:
+    requirement_ids: []
+    algorithm_step_ids: []
+    contract_ids: []
+    business_rule_ids: []
+    risk_ids: []
+    failure_mode_ids: []
+    why_this_test_here: ""
+
+  setup:
+    preconditions: []
+    fixtures: []
+    mocks: []
+    environment: ""
+
+  execution:
+    inputs: []
+    steps: []
+
+  oracle:
+    expected_result: ""
+    invariants: []
+    metrics: {}
+    pass_condition: ""
+    fail_condition: ""
+
+  coverage:
+    requirements: []
+    algorithms: []
+    contracts: []
+    risks: []
+
+  evidence:
+    artifacts: []
+    logs: []
+    screenshots: []
+    traces: []
+    metrics: []
+
+  regression:
+    enabled: true
+    trigger_on_change: []

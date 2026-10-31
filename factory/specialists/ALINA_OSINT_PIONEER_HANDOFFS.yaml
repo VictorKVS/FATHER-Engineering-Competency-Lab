@@ -1,0 +1,90 @@
+handoffs:
+  - id: ALINA_TO_OSINT
+    from: AG-001
+    to: AG-010
+    object: ResearchRequest
+    required:
+      - request_id
+      - case_id
+      - objective
+      - research_questions
+      - hypotheses
+      - entities_of_interest
+      - required_sufficiency
+      - constraints
+      - acceptance_criteria
+      - evidence_refs
+      - schema_version
+
+  - id: OSINT_TO_ALINA_PLAN
+    from: AG-010
+    to: AG-001
+    object: SearchPlanProposal
+    required:
+      - search_plan_id
+      - information_gaps
+      - source_classes
+      - methods
+      - knowledge_refs
+      - search_sequence
+      - verification_approach
+      - limitations
+      - expected_sufficiency
+
+  - id: ALINA_TO_OSINT_PLAN_DECISION
+    from: AG-001
+    to: AG-010
+    object: PlanDecision
+    allowed_status:
+      - ACCEPT
+      - AMEND
+      - REJECT
+
+  - id: OSINT_TO_ALINA_EVIDENCE
+    from: AG-010
+    to: AG-001
+    object: EvidencePackage
+    required:
+      - materials
+      - evidence
+      - leads
+      - failed_attempts
+      - provenance_refs
+      - corroboration
+      - contradictions
+      - unverified_items
+      - achieved_sufficiency
+      - limitations
+      - critical_gaps
+      - decision_record_refs
+
+  - id: ALINA_TO_PIONEER
+    from: AG-001
+    to: AG-005
+    object: EngineeringResearchPackage
+    required:
+      - approved_requirements
+      - analytical_claims
+      - evidence_refs
+      - constraints
+      - assumptions
+      - unresolved_issues
+      - security_inputs
+      - acceptance_outcomes
+
+  - id: PIONEER_TO_ALINA_GAP
+    from: AG-005
+    to: AG-001
+    object: ArchitectureResearchGap
+    required:
+      - question
+      - why_needed
+      - affected_architecture_elements
+      - missing_evidence_type
+      - priority
+
+  - id: PIONEER_TO_TIMA
+    from: AG-005
+    to: AG-003
+    object: InfrastructureHandoff
+    gate: GATE-1

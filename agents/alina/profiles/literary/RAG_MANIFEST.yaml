@@ -1,0 +1,14 @@
+rag:
+  id: ALINA_LITERARY_RAG_V02
+  version: 0.2.0
+  sources:
+    - KNOWLEDGE_BASE.md
+  mode: LOCAL_SIMPLE_RETRIEVAL
+  chunking:
+    strategy: heading_sections
+    max_chunks: 4
+  precedence:
+    - source_story_canon
+    - explicit_user_constraints
+    - retrieved_knowledge
+    - generated_proposal

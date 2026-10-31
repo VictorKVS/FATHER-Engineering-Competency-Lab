@@ -1,0 +1,54 @@
+schema:
+  id: ALGORITHM_PROFILE_V1
+  version: 1.0.0
+
+  required:
+    - algorithm_id
+    - capability
+    - input_contract
+    - output_contract
+    - fixed_components
+    - model_policy
+    - eval_policy
+    - evidence_policy
+
+  fields:
+    algorithm_id: string
+    capability: string
+
+    fixed_components:
+      prompt: string
+      rag: string
+      knowledge_base: string
+      tools: list
+      policy: list
+
+    input_contract: string
+    output_contract: string
+
+    model_policy:
+      replaceable: true
+      catalog: string
+      selection_mode:
+        enum: [FIXED, FAILOVER, SWEEP, SCORE_SELECT]
+      hard_fail_action: NEXT_MODEL
+      no_pass_action: HOLD
+
+    eval_policy:
+      automatic_gate: string
+      quality_gate: string
+      pass_threshold: integer
+
+    evidence_policy:
+      output_root: string
+      record_model_id: true
+      record_component_versions: true
+      record_latency: true
+      record_test_results: true
+      record_git_commit: true
+
+  invariant:
+    - algorithm_contract_is_independent_from_model
+    - model_change_does_not_change_input_output_contract
+    - model_change_is_recorded_in_evidence
+    - promotion_requires_same_eval_suite

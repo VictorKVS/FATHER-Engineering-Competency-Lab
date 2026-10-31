@@ -1,0 +1,247 @@
+matrix:
+  version: 0.1.0
+  legend:
+    P: PASS
+    R: PARTIAL
+    F: FAIL
+    N: NOT_APPLICABLE
+
+  agents:
+    - id: AG-000
+      name: PRODUCT_MANAGER
+      components:
+        ROLE: P
+        PROMPT: P
+        ALGORITHM: P
+        RAG: P
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: P
+        OUTPUT_CONTRACT: P
+        API_HANDOFF: R
+        CHECKLIST: P
+        EVALS: P
+        EXPERIENCE: P
+        STATUS: R
+        TEST_PACKS: P
+      readiness: PARTIAL
+      blocking:
+        - canonical_API_HANDOFF_file
+        - STATUS.yaml
+
+    - id: AG-001
+      name: ALINA
+      components:
+        ROLE: P
+        PROMPT: R
+        ALGORITHM: P
+        RAG: R
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: P
+        OUTPUT_CONTRACT: P
+        API_HANDOFF: R
+        CHECKLIST: R
+        EVALS: P
+        EXPERIENCE: R
+        STATUS: R
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - factory_API_HANDOFF
+        - STATUS.yaml
+        - three_test_packs
+
+    - id: AG-002
+      name: SECURITY_SPECIALIST
+      components:
+        ROLE: P
+        PROMPT: R
+        ALGORITHM: R
+        RAG: R
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: F
+        OUTPUT_CONTRACT: F
+        API_HANDOFF: F
+        CHECKLIST: R
+        EVALS: R
+        EXPERIENCE: R
+        STATUS: R
+        TEST_PACKS: F
+      readiness: FAIL
+      blocking:
+        - INPUT_CONTRACT
+        - OUTPUT_CONTRACT
+        - API_HANDOFF
+        - three_test_packs
+
+    - id: AG-003
+      name: TIMA
+      components:
+        ROLE: P
+        PROMPT: R
+        ALGORITHM: R
+        RAG: F
+        KNOWLEDGE_BASE: R
+        INPUT_CONTRACT: R
+        OUTPUT_CONTRACT: R
+        API_HANDOFF: R
+        CHECKLIST: R
+        EVALS: R
+        EXPERIENCE: P
+        STATUS: R
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - RAG_MANIFEST
+        - canonical_API_HANDOFF
+        - three_test_packs
+
+    - id: AG-004
+      name: FATHER_CODEX
+      components:
+        ROLE: P
+        PROMPT: P
+        ALGORITHM: P
+        RAG: P
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: P
+        OUTPUT_CONTRACT: P
+        API_HANDOFF: R
+        CHECKLIST: P
+        EVALS: P
+        EXPERIENCE: P
+        STATUS: R
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - canonical_API_HANDOFF
+        - STATUS.yaml
+        - three_test_packs
+
+    - id: AG-005
+      name: PIONEER
+      components:
+        ROLE: P
+        PROMPT: F
+        ALGORITHM: P
+        RAG: F
+        KNOWLEDGE_BASE: R
+        INPUT_CONTRACT: R
+        OUTPUT_CONTRACT: R
+        API_HANDOFF: R
+        CHECKLIST: R
+        EVALS: P
+        EXPERIENCE: P
+        STATUS: P
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - PROMPT
+        - RAG_MANIFEST
+        - standard_API_HANDOFF
+        - three_test_packs
+
+    - id: AG-006
+      name: FATHER_TEST_ENGINEER
+      components:
+        ROLE: P
+        PROMPT: P
+        ALGORITHM: P
+        RAG: P
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: P
+        OUTPUT_CONTRACT: P
+        API_HANDOFF: R
+        CHECKLIST: P
+        EVALS: P
+        EXPERIENCE: P
+        STATUS: R
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - canonical_API_HANDOFF
+        - STATUS.yaml
+        - three_test_packs
+
+    - id: AG-007
+      name: QA_EVALS
+      components:
+        ROLE: R
+        PROMPT: F
+        ALGORITHM: F
+        RAG: F
+        KNOWLEDGE_BASE: F
+        INPUT_CONTRACT: F
+        OUTPUT_CONTRACT: F
+        API_HANDOFF: F
+        CHECKLIST: F
+        EVALS: F
+        EXPERIENCE: F
+        STATUS: R
+        TEST_PACKS: F
+      readiness: FAIL
+      blocking:
+        - full_standard_package
+
+    - id: AG-008
+      name: OPTIMIZATION_ENGINE
+      components:
+        ROLE: R
+        PROMPT: F
+        ALGORITHM: F
+        RAG: F
+        KNOWLEDGE_BASE: F
+        INPUT_CONTRACT: F
+        OUTPUT_CONTRACT: F
+        API_HANDOFF: F
+        CHECKLIST: F
+        EVALS: F
+        EXPERIENCE: F
+        STATUS: R
+        TEST_PACKS: F
+      readiness: FAIL
+      blocking:
+        - full_standard_package
+
+    - id: AG-009
+      name: POLYGON
+      components:
+        ROLE: P
+        PROMPT: R
+        ALGORITHM: R
+        RAG: R
+        KNOWLEDGE_BASE: R
+        INPUT_CONTRACT: R
+        OUTPUT_CONTRACT: R
+        API_HANDOFF: F
+        CHECKLIST: R
+        EVALS: R
+        EXPERIENCE: R
+        STATUS: R
+        TEST_PACKS: F
+      readiness: FAIL
+      blocking:
+        - canonical_package_merge
+        - API_HANDOFF
+        - test_packs
+
+    - id: AG-010
+      name: OSINT_EXPERT
+      components:
+        ROLE: P
+        PROMPT: R
+        ALGORITHM: P
+        RAG: R
+        KNOWLEDGE_BASE: P
+        INPUT_CONTRACT: P
+        OUTPUT_CONTRACT: P
+        API_HANDOFF: R
+        CHECKLIST: P
+        EVALS: P
+        EXPERIENCE: P
+        STATUS: P
+        TEST_PACKS: F
+      readiness: PARTIAL
+      blocking:
+        - factory_RAG_wrapper
+        - canonical_API_HANDOFF
+        - three_test_packs

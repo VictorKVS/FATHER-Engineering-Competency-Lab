@@ -1,0 +1,37 @@
+product:
+  id: FATHER-PLATFORM
+  name: FATHER Engineering Platform
+  type: self_product
+  owner: FATHER_FACTORY
+  current_stage: "000"
+  status: IN_WORK
+
+  mandatory_agents:
+    - AG-000
+    - AG-001
+    - AG-010
+    - AG-005
+    - AG-002
+    - AG-004
+    - AG-006
+    - AG-003
+    - AG-007
+    - AG-008
+    - AG-009
+
+  mandatory_evidence:
+    - stage_run_records
+    - tests
+    - metrics
+    - security_results
+    - ab_results
+    - regression_results
+    - polygon_results
+
+  rule:
+    - father_must_pass_its_own_factory
+    - every_platform_block_is_replaceable_where_contract_allows
+    - every_llm_is_replaceable_through_model_slot
+    - every_agent_is_versioned
+    - every_change_is_traceable
+    - no_stage_pass_without_evidence

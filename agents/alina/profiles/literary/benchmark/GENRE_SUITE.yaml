@@ -1,0 +1,83 @@
+suite:
+  id: ALINA_LITERARY_GENRE_SUITE_V1
+  version: 1.0.0
+  max_target_words: 450
+  rule: one_page_maximum_approximately
+  cases:
+    - id: FANTASY_001
+      genre: fantasy
+      title: The Frozen Bell
+      story_text: >
+        Когда колокол на башне ударил тринадцатый раз, снег над городом замер в воздухе.
+        Лира увидела, что только она и старый часовщик продолжают двигаться.
+        На площади раскрылась каменная дверь, которой вчера не существовало.
+      constraints:
+        - continue in Russian
+        - preserve third-person narration
+        - keep magic mysterious
+        - do not resolve the central mystery completely
+
+    - id: THRILLER_001
+      genre: thriller
+      title: Apartment 47
+      story_text: >
+        Илья получил сообщение со своего собственного номера: «Не заходи в квартиру 47».
+        Через минуту лифт остановился именно на сорок седьмом этаже, хотя он не нажимал кнопку.
+        Двери открылись, и в коридоре кто-то тихо повторил его имя.
+      constraints:
+        - continue in Russian
+        - increase tension gradually
+        - avoid supernatural explanation unless earned by the source
+        - preserve close third-person perspective
+
+    - id: ROMANCE_001
+      genre: romance
+      title: Last Train
+      story_text: >
+        Вера и Максим не виделись семь лет.
+        В пустом вагоне ночной электрички они одновременно потянулись к одному забытому на сиденье шарфу.
+        Максим узнал её первым, но вместо приветствия спросил: «Ты всё-таки уехала тогда?»
+      constraints:
+        - continue in Russian
+        - focus on emotional subtext
+        - avoid melodramatic confession in the first scene
+        - preserve both characters' dignity
+
+    - id: ACTION_001
+      genre: action
+      title: Bridge 12
+      story_text: >
+        Грузовик занесло поперёк моста за секунду до того, как погасло освещение.
+        Артём услышал два коротких выстрела и увидел, как водитель броневика открыл дверь.
+        До противоположного берега оставалось триста метров.
+      constraints:
+        - continue in Russian
+        - keep action spatially coherent
+        - preserve cause and effect
+        - avoid impossible physics
+
+    - id: SCI_FI_001
+      genre: science_fiction
+      title: Echo Copy
+      story_text: >
+        На орбитальной станции Марина получила видеозвонок от себя самой.
+        Другая Марина выглядела старше на несколько часов и сказала: «Не запускай синхронизацию памяти».
+        Таймер до запуска показывал 02:17.
+      constraints:
+        - continue in Russian
+        - keep technological rules internally consistent
+        - do not solve the paradox immediately
+        - preserve urgency
+
+    - id: MYSTERY_001
+      genre: mystery
+      title: The Missing Photograph
+      story_text: >
+        На семейной фотографии 1998 года было пустое место между отцом и матерью.
+        По краям пустоты сохранились две чужие руки, словно человека вырезали не из бумаги, а из самого снимка.
+        Бабушка посмотрела на фотографию и впервые за вечер попросила закрыть дверь.
+      constraints:
+        - continue in Russian
+        - preserve clue logic
+        - introduce no more than one major new clue
+        - do not reveal the full answer

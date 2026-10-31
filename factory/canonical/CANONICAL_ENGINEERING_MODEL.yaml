@@ -1,0 +1,76 @@
+model:
+  id: CANONICAL_ENGINEERING_MODEL
+  version: 1.0.0
+
+  root_entity: PROJECT
+
+  entity_types:
+    PROJECT:
+      required: [project_id, name, version, state]
+    PRODUCT:
+      required: [product_id, project_id, purpose, users, outcomes]
+    REQUIREMENT:
+      required: [requirement_id, project_id, type, statement, status]
+    BUSINESS_PROCESS:
+      required: [process_id, project_id, name]
+    PROCESS_STEP:
+      required: [step_id, process_id, name]
+    DECISION:
+      required: [decision_id, project_id, statement]
+    DOMAIN_ENTITY:
+      required: [entity_id, project_id, name]
+    SYSTEM_COMPONENT:
+      required: [component_id, project_id, name, component_type]
+    DATA_OBJECT:
+      required: [data_id, project_id, name, classification]
+    SECURITY_REQUIREMENT:
+      required: [security_requirement_id, project_id, statement]
+    RISK:
+      required: [risk_id, project_id, statement, severity]
+    CONTROL:
+      required: [control_id, project_id, statement]
+    COMPETENCY:
+      required: [competency_id, project_id, name]
+    SKILL:
+      required: [skill_id, competency_id, name]
+    KNOWLEDGE_NODE:
+      required: [knowledge_id, project_id, title, knowledge_type]
+    RESEARCH_QUESTION:
+      required: [question_id, project_id, question]
+    SOURCE:
+      required: [source_id, project_id, source_type, locator]
+    CLAIM:
+      required: [claim_id, project_id, statement]
+    PROMPT_RULE:
+      required: [prompt_rule_id, project_id, statement]
+    RAG_RULE:
+      required: [rag_rule_id, project_id, statement]
+    TOOL_BINDING:
+      required: [tool_binding_id, project_id, tool_id]
+    TRAINING_CASE:
+      required: [training_case_id, project_id, objective]
+    EVAL_CASE:
+      required: [eval_case_id, project_id, objective]
+    METRIC:
+      required: [metric_id, project_id, name]
+    EVIDENCE:
+      required: [evidence_id, project_id, evidence_type, status]
+    AGENT:
+      required: [agent_id, project_id, role, state]
+    RELEASE:
+      required: [release_id, project_id, version, state]
+
+  lifecycle:
+    - DRAFT
+    - DESIGNED
+    - TESTED
+    - VERIFIED
+    - RELEASE_CANDIDATE
+    - ACCEPTED
+
+  rules:
+    - all_entities_use_stable_ids
+    - all_changes_are_versioned
+    - all_critical_entities_require_owner
+    - all_promotions_require_evidence
+    - role_editors_modify_shared_entities_not_private_copies

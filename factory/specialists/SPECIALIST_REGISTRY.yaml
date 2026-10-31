@@ -1,0 +1,164 @@
+specialists:
+  - id: alina
+    name: ALINA Analyst / Knowledge & Process Architect
+    order: 1
+    status: existing_canonical
+    canonical_sources:
+      - repo: VictorKVS/alina-knowledge-worker
+        paths:
+          - AGENTS.md
+          - README.md
+          - docs/knowledge/
+          - processes/
+    functions:
+      - business_analysis
+      - system_analysis_support
+      - knowledge_architecture
+      - process_design
+      - source_and_evidence_control
+      - specialist_training
+      - agent_nursery
+      - exams_and_experience
+
+  - id: security_specialist
+    name: Information Security Specialist
+    order: 2
+    status: existing_canonical
+    responsibility_boundary: security_decisions_only
+    functions:
+      - applicability
+      - data_classification
+      - threat_and_risk_analysis
+      - control_selection
+      - compliance_mapping
+      - security_architecture
+      - security_acceptance
+    knowledge_sources:
+      - SecGraph
+      - Security_KB
+      - Legal_Registry
+      - canonical_regulatory_sources
+
+  - id: pioneer
+    name: PIONEER / Infrastructure Architect
+    agent_id: AG-005
+    order: 3
+    status: existing_canonical
+    canonical_sources:
+      - repo: VictorKVS/CyberED
+        path: PIONEER-00/
+    functions:
+      - infrastructure_architecture
+      - topology
+      - asset_dependency_graph
+      - addressing_and_network_plan
+      - bill_of_materials
+      - threat_model_input
+      - acceptance_test_plan
+      - gate1_handoff_to_tima
+    restrictions:
+      - no_infrastructure_write
+      - no_cloud_credentials
+      - no_physical_network_write
+
+  - id: father_codex
+    name: FATHER_CODEX / Programmer
+    order: 4
+    status: existing_canonical
+    canonical_sources:
+      - repo: VictorKVS/FATHER_CODEX
+        path: README.md
+    functions:
+      - approved_requirements_to_code
+      - api_mcp_rag_workflows
+      - secure_implementation
+      - tests_and_quality_checks
+      - provenance
+      - release_artifacts
+    principle: programmer_specialization_of_shared_father_core
+
+  - id: tima
+    name: TIMA / Timofey Engineering Agent
+    agent_id: AG-003
+    order: 5
+    status: existing_canonical
+    functions:
+      - infrastructure_execution
+      - windows_linux
+      - docker_kubernetes
+      - git_cicd
+      - devsecops
+      - ai_security_runtime
+      - sre_observability
+      - resource_control
+      - deployment
+      - evidence_collection
+    receives_from:
+      - pioneer
+    rule: does_not_change_approved_architecture_without_registered_change
+
+  - id: father_test_engineer
+    name: FATHER Test Engineer
+    order: 6
+    status: integrated_new_specialist
+    functions:
+      - test_design_from_requirements_algorithms_contracts
+      - node_edge_chain_subgraph_system_tests
+      - rationale_and_oracles
+      - regression
+      - evidence
+
+  - id: qa_evals
+    name: QA / Evals Engineer
+    order: 7
+    status: factory_role
+  - id: optimization_engine
+    name: Optimization / Experiment Engineer
+    order: 8
+    status: factory_role
+  - id: polygon
+    name: Polygon / Adversarial Verification
+    order: 9
+    status: existing_platform_contour
+
+derived_views:
+  business_analysis:
+    primary: alina
+  system_analysis:
+    primary: alina
+    consultation:
+      - security_specialist
+      - pioneer
+      - father_codex
+  architecture:
+    primary: pioneer
+    scope: infrastructure_and_execution_architecture
+  programming:
+    primary: father_codex
+  devsecops:
+    primary: tima
+  security:
+    primary: security_specialist
+  testing:
+    primary: father_test_engineer
+
+standard_package:
+  required:
+    - ROLE.md
+    - PROMPT.md
+    - ALGORITHM.md
+    - RAG_MANIFEST.yaml
+    - KNOWLEDGE_BASE.md
+    - INPUT_CONTRACT.yaml
+    - OUTPUT_CONTRACT.yaml
+    - CHECKLIST.md
+    - STATUS.yaml
+    - EVALS/
+    - EXPERIENCE/
+    - API_HANDOFF.yaml
+
+integration_rule:
+  - existing_specialists_are_reused_not_recreated
+  - legacy_documents_remain_canonical_until_migrated_with_provenance
+  - specialist_decisions_respect_professional_boundaries
+  - all_handoffs_use_versioned_machine_readable_contracts

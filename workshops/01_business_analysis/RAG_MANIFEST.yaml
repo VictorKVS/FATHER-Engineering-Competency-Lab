@@ -1,0 +1,30 @@
+rag:
+  id: FATHER-BA-RAG
+  version: 0.1.0
+  purpose: business_architecture_and_analysis
+  collections:
+    - id: notations
+      topics: [BPMN, DMN, SIPOC, RACI]
+    - id: requirements
+      topics: [business_requirements, acceptance_criteria, traceability]
+    - id: process_patterns
+      topics: [request_response, human_approval, event_processing, external_api]
+    - id: information_flow
+      topics: [producer_consumer, formats, volume, quality, SLA]
+    - id: decision_models
+      topics: [business_rules, decision_tables]
+    - id: quality
+      topics: [completeness, accuracy, validity, consistency, uniqueness, timeliness, traceability]
+    - id: risk_security_handoff
+      topics: [trust_boundaries, untrusted_inputs, sensitive_data, approvals]
+    - id: examples
+      topics: [reference_business_models, anti_patterns]
+    - id: factory_experience
+      topics: [defects, successful_patterns, reusable_templates]
+  retrieval:
+    hybrid: true
+    rerank: true
+    provenance_required: true
+  policy:
+    unknown_is_not_fact: true
+    official_sources_preferred_for_notation_rules: true

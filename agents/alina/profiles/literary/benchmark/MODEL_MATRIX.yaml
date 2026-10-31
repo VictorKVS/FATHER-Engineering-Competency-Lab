@@ -1,0 +1,43 @@
+benchmark_models:
+  version: 1.0.0
+  automatic_local_candidates: 4
+  candidates:
+    - order: 1
+      model_id: MDL-GIGACHAT3-10B-A18-Q4KS
+      label: GigaChat3-10B-A1.8B-Q4_K_S
+      path: C:/Users/1/.lmstudio/models/bartowski/ai-sage_GigaChat3-10B-A1.8B-GGUF/ai-sage_GigaChat3-10B-A1.8B-Q4_K_S.gguf
+      enabled: true
+      runtime_overrides:
+        no_jinja: true
+        chat_template: chatml
+    - order: 2
+      model_id: MDL-QWEN25-14B-1M-Q4
+      label: Qwen2.5-14B-Instruct-1M-Q4_K_M
+      path: C:/Users/1/.lmstudio/models/lmstudio-community/Qwen2.5-14B-Instruct-1M-GGUF/Qwen2.5-14B-Instruct-1M-Q4_K_M.gguf
+      enabled: true
+    - order: 3
+      model_id: MDL-GIGACHAT-20B-A3B-Q4
+      label: GigaChat-20B-A3B-Q4_K_M
+      path: C:/Users/1/.lmstudio/models/ai-sage/GigaChat-20B-A3B-instruct-GGUF/GigaChat-20B-A3B-instruct-q4_K_M.gguf
+      enabled: true
+      runtime_overrides:
+        no_jinja: true
+        chat_template: chatml
+    - order: 4
+      model_id: MDL-GIGACHAT-20B-A3B-V15-Q4
+      label: GigaChat-20B-A3B-v1.5-Q4_K_M
+      path: C:/Users/1/.lmstudio/models/ai-sage/GigaChat-20B-A3B-instruct-v1.5-GGUF/GigaChat-20B-A3B-instruct-v1.5-q4_K_M.gguf
+      enabled: true
+      runtime_overrides:
+        no_jinja: true
+        chat_template: chatml
+
+  excluded_from_literary_auto:
+    - coding_models
+    - multimodal_models
+    - embedding_models
+    - speech_models
+
+  online_candidates:
+    default_enabled: false
+    candidates: [MDL-GIGACHAT-2, MDL-GIGACHAT-2-PRO, MDL-GIGACHAT-3-ULTRA]

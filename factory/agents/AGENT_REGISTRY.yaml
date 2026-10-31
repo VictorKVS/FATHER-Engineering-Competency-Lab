@@ -1,0 +1,396 @@
+registry:
+  id: FATHER_AGENT_REGISTRY
+  version: 0.1.0
+  principle: reuse_wrap_adapt_before_build
+
+  fields:
+    identity:
+      - agent_id
+      - name
+      - aliases
+      - owner_domain
+      - role
+      - status
+      - maturity
+    intelligence:
+      - prompt
+      - algorithm
+      - rag_manifest
+      - knowledge_base
+      - experience_store
+      - evals
+    interfaces:
+      - input_contract
+      - output_contract
+      - api_handoff
+      - tools
+      - permissions
+      - human_approval
+    assurance:
+      - tests
+      - security_constraints
+      - evidence
+      - known_limits
+      - gaps
+    provenance:
+      - canonical_repository
+      - canonical_paths
+      - legacy_assets
+      - last_reviewed
+
+agents:
+  - agent_id: AG-000
+    name: PRODUCT_MANAGER
+    aliases: [Product Manager, Product Discovery Agent, PM]
+    owner_domain: product_discovery
+    role: product_discovery_and_customer_intent_owner
+    status: factory_core_role
+    maturity: M2_STANDARD_PACKAGE_DEFINED
+    capabilities:
+      - customer_interviews
+      - stakeholder_interviews
+      - problem_discovery
+      - jobs_to_be_done
+      - market_research
+      - competitor_research
+      - user_segmentation
+      - persona_hypotheses
+      - value_proposition
+      - product_hypotheses
+      - prioritization
+      - discovery_experiments
+      - success_metrics
+      - product_risks
+      - scope_non_scope
+      - acceptance_outcomes
+    intelligence:
+      prompt: DEFINED
+      algorithm: DEFINED
+      rag_manifest: DEFINED
+      knowledge_base: DEFINED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    interfaces:
+      sends_to: [AG-001]
+      handoff: PRODUCT_DISCOVERY_PACKAGE
+    gaps:
+      - executable_research_connectors
+      - reusable_interview_question_banks
+      - accumulated_market_research_experience
+      - discovery_experiment_runtime
+
+  - agent_id: AG-001
+    name: ALINA
+    aliases: [Alina Analyst, Knowledge Worker, Analytical Core]
+    owner_domain: analysis_knowledge_process
+    role: analytical_supervisor_and_knowledge_architect
+    status: canonical_existing
+    maturity: M4_WORKING_ASSETS
+    canonical_repository: VictorKVS/alina-knowledge-worker
+    canonical_paths:
+      - AGENTS.md
+      - README.md
+      - alina.py
+      - process_engine.py
+      - processes/
+      - docs/knowledge/
+    capabilities:
+      - source_ingestion
+      - knowledge_normalization
+      - process_design
+      - evidence_traceability
+      - business_analysis_support
+      - system_analysis_support
+      - specialist_training
+      - scientific_prompt_engineering
+      - rag_strategy_engineering
+      - knowledge_base_engineering
+      - prompt_rag_kb_experiment_design
+      - intelligence_package_verification
+      - knowledge_quality_control
+      - visual_analysis
+      - trend_analysis
+      - security_audit_process_support
+    intelligence:
+      prompt: SCIENTIFIC_PROTOCOL_DEFINED
+      algorithm: STRONG_EXISTING_PLUS_INTELLIGENCE_PACKAGE_PROCESS
+      rag_manifest: SCIENTIFIC_PROTOCOL_DEFINED
+      knowledge_base: STRONG_EXISTING_PLUS_KB_ENGINEERING_PROTOCOL
+      experience_store: PARTIAL_EXISTING
+      evals: EXISTING_TESTS
+    interfaces:
+      input_contract: EXISTING_PROCESS_CONTRACTS
+      output_contract: EXISTING_RESULT_EVIDENCE_MODEL
+      api_handoff: NEEDS_FACTORY_STANDARDIZATION
+      tools: [document_extractors, process_engine, sqlite_fts5, visual_review]
+    gaps:
+      - executable_prompt_optimizer_runtime
+      - executable_rag_tournament_runtime
+      - formal_factory_api_handoff
+      - canonical_experience_promotion_rules
+
+  - agent_id: AG-002
+    name: SECURITY_SPECIALIST
+    aliases: [IB Specialist, Security Architect]
+    owner_domain: information_security
+    role: security_decision_owner
+    status: canonical_existing
+    maturity: M3_DISTRIBUTED_KNOWLEDGE
+    canonical_repository: VictorKVS/SecGraph
+    related_assets:
+      - security_kb
+      - legal_registry
+      - regulatory_core
+    capabilities:
+      - applicability
+      - data_classification
+      - threat_modeling
+      - risk_assessment
+      - control_selection
+      - compliance_mapping
+      - security_architecture
+      - security_acceptance
+    intelligence:
+      prompt: NEEDS_CONSOLIDATION
+      algorithm: PARTIAL_EXISTING
+      rag_manifest: NEEDS_CONSOLIDATION
+      knowledge_base: STRONG_DISTRIBUTED
+      experience_store: PARTIAL
+      evals: PARTIAL
+    gaps:
+      - canonical_agent_package
+      - unified_prompt
+      - unified_rag_manifest
+      - explicit_input_output_contracts
+      - factory_api_handoff
+
+  - agent_id: AG-003
+    name: TIMA
+    aliases: [Timofey, DevOps Sec Infrastructure Agent]
+    owner_domain: infrastructure_devsecops_runtime
+    role: approved_infrastructure_executor
+    status: canonical_existing
+    maturity: M3_PROFILE_AND_LABS
+    capabilities:
+      - windows_linux
+      - docker
+      - kubernetes
+      - git
+      - cicd
+      - devsecops
+      - infrastructure_audit
+      - deployment
+      - observability
+      - sre
+      - ai_security_runtime
+      - evidence_collection
+      - lean_container_engineering
+    intelligence:
+      prompt: EXISTING_PROFILE_NEEDS_IMPORT
+      algorithm: PARTIAL_EXISTING
+      rag_manifest: NEEDS_CONSOLIDATION
+      knowledge_base: PARTIAL_EXISTING
+      experience_store: LAB_EVIDENCE_EXISTS
+      evals: PARTIAL
+    interfaces:
+      receives_from: [AG-005]
+      rule: no_silent_architecture_redesign
+    gaps:
+      - import_full_profile_into_registry
+      - formal_prompt_package
+      - rag_manifest
+      - knowledge_base_index
+      - standard_api_handoff
+
+  - agent_id: AG-004
+    name: FATHER_CODEX
+    aliases: [Programmer, Programmer Agent]
+    owner_domain: software_engineering
+    role: traceable_implementation
+    status: canonical_existing
+    maturity: M2_ARCHITECTURE_DEFINED
+    canonical_repository: VictorKVS/FATHER_CODEX
+    capabilities:
+      - requirements_to_code
+      - architecture_to_code
+      - secure_coding
+      - api_mcp_rag_workflows
+      - tests
+      - static_analysis
+      - provenance
+      - release_artifacts
+      - code_signature
+    intelligence:
+      prompt: FACTORY_PACKAGE_ADDED_NEEDS_MERGE_WITH_LEGACY
+      algorithm: EXISTING_PLUS_FACTORY
+      rag_manifest: FACTORY_PACKAGE_ADDED
+      knowledge_base: FACTORY_PACKAGE_ADDED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    gaps:
+      - inventory_legacy_programming_docs
+      - merge_without_losing_provenance
+      - sandbox_execution
+      - code_runtime_adapter
+      - full_devsecops_gate
+
+  - agent_id: AG-005
+    name: PIONEER
+    aliases: [Infrastructure Architect]
+    owner_domain: infrastructure_architecture
+    role: infrastructure_designer
+    status: canonical_existing
+    maturity: M4_PROTOTYPE_WITH_TESTS
+    canonical_repository: VictorKVS/CyberED
+    canonical_paths:
+      - PIONEER-00/README.md
+      - PIONEER-00/agent.yaml
+      - PIONEER-00/GATE1.md
+      - PIONEER-00/pioneer.py
+      - PIONEER-00/topology.py
+      - PIONEER-00/dependency_graph.py
+      - PIONEER-00/security/
+      - PIONEER-00/tests/
+    capabilities:
+      - infrastructure_architecture
+      - topology
+      - asset_dependency_graph
+      - addressing_plan
+      - bill_of_materials
+      - threat_model_input
+      - acceptance_test_plan
+      - gate1
+      - handoff_to_tima
+    permissions:
+      infrastructure_write: false
+      cloud_credentials: false
+      physical_network_write: false
+    intelligence:
+      prompt: NEEDS_STANDARD_PACKAGE
+      algorithm: STRONG_EXISTING
+      rag_manifest: NEEDS_STANDARD_PACKAGE
+      knowledge_base: PARTIAL_EXISTING
+      experience_store: TEST_EVIDENCE_EXISTS
+      evals: EXISTING_TESTS
+    gaps:
+      - prompt
+      - rag_manifest
+      - knowledge_base_manifest
+      - standard_input_output_contracts
+      - factory_api_adapter
+
+  - agent_id: AG-006
+    name: FATHER_TEST_ENGINEER
+    aliases: [Test Engineer]
+    owner_domain: testing_verification
+    role: explainable_test_designer
+    status: factory_new
+    maturity: M2_PACKAGE_DEFINED
+    capabilities:
+      - node_tests
+      - edge_tests
+      - chain_tests
+      - subgraph_tests
+      - system_tests
+      - test_rationale
+      - test_oracles
+      - regression
+      - evidence
+    intelligence:
+      prompt: DEFINED
+      algorithm: DEFINED
+      rag_manifest: DEFINED
+      knowledge_base: DEFINED
+      experience_store: INITIALIZED
+      evals: INITIALIZED
+    gaps:
+      - executable_test_runtime
+      - richer_reference_test_patterns
+      - integration_with_program_00_100
+      - accumulated_real_experience
+
+  - agent_id: AG-007
+    name: QA_EVALS
+    owner_domain: quality_evaluation
+    role: independent_quality_gate
+    status: factory_role
+    maturity: M1_ROLE_DEFINED
+    gaps:
+      - full_standard_package
+
+  - agent_id: AG-008
+    name: OPTIMIZATION_ENGINE
+    owner_domain: optimization_experiments
+    role: ab_and_multiobjective_optimizer
+    status: factory_role
+    maturity: M1_ROLE_DEFINED
+    gaps:
+      - full_standard_package
+
+  - agent_id: AG-009
+    name: POLYGON
+    owner_domain: adversarial_verification
+    role: independent_rc_verifier
+    status: existing_platform_contour
+    maturity: M2_CONCEPT_AND_REPOS_EXIST
+    related_repositories:
+      - VictorKVS/-olygon
+      - VictorKVS/mindforge-polygon-framework
+    gaps:
+      - canonical_package_merge
+      - standard_api_handoff
+      - rc_manifest_binding
+      - evidence_model_consolidation
+
+  - agent_id: AG-010
+    name: OSINT_EXPERT
+    aliases: [FATHER OSINT, OSINT Worker, Evidence Supplier]
+    owner_domain: open_source_intelligence
+    role: search_collection_provenance_and_evidence_owner
+    status: canonical_existing
+    maturity: M4_FROZEN_DEV_BASELINE
+    canonical_repository: VictorKVS/OSINT_deepseek
+    canonical_paths:
+      - README.md
+      - father_osint/
+      - docs/03_architecture/06_ROLE_MATRIX_ANALYST_OSINT_V1.md
+      - docs/03_architecture/07_ANALYST_OSINT_INTERACTION_PROTOCOL_V1.md
+      - docs/04_testing/
+      - docs/06_verification/
+      - tests/
+    capabilities:
+      - search_planning
+      - source_class_selection
+      - collection
+      - provenance_preservation
+      - normalization
+      - deduplication
+      - evidence_preparation
+      - contradiction_capture
+      - counter_evidence
+      - coverage_assessment
+      - sufficiency_assessment
+      - telegram_collection
+      - tdlib_poc
+      - acquisition_reporting
+    prohibitions:
+      - no_final_analytical_conclusions
+      - no_hidden_contradictions
+      - no_provenance_destruction
+      - no_invented_confidence_without_named_method
+    intelligence:
+      prompt: EMBEDDED_IN_ACCEPTED_ROLE_PROTOCOLS
+      algorithm: STRONG_EXISTING
+      rag_manifest: NEEDS_FACTORY_WRAPPER
+      knowledge_base: SEARCH_INTELLIGENCE_KB_PRESENT_DISTRIBUTED
+      experience_store: DEVELOPMENT_JOURNAL_AND_TEST_REPORTS
+      evals: STRONG_EXISTING
+    interfaces:
+      primary_peer: AG-001
+      protocol: ANALYST_OSINT_INTERACTION_PROTOCOL_V1
+      output: EVIDENCE_PACKAGE
+    gaps:
+      - factory_standard_wrapper
+      - explicit_rag_manifest_index
+      - standard_api_handoff_adapter
+      - productized_test_pack_set

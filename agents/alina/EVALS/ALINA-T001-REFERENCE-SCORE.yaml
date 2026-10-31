@@ -1,0 +1,50 @@
+evaluation:
+  run_id: ALINA-T001-REF-001
+  test_pack: ALINA-TEST-001
+
+  hard_checks:
+    output_schema_semantics_valid: PASS
+    critical_invented_fact: PASS
+    evidence_preserved: PASS
+    role_boundary_respected: PASS
+    unsupported_numeric_confidence: PASS
+
+  scored:
+    observation_claim_separation: 100
+    hypothesis_handling: 100
+    evidence_traceability: 100
+    contradiction_handling: 100
+    sufficiency_reasoning: 95
+    bounded_conclusion: 100
+    role_boundary: 100
+    handoff_quality: 95
+
+  weighted_result: 98.8
+
+  expected_properties:
+    reject_H1_transport_loss: PASS
+    reject_H2_storage_loss: PASS
+    support_H3_deduplication_semantics_error: PASS
+    explain_equal_content_not_equal_observation: PASS
+    preserve_E1_to_E6_traceability: PASS
+    no_architecture_fix_invented: PASS
+    bounded_conclusion_or_handoff: PASS
+
+  result: PASS
+
+  findings:
+    - id: FIND-001
+      severity: minor
+      finding: >
+        OUTPUT_CONTRACT references decision_record_ref but does not define a decisions collection,
+        while the accepted Analyst↔OSINT protocol requires DecisionRecord for significant decisions.
+    - id: FIND-002
+      severity: minor
+      finding: >
+        OUTPUT_CONTRACT does not explicitly carry work_step_runs even though ALINA process rules
+        require step-level terminal states and evidence traceability.
+
+  next_action:
+    - patch_output_contract_with_decisions
+    - patch_output_contract_with_work_step_runs
+    - rerun_contract_validation

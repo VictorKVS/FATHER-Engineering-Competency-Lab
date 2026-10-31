@@ -1,0 +1,50 @@
+model_slot:
+  id: ALINA_MODEL_SLOT
+  owner_stable_id: ROLE-001
+  owner_code_name: ALINA
+  purpose: >
+    Reasoning and proposal-generation engine for the Knowledge & Reasoning Engineer.
+    The model assists analysis but cannot promote its own output to canon.
+
+  contract:
+    replaceable: true
+    local_first: true
+    provider_neutral: true
+    hidden_memory_forbidden: true
+    exact_context_required: true
+
+  required_inputs:
+    - engineering_context
+    - source_registry
+    - active_artifact
+    - artifact_version
+    - policies
+    - output_schema
+
+  allowed_outputs:
+    - ANALYSIS
+    - RESEARCH_QUESTIONS
+    - PROPOSAL
+    - COMPARISON
+    - GAP_REPORT
+    - TEST_SUGGESTIONS
+
+  prohibited:
+    - SELF_PROMOTION_TO_CANON
+    - SELF_APPROVAL
+    - POLICY_OVERRIDE
+    - SOURCE_INVENTION
+    - HIDDEN_CONTEXT_DEPENDENCY
+
+  model_policy:
+    selection: MODEL_ZOO
+    current: MDL-QWEN25-14B-1M-Q4
+    fallback: MANUAL_OR_POLICY_ROUTED
+    ab_enabled: true
+
+  gates:
+    - OUTPUT_CONTRACT
+    - SOURCE_GROUNDING
+    - TRACEABILITY
+    - EVAL
+    - HUMAN_OR_DOWNSTREAM_APPROVAL

@@ -1,0 +1,243 @@
+registry:
+  id: NEXUS_NAMING_REGISTRY
+  version: 1.0.0
+  purpose: >
+    Central terminology and naming layer for public branding, internal code names,
+    roles, workspaces, blocks, links and references. Stable IDs must not change
+    when public names change.
+
+  rules:
+    - stable_id_is_immutable
+    - public_name_may_change
+    - code_name_may_remain_internal
+    - aliases_are_preserved_for_search_and_migration
+    - references_must_point_to_stable_id_where_possible
+    - ui_labels_should_resolve_from_registry
+    - renaming_requires_reference_report
+
+  entities:
+    - stable_id: SYS-001
+      entity_type: SYSTEM
+      public_name: NEXUS AI Systems Engineering
+      code_name: FATHER
+      previous_names:
+        - FATHER Engineering Platform
+        - FATHER Engineering OS
+      aliases:
+        - NEXUS
+        - FATHER
+      references:
+        - README.md
+        - factory/ui/father_site/index.html
+        - factory/ui/father_site/alina.html
+      rename_policy: PUBLIC_NAME_ONLY
+
+    - stable_id: ROLE-001
+      entity_type: ROLE
+      public_name: Knowledge & Reasoning Engineer
+      code_name: ALINA
+      previous_names:
+        - ALINA Analyst
+        - Analytical Core
+      aliases:
+        - ALINA
+        - Knowledge Engineer
+        - Reasoning Engineer
+      references:
+        - agents/alina/ROLE_KNOWLEDGE_REASONING_ENGINEER.md
+        - factory/ui/father_site/alina.html
+        - factory/ui/father_site/alina.js
+        - agents/alina/profiles/literary/
+      rename_policy: PUBLIC_NAME_ONLY
+
+    - stable_id: WS-001
+      entity_type: WORKSPACE
+      public_name: Agent Designer
+      code_name: FIELD_01
+      aliases:
+        - Проектирование агента
+        - Agent Engineering
+      references:
+        - factory/ui/father_site/index.html
+        - factory/ui/father_site/app.js
+      rename_policy: PUBLIC_NAME_ONLY
+
+    - stable_id: BLK-001
+      entity_type: BLOCK
+      public_name: Input Contract
+      code_name: INPUT
+      aliases: [Input, Входной контракт]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/INPUT_CONTRACT.yaml
+
+    - stable_id: BLK-002
+      entity_type: BLOCK
+      public_name: Role
+      code_name: ROLE
+      aliases: [Agent Role, Роль]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/
+
+    - stable_id: BLK-003
+      entity_type: BLOCK
+      public_name: Prompt
+      code_name: PROMPT
+      aliases: [Prompt Engineering, System Prompt]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/PROMPT.md
+        - factory/ui/father_site/alina.html
+        - factory/ui/father_site/alina.js
+
+    - stable_id: BLK-004
+      entity_type: BLOCK
+      public_name: RAG
+      code_name: RAG
+      aliases: [RAG Engineering, Retrieval]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/RAG_MANIFEST.yaml
+        - factory/ui/father_site/alina.html
+        - factory/ui/father_site/alina.js
+
+    - stable_id: BLK-005
+      entity_type: BLOCK
+      public_name: Knowledge Base
+      code_name: KB
+      aliases: [Knowledge Engineering, KB]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/KNOWLEDGE_BASE.md
+        - factory/ui/father_site/alina.html
+        - factory/ui/father_site/alina.js
+
+    - stable_id: BLK-006
+      entity_type: BLOCK
+      public_name: Model Slot
+      code_name: MODEL_SLOT
+      aliases: [Model, LLM Slot, Model Router Slot]
+      references:
+        - factory/ui/father_site/app.js
+        - factory/model_fabric/LOCAL_MODEL_CATALOG.yaml
+
+    - stable_id: BLK-007
+      entity_type: BLOCK
+      public_name: Output Contract
+      code_name: OUTPUT
+      aliases: [Output, Выходной контракт]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/OUTPUT_CONTRACT.yaml
+
+    - stable_id: BLK-008
+      entity_type: BLOCK
+      public_name: Evals
+      code_name: EVAL
+      aliases: [Evaluation, Evaluation Suite]
+      references:
+        - factory/ui/father_site/app.js
+        - agents/alina/profiles/literary/EVALS/
+        - agents/alina/profiles/literary/benchmark/EVALUATION_RUBRIC.yaml
+
+    - stable_id: BLK-009
+      entity_type: BLOCK
+      public_name: Evidence
+      code_name: EVIDENCE
+      aliases: [Proof, Evidence Store]
+      references:
+        - factory/ui/father_site/app.js
+        - benchmark_results/alina_literary/
+
+    - stable_id: ROLE-101
+      entity_type: ROLE
+      public_name: AI Product Engineer
+      code_name: PRODUCT
+      aliases: [Product Engineer, Product Manager]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-102
+      entity_type: ROLE
+      public_name: Business Process Engineer
+      code_name: BA
+      aliases: [Business Analyst, Process Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-103
+      entity_type: ROLE
+      public_name: System & Domain Engineer
+      code_name: SYSTEM
+      aliases: [System Analyst, Domain Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-104
+      entity_type: ROLE
+      public_name: Security & Compliance Engineer
+      code_name: SECURITY
+      aliases: [Security Engineer, Compliance Engineer]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-105
+      entity_type: ROLE
+      public_name: Profession & Competency Engineer
+      code_name: COMPETENCY
+      aliases: [Competency Engineer, Profession Analyst]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-106
+      entity_type: ROLE
+      public_name: Corporate Knowledge Engineer
+      code_name: CORP_KNOWLEDGE
+      aliases: [Knowledge Curator, Corporate Knowledge]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: ROLE-107
+      entity_type: ROLE
+      public_name: Research & Evidence Engineer
+      code_name: OSINT
+      aliases: [OSINT Research Agent, Evidence Researcher]
+      references:
+        - factory/roles/ENGINEERING_ROLE_REGISTRY.yaml
+        - factory/ui/father_site/specialist.js
+
+    - stable_id: EXT-001
+      entity_type: EXTERNAL_AGENT
+      public_name: OSINT Research Agent
+      code_name: OSINT
+      aliases: [OSINT Agent, Research Collector]
+      references:
+        - agents/alina/contracts/RESEARCH_REQUEST.schema.yaml
+        - agents/alina/RESEARCH_QUESTION_GENERATOR.md
+
+    - stable_id: GATE-001
+      entity_type: GATE
+      public_name: Research Sufficiency Gate
+      code_name: RESEARCH_SUFFICIENCY_GATE
+      aliases: [Evidence Sufficiency Gate]
+      references:
+        - agents/alina/ROLE_KNOWLEDGE_REASONING_ENGINEER.md
+
+  rename_process:
+    steps:
+      - select_stable_id
+      - set_new_public_name
+      - append_old_name_to_previous_names
+      - scan_references
+      - update_ui_labels
+      - update_docs_if_required
+      - run_tests
+      - create_rename_report
+      - preserve_aliases

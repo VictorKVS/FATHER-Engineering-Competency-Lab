@@ -1,0 +1,22 @@
+output:
+  test_design:
+    test_cases: []
+    suites: []
+    rationale_map: []
+  coverage:
+    requirements: {}
+    algorithms: {}
+    contracts: {}
+    risks: {}
+    paths: {}
+  execution:
+    results: []
+    failures: []
+    bottlenecks: []
+  evidence:
+    logs: []
+    traces: []
+    reports: []
+    metrics: []
+  residual_risks: []
+  status: PASS|FAIL|HOLD

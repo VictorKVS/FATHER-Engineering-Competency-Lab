@@ -1,0 +1,38 @@
+agent_configuration:
+  schema: father.agent_configuration.v1
+
+  config_id: ""
+  agent_id: ""
+  stage_id: ""
+
+  layers:
+    role_ref: ""
+    prompt_ref: ""
+    algorithm_ref: ""
+    rag_manifest_ref: ""
+    knowledge_base_ref: ""
+    input_contract_ref: ""
+    output_contract_ref: ""
+    tools_ref: ""
+    security_policy_ref: ""
+    metrics_ref: ""
+    eval_suite_ref: ""
+    experience_ref: ""
+
+  model_slot_ref: ""
+
+  gates:
+    - CONTRACT
+    - FUNCTIONAL
+    - SECURITY
+    - EVAL
+    - AB
+    - REGRESSION
+
+  provenance:
+    repository: ""
+    commit: ""
+    created_from: []
+    change_reason: ""
+
+  status: DRAFT|CANDIDATE|PROMOTED|REJECTED

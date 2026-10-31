@@ -1,0 +1,35 @@
+assignments:
+  version: 0.1.0
+  status: CANDIDATE_NOT_PROMOTED
+
+  AG-000:
+    primary_candidates: [MDL-QWEN25-7B, MDL-MINISTRAL3-8B-Q4]
+    online_challenger: MDL-GIGACHAT-2-PRO
+
+  AG-001:
+    primary_candidates: [MDL-QWEN25-7B, MDL-DEEPSEEK-R1-7B, MDL-MINISTRAL3-8B-Q4]
+    control: MDL-LLAMA31-8B-Q4
+    online_challenger: MDL-GIGACHAT-2-PRO
+
+  AG-010:
+    primary_candidates: [MDL-QWEN25-7B, MDL-DEEPSEEK-R1-7B]
+    fast_worker: MDL-QWEN25-3B
+    online_challenger: MDL-GIGACHAT-2-PRO
+
+  AG-004:
+    primary_candidates: [MDL-QWEN25-CODER-7B]
+    fast_worker: MDL-QWEN25-CODER-1P5B
+    review_challenger: MDL-GPT-OSS-20B
+
+  AG-006:
+    primary_candidates: [MDL-QWEN25-7B, MDL-QWEN25-CODER-7B]
+    fast_worker: MDL-QWEN25-3B
+
+  visual_analysis:
+    primary_candidates: [MDL-QWEN3-VL-8B, MDL-LLAVA-7B]
+
+  rules:
+    - these_are_test_candidates_not_champions
+    - promotion_requires_same_input_same_contract_AB
+    - local_model_preferred_when_quality_gate_passes
+    - online_provider_is_fallback_or_challenger_by_policy

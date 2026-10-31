@@ -1,0 +1,252 @@
+artifacts:
+  analysis:
+    stable_id: ALINA-ART-001
+    public_name: Situation Analysis
+    template: templates/SITUATION_ANALYSIS.yaml
+    logic:
+      - reconstruct_business_context
+      - identify_decisions_and_constraints
+      - separate_facts_assumptions_unknowns
+      - identify_research_gaps
+    metrics:
+      - requirement_coverage
+      - unresolved_gap_count
+      - contradiction_count
+      - source_grounding_ratio
+    ab_tests:
+      - question_decomposition_strategy
+      - evidence_sufficiency_threshold
+    primary_action: "Провести инженерный анализ"
+
+  requirements:
+    stable_id: ALINA-ART-002
+    public_name: Requirements Map
+    template: templates/REQUIREMENTS_MAP.yaml
+    logic:
+      - map_business_to_functional_requirements
+      - map_security_and_data_constraints
+      - derive_knowledge_and_training_requirements
+      - build_traceability
+    metrics:
+      - requirement_coverage
+      - orphan_requirement_count
+      - traceability_ratio
+      - conflicting_requirement_count
+    ab_tests:
+      - decomposition_granularity
+      - prioritization_policy
+    primary_action: "Сформировать карту требований"
+
+  research:
+    stable_id: ALINA-ART-003
+    public_name: Research Questions
+    template: templates/RESEARCH_GRAPH.yaml
+    logic:
+      - derive_questions_from_idea_process_decisions
+      - prioritize_by_business_and_risk_impact
+      - link_questions_to_downstream_targets
+    metrics:
+      - traceable_question_ratio
+      - redundant_question_ratio
+      - unanswered_critical_questions
+      - downstream_coverage
+    ab_tests:
+      - question_generation_prompt
+      - priority_scoring_method
+    primary_action: "Сформировать исследовательскую программу"
+
+  osint:
+    stable_id: ALINA-ART-004
+    public_name: OSINT Orders
+    template: templates/OSINT_REQUEST.yaml
+    logic:
+      - package_research_requests
+      - specify_source_authority
+      - define_freshness_jurisdiction
+      - define_sufficiency
+    metrics:
+      - primary_source_ratio
+      - corroboration_ratio
+      - counter_evidence_coverage
+      - unresolved_research_gap_count
+    ab_tests:
+      - source_priority_policy
+      - search_strategy
+    primary_action: "Сформировать заказ OSINT"
+
+  competency:
+    stable_id: ALINA-ART-005
+    public_name: Competency Model
+    template: templates/COMPETENCY_MODEL.yaml
+    logic:
+      - derive_competencies_from_business_process
+      - decompose_knowledge_skills_decisions_tools
+      - define_proficiency_levels
+      - bind_failures_and_tests
+    metrics:
+      - competency_coverage
+      - test_coverage
+      - prerequisite_consistency
+      - critical_skill_gap_count
+    ab_tests:
+      - competency_decomposition
+      - proficiency_thresholds
+    primary_action: "Спроектировать компетенции"
+
+  graph:
+    stable_id: ALINA-ART-006
+    public_name: Knowledge Graph
+    template: templates/KNOWLEDGE_GRAPH.yaml
+    logic:
+      - normalize_entities_claims_sources
+      - create_relationships
+      - detect_contradictions
+      - track_temporal_and_jurisdiction_context
+    metrics:
+      - orphan_node_ratio
+      - provenance_coverage
+      - contradiction_resolution_ratio
+      - graph_connectivity
+    ab_tests:
+      - ontology_variant
+      - relation_extraction_strategy
+    primary_action: "Перестроить граф знаний"
+
+  prompt:
+    stable_id: ALINA-ART-007
+    public_name: Prompt Engineering
+    template: templates/PROMPT_ARCHITECTURE.yaml
+    logic:
+      - bind_role_goal_context_algorithm
+      - bind_tool_rag_security_rules
+      - define_output_and_fail_conditions
+    metrics:
+      - instruction_adherence
+      - task_accuracy
+      - hallucination_rate
+      - hard_fail_rate
+    ab_tests:
+      - prompt_variant
+      - instruction_order
+      - few_shot_strategy
+    primary_action: "Сформировать Prompt Proposal"
+
+  rag:
+    stable_id: ALINA-ART-008
+    public_name: RAG Engineering
+    template: templates/RAG_ARCHITECTURE.yaml
+    logic:
+      - select_sources
+      - define_ingestion_normalization_chunking
+      - define_retrieval_reranking
+      - define_context_and_citations
+    metrics:
+      - recall_at_k
+      - precision_at_k
+      - mrr
+      - context_relevance
+      - faithfulness
+      - citation_accuracy
+    ab_tests:
+      - chunking_strategy
+      - embedding_model
+      - top_k
+      - reranker
+      - context_assembly
+    primary_action: "Спроектировать RAG"
+
+  kb:
+    stable_id: ALINA-ART-009
+    public_name: Knowledge Architecture
+    template: templates/KNOWLEDGE_ARCHITECTURE.yaml
+    logic:
+      - separate_common_corporate_professional_specialized_knowledge
+      - bind_sources_and_provenance
+      - build_nodes_relations_rules_cases
+      - bind_knowledge_to_competencies_and_skills
+      - define_update_and_obsolescence_policy
+    metrics:
+      - source_coverage
+      - provenance_coverage
+      - competency_coverage
+      - stale_knowledge_ratio
+      - contradiction_rate
+      - orphan_knowledge_ratio
+      - retrieval_readiness
+    ab_tests:
+      - ontology_structure
+      - knowledge_layering
+      - chunking_and_indexing
+      - source_weighting
+    primary_action: "Открыть Knowledge Architecture Studio"
+
+  training:
+    stable_id: ALINA-ART-010
+    public_name: Training Program
+    template: templates/TRAINING_PROGRAM.yaml
+    logic:
+      - sequence_prerequisites
+      - create_curriculum_levels
+      - attach_cases_and_remediation
+      - define_graduation
+    metrics:
+      - skill_mastery
+      - pass_rate
+      - regression_rate
+      - remediation_success
+      - generalization_score
+    ab_tests:
+      - curriculum_order
+      - case_mix
+      - remediation_policy
+    primary_action: "Сформировать программу обучения"
+
+  ab:
+    stable_id: ALINA-ART-011
+    public_name: A/B & Metrics
+    template: templates/AB_EXPERIMENT_PLAN.yaml
+    logic:
+      - freeze_controls
+      - vary_one_primary_factor
+      - run_same_dataset
+      - compare_metrics_and_hard_fails
+    metrics:
+      - experiment_validity
+      - effect_size
+      - reproducibility
+      - regression_delta
+    ab_tests:
+      - meta_experiment_policy
+    primary_action: "Запустить эксперимент"
+
+  acceptance:
+    stable_id: ALINA-ART-012
+    public_name: Acceptance
+    template: templates/ACCEPTANCE_PROGRAM.yaml
+    logic:
+      - assemble_knowledge_task_edge_adversarial_e2e_tests
+      - verify_security_regression_evidence
+      - produce_acceptance_package
+    metrics:
+      - pass_rate
+      - hard_fail_count
+      - critical_scenario_coverage
+      - evidence_completeness
+    ab_tests:
+      - threshold_policy
+    primary_action: "Провести внутреннюю приёмку"
+
+  version:
+    stable_id: ALINA-ART-013
+    public_name: Versioning
+    template: templates/HANDOFF.yaml
+    logic:
+      - record_change_reason
+      - record_sources_tests_metrics_risks
+      - preserve_previous_version
+      - prepare_handoff
+    metrics:
+      - traceability_completeness
+      - evidence_completeness
+    ab_tests: []
+    primary_action: "Собрать версионный пакет"

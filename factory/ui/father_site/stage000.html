@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Этап 000: Регистрация идеи</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./stage000.css">
+  <link rel="stylesheet" href="./i18n.css?v=20261030-1300">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body class="stage000-page">
+<div class="stage-shell">
+  <aside class="stage-rail">
+    <a href="./index.html" class="back-link">← Agent Designer</a>
+    <div class="stage-brand"><div class="stage-mark">000</div><div><strong>Регистрация идеи</strong><small>ВХОДНОЙ ШЛЮЗ ФАБРИКИ</small></div></div>
+    <div class="section-label">ФАЗЫ</div>
+    <button class="phase active" data-phase="input">01 · ВХОД</button>
+    <button class="phase" data-phase="input-test">02 · ТЕСТ ВХОДА</button>
+    <button class="phase" data-phase="analysis">03 · РАБОТА СПЕЦИАЛИСТА</button>
+    <button class="phase" data-phase="artifact-test">04 · ТЕСТ АРТЕФАКТА</button>
+    <button class="phase" data-phase="evidence">05 · ДОКАЗАТЕЛЬСТВА</button>
+    <button class="phase" data-phase="gate">06 · ЧЕЛОВЕЧЕСКИЙ ШЛЮЗ</button>
+    <div class="stage-foot"><div class="health"><span></span>ЭТАП 000 РАБОТАЕТ</div><small>Следующий этап закрыт до одобрения</small></div>
+  </aside>
+
+  <main class="stage-main">
+    <header class="stage-top">
+      <div><div class="eyebrow">ФАБРИКА · ЭТАП 000</div><h1>Регистрация идеи</h1><p>Идея сначала проходит входной тест, анализ, проверку артефакта и только затем человеческое решение.</p></div>
+      <div class="top-actions"><button class="ghost" id="resetIdea">Новая идея</button><button class="primary" id="runInputTest">Запустить тест входа</button></div>
+    </header>
+
+    <section class="stage-status">
+      <div><span>Этап</span><b>STAGE-000</b></div>
+      <div><span>Ответственный</span><b>ROLE-101 · PRODUCT</b></div>
+      <div><span>Состояние</span><b id="stageState" class="hold">DRAFT</b></div>
+      <div><span>Следующий</span><b id="nextStageState">STAGE-001 · LOCKED</b></div>
+    </section>
+
+    <section class="stage-grid">
+      <aside class="stage-left">
+        <div class="stage-card">
+          <div class="card-head">Правила фабрики</div>
+          <div class="rule-list">
+            <span>Тест входа <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Тест артефакта <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Доказательства <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Человеческий шлюз <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Автоодобрение <b>ЗАПРЕЩЕНО</b></span>
+          </div>
+        </div>
+        <div class="stage-card">
+          <div class="card-head">Запреты этапа 000</div>
+          <div class="prohibit-list">
+            <span>НЕ создавать GitHub-репозиторий</span>
+            <span>НЕ создавать локальный проект</span>
+            <span>НЕ генерировать агента</span>
+            <span>НЕ писать код продукта</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="stage-center">
+        <div class="stage-tabs">
+          <button class="stage-tab active" data-view="idea">Идея</button>
+          <button class="stage-tab" data-view="analysis">Анализ</button>
+          <button class="stage-tab" data-view="tests">Тесты</button>
+          <button class="stage-tab" data-view="evidence">Доказательства</button>
+          <button class="stage-tab" data-view="gate">Шлюз</button>
+        </div>
+        <div id="stageContent" class="stage-content"></div>
+      </section>
+
+      <aside class="stage-right">
+        <div class="stage-card">
+          <div class="card-head">Тест входа</div>
+          <div id="inputTestPanel"><p>NOT RUN</p></div>
+        </div>
+        <div class="stage-card">
+          <div class="card-head">Тест артефакта</div>
+          <div id="artifactTestPanel"><p>LOCKED</p></div>
+        </div>
+        <div class="stage-card">
+          <div class="card-head">Человеческий шлюз</div>
+          <div class="gate-actions">
+            <button id="approveStage">ОДОБРИТЬ</button>
+            <button id="holdStage" disabled>УДЕРЖАТЬ</button>
+            <button id="rejectStage" disabled>ОТКЛОНИТЬ</button>
+          </div>
+          <textarea id="gateReason" placeholder="Причина удержания / отклонения"></textarea>
+          <div id="stageAdvancePanel"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./stage000.js"></script>
+  <script src="./i18n.js?v=20261030-1300"></script>
+  <script src="./trace.js?v=20261030-1515"></script>
+  <script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>

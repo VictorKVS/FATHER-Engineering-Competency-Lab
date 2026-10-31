@@ -1,0 +1,62 @@
+handoff:
+  contract_version: 0.1.0
+
+  envelope:
+    handoff_id: ""
+    run_id: ""
+    product_id: ""
+    from_specialist: ""
+    to_specialist: ""
+    created_at: ""
+    artifact_type: ""
+    artifact_version: ""
+    schema_id: ""
+    schema_version: ""
+    correlation_id: ""
+
+  payload:
+    model_refs: []
+    node_refs: []
+    flow_refs: []
+    requirement_refs: []
+    algorithm_refs: []
+    contract_refs: []
+    artifacts: []
+    findings: []
+    decisions: []
+    assumptions: []
+    unresolved_issues: []
+    metrics: {}
+    risks: []
+    tests: []
+    evidence: []
+
+  quality:
+    confidence: null
+    completeness: null
+    traceability: null
+    validation_status: NOT_RUN
+    gate_status: HOLD
+
+  transport:
+    preferred:
+      - REST_JSON
+      - EVENT_JSON
+      - GITHUB_ARTIFACT
+    optional:
+      - FILE_YAML
+      - MESSAGE_QUEUE
+
+  security:
+    classification: INTERNAL
+    auth_required: true
+    integrity_required: true
+    audit_required: true
+
+  errors:
+    - INVALID_SCHEMA
+    - MISSING_REQUIRED_REFERENCE
+    - FAILED_VALIDATION
+    - GATE_NOT_PASSED
+    - VERSION_CONFLICT
+    - SECURITY_POLICY_BLOCK

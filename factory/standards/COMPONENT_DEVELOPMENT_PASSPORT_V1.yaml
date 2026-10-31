@@ -1,0 +1,118 @@
+version: 1
+schema: FATHER_COMPONENT_DEVELOPMENT_PASSPORT_V1
+title: Component Development Passport
+
+purpose: >
+  Maintain the complete engineering history, current proven state, reuse options,
+  modernization paths, replacement paths and operational evidence for every
+  factory component.
+
+identity:
+  required:
+    - component_id
+    - name
+    - version
+    - owner
+    - component_type
+
+development_history:
+  required:
+    - problem_statement
+    - requirements
+    - architecture_decisions
+    - implementation_refs
+    - test_refs
+    - evidence_refs
+    - release_state
+
+intelligence_engineering:
+  applicable_to:
+    - agents
+    - agent_zoo_members
+    - domain_intelligence_packages
+  required_when_applicable:
+    - role_profile
+    - prompt_baseline
+    - promoted_prompt_version
+    - rag_manifest
+    - retrieval_strategy
+    - knowledge_snapshot
+    - source_registry
+    - eval_dataset
+    - experiment_history
+    - rejected_hypotheses
+    - regression_evidence
+    - security_evidence
+    - intelligence_package_gate
+
+current_state:
+  required:
+    - maturity_level
+    - readiness_state
+    - known_limitations
+    - dependencies
+    - interfaces
+    - security_status
+    - operational_status
+
+reuse:
+  fields:
+    reusable_as_is:
+      description: Where the component can be reused without modification
+    reusable_with_adapter:
+      description: Where reuse is possible through an adapter or compatibility layer
+    reusable_as_subcomponent:
+      description: Where only part of the component should be reused
+    prohibited_reuse:
+      description: Where use is not allowed because of constraints or risk
+
+modernization:
+  required_fields:
+    - modernization_id
+    - hypothesis
+    - trigger
+    - expected_gain
+    - required_changes
+    - affected_interfaces
+    - risks
+    - verification_plan
+    - rollback_plan
+    - status
+  statuses:
+    - IDEA
+    - CANDIDATE
+    - PLANNED
+    - EXPERIMENT
+    - VERIFIED
+    - REJECTED
+    - SUPERSEDED
+
+replacement:
+  fields:
+    replaceable_by:
+      description: Known compatible replacement components
+    replacement_contract:
+      description: Interfaces and evidence required before substitution
+    migration_plan:
+      description: Safe replacement procedure
+    champion_challenger:
+      description: Optional controlled replacement through tournament/experiment
+
+experience_loop:
+  production_feedback:
+    - incidents
+    - performance
+    - quality
+    - security_findings
+    - user_feedback
+  feeds_back_to:
+    - modernization
+    - replacement
+    - reuse
+    - requirements
+
+decision_rule:
+  - no_modernization_becomes_default_without_evidence
+  - no_replacement_without_contract_compatibility
+  - every_verified_improvement_updates_the_passport
+  - rejected_experiments_are_kept_as_negative_knowledge

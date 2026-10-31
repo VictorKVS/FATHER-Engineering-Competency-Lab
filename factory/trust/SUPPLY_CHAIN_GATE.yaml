@@ -1,0 +1,40 @@
+gate:
+  id: FATHER_SUPPLY_CHAIN_GATE
+  version: 0.1.0
+
+  required:
+    source:
+      - protected_branch_or_equivalent_control
+      - review_policy
+      - provenance
+    dependencies:
+      - dependency_inventory
+      - version_pinning_or_justified_range
+      - license_status
+      - vulnerability_status
+    build:
+      - controlled_ci
+      - build_provenance
+      - sbom
+      - artifact_digest
+    security:
+      - sast
+      - sca
+      - secret_scan
+      - container_or_package_scan_where_applicable
+    release:
+      - release_manifest
+      - attestation_set
+      - signature_or_verified_release_identity
+      - rollback_reference
+
+  hard_fail:
+    - unknown_release_artifact_origin
+    - missing_required_sbom
+    - missing_build_provenance
+    - unresolved_critical_secret_exposure
+    - unapproved_critical_dependency_risk
+    - release_without_required_attestations
+
+  on_pass:
+    status: SUPPLY_CHAIN_VERIFIED

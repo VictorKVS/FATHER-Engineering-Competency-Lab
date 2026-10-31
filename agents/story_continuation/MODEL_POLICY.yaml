@@ -1,0 +1,14 @@
+model_policy:
+  slot: STORY_MODEL
+  provider_independent: true
+  candidates:
+    - MDL-GIGACHAT3-10B-A18-Q4KS
+    - MDL-QWEN25-14B-1M-Q4
+    - MDL-GIGACHAT-20B-A3B-V15-Q4
+  selection:
+    first_smoke: MDL-GIGACHAT3-10B-A18-Q4KS
+    promotion_requires:
+      - contract_pass
+      - continuity_eval_pass
+      - reproducibility_eval
+  fallback_allowed: true

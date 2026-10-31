@@ -1,0 +1,10 @@
+input:
+  target_model_elements: []
+  requirement_ids: []
+  algorithm_step_ids: []
+  architecture_decision_ids: []
+  contract_ids: []
+  security_requirement_ids: []
+  reusable_block_candidates: []
+  coding_standard_ids: []
+  constraints: []

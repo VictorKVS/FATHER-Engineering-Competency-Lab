@@ -1,0 +1,135 @@
+military_discipline_overlay:
+  id: NEXUS_MIL_OKR_DISCIPLINE_V1
+  version: 1.0.0
+  purpose: >-
+    Adapt proven staged-development discipline from classical OKR/defense and
+    systems-engineering practice to the immutable NEXUS 000-100 lifecycle.
+  note: >-
+    This is an engineering overlay, not a claim of formal compliance with any
+    military standard.
+
+  principles:
+    - previous_stage_acceptance_required_before_next_stage
+    - requirements_are_baselined_before_detailed_design
+    - design_is_reviewed_before_implementation
+    - build_configuration_is_frozen_before_qualification
+    - independent_test_precedes_acceptance
+    - configuration_and_evidence_are_auditable
+    - deviations_require_recorded_disposition
+    - production_release_requires_acceptance_and_operational_readiness
+
+  review_gates:
+    - id: GATE-MCR-SRR
+      stages: "000-009"
+      name: MISSION_AND_REQUIREMENTS_REVIEW
+      russian_label: "Замысел / ТЗ / требования"
+      intent:
+        - mission_need_confirmed
+        - stakeholder_need_confirmed
+        - requirements_baselined
+        - acceptance_criteria_defined
+      baseline: REQUIREMENTS_BASELINE
+
+    - id: GATE-SDR-PDR
+      stages: "010-019"
+      name: SYSTEM_AND_PRELIMINARY_DESIGN_REVIEW
+      russian_label: "Эскизный проект"
+      intent:
+        - architecture_matches_requirements
+        - interfaces_defined
+        - principal_design_solutions_selected
+        - verification_methods_defined
+      baseline: DESIGN_TO_BASELINE
+
+    - id: GATE-CDR
+      stages: "020-039"
+      name: CRITICAL_DESIGN_REVIEW
+      russian_label: "Технический проект / рабочая документация"
+      intent:
+        - detailed_design_complete
+        - agent_model_tool_contracts_frozen
+        - build_and_integration_authorized
+        - security_design_reviewed
+      baseline: BUILD_TO_BASELINE
+
+    - id: GATE-SIR
+      stages: "040-049"
+      name: SYSTEM_INTEGRATION_REVIEW
+      russian_label: "Сборка опытного образца"
+      intent:
+        - components_ready_for_integration
+        - interface_compatibility_proven
+        - integration_plan_ready
+        - as_built_configuration_recorded
+      baseline: AS_BUILT_BASELINE
+
+    - id: GATE-TRR
+      stages: "050-069"
+      name: TEST_READINESS_REVIEW
+      russian_label: "Готовность к предварительным и квалификационным испытаниям"
+      intent:
+        - security_controls_ready
+        - test_methods_approved
+        - test_environment_ready
+        - hard_fail_rules_defined
+        - evidence_capture_ready
+      baseline: TEST_BASELINE
+
+    - id: GATE-QUAL
+      stages: "070-079"
+      name: QUALIFICATION_AND_VERIFICATION
+      russian_label: "Квалификационные / предварительные испытания"
+      intent:
+        - functional_tests_pass
+        - security_tests_pass
+        - devsecops_pipeline_pass
+        - sbom_and_hashes_exist
+        - defects_dispositioned
+      baseline: VERIFIED_BUILD_BASELINE
+
+    - id: GATE-ORR
+      stages: "080-089"
+      name: OPERATIONAL_READINESS_REVIEW
+      russian_label: "Готовность к эксплуатации"
+      intent:
+        - observability_ready
+        - runbooks_ready
+        - rollback_ready
+        - operator_controls_ready
+        - runtime_resources_confirmed
+      baseline: OPERATIONAL_BASELINE
+
+    - id: GATE-FCA-PCA-SAR
+      stages: "090-099"
+      name: FUNCTIONAL_PHYSICAL_ACCEPTANCE
+      russian_label: "Государственные/приёмочные испытания и приёмка"
+      intent:
+        - release_candidate_frozen
+        - functional_configuration_audited
+        - physical_configuration_audited
+        - independent_polygon_pass
+        - customer_acceptance_recorded
+      baseline: ACCEPTED_RELEASE_BASELINE
+
+    - id: GATE-100
+      stages: "100"
+      name: PRODUCTION_PROVEN
+      russian_label: "Подтверждено в эксплуатации"
+      intent:
+        - accepted_release_deployed
+        - production_telemetry_available
+        - operational_verification_pass
+        - lessons_learned_recorded
+      baseline: PRODUCTION_PROVEN_BASELINE
+
+  mandatory_records:
+    - entrance_criteria
+    - review_result
+    - open_findings
+    - finding_disposition
+    - baseline_id
+    - artifact_hashes
+    - configuration_snapshot
+    - evidence_refs
+    - approving_actor
+    - timestamp

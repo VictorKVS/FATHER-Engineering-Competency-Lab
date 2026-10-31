@@ -1,0 +1,19 @@
+name: Father Factory CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  factory:
+    uses: ./.github/workflows/factory-reusable-validation.yml
+    with:
+      project_root: "."
+      run_demo_autopilot_test: true

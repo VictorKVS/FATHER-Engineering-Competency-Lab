@@ -1,0 +1,41 @@
+trust:
+  id: FATHER_CODE_PROVENANCE
+  version: 0.1.0
+
+  purpose:
+    - prove_origin_of_every_material_code_change
+    - preserve_authorship_and_ownership_evidence
+    - prevent_untraceable_code_substitution
+    - support_legal_and_security_audit
+
+  required_for_each_change:
+    - repository
+    - commit_sha
+    - author_identity
+    - timestamp
+    - parent_commit
+    - change_reason
+    - requirement_refs
+    - architecture_refs
+    - algorithm_refs
+    - test_refs
+    - security_refs
+    - dependency_changes
+    - license_impact
+    - build_artifact_hash
+    - evidence_refs
+
+  cryptographic_evidence:
+    - git_commit_hash
+    - release_manifest_hash
+    - artifact_hash
+    - sbom_hash
+    - signed_release_when_available
+    - immutable_audit_record
+
+  rules:
+    - no_untracked_production_code
+    - no_direct_production_mutation_without_recorded_change
+    - generated_code_must_record_generator_model_prompt_and_run_id
+    - copied_or_adapted_code_must_record_source_and_license
+    - provenance_must_survive_repository_migration

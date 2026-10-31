@@ -1,0 +1,11 @@
+runtime_policy:
+  id: STORY_RUNTIME_POLICY_V1
+  version: 1.0.0
+  timeout_seconds: 120
+  retry_limit: 1
+  max_tool_calls: 0
+  max_output_chars: 30000
+  require_json_object: true
+  require_output_contract: true
+  require_model_endpoint_allowlist: true
+  evidence_redaction: true

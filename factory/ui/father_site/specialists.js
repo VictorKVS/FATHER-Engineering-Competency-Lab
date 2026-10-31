@@ -1,0 +1,13 @@
+const roles=[
+ {id:"ROLE-101",key:"product",name:"Инженер ИИ-продукта",code:"PRODUCT",purpose:"Идея → продуктовая ценность, пользователи, KPI, границы и критерии успеха.",inputs:"Идея · Заказчик · Рынок",outputs:"Продуктовая цель · Ценность · KPI"},
+ {id:"ROLE-102",key:"business",name:"Инженер бизнес-процессов",code:"BA",purpose:"Продуктовая цель → AS-IS/TO-BE процессы, решения, роли, исключения и business rules.",inputs:"Продуктовая цель",outputs:"Модель процесса · Карта решений"},
+ {id:"ROLE-103",key:"system",name:"Инженер систем и предметной области",code:"SYSTEM",purpose:"Процессы → domain/system model, данные, состояния, API и зависимости.",inputs:"Процесс · Решения",outputs:"Предметная область · Система · Данные · API"},
+ {id:"ROLE-104",key:"security",name:"Инженер безопасности и соответствия",code:"SECURITY",purpose:"Определяет угрозы, риски, controls, compliance, hard fails и security boundaries.",inputs:"Продукт · Процесс · Система",outputs:"Пакет безопасности"},
+ {id:"ROLE-105",key:"profession",name:"Инженер профессий и компетенций",code:"COMPETENCY",purpose:"Моделирует профессию: деятельность, решения, знания, навыки, инструменты и уровни.",inputs:"Процесс · Предметная область · Безопасность",outputs:"Профессия · Компетенции · Навыки"},
+ {id:"ROLE-106",key:"corporate",name:"Инженер корпоративных знаний",code:"CORP_KNOWLEDGE",purpose:"Собирает повторно используемые корпоративные знания, терминологию, policies и freshness.",inputs:"Корпоративные источники",outputs:"Пакет корпоративных знаний"},
+ {id:"ROLE-001",key:"alina",name:"Инженер знаний и рассуждений",code:"ALINA",purpose:"Проектирует intelligence package: research, Prompt, RAG, KB, training, evals и acceptance.",inputs:"Все входные пакеты",outputs:"Пакет инженерии интеллекта"},
+ {id:"ROLE-107",key:"osint",name:"Инженер исследований и доказательств",code:"OSINT",purpose:"Выполняет исследовательские заказы и возвращает evidence с provenance и counter-evidence.",inputs:"Исследовательский запрос",outputs:"Пакет доказательств"}
+];
+document.getElementById("rolePipeline").innerHTML=roles.map(r=>'<div class="pipeline-item"><b>'+r.name+'</b>'+r.id+' · '+r.code+'</div>').join("");
+document.getElementById("rolesFlow").innerHTML=roles.map((r,i)=>(i?'<span class="flow-arrow">→</span>':'')+'<span class="flow-chip">'+r.code+'</span>').join("");
+document.getElementById("rolesGrid").innerHTML=roles.map(r=>'<article class="role-card"><div class="rid">'+r.id+' · '+r.code+'</div><h3>'+r.name+'</h3><p>'+r.purpose+'</p><div class="io"><div><b>ВХОД</b><span>'+r.inputs+'</span></div><div><b>ВЫХОД</b><span>'+r.outputs+'</span></div></div><a href="./specialist.html?role='+r.key+'">Открыть редактор специалиста</a></article>').join("");

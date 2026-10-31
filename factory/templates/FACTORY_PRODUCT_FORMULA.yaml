@@ -1,0 +1,42 @@
+product_formula:
+  schema: father.product_formula.v1
+
+  product:
+    equals:
+      - PLATFORM_CORE
+      - CHASSIS
+      - STANDARD_BLOCKS
+      - DOMAIN_PACK
+      - AGENTS
+      - MODELS
+      - TOOLS
+      - DATA_RAG
+      - UI_CHANNELS
+      - CONFIGURATION
+      - PROJECT_SPECIFIC_PART
+
+  selection:
+    strategy:
+      - REUSE
+      - WRAP
+      - ADAPT
+      - BUILD
+
+  block_requirements:
+    - versioned_contract
+    - declared_dependencies
+    - license_status
+    - security_status
+    - test_status
+    - evidence_status
+    - compatibility_status
+
+  readiness:
+    block:
+      - SPECIFIED
+      - IMPLEMENTED
+      - UNIT_VERIFIED
+      - INTEGRATION_VERIFIED
+      - SECURITY_VERIFIED
+      - POLYGON_VERIFIED
+      - PRODUCTION_PROVEN

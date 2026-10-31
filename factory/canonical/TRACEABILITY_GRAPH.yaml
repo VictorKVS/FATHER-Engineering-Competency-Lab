@@ -1,0 +1,71 @@
+graph:
+  id: TRACEABILITY_GRAPH
+  version: 1.0.0
+
+  node_types:
+    - PROJECT
+    - PRODUCT
+    - REQUIREMENT
+    - BUSINESS_PROCESS
+    - PROCESS_STEP
+    - DECISION
+    - DOMAIN_ENTITY
+    - SYSTEM_COMPONENT
+    - DATA_OBJECT
+    - SECURITY_REQUIREMENT
+    - RISK
+    - CONTROL
+    - COMPETENCY
+    - SKILL
+    - KNOWLEDGE_NODE
+    - RESEARCH_QUESTION
+    - SOURCE
+    - CLAIM
+    - PROMPT_RULE
+    - RAG_RULE
+    - TOOL_BINDING
+    - TRAINING_CASE
+    - EVAL_CASE
+    - METRIC
+    - EVIDENCE
+    - AGENT
+    - RELEASE
+
+  edge_types:
+    - DERIVED_FROM
+    - REQUIRES
+    - SATISFIES
+    - IMPLEMENTS
+    - SUPPORTS
+    - CONSTRAINS
+    - MITIGATES
+    - DEPENDS_ON
+    - PRODUCES
+    - USES
+    - VALIDATES
+    - TESTS
+    - MEASURES
+    - PROVES
+    - BLOCKS
+    - SUPERSEDES
+
+  mandatory_trace:
+    - IDEA_TO_REQUIREMENT
+    - REQUIREMENT_TO_PROCESS
+    - PROCESS_TO_DECISION
+    - DECISION_TO_COMPETENCY
+    - COMPETENCY_TO_SKILL
+    - SKILL_TO_KNOWLEDGE
+    - KNOWLEDGE_TO_SOURCE
+    - KNOWLEDGE_TO_PROMPT_OR_RAG_OR_TOOL
+    - SKILL_TO_TRAINING_CASE
+    - SKILL_TO_EVAL_CASE
+    - EVAL_TO_METRIC
+    - METRIC_TO_EVIDENCE
+    - EVIDENCE_TO_RELEASE
+
+  hard_rules:
+    - critical_requirement_without_test_is_invalid
+    - critical_knowledge_without_source_is_invalid
+    - critical_skill_without_eval_is_invalid
+    - release_without_evidence_path_is_invalid

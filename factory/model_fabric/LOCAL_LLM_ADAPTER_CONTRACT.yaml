@@ -1,0 +1,53 @@
+adapter:
+  id: FATHER_LOCAL_LLM_ADAPTER
+  version: 0.1.0
+
+  request:
+    required:
+      - run_id
+      - stage_id
+      - agent_id
+      - model_id
+      - prompt_version
+      - rag_version
+      - kb_version
+      - input_payload
+      - output_schema
+    optional:
+      - temperature
+      - top_p
+      - seed
+      - max_tokens
+      - context_tokens
+      - stop
+
+  response:
+    required:
+      - run_id
+      - model_id
+      - raw_output
+      - parsed_output
+      - schema_valid
+      - started_at
+      - completed_at
+    metrics:
+      - prompt_tokens
+      - completion_tokens
+      - latency_ms
+      - tokens_per_second
+      - peak_ram_mb
+      - peak_vram_mb
+    errors:
+      - parse_error
+      - schema_error
+      - timeout
+      - oom
+      - runtime_error
+
+  invariants:
+    - no_hidden_chat_context
+    - exact_prompt_version_recorded
+    - exact_model_and_quant_recorded
+    - raw_output_preserved
+    - parsed_output_separate_from_raw
+    - every_run_reproducible_from_recorded_inputs

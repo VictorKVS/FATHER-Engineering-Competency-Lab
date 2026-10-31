@@ -1,0 +1,25 @@
+schema:
+  id: STAGE_000_EVIDENCE_V1
+  version: 1.0.0
+
+  required:
+    - stage_id
+    - run_id
+    - state
+    - input_snapshot
+    - input_test
+    - analysis
+    - artifact_test
+    - human_gate
+
+  human_gate:
+    required:
+      - decision
+      - decided_by
+      - decided_at
+    decision:
+      enum: [APPROVE, HOLD, REJECT]
+
+  project_creation:
+    allowed_only_when: human_gate.decision == APPROVE
+    mode: PROPOSAL_ONLY

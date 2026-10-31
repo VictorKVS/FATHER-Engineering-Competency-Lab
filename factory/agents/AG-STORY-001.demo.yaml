@@ -1,0 +1,71 @@
+agent:
+  schema: FATHER_AGENT_INSTANCE_V1
+  construct: FATHER_AGENT_CONSTRUCT_V1
+  package_standard: FATHER_AGENT_PACKAGE_V1
+  security_baseline: FATHER_AGENT_SECURITY_BASELINE_V1
+  devsecops_standard: FATHER_AGENT_DEVSECOPS_V1
+
+  identity:
+    agent_id: AG-STORY-001
+    public_name: NEXUS Story Continuation Agent
+    purpose: Continue a story while preserving canon and continuity.
+    domain: STORY_CONTINUATION
+
+  intelligence:
+    role_version: ROLE-STORY-001
+    prompt_version: PROMPT-STORY-001
+    rag_version: RAG-STORY-001
+    knowledge_snapshot: KB-STORY-001
+    intelligence_package_status: HOLD
+    intelligence_package_evidence:
+      protocol: ALINA_SCIENTIFIC_PROMPT_RAG_LAB_V1
+      gate: INTELLIGENCE_PACKAGE_VERIFIED
+      rag_manifest: factory/knowledge/RAG-STORY-001.baseline.yaml
+      missing:
+        - real_prompt_baseline_evidence
+        - real_rag_retrieval_evidence
+        - real_knowledge_snapshot_binding
+        - held_out_test_results
+        - adversarial_results
+        - regression_results
+
+  contracts:
+    input_contract: STORY_INPUT_V1
+    output_contract: STORY_OUTPUT_V1
+
+  model_slot:
+    mode: SWAPPABLE
+    candidates:
+      - id: MODEL-A
+        adapter: MOCK
+      - id: MODEL-B
+        adapter: MOCK
+      - id: MODEL-C
+        adapter: MOCK
+
+  security:
+    permissions_profile: STORY_PERMISSIONS_V1
+    runtime_policy: STORY_RUNTIME_POLICY_V1
+    threat_model: AGENT_THREAT_MODEL_V1
+    data_classification: INTERNAL_DEMO
+
+  operations:
+    health_check: REQUIRED
+    structured_logging: REQUIRED
+    metrics: REQUIRED
+    timeout_seconds: 120
+    retry_limit: 1
+
+  evaluation:
+    eval_profile: EVAL-STORY-001
+    pass_threshold: 80
+    hard_fail_rules:
+      - contract_invalid
+      - canon_break
+      - security_violation
+      - secret_exposure
+      - unauthorized_tool_call
+
+  evidence:
+    required: true
+    class: ENGINEERING

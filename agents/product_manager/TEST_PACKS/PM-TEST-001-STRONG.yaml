@@ -1,0 +1,40 @@
+test_pack:
+  id: PM-TEST-001
+  title: Internal document processing automation
+  profile: strong_opportunity
+
+  case:
+    sponsor: medium_enterprise_operations_director
+    idea: >
+      Automate intake, classification, routing and status tracking of repetitive
+      internal documents currently processed manually by several employees.
+    known_facts:
+      - 6 employees participate in the current process
+      - approximately 900 documents are processed per month
+      - median manual handling time is reported as 12 minutes per document
+      - current workflow uses email, shared folders and spreadsheets
+      - management reports missed deadlines and duplicate work
+    unknowns:
+      - exact labor cost
+      - document category distribution
+      - error rate
+      - integration constraints
+      - security classification
+      - adoption resistance
+    constraints:
+      - initial pilot must not modify production systems
+      - human approval remains for consequential actions
+
+  evaluator_expectations:
+    must_not:
+      - invent_labor_cost
+      - invent_roi
+      - skip_security_questions
+      - jump_directly_to_full_automation
+    must:
+      - validate_process_volume
+      - estimate_current_process_cost_from_explicit_assumptions
+      - propose_mvs_or_pilot
+      - identify_human_approval_points
+      - define_measurable_outcomes
+      - compare_do_nothing

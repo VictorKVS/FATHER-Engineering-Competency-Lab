@@ -1,0 +1,55 @@
+stage:
+  id: STAGE-001
+  number: 1
+  public_name: Project Initialization
+  code_name: PROJECT_INITIALIZATION
+  contract: FACTORY_STAGE_CONTRACT_V1
+
+  prerequisite:
+    stage: STAGE-000
+    required_state: APPROVED
+
+  purpose: >
+    Propose and, only after explicit human approval, create the canonical local
+    project chassis and corresponding Git repository configuration.
+
+  proposal_fields:
+    - project_id
+    - public_name
+    - code_name
+    - local_directory
+    - github_owner
+    - github_repository
+    - visibility
+    - default_branch
+    - license
+
+  input_test:
+    checks:
+      - stage_000_approved
+      - project_id_valid
+      - project_name_present
+      - local_directory_present
+      - repository_name_present
+
+  human_gate:
+    required: true
+    decisions: [APPROVE, HOLD, REJECT]
+
+  on_approve:
+    operations:
+      - create_local_root
+      - generate_project_yaml
+      - generate_stage_files_000_to_100
+      - create_standard_directories
+      - initialize_or_clone_git
+      - create_or_bind_github_repository
+      - write_initial_evidence
+      - verify_scaffold
+    output:
+      - PROJECT_SCAFFOLD
+      - GIT_BINDING
+      - STAGE_001_EVIDENCE
+
+  prohibition:
+    - no_creation_before_human_approval

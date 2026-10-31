@@ -1,0 +1,63 @@
+agent_set:
+  schema: father.factory_agent_set.v1
+
+  agents:
+    - agent_id: AG-000
+      role: PRODUCT_MANAGER
+      required: true
+      package_ref: agents/product_manager/
+      model_slots: [discovery_reasoning]
+      tool_scopes: []
+      input_contract_ref: agents/product_manager/INPUT_CONTRACT.yaml
+      output_contract_ref: agents/product_manager/OUTPUT_CONTRACT.yaml
+      handoff_targets: [AG-001]
+      approval_requirements: []
+      maturity_required: M3
+
+    - agent_id: AG-001
+      role: ALINA
+      required: true
+      package_ref: agents/alina/
+      model_slots: [analytical_reasoning, evidence_review]
+      tool_scopes: []
+      input_contract_ref: agents/alina/INPUT_CONTRACT.yaml
+      output_contract_ref: agents/alina/OUTPUT_CONTRACT.yaml
+      handoff_targets: [AG-010, AG-005, AG-002]
+      approval_requirements: []
+      maturity_required: M3
+
+    - agent_id: AG-010
+      role: OSINT_EXPERT
+      required: true
+      package_ref: factory/agents/AGENT_REGISTRY.yaml
+      model_slots: [search_planning, evidence_quality_review]
+      tool_scopes: [web_search, browser, telegram, files]
+      input_contract_ref: factory/specialists/API_HANDOFF_CONTRACT.yaml
+      output_contract_ref: factory/specialists/ALINA_OSINT_PIONEER_HANDOFFS.yaml
+      handoff_targets: [AG-001]
+      approval_requirements: [active_collection_when_required]
+      maturity_required: M3
+
+    - agent_id: AG-002
+      role: SECURITY_SPECIALIST
+      required: true
+      package_ref: factory/agents/AGENT_REGISTRY.yaml
+      model_slots: [threat_risk_analysis]
+      tool_scopes: []
+      input_contract_ref: factory/specialists/API_HANDOFF_CONTRACT.yaml
+      output_contract_ref: factory/specialists/API_HANDOFF_CONTRACT.yaml
+      handoff_targets: [AG-001, AG-004, AG-003]
+      approval_requirements: []
+      maturity_required: M2
+
+    - agent_id: AG-004
+      role: FATHER_CODEX
+      required: true
+      package_ref: agents/father_programmer/
+      model_slots: [code_planning, code_generation, code_review]
+      tool_scopes: [github, files]
+      input_contract_ref: agents/father_programmer/INPUT_CONTRACT.yaml
+      output_contract_ref: agents/father_programmer/OUTPUT_CONTRACT.yaml
+      handoff_targets: [AG-006]
+      approval_requirements: []
+      maturity_required: M3

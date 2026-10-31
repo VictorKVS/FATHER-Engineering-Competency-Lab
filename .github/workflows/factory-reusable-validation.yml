@@ -1,0 +1,59 @@
+name: Factory reusable validation
+
+on:
+  workflow_call:
+    inputs:
+      project_root:
+        required: false
+        type: string
+        default: "."
+      run_demo_autopilot_test:
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml jsonschema pytest
+
+      - name: Validate factory Python syntax
+        run: |
+          python -m compileall father_runtime
+
+      - name: Run scaffold and factory contract tests
+        run: |
+          pytest -q tests/test_project_scaffold_000_100.py tests/test_factory_event_trace.py tests/test_cli_lazy_imports.py
+
+      - name: Run demo autopilot tests
+        if: ${{ inputs.run_demo_autopilot_test }}
+        run: |
+          pytest -q tests/test_demo_autopilot.py
+
+      - name: Check canonical 000-100 stage map
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+          p=Path("factory/project/PROJECT_STAGE_MAP.yaml")
+          data=yaml.safe_load(p.read_text(encoding="utf-8"))["project_stage_map"]
+          assert data["numbering"]["first"] == 0
+          assert data["numbering"]["last"] == 100
+          assert data["numbering"]["immutable"] is True
+          print("PROJECT_STAGE_MAP: PASS")
+          PY
