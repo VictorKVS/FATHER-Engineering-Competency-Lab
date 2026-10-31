@@ -16,6 +16,18 @@ agent:
     prompt_version: PROMPT-STORY-001
     rag_version: RAG-STORY-001
     knowledge_snapshot: KB-STORY-001
+    intelligence_package_status: HOLD
+    intelligence_package_evidence:
+      protocol: ALINA_SCIENTIFIC_PROMPT_RAG_LAB_V1
+      gate: INTELLIGENCE_PACKAGE_VERIFIED
+      rag_manifest: factory/knowledge/RAG-STORY-001.baseline.yaml
+      missing:
+        - real_prompt_baseline_evidence
+        - real_rag_retrieval_evidence
+        - real_knowledge_snapshot_binding
+        - held_out_test_results
+        - adversarial_results
+        - regression_results
 
   contracts:
     input_contract: STORY_INPUT_V1
