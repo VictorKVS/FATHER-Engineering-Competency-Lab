@@ -153,6 +153,33 @@
   </section>
 </div>
 
+<div class="agent-report-modal" id="agentReportModal" aria-hidden="true">
+  <div class="agent-report-backdrop" id="agentReportBackdrop"></div>
+  <section class="agent-report-card" role="dialog" aria-modal="true" aria-labelledby="agentReportTitle">
+    <header>
+      <div>
+        <div class="eyebrow">BLOCK-01 · AGENT DISCOVERY REPORT</div>
+        <h2 id="agentReportTitle">Отчёт поиска агентов</h2>
+        <p id="agentReportSummary">Результаты ещё не загружены.</p>
+      </div>
+      <button id="agentReportClose" aria-label="Закрыть">×</button>
+    </header>
+    <div class="agent-report-toolbar">
+      <label>Фильтр
+        <select id="agentReportFilter">
+          <option value="ALL">Все</option>
+          <option value="CANONICAL">CANONICAL</option>
+          <option value="HIGH">HIGH</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="LOW">LOW</option>
+        </select>
+      </label>
+      <button class="ghost" id="agentReportShowSources">Диски / источники</button>
+    </div>
+    <div class="agent-report-body" id="agentReportBody"></div>
+  </section>
+</div>
+
 <div class="toast" id="toast"></div>
 <script src="./naming.js?v=20261030-1247"></script>
 <script src="./app.js?v=20261030-1247"></script>
