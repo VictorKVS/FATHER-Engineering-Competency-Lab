@@ -59,6 +59,23 @@
       ],
       "verification": "code_and_tests",
       "status": "derived_source"
+    },
+    {
+      "source_id": "SRC-GITHUB-AIENG-RESOURCES-001",
+      "type": "repository_file",
+      "title": "AI Engineering Book — resources.md",
+      "author_or_owner": "nitanshuj / based on resources collected around Chip Huyen's AI Engineering",
+      "origin": "GitHub",
+      "location": "https://github.com/nitanshuj/AI-Engineering-Book-Chip_Hyuen/blob/main/resources.md",
+      "retrieved_at": "2026-10-31",
+      "used_for": [
+        "topic-oriented resource navigation",
+        "knowledge library organization pattern",
+        "FATHER RESOURCES.md information architecture"
+      ],
+      "reuse_mode": "STRUCTURE_INSPIRATION_ONLY",
+      "verification": "repository_file_reviewed",
+      "status": "external_reference"
     }
   ]
 }
