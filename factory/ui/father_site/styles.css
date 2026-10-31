@@ -151,3 +151,11 @@ button,select,input,textarea{font:inherit}
 .node-actions{position:relative;z-index:auto}
 .node-action{position:relative;z-index:auto}
 .node:not(.selected) .node-action{box-shadow:none}
+
+/* Sequential factory signal semantics */
+.node.factory.state-pass .state{background:#ff5f70;box-shadow:0 0 12px #ff5f70}
+.node.factory.state-ready .state,
+.node.factory.state-open .state{background:#ff5f70;box-shadow:0 0 12px #ff5f70}
+.node-action.done-tone{opacity:.42;background:#151b21;border-color:#38434c;color:#7e8a94;box-shadow:none;cursor:default}
+.node-action.ready-tone{background:#401821;border-color:#9c4050;color:#ffe5e9;box-shadow:0 0 12px #ff5f7030}
+.node-action:disabled{pointer-events:none}
