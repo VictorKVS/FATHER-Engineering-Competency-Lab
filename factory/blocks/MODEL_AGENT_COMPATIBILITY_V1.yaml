@@ -1,0 +1,33 @@
+model_agent_compatibility:
+  id: FATHER_MODEL_AGENT_COMPATIBILITY_V1
+  version: 1.0.0
+  rule: Agents never bind directly to file paths or provider-specific APIs.
+
+  resolution_flow:
+    - agent_requests_capabilities
+    - model_base_filters_candidates
+    - connection_registry_resolves_adapter
+    - health_probe_confirms_endpoint
+    - compatibility_probe_runs
+    - agent_runtime_receives_model_binding
+
+  request_contract:
+    required:
+      - agent_id
+      - required_capabilities
+    optional:
+      - local_only
+      - max_vram_gb
+      - min_context_window
+      - security_class
+      - preferred_runtime
+
+  response_contract:
+    returns:
+      - model_id
+      - connection_id
+      - adapter_id
+      - endpoint
+      - model_name
+      - compatibility_state
+      - restrictions
