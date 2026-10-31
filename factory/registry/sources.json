@@ -76,6 +76,26 @@
       "reuse_mode": "STRUCTURE_INSPIRATION_ONLY",
       "verification": "repository_file_reviewed",
       "status": "external_reference"
+    },
+    {
+      "source_id": "SRC-BOOK-0001",
+      "type": "book",
+      "title": "Designing Large Language Model Applications: A Holistic Approach to LLMs",
+      "author_or_owner": "Suhas Pai",
+      "publisher": "O'Reilly Media",
+      "year": 2025,
+      "edition": "First Edition",
+      "isbn": "978-1-098-15050-1",
+      "location": "User-provided PDF; companion material referenced by book at https://oreil.ly/llm-playbooks",
+      "used_for": [
+        "first ALINA knowledge-extraction factory run",
+        "prototype-to-production decomposition",
+        "LLM application architecture",
+        "RAG, agents, tools, evaluation, inference and design patterns"
+      ],
+      "reuse_mode": "KNOWLEDGE_EXTRACTION_AND_REFERENCE",
+      "verification": "user_provided_book_reviewed",
+      "status": "primary_learning_source"
     }
   ]
 }
