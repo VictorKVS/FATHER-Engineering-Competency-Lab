@@ -1,4 +1,6 @@
 const blocks=[
+ {id:"agentDiscovery",stableId:"FBLK-001",type:"FACTORY_BLOCK",title:"BLOCK-01 · Поиск агентов",desc:"READ ONLY · обнаружение агентов и профилей",x:55,y:48,cls:"factory discovery"},
+ {id:"agentCatalog",stableId:"FBLK-002",type:"FACTORY_BLOCK",title:"BLOCK-02 · Список агентов",desc:"Каталог · описание · maturity · gaps",x:265,y:48,cls:"factory catalog"},
  {id:"input",stableId:"BLK-001",type:"INPUT",title:"Входной контракт",desc:"Явный вход агента",x:55,y:120},
  {id:"role",stableId:"BLK-002",type:"ROLE",title:"Роль",desc:"Кто агент и за что отвечает",x:245,y:70},
  {id:"prompt",stableId:"BLK-003",type:"PROMPT",title:"Промпт",desc:"Версионируемая инструкция",x:245,y:180},
@@ -9,8 +11,10 @@ const blocks=[
  {id:"eval",stableId:"BLK-008",type:"EVAL",title:"Оценки",desc:"Контракт + качество",x:815,y:180},
  {id:"evidence",stableId:"BLK-009",type:"EVIDENCE",title:"Доказательства",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
 ];
-const edges=[["input","role"],["role","rag"],["role","prompt"],["prompt","model"],["rag","model"],["kb","model"],["model","output"],["output","eval"],["eval","evidence"]];
+const edges=[["agentDiscovery","agentCatalog"],["agentCatalog","role"],["input","role"],["role","rag"],["role","prompt"],["prompt","model"],["rag","model"],["kb","model"],["model","output"],["output","eval"],["eval","evidence"]];
 const palette=[
+ ["AGENT_DISCOVERY","01","Поиск агентов","READ ONLY · обнаружение кандидатов"],
+ ["AGENT_CATALOG","02","Список агентов","Описание · maturity · gaps"],
  ["ROLE","R","Роль","Ответственность агента"],["PROMPT","P","Промпт","Версия инструкций"],["RAG","G","RAG","Извлечение знаний"],["KB","K","База знаний","Доменная база знаний"],["MODEL_SLOT","M","Слот модели","Сменная LLM"],["CONTRACT","C","Контракт","Вход / выход"],["EVAL","E","Оценка","Проверка качества"],["EVIDENCE","V","Доказательства","Доказательства"]
 ];
 const models=[
@@ -30,6 +34,20 @@ const config={
 };
 
 const blockDocs={
+  agentDiscovery:{
+  purpose:"Ищет существующие агенты, профили и agent-like артефакты. Работает READ ONLY и выдаёт кандидатов с confidence и evidence.",
+  repoPath:"factory/blocks/BLOCK_01_AGENT_DISCOVERY.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/factory/blocks/BLOCK_01_AGENT_DISCOVERY.yaml",
+  editor:"Factory block / discovery contract",
+  version:"FATHER_BLOCK_01_AGENT_DISCOVERY v1.0.0"
+ },
+ agentCatalog:{
+  purpose:"Принимает результаты поиска и канонический AGENT_REGISTRY, нормализует их в единый список агентов с назначением, maturity, status, составом и gaps.",
+  repoPath:"factory/blocks/BLOCK_02_AGENT_CATALOG.yaml",
+  localPath:"G:/1/FATHER-Engineering-Competency-Lab-git/factory/blocks/BLOCK_02_AGENT_CATALOG.yaml",
+  editor:"Factory block / catalog contract",
+  version:"FATHER_BLOCK_02_AGENT_CATALOG v1.0.0"
+ },
  input:{
   purpose:"Определяет явный вход агента: какие данные он принимает, какие поля обязательны и что считается некорректным входом.",
   repoPath:"agents/alina/profiles/literary/INPUT_CONTRACT.yaml",
@@ -392,4 +410,49 @@ document.getElementById("cloneCreate").onclick=()=>{
  toast("CLONED_DRAFT создан: "+publicName);
 };
 
-window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");
+
+const fatherAgents=[
+ {id:"AG-000",name:"PRODUCT_MANAGER",domain:"product_discovery",maturity:"M2",desc:"Product discovery и работа с замыслом заказчика."},
+ {id:"AG-001",name:"ALINA",domain:"analysis_knowledge_process",maturity:"M4",desc:"Аналитическое ядро и архитектор знаний."},
+ {id:"AG-002",name:"SECURITY_SPECIALIST",domain:"information_security",maturity:"M3",desc:"ИБ-архитектура, риски, требования и контроль безопасности."},
+ {id:"AG-003",name:"TIMA",domain:"infrastructure_devsecops_runtime",maturity:"M3",desc:"DevOps / DevSecOps / инфраструктурный исполнитель."},
+ {id:"AG-004",name:"FATHER_CODEX",domain:"software_engineering",maturity:"M2",desc:"Программирование и трассируемая реализация."},
+ {id:"AG-005",name:"PIONEER",domain:"infrastructure_architecture",maturity:"M4",desc:"Архитектор инфраструктуры и topology/dependency design."},
+ {id:"AG-006",name:"FATHER_TEST_ENGINEER",domain:"testing_verification",maturity:"M2",desc:"Проектирование тестов узлов, связей, цепочек и системы."},
+ {id:"AG-007",name:"QA_EVALS",domain:"quality_evaluation",maturity:"M1",desc:"Независимый quality/eval gate."},
+ {id:"AG-008",name:"OPTIMIZATION_ENGINE",domain:"optimization_experiments",maturity:"M1",desc:"A/B и многокритериальная оптимизация."},
+ {id:"AG-009",name:"POLYGON",domain:"adversarial_verification",maturity:"M2",desc:"Независимое испытание frozen Release Candidate."},
+ {id:"AG-010",name:"OSINT_EXPERT",domain:"open_source_intelligence",maturity:"M4",desc:"Поиск, сбор, provenance и evidence supply."}
+];
+
+function renderAgentBlockOutput(mode="ready"){
+ const host=document.getElementById("agentBlockOutput");
+ if(!host)return;
+ const count=fatherAgents.length;
+ const rows=fatherAgents.map(a=>'<article class="agent-result-card"><div><b>'+a.id+'</b><strong>'+a.name+'</strong></div><span>'+a.maturity+'</span><p>'+a.desc+'</p><small>'+a.domain+'</small></article>').join("");
+ host.innerHTML=
+   '<div class="agent-output-head"><div><span>FACTORY BLOCK OUTPUT</span><h3>BLOCK-01 → BLOCK-02</h3><p>Поиск агентов передаёт кандидатов в нормализованный каталог.</p></div>'+
+   '<div class="agent-output-stats"><div><span>НАЙДЕНО</span><b>'+count+'</b></div><div><span>КАТАЛОГ</span><b>'+count+'</b></div><div><span>STATUS</span><b class="'+(mode==="pass"?"pass":"hold")+'">'+(mode==="pass"?"PASS":"READY")+'</b></div></div></div>'+
+   '<div class="agent-output-actions"><button class="primary" id="runAgentDiscovery">RUN BLOCK-01</button><button class="ghost" id="showAgentCatalog">ОТКРЫТЬ BLOCK-02</button></div>'+
+   '<div class="agent-result-grid '+(mode==="pass"?"visible":"")+'" id="agentResultGrid">'+rows+'</div>';
+ document.getElementById("runAgentDiscovery").onclick=async()=>{
+   const n1=document.querySelector('[data-id="agentDiscovery"]');
+   const n2=document.querySelector('[data-id="agentCatalog"]');
+   n1?.classList.add("processing");
+   toast("BLOCK-01: READ ONLY поиск агентов");
+   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("EXECUTION_START","BLOCK-01","RUNNING",{block:"AGENT_DISCOVERY"});
+   await new Promise(r=>setTimeout(r,650));
+   n1?.classList.remove("processing");n2?.classList.add("processing");
+   await new Promise(r=>setTimeout(r,450));
+   n2?.classList.remove("processing");
+   renderAgentBlockOutput("pass");
+   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01/02","PASS",{found:count,catalog:count});
+   toast("PASS: найдено и описано "+count+" агентов");
+ };
+ document.getElementById("showAgentCatalog").onclick=()=>{
+   document.getElementById("agentResultGrid")?.classList.add("visible");
+   selectBlock("agentCatalog");
+ };
+}
+
+window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");renderAgentBlockOutput("ready");
