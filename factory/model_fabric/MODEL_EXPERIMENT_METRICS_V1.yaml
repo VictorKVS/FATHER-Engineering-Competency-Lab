@@ -1,0 +1,85 @@
+version: 1
+schema: FATHER_MODEL_EXPERIMENT_METRICS_V1
+title: Model Experiment Metrics Layer
+
+principles:
+  - SAME_INPUTS_FOR_ALL_MODELS
+  - TASK_SPECIFIC_METRICS
+  - HARD_GATES_BEFORE_SCORE
+  - REPEATED_TRIALS_WHEN_STOCHASTIC
+  - NO_WINNER_WITHOUT_MINIMUM_EVIDENCE
+  - PARETO_AWARE_SELECTION
+  - COST_AND_RESOURCE_ARE_FIRST_CLASS_METRICS
+
+metric_layers:
+  L0_eligibility:
+    hard_gate: true
+    metrics:
+      - runtime_available
+      - model_loads
+      - hardware_fit
+      - context_fit
+      - modality_fit
+      - license_accepted
+      - safety_policy_fit
+  L1_quality:
+    metrics:
+      correctness: {direction: MAX}
+      completeness: {direction: MAX}
+      instruction_following: {direction: MAX}
+      groundedness: {direction: MAX}
+      reasoning_quality: {direction: MAX}
+      format_compliance: {direction: MAX}
+  L2_operational:
+    metrics:
+      latency_p50_ms: {direction: MIN}
+      latency_p95_ms: {direction: MIN}
+      tokens_per_second: {direction: MAX}
+      peak_vram_gb: {direction: MIN}
+      peak_ram_gb: {direction: MIN}
+      input_tokens: {direction: MIN}
+      output_tokens: {direction: MIN}
+      energy_proxy: {direction: MIN, optional: true}
+  L3_reliability:
+    metrics:
+      success_rate: {direction: MAX}
+      repeatability: {direction: MAX}
+      timeout_rate: {direction: MIN}
+      runtime_error_rate: {direction: MIN}
+      contract_violation_rate: {direction: MIN}
+  L4_safety:
+    hard_gate: true
+    metrics:
+      unsafe_output_rate: {direction: MIN}
+      prompt_injection_resistance: {direction: MAX}
+      sensitive_data_leakage: {direction: MIN}
+      tool_policy_compliance: {direction: MAX}
+  L5_economics:
+    metrics:
+      estimated_cost_per_task: {direction: MIN}
+      download_size_gb: {direction: MIN}
+      storage_size_gb: {direction: MIN}
+      cold_start_seconds: {direction: MIN}
+
+task_profiles:
+  CODING:
+    priority: [correctness, format_compliance, instruction_following, success_rate, latency_p95_ms]
+  REASONING:
+    priority: [correctness, reasoning_quality, groundedness, repeatability]
+  RAG:
+    priority: [groundedness, correctness, completeness, format_compliance]
+  VISION:
+    priority: [correctness, completeness, latency_p95_ms, peak_vram_gb]
+  ROUTER:
+    priority: [latency_p95_ms, success_rate, estimated_cost_per_task, correctness]
+
+scoring:
+  normalize_per_metric: true
+  weights_from_task_profile: true
+  hard_gate_precedes_weighted_score: true
+  report:
+    - weighted_score
+    - hard_gate_status
+    - pareto_status
+    - confidence_interval
+    - win_rate
