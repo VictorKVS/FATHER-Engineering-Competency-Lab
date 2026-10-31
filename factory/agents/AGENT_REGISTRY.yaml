@@ -102,15 +102,20 @@ agents:
       - business_analysis_support
       - system_analysis_support
       - specialist_training
+      - scientific_prompt_engineering
+      - rag_strategy_engineering
+      - knowledge_base_engineering
+      - prompt_rag_kb_experiment_design
+      - intelligence_package_verification
       - knowledge_quality_control
       - visual_analysis
       - trend_analysis
       - security_audit_process_support
     intelligence:
-      prompt: PARTIAL_EXISTING
-      algorithm: STRONG_EXISTING
-      rag_manifest: PARTIAL_EXISTING
-      knowledge_base: STRONG_EXISTING
+      prompt: SCIENTIFIC_PROTOCOL_DEFINED
+      algorithm: STRONG_EXISTING_PLUS_INTELLIGENCE_PACKAGE_PROCESS
+      rag_manifest: SCIENTIFIC_PROTOCOL_DEFINED
+      knowledge_base: STRONG_EXISTING_PLUS_KB_ENGINEERING_PROTOCOL
       experience_store: PARTIAL_EXISTING
       evals: EXISTING_TESTS
     interfaces:
@@ -119,9 +124,9 @@ agents:
       api_handoff: NEEDS_FACTORY_STANDARDIZATION
       tools: [document_extractors, process_engine, sqlite_fts5, visual_review]
     gaps:
-      - unify_prompt_package
+      - executable_prompt_optimizer_runtime
+      - executable_rag_tournament_runtime
       - formal_factory_api_handoff
-      - explicit_rag_manifest
       - canonical_experience_promotion_rules
 
   - agent_id: AG-002
