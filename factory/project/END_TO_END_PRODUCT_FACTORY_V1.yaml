@@ -1,0 +1,247 @@
+version: 1
+schema: FATHER_END_TO_END_PRODUCT_FACTORY_V1
+title: FATHER End-to-End Product Factory
+
+doctrine:
+  - security_is_cross_cutting
+  - evidence_is_cross_cutting
+  - no_component_is_ready_without_system_proof
+  - every_stage_has_input_test_output_test_and_gate
+  - agent_is_not_llm
+  - model_is_replaceable_engine
+  - polygon_tests_frozen_release_candidate
+
+main_flow:
+  - id: IDEA
+    role: Idea / Customer Intent
+    purpose: capture problem, value hypothesis, constraints, expected outcome
+    outputs:
+      - idea_card
+      - initial_constraints
+      - initial_risks
+
+  - id: SECURITY_INIT
+    role: Information Security
+    purpose: establish security perimeter, data sensitivity, threat assumptions and hard constraints from the start
+    cross_cutting: true
+    outputs:
+      - security_context
+      - initial_threat_model
+      - prohibited_actions
+
+  - id: PROJECT_MANAGEMENT
+    role: Project Manager
+    purpose: scope, milestones, dependencies, ownership, budget/time/resource constraints
+    outputs:
+      - project_charter
+      - roadmap
+      - work_breakdown
+      - risks_register
+
+  - id: BUSINESS_ANALYSIS
+    role: Business Analyst
+    purpose: business goals, stakeholders, processes, value, acceptance criteria
+    outputs:
+      - business_requirements
+      - use_cases
+      - acceptance_criteria
+
+  - id: SYSTEM_ANALYSIS
+    role: System Analyst
+    purpose: functional/nonfunctional requirements, data flows, interfaces, contracts
+    outputs:
+      - system_requirements
+      - data_flows
+      - interface_contracts
+      - NFR
+
+  - id: ARCHITECTURE
+    role: Architect
+    purpose: target architecture, decomposition, integration, technology-independent design
+    outputs:
+      - architecture_baseline
+      - component_map
+      - dependency_map
+      - ADR
+
+  - id: ALINA_ANALYSIS
+    role: ALINA Knowledge & Reasoning Engineer
+    purpose: build reasoning package for agent execution
+    outputs:
+      - role_profile
+      - system_prompt
+      - prompt_pack
+      - RAG_manifest
+      - knowledge_base
+      - evidence_graph
+      - evaluation_requirements
+
+  - id: AGENT_ASSEMBLY
+    role: Agent Factory
+    purpose: assemble executable agent package from role, prompt, RAG, KB, tools, policies, model slot and evals
+    target_modes:
+      - SINGLE_SPECIALIST_AGENT
+      - DEVOPS_AGENT
+      - SECURITY_AGENT
+      - OSINT_AGENT
+      - PENTEST_AGENT
+      - SECRETARY_AGENT
+      - AGENT_ZOO
+    outputs:
+      - agent_package
+      - permissions
+      - tools_binding
+      - model_slot
+      - contracts
+
+  - id: MODEL_AND_AGENT_ZOO
+    role: Zoo Federation
+    purpose: discover, qualify, compare and connect agents/models/tools
+    internal_factory: true
+    outputs:
+      - qualified_agents
+      - qualified_models
+      - compatibility_matrix
+
+  - id: TASK_FACTORY
+    role: Agent/Model Tournament Factory
+    purpose: run identical task through one or more agent/model candidates
+    steps:
+      - freeze_task
+      - build_test_set
+      - run_candidates
+      - collect_metrics
+      - hard_gate
+      - compare_results
+      - select_winner_or_pareto_set
+    outputs:
+      - tournament_report
+      - selected_configuration
+      - fallback_configuration
+
+  - id: ENGINEERING_TESTS
+    role: Test Engineering
+    purpose: validate node, edge, chain, subgraph and end-to-end behavior
+    outputs:
+      - unit_evidence
+      - integration_evidence
+      - system_evidence
+      - regression_evidence
+
+  - id: SECURITY_DEVSECOPS
+    role: Security / DevSecOps
+    cross_cutting: true
+    purpose: continuously test dependencies, code, configs, secrets, supply chain, policies and runtime security
+    outputs:
+      - SAST_results
+      - dependency_scan
+      - secrets_scan
+      - SBOM
+      - container_scan
+      - policy_results
+
+  - id: RELEASE_CANDIDATE
+    role: Release Engineering
+    purpose: freeze qualified configuration and evidence
+    outputs:
+      - frozen_RC
+      - hashes
+      - provenance
+      - release_manifest
+
+  - id: FINAL_QUALIFICATION
+    role: Qualification
+    purpose: final functional, regression, performance and resilience tests
+    tests:
+      - functional
+      - regression
+      - load
+      - stress
+      - soak
+      - failover
+      - recovery
+
+  - id: RED_TEAM
+    role: PenTest / Red Team
+    purpose: adversarial security testing against frozen release candidate
+    tests:
+      - attack_surface
+      - authz_bypass
+      - injection
+      - prompt_injection
+      - tool_abuse
+      - privilege_escalation
+      - data_exfiltration
+
+  - id: AI_ANTIVIRUS
+    role: AI Antivirus / Guardrails
+    purpose: adversarial input/output inspection and malicious behavior detection
+    tests:
+      - malicious_prompt_detection
+      - unsafe_tool_use
+      - poisoned_context
+      - policy_bypass
+      - anomalous_agent_behavior
+
+  - id: POLYGON
+    role: Independent Polygon
+    purpose: independently verify frozen release candidate without redesign
+    outcomes:
+      - PASS
+      - FAIL_TO_FACTORY
+
+  - id: ACCEPTANCE
+    role: Human / Customer Acceptance
+    purpose: accept proven product against requirements and evidence
+    outputs:
+      - acceptance_decision
+
+  - id: PRODUCTION
+    role: Operations
+    purpose: production deployment, telemetry and experience collection
+    outputs:
+      - telemetry
+      - incidents
+      - quality_metrics
+      - security_events
+      - lessons_learned
+
+  - id: EXPERIENCE_LOOP
+    role: Factory Experience
+    purpose: feed production evidence into passports, modernization, reuse and new design
+    loops_to:
+      - IDEA
+      - ARCHITECTURE
+      - ALINA_ANALYSIS
+      - AGENT_ASSEMBLY
+      - MODEL_AND_AGENT_ZOO
+
+cross_cutting_layers:
+  SECURITY:
+    starts_at: IDEA
+    ends_at: PRODUCTION
+  EVIDENCE:
+    starts_at: IDEA
+    ends_at: PRODUCTION
+  DEVSECOPS:
+    starts_at: ARCHITECTURE
+    ends_at: PRODUCTION
+  OBSERVABILITY:
+    starts_at: ENGINEERING_TESTS
+    ends_at: PRODUCTION
+  DEVELOPMENT_PASSPORT:
+    starts_at: IDEA
+    ends_at: EXPERIENCE_LOOP
+
+terminal_gate:
+  id: FATHER_100_PASS
+  requires:
+    - accepted_requirements
+    - frozen_release_candidate
+    - functional_pass
+    - load_pass
+    - security_pass
+    - red_team_pass
+    - ai_antivirus_pass
+    - polygon_pass
+    - evidence_complete
