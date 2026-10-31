@@ -118,3 +118,10 @@ button,select,input,textarea{font:inherit}
 .agent-report-row p{margin:7px 0;color:#7e94a5;font-size:9px;line-height:1.45}.agent-report-row small{color:#536d80;font-size:8px}
 .conf{font-size:7px;border-radius:999px;padding:4px 7px;border:1px solid #36576e}.conf.canonical{color:#82efbc;border-color:#2f7257}.conf.high{color:#7bdcff;border-color:#296783}.conf.medium{color:#e7be73;border-color:#7a6030}.conf.low{color:#b28b8b;border-color:#644545}
 .agent-report-empty{padding:24px;color:#71889b;text-align:center;font-size:10px}
+
+.node-actions{display:flex;gap:6px;margin-top:10px}
+.node-action{min-height:30px;padding:6px 9px;border-radius:7px;font-size:8px;letter-spacing:.08em;cursor:pointer;position:relative;z-index:3}
+.node-action.primary{border:1px solid #2d89b8;background:#123b52;color:#dff7ff}
+.node-action.ghost{border:1px solid #315064;background:#0b1822;color:#b9cedb}
+.node-action:hover{filter:brightness(1.12)}
+.node.factory{min-height:132px}
