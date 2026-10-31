@@ -25,6 +25,26 @@ development_history:
     - evidence_refs
     - release_state
 
+intelligence_engineering:
+  applicable_to:
+    - agents
+    - agent_zoo_members
+    - domain_intelligence_packages
+  required_when_applicable:
+    - role_profile
+    - prompt_baseline
+    - promoted_prompt_version
+    - rag_manifest
+    - retrieval_strategy
+    - knowledge_snapshot
+    - source_registry
+    - eval_dataset
+    - experiment_history
+    - rejected_hypotheses
+    - regression_evidence
+    - security_evidence
+    - intelligence_package_gate
+
 current_state:
   required:
     - maturity_level
