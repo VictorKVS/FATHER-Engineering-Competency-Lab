@@ -132,11 +132,14 @@ function renderNodes(){
  nodes.innerHTML="";
  blocks.forEach(b=>{
   const n=document.createElement("article");n.className="node "+(b.cls||"");n.dataset.id=b.id;n.style.left=b.x+"px";n.style.top=b.y+"px";
+  const st=factoryBlockState[b.id];
+  const stateClass=st ? (' state-'+st.status.toLowerCase()) : '';
   const actions=b.id==="agentDiscovery"
-    ? '<div class="node-actions"><button type="button" class="node-action primary" data-action="run-discovery">RUN</button></div>'
+    ? '<div class="node-actions"><button type="button" class="node-action '+(st?.activated?"active-tone":"")+'" data-action="run-discovery">RUN</button></div>'
     : b.id==="agentCatalog"
-      ? '<div class="node-actions"><button type="button" class="node-action ghost" data-action="show-catalog">СПИСОК</button></div>'
+      ? '<div class="node-actions"><button type="button" class="node-action '+(st?.activated?"active-tone":"")+'" data-action="show-catalog">СПИСОК</button></div>'
       : '';
+  n.className+=" "+stateClass;
   n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>'+actions;
   n.onclick=()=>selectBlock(b.id);n.ondblclick=e=>{e.stopPropagation();openBlockModal(b.id)};nodes.appendChild(n);
   const runBtn=n.querySelector('[data-action="run-discovery"]');
@@ -421,18 +424,22 @@ document.getElementById("cloneCreate").onclick=()=>{
 
 
 let lastDiscoveryReport=null;
+const factoryBlockState={
+ agentDiscovery:{status:"IDLE",activated:false},
+ agentCatalog:{status:"IDLE",activated:false}
+};
 const fatherAgents=[
- {id:"AG-000",name:"PRODUCT_MANAGER",domain:"product_discovery",maturity:"M2",desc:"Product discovery и работа с замыслом заказчика."},
- {id:"AG-001",name:"ALINA",domain:"analysis_knowledge_process",maturity:"M4",desc:"Аналитическое ядро и архитектор знаний."},
- {id:"AG-002",name:"SECURITY_SPECIALIST",domain:"information_security",maturity:"M3",desc:"ИБ-архитектура, риски, требования и контроль безопасности."},
- {id:"AG-003",name:"TIMA",domain:"infrastructure_devsecops_runtime",maturity:"M3",desc:"DevOps / DevSecOps / инфраструктурный исполнитель."},
- {id:"AG-004",name:"FATHER_CODEX",domain:"software_engineering",maturity:"M2",desc:"Программирование и трассируемая реализация."},
- {id:"AG-005",name:"PIONEER",domain:"infrastructure_architecture",maturity:"M4",desc:"Архитектор инфраструктуры и topology/dependency design."},
- {id:"AG-006",name:"FATHER_TEST_ENGINEER",domain:"testing_verification",maturity:"M2",desc:"Проектирование тестов узлов, связей, цепочек и системы."},
- {id:"AG-007",name:"QA_EVALS",domain:"quality_evaluation",maturity:"M1",desc:"Независимый quality/eval gate."},
- {id:"AG-008",name:"OPTIMIZATION_ENGINE",domain:"optimization_experiments",maturity:"M1",desc:"A/B и многокритериальная оптимизация."},
- {id:"AG-009",name:"POLYGON",domain:"adversarial_verification",maturity:"M2",desc:"Независимое испытание frozen Release Candidate."},
- {id:"AG-010",name:"OSINT_EXPERT",domain:"open_source_intelligence",maturity:"M4",desc:"Поиск, сбор, provenance и evidence supply."}
+ {id:"AG-000",name:"PRODUCT_MANAGER",domain:"product_discovery",maturity:"M2",desc:"Product discovery и работа с замыслом заказчика.",launch:"Factory runtime / профиль PRODUCT_MANAGER",connect:"К STAGE 000–009, входу заказчика, бизнес-требованиям и проектному контуру."},
+ {id:"AG-001",name:"ALINA",domain:"analysis_knowledge_process",maturity:"M4",desc:"Аналитическое ядро и архитектор знаний.",launch:"alina-knowledge-worker / процессный runtime",connect:"К RAG, Knowledge Base, OSINT evidence и специализированным аналитическим профилям."},
+ {id:"AG-002",name:"SECURITY_SPECIALIST",domain:"information_security",maturity:"M3",desc:"ИБ-архитектура, риски, требования и контроль безопасности.",launch:"SecGraph / security package",connect:"К Security Gate, threat model, risk register, compliance и DevSecOps."},
+ {id:"AG-003",name:"TIMA",domain:"infrastructure_devsecops_runtime",maturity:"M3",desc:"DevOps / DevSecOps / инфраструктурный исполнитель.",launch:"TIMA profile / approved infrastructure executor",connect:"К CI/CD, Docker, Kubernetes, runtime, deployment, observability и инфраструктурным задачам."},
+ {id:"AG-004",name:"FATHER_CODEX",domain:"software_engineering",maturity:"M2",desc:"Программирование и трассируемая реализация.",launch:"FATHER_CODEX runtime / coding workflow",connect:"К архитектурным заданиям, GitHub, тестам, SAST и сборке программных модулей."},
+ {id:"AG-005",name:"PIONEER",domain:"infrastructure_architecture",maturity:"M4",desc:"Архитектор инфраструктуры и topology/dependency design.",launch:"PIONEER-00 / architecture workflow",connect:"Перед TIMA: topology, dependency graph, addressing, BOM и acceptance plan."},
+ {id:"AG-006",name:"FATHER_TEST_ENGINEER",domain:"testing_verification",maturity:"M2",desc:"Проектирование тестов узлов, связей, цепочек и системы.",launch:"Factory test package",connect:"К любому блоку перед gate: node/edge/chain/subgraph/system tests."},
+ {id:"AG-007",name:"QA_EVALS",domain:"quality_evaluation",maturity:"M1",desc:"Независимый quality/eval gate.",launch:"Factory QA/Eval profile",connect:"После исполнения агента и перед evidence/release gate."},
+ {id:"AG-008",name:"OPTIMIZATION_ENGINE",domain:"optimization_experiments",maturity:"M1",desc:"A/B и многокритериальная оптимизация.",launch:"Factory optimization profile",connect:"После появления стабильного baseline; к Model Tournament и A/B экспериментам."},
+ {id:"AG-009",name:"POLYGON",domain:"adversarial_verification",maturity:"M2",desc:"Независимое испытание frozen Release Candidate.",launch:"Polygon contour / independent verifier",connect:"Только к зафиксированному Release Candidate после Factory qualification."},
+ {id:"AG-010",name:"OSINT_EXPERT",domain:"open_source_intelligence",maturity:"M4",desc:"Поиск, сбор, provenance и evidence supply.",launch:"OSINT_deepseek / FATHER OSINT runtime",connect:"К ALINA и исследовательским задачам как поставщик источников, provenance и evidence."}
 ];
 
 function renderAgentBlockOutput(mode="ready"){
@@ -444,10 +451,19 @@ function renderAgentBlockOutput(mode="ready"){
    '<div class="agent-output-stats"><div><span>НАЙДЕНО</span><b>'+discovered+'</b></div><div><span>КАТАЛОГ</span><b>'+fatherAgents.length+'</b></div><div><span>STATUS</span><b class="'+(mode==="pass"?"pass":"hold")+'">'+(mode==="pass"?"PASS":"READY")+'</b></div></div></div>';
 }
 
+function refreshFactoryNodes(selectedId=null){
+ const current=selectedId || document.querySelector(".node.selected")?.dataset.id || "role";
+ renderNodes();
+ selectBlock(current);
+}
+
 async function runAgentDiscoveryFromCard(){
  const n1=document.querySelector('[data-id="agentDiscovery"]');
  const n2=document.querySelector('[data-id="agentCatalog"]');
- n1?.classList.add("processing");
+ factoryBlockState.agentDiscovery={status:"RUNNING",activated:true};
+ factoryBlockState.agentCatalog={status:"IDLE",activated:false};
+ refreshFactoryNodes("agentDiscovery");
+ document.querySelector('[data-id="agentDiscovery"]')?.classList.add("processing");
  toast("BLOCK-01: поиск по доступным дискам...");
  if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("EXECUTION_START","BLOCK-01","RUNNING",{block:"AGENT_DISCOVERY"});
  try{
@@ -458,23 +474,29 @@ async function runAgentDiscoveryFromCard(){
    });
    if(!res.ok)throw new Error("HTTP "+res.status);
    lastDiscoveryReport=await res.json();
-   n1?.classList.remove("processing");
-   n2?.classList.add("processing");
+   factoryBlockState.agentDiscovery={status:"PASS",activated:true};
+   factoryBlockState.agentCatalog={status:"READY",activated:false};
+   refreshFactoryNodes("agentDiscovery");
+   document.querySelector('[data-id="agentCatalog"]')?.classList.add("processing");
    await new Promise(r=>setTimeout(r,220));
-   n2?.classList.remove("processing");
+   document.querySelector('[data-id="agentCatalog"]')?.classList.remove("processing");
    renderAgentBlockOutput("pass");
    document.getElementById("agentReportTitle").textContent="Отчёт поиска агентов";
    openAgentReport();
    if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01","PASS",{found:lastDiscoveryReport.count,sources:lastDiscoveryReport.sources?.length||0});
    toast("BLOCK-01 завершён: найдено "+lastDiscoveryReport.count+" кандидатов");
  }catch(err){
-   n1?.classList.remove("processing");
+   factoryBlockState.agentDiscovery={status:"ERROR",activated:true};
+   factoryBlockState.agentCatalog={status:"IDLE",activated:false};
+   refreshFactoryNodes("agentDiscovery");
    toast("BLOCK-01 ERROR: runtime 8091 недоступен или поиск завершился ошибкой");
    if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("ERROR","BLOCK-01","ERROR",{message:String(err)});
  }
 }
 
 function openAgentCatalogFromCard(){
+ factoryBlockState.agentCatalog={status:"OPEN",activated:true};
+ refreshFactoryNodes("agentCatalog");
  lastDiscoveryReport={
    schema:"FATHER_AGENT_CATALOG_VIEW_V1",
    mode:"CATALOG",
@@ -485,7 +507,10 @@ function openAgentCatalogFromCard(){
      locator:"factory/agents/AGENT_REGISTRY.yaml",
      detected_name:a.name,
      confidence:"CANONICAL",
-     evidence:["agent_id:"+a.id,"domain:"+a.domain,"maturity:"+a.maturity,a.desc]
+     description:a.desc,
+     launch:a.launch,
+     connect:a.connect,
+     evidence:["agent_id:"+a.id,"domain:"+a.domain,"maturity:"+a.maturity]
    })),
    sources:[{root:"factory/agents/AGENT_REGISTRY.yaml",inspected:fatherAgents.length,truncated:false,skipped_dirs:0,errors:0}],
    confidence_counts:{CANONICAL:fatherAgents.length,HIGH:0,MEDIUM:0,LOW:0}
@@ -505,14 +530,18 @@ function renderAgentReport(){
  const items=(lastDiscoveryReport.candidates||[]).filter(x=>filter==="ALL"||x.confidence===filter);
  const cc=lastDiscoveryReport.confidence_counts||{};
  summary.textContent="Найдено "+lastDiscoveryReport.count+" · CANONICAL "+(cc.CANONICAL||0)+" · HIGH "+(cc.HIGH||0)+" · MEDIUM "+(cc.MEDIUM||0)+" · LOW "+(cc.LOW||0);
- body.innerHTML=items.map(x=>
-   '<article class="agent-report-row">'+
+ body.innerHTML=items.map(x=>{
+   const details=x.description
+     ? '<p class="agent-desc">'+escapeHtml(x.description)+'</p>'+
+       '<div class="agent-how"><b>ЗАПУСК</b><span>'+escapeHtml(x.launch||"Не определён")+'</span></div>'+
+       '<div class="agent-how"><b>ЛУЧШЕ ПОДКЛЮЧАТЬ</b><span>'+escapeHtml(x.connect||"Не определено")+'</span></div>'
+     : '<p>'+escapeHtml((x.evidence||[]).join(" · "))+'</p>';
+   return '<article class="agent-report-row">'+
    '<div class="agent-report-row-head"><b>'+escapeHtml(x.detected_name)+'</b><span class="conf '+escapeHtml(x.confidence.toLowerCase())+'">'+escapeHtml(x.confidence)+'</span></div>'+
-   '<code>'+escapeHtml(x.locator)+'</code>'+
-   '<p>'+escapeHtml((x.evidence||[]).join(" · "))+'</p>'+
+   '<code>'+escapeHtml(x.locator)+'</code>'+details+
    '<small>'+escapeHtml(x.source)+' · '+escapeHtml(x.discovery_id)+'</small>'+
-   '</article>'
- ).join("") || '<div class="agent-report-empty">По выбранному фильтру ничего нет.</div>';
+   '</article>';
+ }).join("") || '<div class="agent-report-empty">По выбранному фильтру ничего нет.</div>';
 }
 function openAgentReport(){
  agentReportModal.classList.add("open");
