@@ -132,8 +132,17 @@ function renderNodes(){
  nodes.innerHTML="";
  blocks.forEach(b=>{
   const n=document.createElement("article");n.className="node "+(b.cls||"");n.dataset.id=b.id;n.style.left=b.x+"px";n.style.top=b.y+"px";
-  n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>';
+  const actions=b.id==="agentDiscovery"
+    ? '<div class="node-actions"><button type="button" class="node-action primary" data-action="run-discovery">RUN</button></div>'
+    : b.id==="agentCatalog"
+      ? '<div class="node-actions"><button type="button" class="node-action ghost" data-action="show-catalog">СПИСОК</button></div>'
+      : '';
+  n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>'+actions;
   n.onclick=()=>selectBlock(b.id);n.ondblclick=e=>{e.stopPropagation();openBlockModal(b.id)};nodes.appendChild(n);
+  const runBtn=n.querySelector('[data-action="run-discovery"]');
+  if(runBtn)runBtn.onclick=e=>{e.stopPropagation();runAgentDiscoveryFromCard()};
+  const listBtn=n.querySelector('[data-action="show-catalog"]');
+  if(listBtn)listBtn.onclick=e=>{e.stopPropagation();openAgentCatalogFromCard()};
  });
  requestAnimationFrame(()=>{drawWires();enableNodeDragging();});
 }
@@ -429,45 +438,60 @@ const fatherAgents=[
 function renderAgentBlockOutput(mode="ready"){
  const host=document.getElementById("agentBlockOutput");
  if(!host)return;
- const count=fatherAgents.length;
- const rows=fatherAgents.map(a=>'<article class="agent-result-card"><div><b>'+a.id+'</b><strong>'+a.name+'</strong></div><span>'+a.maturity+'</span><p>'+a.desc+'</p><small>'+a.domain+'</small></article>').join("");
+ const discovered=lastDiscoveryReport?.schema==="FATHER_AGENT_DISCOVERY_RESULTS_V2" ? lastDiscoveryReport.count : "—";
  host.innerHTML=
-   '<div class="agent-output-head"><div><span>FACTORY BLOCK OUTPUT</span><h3>BLOCK-01 → BLOCK-02</h3><p>Поиск агентов передаёт кандидатов в нормализованный каталог.</p></div>'+
-   '<div class="agent-output-stats"><div><span>НАЙДЕНО</span><b>'+count+'</b></div><div><span>КАТАЛОГ</span><b>'+count+'</b></div><div><span>STATUS</span><b class="'+(mode==="pass"?"pass":"hold")+'">'+(mode==="pass"?"PASS":"READY")+'</b></div></div></div>'+
-   '<div class="agent-output-actions"><button class="primary" id="runAgentDiscovery">RUN BLOCK-01</button><button class="ghost" id="showAgentCatalog">ОТКРЫТЬ BLOCK-02</button></div>'+
-   '<div class="agent-result-grid '+(mode==="pass"?"visible":"")+'" id="agentResultGrid">'+rows+'</div>';
- document.getElementById("runAgentDiscovery").onclick=async()=>{
-   const n1=document.querySelector('[data-id="agentDiscovery"]');
-   const n2=document.querySelector('[data-id="agentCatalog"]');
-   n1?.classList.add("processing");
-   toast("BLOCK-01: поиск по доступным дискам...");
-   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("EXECUTION_START","BLOCK-01","RUNNING",{block:"AGENT_DISCOVERY"});
-   try{
-     const res=await fetch("http://127.0.0.1:8091/agent-discovery/run",{
-       method:"POST",
-       headers:{"Content-Type":"application/json"},
-       body:JSON.stringify({})
-     });
-     if(!res.ok)throw new Error("HTTP "+res.status);
-     lastDiscoveryReport=await res.json();
-     n1?.classList.remove("processing");
-     n2?.classList.add("processing");
-     await new Promise(r=>setTimeout(r,300));
-     n2?.classList.remove("processing");
-     renderAgentBlockOutput("pass");
-     openAgentReport();
-     if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01","PASS",{found:lastDiscoveryReport.count,sources:lastDiscoveryReport.sources?.length||0});
-     toast("BLOCK-01 завершён: найдено "+lastDiscoveryReport.count+" кандидатов");
-   }catch(err){
-     n1?.classList.remove("processing");
-     toast("BLOCK-01 ERROR: runtime 8091 недоступен или поиск завершился ошибкой");
-     if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("ERROR","BLOCK-01","ERROR",{message:String(err)});
-   }
+   '<div class="agent-output-head"><div><span>FACTORY BLOCK OUTPUT</span><h3>BLOCK-01 → BLOCK-02</h3><p>Запуск и просмотр результатов выполняются прямо из карточек на поле.</p></div>'+
+   '<div class="agent-output-stats"><div><span>НАЙДЕНО</span><b>'+discovered+'</b></div><div><span>КАТАЛОГ</span><b>'+fatherAgents.length+'</b></div><div><span>STATUS</span><b class="'+(mode==="pass"?"pass":"hold")+'">'+(mode==="pass"?"PASS":"READY")+'</b></div></div></div>';
+}
+
+async function runAgentDiscoveryFromCard(){
+ const n1=document.querySelector('[data-id="agentDiscovery"]');
+ const n2=document.querySelector('[data-id="agentCatalog"]');
+ n1?.classList.add("processing");
+ toast("BLOCK-01: поиск по доступным дискам...");
+ if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("EXECUTION_START","BLOCK-01","RUNNING",{block:"AGENT_DISCOVERY"});
+ try{
+   const res=await fetch("http://127.0.0.1:8091/agent-discovery/run",{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({})
+   });
+   if(!res.ok)throw new Error("HTTP "+res.status);
+   lastDiscoveryReport=await res.json();
+   n1?.classList.remove("processing");
+   n2?.classList.add("processing");
+   await new Promise(r=>setTimeout(r,220));
+   n2?.classList.remove("processing");
+   renderAgentBlockOutput("pass");
+   document.getElementById("agentReportTitle").textContent="Отчёт поиска агентов";
+   openAgentReport();
+   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01","PASS",{found:lastDiscoveryReport.count,sources:lastDiscoveryReport.sources?.length||0});
+   toast("BLOCK-01 завершён: найдено "+lastDiscoveryReport.count+" кандидатов");
+ }catch(err){
+   n1?.classList.remove("processing");
+   toast("BLOCK-01 ERROR: runtime 8091 недоступен или поиск завершился ошибкой");
+   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("ERROR","BLOCK-01","ERROR",{message:String(err)});
+ }
+}
+
+function openAgentCatalogFromCard(){
+ lastDiscoveryReport={
+   schema:"FATHER_AGENT_CATALOG_VIEW_V1",
+   mode:"CATALOG",
+   count:fatherAgents.length,
+   candidates:fatherAgents.map(a=>({
+     discovery_id:a.id,
+     source:"FATHER_AGENT_REGISTRY",
+     locator:"factory/agents/AGENT_REGISTRY.yaml",
+     detected_name:a.name,
+     confidence:"CANONICAL",
+     evidence:["agent_id:"+a.id,"domain:"+a.domain,"maturity:"+a.maturity,a.desc]
+   })),
+   sources:[{root:"factory/agents/AGENT_REGISTRY.yaml",inspected:fatherAgents.length,truncated:false,skipped_dirs:0,errors:0}],
+   confidence_counts:{CANONICAL:fatherAgents.length,HIGH:0,MEDIUM:0,LOW:0}
  };
- document.getElementById("showAgentCatalog").onclick=()=>{
-   document.getElementById("agentResultGrid")?.classList.add("visible");
-   selectBlock("agentCatalog");
- };
+ document.getElementById("agentReportTitle").textContent="Список агентов FATHER";
+ openAgentReport();
 }
 
 
