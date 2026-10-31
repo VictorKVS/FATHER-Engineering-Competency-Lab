@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1",
+  "knowledge_items": [
+    {
+      "knowledge_id": "KNOW-FACTORY-001",
+      "title": "Reusable chassis and standard block architecture",
+      "sources": ["SRC-FATHER-CONCEPT-001", "SRC-FATHER-LAB-001"],
+      "extract": "Products should be assembled from reusable chassis, standard blocks and configuration instead of rebuilding the system for every project.",
+      "decision": "ADR-0001",
+      "capabilities": ["chassis_selection", "block_composition", "configuration_driven_assembly"],
+      "artifacts": [
+        "factory/chassis/C1_LIGHT_AGENT.json",
+        "factory/registry/blocks.json",
+        "factory/runtime/factory.py"
+      ],
+      "products": ["FTH-PRODUCT-HELLO-001"],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "knowledge_id": "KNOW-FACTORY-002",
+      "title": "Traceable engineering evidence loop",
+      "sources": ["SRC-FATHER-README-001"],
+      "extract": "Engineering output must remain traceable from requirements through architecture, implementation, tests, defects and reusable patterns.",
+      "decision": "Factory evidence principle",
+      "capabilities": ["audit", "observability", "evidence_generation"],
+      "artifacts": [
+        "FTH-BLOCK-AUDIT-001",
+        "FTH-BLOCK-OBS-001",
+        "factory/evidence/"
+      ],
+      "products": ["FTH-PRODUCT-HELLO-001"],
+      "status": "MAPPED"
+    },
+    {
+      "knowledge_id": "KNOW-RESOURCE-MAP-001",
+      "title": "Topic-oriented resource index linked to engineering outputs",
+      "sources": ["SRC-GITHUB-AIENG-RESOURCES-001"],
+      "extract": "Organize learning sources by engineering topic, then extend each topic with explicit mapping to capabilities, artifacts, products and evidence.",
+      "decision": "FATHER knowledge-to-product resource map",
+      "capabilities": ["knowledge_management", "provenance", "product_traceability"],
+      "artifacts": [
+        "factory/RESOURCES.md",
+        "factory/registry/knowledge_map.json"
+      ],
+      "products": ["FATHER Factory"],
+      "status": "IMPLEMENTED"
+    }
+  ]
+}
