@@ -1,0 +1,25 @@
+version: 1
+schema: FATHER_BOOK_CATALOG_V1
+books:
+  - id: BOOK-01
+    slug: agent-engineering
+    title: FATHER Agent Engineering
+    status: IN_PROGRESS
+    root: books/BOOK_01_AGENT_ENGINEERING
+    product_target: AGENT_V1
+  - id: BOOK-02
+    slug: prompt-rag-knowledge-engineering
+    title: ALINA Scientific Prompt, RAG & Knowledge Engineering
+    status: PLANNED
+    root: books/BOOK_02_PROMPT_RAG_KB
+    product_target: INTELLIGENCE_PACKAGE
+  - id: BOOK-03
+    slug: model-engineering-selection
+    title: FATHER Model Engineering & Selection Lab
+    status: PLANNED
+    root: books/BOOK_03_MODEL_LAB
+    product_target: MODEL_FABRIC
+site:
+  navigation_source: books/catalog.yaml
+  book_manifest_name: book.yaml
+  chapter_manifest_name: chapter.yaml
