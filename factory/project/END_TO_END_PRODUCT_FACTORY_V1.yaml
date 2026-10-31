@@ -66,15 +66,30 @@ main_flow:
 
   - id: ALINA_ANALYSIS
     role: ALINA Knowledge & Reasoning Engineer
-    purpose: build reasoning package for agent execution
+    purpose: scientifically engineer and verify the agent intelligence package
+    process: PROC-ALINA-INTELLIGENCE-PACKAGE-DESIGN
+    methods:
+      - prompt_baseline_and_controlled_optimization
+      - rag_strategy_experiments
+      - knowledge_base_provenance_and_versioning
+      - held_out_evaluation
+      - adversarial_evaluation
+      - regression_evaluation
     outputs:
       - role_profile
-      - system_prompt
-      - prompt_pack
+      - prompt_program
+      - prompt_version
       - RAG_manifest
-      - knowledge_base
+      - retrieval_strategy
+      - knowledge_base_manifest
+      - source_registry
       - evidence_graph
-      - evaluation_requirements
+      - evaluation_dataset
+      - evaluation_metrics
+      - promotion_evidence
+    gate:
+      id: INTELLIGENCE_PACKAGE_VERIFIED
+      on_fail: HOLD
 
   - id: AGENT_ASSEMBLY
     role: Agent Factory
