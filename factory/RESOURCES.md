@@ -493,3 +493,35 @@ FATHER processing package:
 - required outputs per chapter: translation → semantic outline → glossary → applications → examples → algorithms → conclusions → combinations → checklists → knowledge atoms → FATHER mapping.
 
 Status: Chapter 1 initial extraction complete; full 13-chapter semantic pass registered.
+
+
+## BOOK-0001 — Designing Large Language Model Applications
+
+**Source:** Suhas Pai, O'Reilly, 2025.  
+**ALINA package:** `VictorKVS/alina-knowledge-worker/docs/books/BOOK-0001/`
+
+Processing model:
+
+```text
+book scope
+→ RU translation
+→ semantic outline
+→ glossary
+→ applications/examples
+→ algorithms
+→ conclusions
+→ combinations
+→ checklists
+→ knowledge atoms
+→ FATHER mapping
+```
+
+Current FATHER impact from Chapter 1 pilot:
+
+- strengthen `FTH-BLOCK-MODEL-001` with capability/cost/eval profiles;
+- plan `C2_KNOWLEDGE_RAG`;
+- plan evaluator/reranker/tool blocks;
+- add production-readiness gate concept;
+- require retrieval quality evidence rather than similarity score alone.
+
+The ALINA package stores derived knowledge and provenance, not the copyrighted book PDF.
