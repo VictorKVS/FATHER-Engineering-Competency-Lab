@@ -11,6 +11,29 @@ const blocks=[
  {id:"eval",stableId:"BLK-008",type:"EVAL",title:"Оценки",desc:"Контракт + качество",x:815,y:180},
  {id:"evidence",stableId:"BLK-009",type:"EVIDENCE",title:"Доказательства",desc:"Кто / что / версия / PASS",x:1005,y:125,cls:"evidence"}
 ];
+const LAYOUT_STORAGE_KEY="father_field_layout_v1";
+function loadSavedLayout(){
+ try{
+   const raw=window.localStorage?.getItem(LAYOUT_STORAGE_KEY);
+   if(!raw)return;
+   const saved=JSON.parse(raw);
+   blocks.forEach(b=>{
+     const p=saved[b.id];
+     if(!p)return;
+     if(Number.isFinite(p.x))b.x=p.x;
+     if(Number.isFinite(p.y))b.y=p.y;
+   });
+ }catch(_e){}
+}
+function saveLayout(){
+ try{
+   const payload={};
+   blocks.forEach(b=>payload[b.id]={x:b.x,y:b.y});
+   window.localStorage?.setItem(LAYOUT_STORAGE_KEY,JSON.stringify(payload));
+ }catch(_e){}
+}
+loadSavedLayout();
+
 const edges=[["agentDiscovery","agentCatalog"],["agentCatalog","role"],["input","role"],["role","rag"],["role","prompt"],["prompt","model"],["rag","model"],["kb","model"],["model","output"],["output","eval"],["eval","evidence"]];
 const palette=[
  ["AGENT_DISCOVERY","01","Поиск агентов","READ ONLY · обнаружение кандидатов"],
@@ -143,9 +166,15 @@ function renderNodes(){
   n.innerHTML='<div class="nhead"><span class="nid">'+b.type+'</span><span class="state"></span></div><h3>'+b.title+'</h3><p>'+b.desc+'</p>'+actions;
   n.onclick=()=>selectBlock(b.id);n.ondblclick=e=>{e.stopPropagation();openBlockModal(b.id)};nodes.appendChild(n);
   const runBtn=n.querySelector('[data-action="run-discovery"]');
-  if(runBtn)runBtn.onclick=e=>{e.stopPropagation();runAgentDiscoveryFromCard()};
+  if(runBtn){
+    runBtn.onpointerdown=e=>e.stopPropagation();
+    runBtn.onclick=e=>{e.stopPropagation();runAgentDiscoveryFromCard()};
+  }
   const listBtn=n.querySelector('[data-action="show-catalog"]');
-  if(listBtn)listBtn.onclick=e=>{e.stopPropagation();openAgentCatalogFromCard()};
+  if(listBtn){
+    listBtn.onpointerdown=e=>e.stopPropagation();
+    listBtn.onclick=e=>{e.stopPropagation();openAgentCatalogFromCard()};
+  }
  });
  requestAnimationFrame(()=>{drawWires();enableNodeDragging();});
 }
@@ -217,6 +246,7 @@ function enableNodeDragging(){
  let drag=null;
  document.querySelectorAll(".node").forEach(node=>{
   node.addEventListener("pointerdown",e=>{
+   if(e.target.closest("button"))return;
    if(e.button!==0)return;
    const b=blocks.find(x=>x.id===node.dataset.id);if(!b)return;
    drag={node,b,startX:e.clientX,startY:e.clientY,originX:b.x,originY:b.y,moved:false};
@@ -239,12 +269,17 @@ function enableNodeDragging(){
    node.releasePointerCapture(e.pointerId);
    drag=null;
    drawWires();
+   if(moved)saveLayout();
    if(moved)e.stopPropagation();
   });
  });
 }
 function selectBlock(id){
- document.querySelectorAll(".node").forEach(n=>n.classList.toggle("selected",n.dataset.id===id));
+ document.querySelectorAll(".node").forEach(n=>{
+   const selected=n.dataset.id===id;
+   n.classList.toggle("selected",selected);
+   n.style.zIndex=selected?"6":"2";
+ });
  const b=blocks.find(x=>x.id===id);const ins=document.getElementById("inspector");document.getElementById("inspectorType").textContent=b.type;
  let html='<div class="info-box"><b>'+b.title+'</b><p>'+b.desc+'</p></div>';
  if(id==="role")html+=field("Agent ID",config.agent_id)+area("Роль",config.role);
