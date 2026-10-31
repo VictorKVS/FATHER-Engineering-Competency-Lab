@@ -1,0 +1,34 @@
+version: 1
+block_id: BLOCK_04_MODEL_ANALYST_ORCHESTRATOR
+title: Model Analyst / Model Orchestrator
+position: after BLOCK-03 Model Discovery & Connectivity
+inputs:
+  - model_registry
+  - task_profile
+  - agent_contract
+outputs:
+  - model_selection_decision
+  - tournament_report
+  - fallback_plan
+actions:
+  - ANALYZE_TASK
+  - BUILD_SHORTLIST
+  - RUN_TOURNAMENT
+  - SELECT_WINNER
+  - BUILD_CASCADE
+state_machine:
+  IDLE: ANALYZE_TASK
+  ANALYZED: BUILD_SHORTLIST
+  SHORTLIST_READY: RUN_TOURNAMENT
+  TOURNAMENT_DONE: SELECT_WINNER
+  SELECTED: PASS
+failure_policy:
+  no_eligible_model: HOLD
+  runtime_failure: RETRY_OR_FALLBACK
+  all_hard_fail: REJECT
+evidence:
+  - task_profile
+  - shortlist
+  - per_model_run
+  - per_model_metrics
+  - final_decision
