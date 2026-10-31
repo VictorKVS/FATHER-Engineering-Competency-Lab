@@ -1,0 +1,77 @@
+agent_discovery:
+  id: FATHER_BLOCK_01_AGENT_DISCOVERY
+  version: 1.0.0
+  name: AGENT_DISCOVERY
+  user_label: "Поиск агентов"
+  purpose: >-
+    Discover existing agent implementations, profiles, manifests and agent-like
+    assets without modifying them. Produce candidates for BLOCK-02 Agent Catalog.
+
+  mode: READ_ONLY
+
+  sources:
+    - father_repository
+    - configured_local_roots
+    - github_repositories
+    - project_manifests
+    - agent_yaml_files
+    - readme_and_profile_markers
+    - legacy_agent_assets
+
+  detection_markers:
+    filenames:
+      - agent.yaml
+      - agent.yml
+      - AGENTS.md
+      - agent.json
+      - "*AGENT*.yaml"
+      - "*AGENT*.md"
+    content_markers:
+      - agent_id
+      - role
+      - capabilities
+      - prompt
+      - rag_manifest
+      - knowledge_base
+      - tools
+      - permissions
+      - evals
+
+  candidate_record:
+    required:
+      - discovery_id
+      - source
+      - locator
+      - detected_name
+      - confidence
+      - evidence
+    optional:
+      - agent_id
+      - repository
+      - path
+      - aliases
+      - role
+      - domain
+      - maturity
+      - capabilities
+      - canonical_candidate
+
+  confidence:
+    levels:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - CANONICAL
+    rule: >-
+      Discovery confidence describes identification confidence only and never
+      means the agent is verified or production-ready.
+
+  output:
+    artifact: AGENT_DISCOVERY_RESULTS
+    feeds: FATHER_BLOCK_02_AGENT_CATALOG
+
+  states:
+    - READY
+    - RUNNING
+    - HOLD
+    - PASS
