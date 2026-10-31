@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "sources": [
+    {
+      "source_id": "SRC-FATHER-CONCEPT-001",
+      "type": "project_conversation",
+      "title": "FATHER Factory / universal chassis concept",
+      "origin": "ChatGPT project conversation and design notes",
+      "location": "Project: АРХИТЕКТОР OSUT / conversation: Доводим фабрику до рабочего состояния",
+      "used_for": [
+        "Platform Core + Chassis + Blocks + Configuration model",
+        "chassis family C1-C8",
+        "block contract",
+        "REUSE / ADAPT / BUILD production flow"
+      ],
+      "verification": "manual",
+      "status": "primary_internal_source"
+    },
+    {
+      "source_id": "SRC-FATHER-LAB-001",
+      "type": "repository",
+      "title": "FATHER Engineering Competency Lab",
+      "origin": "GitHub",
+      "location": "https://github.com/VictorKVS/FATHER-Engineering-Competency-Lab",
+      "used_for": [
+        "engineering evidence loop",
+        "artifact IDs",
+        "training and validation principles"
+      ],
+      "verification": "repository",
+      "status": "primary_project_source"
+    },
+    {
+      "source_id": "SRC-FATHER-README-001",
+      "type": "file",
+      "title": "README.md",
+      "origin": "FATHER Engineering Competency Lab",
+      "location": "README.md",
+      "used_for": [
+        "traceable engineering loop",
+        "evidence IDs",
+        "definition of measurable competence"
+      ],
+      "verification": "repository_file",
+      "status": "primary_project_source"
+    },
+    {
+      "source_id": "SRC-FACTORY-DESIGN-001",
+      "type": "design_decision",
+      "title": "Factory v0.1 executable skeleton",
+      "origin": "FATHER Factory implementation",
+      "location": "factory/",
+      "used_for": [
+        "C1_LIGHT_AGENT",
+        "block registry",
+        "assembly resolver",
+        "evidence manifest",
+        "contract tests"
+      ],
+      "verification": "code_and_tests",
+      "status": "derived_source"
+    }
+  ]
+}
