@@ -1,0 +1,26 @@
+{
+  "id": "C1_LIGHT_AGENT",
+  "version": "0.1.0",
+  "description": "Minimal safe agent chassis for simple assistants and Factory proof runs.",
+  "required_blocks": [
+    "FTH-BLOCK-RUNTIME-001",
+    "FTH-BLOCK-ROUTER-001",
+    "FTH-BLOCK-MODEL-001",
+    "FTH-BLOCK-GUARD-001",
+    "FTH-BLOCK-AUDIT-001",
+    "FTH-BLOCK-OBS-001"
+  ],
+  "required_capabilities": [
+    "runtime",
+    "routing",
+    "model_inference",
+    "guardrails",
+    "audit",
+    "observability"
+  ],
+  "policy": {
+    "deny_unknown_tools": true,
+    "human_approval_for_destructive_actions": true,
+    "audit_required": true
+  }
+}
