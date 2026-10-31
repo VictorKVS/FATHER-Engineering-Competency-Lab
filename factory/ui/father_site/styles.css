@@ -100,3 +100,21 @@ button,select,input,textarea{font:inherit}
 .agent-result-card small{display:block;color:#557083;font-size:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:1100px){.agent-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.agent-output-head{flex-direction:column}.agent-output-stats{width:100%;flex-wrap:wrap}.agent-result-grid{grid-template-columns:1fr}}
+
+/* Agent discovery report modal */
+.agent-report-modal{position:fixed;inset:0;z-index:90;display:none}
+.agent-report-modal.open{display:block}
+.agent-report-backdrop{position:absolute;inset:0;background:#02060bdd;backdrop-filter:blur(8px)}
+.agent-report-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1100px,94vw);max-height:88vh;background:#07111b;border:1px solid #2a526d;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 100px #000d}
+.agent-report-card header{display:flex;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line)}
+.agent-report-card header h2{margin:4px 0;font-size:21px}.agent-report-card header p{margin:0;color:#7890a3;font-size:10px}
+.agent-report-card header button{width:36px;height:36px;border:1px solid #2d4f66;background:#0a1926;color:#d9edf8;border-radius:9px;font-size:21px}
+.agent-report-toolbar{display:flex;align-items:end;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:#08141f}
+.agent-report-toolbar label{font-size:8px;color:#6d8597;letter-spacing:.08em}.agent-report-toolbar select{display:block;margin-top:5px;border:1px solid #26465d;background:#07131d;color:#dbeaf4;border-radius:8px;padding:8px}
+.agent-report-body{padding:12px;overflow:auto}
+.agent-report-row{border:1px solid #1d394d;background:#091824;border-radius:10px;padding:11px;margin-bottom:8px}
+.agent-report-row-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.agent-report-row-head b{font-size:11px}
+.agent-report-row code{display:block;margin-top:7px;padding:7px;border-radius:7px;background:#06111a;color:#83cdea;font-size:9px;word-break:break-all}
+.agent-report-row p{margin:7px 0;color:#7e94a5;font-size:9px;line-height:1.45}.agent-report-row small{color:#536d80;font-size:8px}
+.conf{font-size:7px;border-radius:999px;padding:4px 7px;border:1px solid #36576e}.conf.canonical{color:#82efbc;border-color:#2f7257}.conf.high{color:#7bdcff;border-color:#296783}.conf.medium{color:#e7be73;border-color:#7a6030}.conf.low{color:#b28b8b;border-color:#644545}
+.agent-report-empty{padding:24px;color:#71889b;text-align:center;font-size:10px}
