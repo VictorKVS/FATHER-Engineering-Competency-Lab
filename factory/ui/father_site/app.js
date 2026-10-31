@@ -411,6 +411,7 @@ document.getElementById("cloneCreate").onclick=()=>{
 };
 
 
+let lastDiscoveryReport=null;
 const fatherAgents=[
  {id:"AG-000",name:"PRODUCT_MANAGER",domain:"product_discovery",maturity:"M2",desc:"Product discovery и работа с замыслом заказчика."},
  {id:"AG-001",name:"ALINA",domain:"analysis_knowledge_process",maturity:"M4",desc:"Аналитическое ядро и архитектор знаний."},
@@ -439,20 +440,71 @@ function renderAgentBlockOutput(mode="ready"){
    const n1=document.querySelector('[data-id="agentDiscovery"]');
    const n2=document.querySelector('[data-id="agentCatalog"]');
    n1?.classList.add("processing");
-   toast("BLOCK-01: READ ONLY поиск агентов");
+   toast("BLOCK-01: поиск по доступным дискам...");
    if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("EXECUTION_START","BLOCK-01","RUNNING",{block:"AGENT_DISCOVERY"});
-   await new Promise(r=>setTimeout(r,650));
-   n1?.classList.remove("processing");n2?.classList.add("processing");
-   await new Promise(r=>setTimeout(r,450));
-   n2?.classList.remove("processing");
-   renderAgentBlockOutput("pass");
-   if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01/02","PASS",{found:count,catalog:count});
-   toast("PASS: найдено и описано "+count+" агентов");
+   try{
+     const res=await fetch("http://127.0.0.1:8091/agent-discovery/run",{
+       method:"POST",
+       headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({})
+     });
+     if(!res.ok)throw new Error("HTTP "+res.status);
+     lastDiscoveryReport=await res.json();
+     n1?.classList.remove("processing");
+     n2?.classList.add("processing");
+     await new Promise(r=>setTimeout(r,300));
+     n2?.classList.remove("processing");
+     renderAgentBlockOutput("pass");
+     openAgentReport();
+     if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("TEST_RESULT","BLOCK-01","PASS",{found:lastDiscoveryReport.count,sources:lastDiscoveryReport.sources?.length||0});
+     toast("BLOCK-01 завершён: найдено "+lastDiscoveryReport.count+" кандидатов");
+   }catch(err){
+     n1?.classList.remove("processing");
+     toast("BLOCK-01 ERROR: runtime 8091 недоступен или поиск завершился ошибкой");
+     if(window.NEXUS_TRACE)window.NEXUS_TRACE.emit("ERROR","BLOCK-01","ERROR",{message:String(err)});
+   }
  };
  document.getElementById("showAgentCatalog").onclick=()=>{
    document.getElementById("agentResultGrid")?.classList.add("visible");
    selectBlock("agentCatalog");
  };
 }
+
+
+const agentReportModal=document.getElementById("agentReportModal");
+function closeAgentReport(){agentReportModal.classList.remove("open");agentReportModal.setAttribute("aria-hidden","true")}
+function renderAgentReport(){
+ const body=document.getElementById("agentReportBody");
+ const summary=document.getElementById("agentReportSummary");
+ if(!lastDiscoveryReport){summary.textContent="Результаты ещё не загружены.";body.innerHTML="";return}
+ const filter=document.getElementById("agentReportFilter").value;
+ const items=(lastDiscoveryReport.candidates||[]).filter(x=>filter==="ALL"||x.confidence===filter);
+ const cc=lastDiscoveryReport.confidence_counts||{};
+ summary.textContent="Найдено "+lastDiscoveryReport.count+" · CANONICAL "+(cc.CANONICAL||0)+" · HIGH "+(cc.HIGH||0)+" · MEDIUM "+(cc.MEDIUM||0)+" · LOW "+(cc.LOW||0);
+ body.innerHTML=items.map(x=>
+   '<article class="agent-report-row">'+
+   '<div class="agent-report-row-head"><b>'+escapeHtml(x.detected_name)+'</b><span class="conf '+escapeHtml(x.confidence.toLowerCase())+'">'+escapeHtml(x.confidence)+'</span></div>'+
+   '<code>'+escapeHtml(x.locator)+'</code>'+
+   '<p>'+escapeHtml((x.evidence||[]).join(" · "))+'</p>'+
+   '<small>'+escapeHtml(x.source)+' · '+escapeHtml(x.discovery_id)+'</small>'+
+   '</article>'
+ ).join("") || '<div class="agent-report-empty">По выбранному фильтру ничего нет.</div>';
+}
+function openAgentReport(){
+ agentReportModal.classList.add("open");
+ agentReportModal.setAttribute("aria-hidden","false");
+ renderAgentReport();
+}
+document.getElementById("agentReportClose").onclick=closeAgentReport;
+document.getElementById("agentReportBackdrop").onclick=closeAgentReport;
+document.getElementById("agentReportFilter").onchange=renderAgentReport;
+document.getElementById("agentReportShowSources").onclick=()=>{
+ const body=document.getElementById("agentReportBody");
+ const sources=lastDiscoveryReport?.sources||[];
+ body.innerHTML=sources.map(s=>
+  '<article class="agent-report-row source"><div class="agent-report-row-head"><b>'+escapeHtml(s.root)+'</b><span>'+ (s.truncated?"TRUNCATED":"DONE") +'</span></div>'+
+  '<p>inspected: '+escapeHtml(s.inspected)+' · skipped_dirs: '+escapeHtml(s.skipped_dirs||0)+' · errors: '+escapeHtml(s.errors||0)+'</p></article>'
+ ).join("") || '<div class="agent-report-empty">Источники отсутствуют.</div>';
+};
 
 window.addEventListener("resize",drawWires);renderNodes();selectBlock("role");renderAgentBlockOutput("ready");
