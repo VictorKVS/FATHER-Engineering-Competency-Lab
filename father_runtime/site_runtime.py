@@ -9,6 +9,7 @@ import json
 from .project_init import ProjectInitializer
 from .demo_autopilot import DemoAutopilot
 from .event_log import FactoryEventLogger, export_trace_file, reserve_trace_file, append_trace_snapshot
+from .agent_discovery import discover_local_agents, available_windows_roots
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -40,6 +41,9 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/health":
             self._json(200, {"status": "ok", "service": "father-site-runtime"})
             return
+        if parsed.path == "/agent-discovery/roots":
+            self._json(200, {"roots": available_windows_roots()})
+            return
         if parsed.path == "/demo/autopilot/status":
             self._json(200, self.demo_autopilot.status())
             return
@@ -58,6 +62,14 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         try:
             payload = self._read_json()
+            if path == "/agent-discovery/run":
+                roots = payload.get("roots")
+                result = discover_local_agents(
+                    roots=roots if roots else None,
+                    max_files_per_root=payload.get("max_files_per_root"),
+                )
+                self._json(200, result)
+                return
             if path == "/trace/start":
                 session_id=payload.get("session_id","unknown")
                 path_obj=reserve_trace_file(session_id)
