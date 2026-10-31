@@ -1,0 +1,83 @@
+{
+  "schema_version": "0.1",
+  "blocks": [
+    {
+      "id": "FTH-BLOCK-RUNTIME-001",
+      "version": "0.1.0",
+      "type": "runtime",
+      "inputs": ["normalized_request"],
+      "outputs": ["runtime_result"],
+      "dependencies": [],
+      "permissions": [],
+      "security_profile": "baseline",
+      "tests": ["contract", "smoke"],
+      "evidence": ["manifest"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    },
+    {
+      "id": "FTH-BLOCK-ROUTER-001",
+      "version": "0.1.0",
+      "type": "router",
+      "inputs": ["normalized_request"],
+      "outputs": ["route"],
+      "dependencies": ["FTH-BLOCK-RUNTIME-001"],
+      "permissions": [],
+      "security_profile": "baseline",
+      "tests": ["contract"],
+      "evidence": ["manifest"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    },
+    {
+      "id": "FTH-BLOCK-MODEL-001",
+      "version": "0.1.0",
+      "type": "model_router",
+      "inputs": ["prompt"],
+      "outputs": ["model_response"],
+      "dependencies": ["FTH-BLOCK-RUNTIME-001"],
+      "permissions": ["model.invoke"],
+      "security_profile": "baseline",
+      "tests": ["contract"],
+      "evidence": ["manifest"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    },
+    {
+      "id": "FTH-BLOCK-GUARD-001",
+      "version": "0.1.0",
+      "type": "guardrails",
+      "inputs": ["request", "proposed_action"],
+      "outputs": ["allow_or_deny"],
+      "dependencies": ["FTH-BLOCK-RUNTIME-001"],
+      "permissions": [],
+      "security_profile": "strict",
+      "tests": ["contract", "deny-path"],
+      "evidence": ["decision_log"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    },
+    {
+      "id": "FTH-BLOCK-AUDIT-001",
+      "version": "0.1.0",
+      "type": "audit",
+      "inputs": ["event"],
+      "outputs": ["audit_record"],
+      "dependencies": ["FTH-BLOCK-RUNTIME-001"],
+      "permissions": ["audit.write"],
+      "security_profile": "append-only",
+      "tests": ["contract"],
+      "evidence": ["audit_record"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    },
+    {
+      "id": "FTH-BLOCK-OBS-001",
+      "version": "0.1.0",
+      "type": "observability",
+      "inputs": ["metric", "event"],
+      "outputs": ["telemetry"],
+      "dependencies": ["FTH-BLOCK-RUNTIME-001"],
+      "permissions": ["telemetry.write"],
+      "security_profile": "baseline",
+      "tests": ["contract"],
+      "evidence": ["telemetry_snapshot"],
+      "compatibility": ["C1_LIGHT_AGENT"]
+    }
+  ]
+}
