@@ -16,7 +16,7 @@ from father_fua.full_assembly import FullFUAAssemblyRuntime
 
 
 APP_VERSION = "0.1.0"
-DEV_TOKEN = os.getenv("FUA_DEV_TOKEN", "dev-token")
+DEV_TOKEN = os.getenv("FUA_DEV_TOKEN")
 security = HTTPBearer(auto_error=False)
 
 
@@ -26,7 +26,7 @@ def _sha256(value: object) -> str:
 
 
 def require_auth(credentials: HTTPAuthorizationCredentials | None = Depends(security)) -> str:
-    if credentials is None or credentials.scheme.lower() != "bearer" or credentials.credentials != DEV_TOKEN:
+    if DEV_TOKEN is None or credentials is None or credentials.scheme.lower() != "bearer" or credentials.credentials != DEV_TOKEN:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid bearer token")
     return "local-dev-operator"
 
