@@ -3,7 +3,7 @@ from __future__ import annotations
 import ctypes
 import os
 import shutil
-import subprocess
+import subprocess  # nosec B404 - sandbox intentionally launches an exact allowlisted executable
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -144,7 +144,7 @@ class WindowsProcessSandbox:
         proc = None
         timed_out = False
         try:
-            proc = subprocess.Popen(
+            proc = subprocess.Popen(  # nosec B603 - exe is resolved and checked against exact allowlist; shell=False
                 [exe, *args],
                 cwd=workdir,
                 env=env,
@@ -162,11 +162,16 @@ class WindowsProcessSandbox:
             except subprocess.TimeoutExpired:
                 timed_out = True
                 job.close()
+                kill_error = None
                 try:
                     proc.kill()
-                except Exception:
-                    pass
+                except Exception as exc:
+                    kill_error = exc
                 stdout, stderr = proc.communicate(timeout=5)
+                if kill_error is not None and proc.poll() is None:
+                    raise SandboxExecutionError(
+                        f"timed-out process could not be terminated: {kill_error}"
+                    )
 
             stdout = stdout[: self.max_output_chars]
             stderr = stderr[: self.max_output_chars]
