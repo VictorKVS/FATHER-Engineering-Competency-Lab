@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_RELIABILITY_GATE_VALIDATED",
+  "status": "TARGET_EVM_SANDBOX_STRESS_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,6 +80,7 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
+    "FAULT_RECOVERY_STRESS",
     "HUMAN_ACCEPTANCE"
   ],
   "mandatory_governance_sections": [
@@ -226,5 +227,11 @@
     "memory_limit": "PASS",
     "final_evidence_audit": "PASS",
     "finding_count": 0
+  },
+  "sandbox_stress_evm": {
+    "status": "PASS",
+    "allowlisted_execution": "20/20",
+    "child_process_denial": "20/20",
+    "timeout_termination": "5/5"
   }
 }
