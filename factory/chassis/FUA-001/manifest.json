@@ -373,5 +373,27 @@
       "open_high_critical": 0
     },
     "complete": true
+  },
+  "kubernetes_stage": {
+    "stage": "2.01_KUBERNETES_PREFLIGHT",
+    "status": "IN_PROGRESS",
+    "cluster_profile": "otus-k8s",
+    "driver": "docker",
+    "inherited_certified_profile": "DOCKER_CONTAINED_ONLY",
+    "destructive_reset_allowed": false,
+    "next": [
+      "2.01_KUBERNETES_PREFLIGHT",
+      "2.02_FUA_IMAGE",
+      "2.03_DEPLOYMENT_SERVICE",
+      "2.04_CONFIG_SECRET",
+      "2.05_RESOURCE_SECURITYCONTEXT",
+      "2.06_PROBES_SELF_HEALING",
+      "2.07_NETWORKPOLICY",
+      "2.08_OBSERVABILITY",
+      "2.09_ROLLING_UPDATE_ROLLBACK",
+      "2.10_FAILURE_RECOVERY",
+      "2.11_KUBERNETES_SECURITY_POLYGON",
+      "2.12_KUBERNETES_CERTIFICATION"
+    ]
   }
 }
