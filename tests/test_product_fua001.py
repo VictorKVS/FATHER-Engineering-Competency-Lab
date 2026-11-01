@@ -43,14 +43,19 @@ def test_product_repository_evidence_has_no_findings():
     assert audit_repository(root)==[]
 
 
-def test_product_release_state_is_testing_not_production():
+def test_product_release_state_preserves_release_invariants():
     import json
     root=Path(__file__).resolve().parents[1]
     manifest=json.loads(
         (root/"factory/chassis/FUA-001/manifest.json").read_text(encoding="utf-8")
     )
     assert manifest["installation_permit"]=="PASS"
-    assert manifest["production_ready"] is False
+    if manifest["status"]=="PRODUCTION_RELEASED":
+        assert manifest["production_ready"] is True
+        assert "DOCKER_CONTAINED_ONLY" in manifest["approved_execution_profiles"]
+        assert manifest["windows_host_native_execution"]=="NOT_APPROVED"
+    else:
+        assert manifest["production_ready"] is False
     assert manifest["status"] in {
         "INSTALLATION_APPROVED_FOR_TESTING",
         "PRODUCT_TEST_IN_PROGRESS",
