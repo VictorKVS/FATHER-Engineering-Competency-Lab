@@ -33,3 +33,19 @@ The corrected EVM test:
 5. removes the rule in finally.
 
 Loopback/Ollama connectivity is no longer used as the proof target for external egress isolation.
+
+
+## v0.3 executable identity correction
+
+On Windows, a virtual-environment Python launcher can differ from the base interpreter reported by sys._base_executable. Windows Firewall program filters are path-specific.
+
+The EVM test now:
+- prints the venv Python path;
+- resolves sys._base_executable;
+- prints active firewall profile state;
+- installs temporary outbound Block rules for both executable paths;
+- displays the effective ApplicationFilter.Program for each rule;
+- validates external TCP denial;
+- removes both rules in finally.
+
+If traffic still passes, the gate remains FAIL and the next investigation target is effective policy/WFP arbitration rather than application-path ambiguity.
