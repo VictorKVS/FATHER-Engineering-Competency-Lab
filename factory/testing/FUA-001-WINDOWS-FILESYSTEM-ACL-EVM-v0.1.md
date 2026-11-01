@@ -36,3 +36,12 @@ The runner now verifies:
 - current WindowsIdentity.Name is present in the ACL output;
 - the matching ACE includes (DENY)(M);
 - only then proceeds to the real write-denial probe.
+## v0.4 sentinel verification order
+
+The target EVM proved the child write was denied with PermissionError. The same directory deny ACE also prevented the parent PowerShell process from reading the sentinel before cleanup.
+
+The runner now:
+- treats the child PermissionError as the OS-enforced write-denial proof;
+- removes only the temporary deny ACE;
+- reads the sentinel afterward and requires ORIGINAL;
+- then performs the final ACL reset and directory cleanup.
