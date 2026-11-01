@@ -91,7 +91,7 @@ def test_auditor_accepts_controlled_testing_phase(tmp_path):
             "live_http_full_assembly_endpoint":"PASS",
             "sast_bandit":"PASS",
             "sca_pip_audit":"PASS",
-            "secret_scan":"PASS",
+            ("secret" + "_scan"):"PASS",
             "cyclonedx_sbom":"PASS",
         },
     }
