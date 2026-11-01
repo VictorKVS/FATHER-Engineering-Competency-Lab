@@ -375,7 +375,7 @@
     "complete": true
   },
   "kubernetes_stage": {
-    "stage": "2.02_FUA_IMAGE",
+    "stage": "2.03_DEPLOYMENT_SERVICE",
     "status": "IN_PROGRESS",
     "cluster_profile": "otus-k8s",
     "driver": "docker",
@@ -407,6 +407,15 @@
       "kubernetes": "1.37.0",
       "node_ready": "PASS",
       "kube_system": "PASS"
+    },
+    "image": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-K8S-02-IMAGE-0032",
+      "tag": "father/fua-001:k8s-0.1",
+      "image_id": "sha256:5284548677c011010b1bc8190a1520c6613d2c2a8c19bd21f75d2bd493459480",
+      "runtime_user": "10001:10001",
+      "health": "PASS",
+      "minikube_load": "PASS"
     }
   }
 }
