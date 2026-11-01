@@ -36,7 +36,13 @@ jobs:
       - name: Unit and API contract tests
         env:
           FUA_DEV_TOKEN: dev-token
-        run: python -m pytest
+        run: python -m pytest --junitxml=fua-tests.xml
+      - name: Upload test evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fua-001-test-evidence
+          path: fua-tests.xml
+
       - name: Start API and smoke health
         env:
           FUA_DEV_TOKEN: dev-token
