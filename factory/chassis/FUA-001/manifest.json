@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "FULL_ASSEMBLY_IMPLEMENTED_CI_VALIDATED",
+  "status": "CI_FULL_ASSEMBLY_SECURITY_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -68,22 +68,28 @@
   ],
   "ci_evidence": {
     "component_and_assembly_tests": "PASS",
+    "test_count": 89,
     "full_01_26_assembly": "PASS",
     "live_http_full_assembly_endpoint": "PASS",
-    "openapi_full_assembly_contract": "VALIDATION_IN_PROGRESS"
+    "openapi_full_assembly_contract": "PASS",
+    "sast_bandit": "PASS",
+    "sca_pip_audit": "PASS",
+    "secret_scan": "PASS",
+    "cyclonedx_sbom": "PASS",
+    "test_artifact_id": 13080605784,
+    "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "STATIC_VALIDATION",
-    "SAST",
-    "SCA",
-    "SBOM",
-    "SECRET_SCAN",
-    "API_FUZZ_NEGATIVE_TESTS",
+    "LOCAL_EVM_FULL_ASSEMBLY",
+    "LOCAL_EVM_LIVE_HTTP",
+    "LOCAL_RESOURCE_EVIDENCE",
+    "REAL_MODEL_INTEGRATION",
+    "REAL_SANDBOX_ISOLATION",
     "COMPATIBILITY_HARDENING",
     "RED_TEAM",
-    "POLYGON",
+    "FULL_POLYGON",
     "EVIDENCE_AUDIT",
-    "LOCAL_EVM_FULL_ASSEMBLY"
+    "HUMAN_ACCEPTANCE"
   ],
   "mandatory_governance_sections": [
     "30-60"
