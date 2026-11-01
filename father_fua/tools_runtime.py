@@ -76,5 +76,15 @@ class ToolRuntime:
         self._record(tool_id,role,"EXECUTED")
         return result
 
+    def reset_call_budget(self, tool_id: str | None = None) -> None:
+        """Reset per-scope tool call counters without altering registrations or audit history."""
+        if tool_id is None:
+            for registered in self._specs:
+                self._calls[registered] = 0
+            return
+        if tool_id not in self._specs:
+            raise KeyError(tool_id)
+        self._calls[tool_id] = 0
+
     def calls_used(self, tool_id: str) -> int:
         return self._calls.get(tool_id, 0)
