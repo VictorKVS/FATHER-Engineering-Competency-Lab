@@ -60,10 +60,19 @@ class JOBOBJECT_EXTENDED_LIMIT_INFORMATION(ctypes.Structure):
 
 
 class _WindowsJob:
+    JOB_OBJECT_LIMIT_ACTIVE_PROCESS = 0x00000008
+    JOB_OBJECT_LIMIT_PROCESS_MEMORY = 0x00000100
+    JOB_OBJECT_LIMIT_JOB_MEMORY = 0x00000200
     JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000
     JobObjectExtendedLimitInformation = 9
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        active_process_limit: int | None = None,
+        process_memory_limit_bytes: int | None = None,
+        job_memory_limit_bytes: int | None = None,
+    ) -> None:
         if os.name != "nt":
             self.handle = None
             return
@@ -75,7 +84,27 @@ class _WindowsJob:
             raise OSError(ctypes.get_last_error(), "CreateJobObjectW failed")
 
         info = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
-        info.BasicLimitInformation.LimitFlags = self.JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+        flags = self.JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+
+        if active_process_limit is not None:
+            if active_process_limit <= 0:
+                raise ValueError("active_process_limit must be positive")
+            info.BasicLimitInformation.ActiveProcessLimit = active_process_limit
+            flags |= self.JOB_OBJECT_LIMIT_ACTIVE_PROCESS
+
+        if process_memory_limit_bytes is not None:
+            if process_memory_limit_bytes <= 0:
+                raise ValueError("process_memory_limit_bytes must be positive")
+            info.ProcessMemoryLimit = process_memory_limit_bytes
+            flags |= self.JOB_OBJECT_LIMIT_PROCESS_MEMORY
+
+        if job_memory_limit_bytes is not None:
+            if job_memory_limit_bytes <= 0:
+                raise ValueError("job_memory_limit_bytes must be positive")
+            info.JobMemoryLimit = job_memory_limit_bytes
+            flags |= self.JOB_OBJECT_LIMIT_JOB_MEMORY
+
+        info.BasicLimitInformation.LimitFlags = flags
         ok = kernel32.SetInformationJobObject(
             ctypes.c_void_p(self.handle),
             self.JobObjectExtendedLimitInformation,
@@ -110,10 +139,24 @@ class WindowsProcessSandbox:
         allowed_executables: Sequence[str],
         timeout_seconds: float = 10.0,
         max_output_chars: int = 100_000,
+        active_process_limit: int | None = 1,
+        process_memory_limit_mb: int | None = 256,
+        job_memory_limit_mb: int | None = 384,
     ) -> None:
         self.allowed_executables = {str(Path(p).resolve()).lower() for p in allowed_executables}
         self.timeout_seconds = timeout_seconds
         self.max_output_chars = max_output_chars
+        self.active_process_limit = active_process_limit
+        self.process_memory_limit_mb = process_memory_limit_mb
+        self.job_memory_limit_mb = job_memory_limit_mb
+
+        for name, value in (
+            ("active_process_limit", active_process_limit),
+            ("process_memory_limit_mb", process_memory_limit_mb),
+            ("job_memory_limit_mb", job_memory_limit_mb),
+        ):
+            if value is not None and value <= 0:
+                raise ValueError(f"{name} must be positive")
 
     def run(self, executable: str, args: Sequence[str] = ()) -> ProcessSandboxResult:
         exe = str(Path(executable).resolve())
@@ -140,7 +183,19 @@ class WindowsProcessSandbox:
         if os.name == "nt":
             creationflags = subprocess.CREATE_NO_WINDOW
 
-        job = _WindowsJob()
+        job = _WindowsJob(
+            active_process_limit=self.active_process_limit,
+            process_memory_limit_bytes=(
+                None
+                if self.process_memory_limit_mb is None
+                else self.process_memory_limit_mb * 1024 * 1024
+            ),
+            job_memory_limit_bytes=(
+                None
+                if self.job_memory_limit_mb is None
+                else self.job_memory_limit_mb * 1024 * 1024
+            ),
+        )
         proc = None
         timed_out = False
         try:
