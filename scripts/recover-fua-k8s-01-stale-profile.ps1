@@ -89,7 +89,7 @@ Write-Host "STALE PROFILE DELETE: PASS"
 
 Write-Host ""
 Write-Host "05. Recreate clean Docker-driver cluster"
-& $Minikube start -p $Profile --driver=docker --cpus=4 --memory=6144
+& $Minikube start -p $Profile --driver=docker --cpus=4 --memory=6144 --apiserver-name=control-plane.minikube.internal --apiserver-names=localhost,control-plane.minikube.internal
 if ($LASTEXITCODE -ne 0) { throw "minikube recreate failed" }
 
 Write-Host ""
