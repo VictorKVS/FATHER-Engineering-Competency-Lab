@@ -151,3 +151,20 @@ def test_readiness_stays_denied():
     assert r.status_code == 200
     assert r.json()["installation_permit"] == "DENIED"
     assert r.json()["blocking_gates"]
+
+
+
+def test_full_assembly_api_endpoint():
+    r = client.post(
+        "/v1/assembly/run",
+        headers=AUTH,
+        json={"mission": "FATHER universal agent architecture"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["status"] == "PASS"
+    assert body["audit_ok"] is True
+    assert body["readiness"] == "DENIED"
+    assert len(body["prompt_sha256"]) == 64
+    assert len(body["state_sha256"]) == 64
+    assert len(body["evidence_sha256"]) == 64
