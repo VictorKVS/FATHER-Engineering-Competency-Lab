@@ -18,10 +18,20 @@ if (-not $isAdmin) {
     exit 30
 }
 
-$RuleName = "FUA-001-SANDBOX-NETWORK-DENY-EVM"
+$RuleNameVenv = "FUA-001-SANDBOX-NETWORK-DENY-EVM-VENV"
+$RuleNameBase = "FUA-001-SANDBOX-NETWORK-DENY-EVM-BASE"
+
+$BasePy = (& $Py -c "import sys; print(getattr(sys,'_base_executable',sys.executable))").Trim()
+Write-Host "VENV PYTHON     : $Py"
+Write-Host "BASE PYTHON     : $BasePy"
+
+Write-Host ""
+Write-Host "00. Firewall profile state"
+Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultOutboundAction | Format-Table -AutoSize
 
 function Remove-FuaRule {
-    Get-NetFirewallRule -DisplayName $RuleName -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
+    Get-NetFirewallRule -DisplayName $RuleNameVenv -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
+    Get-NetFirewallRule -DisplayName $RuleNameBase -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
 }
 
 try {
@@ -76,20 +86,36 @@ raise SystemExit(20)
     Write-Host ("BASELINE TARGET : {0}:{1}" -f $TargetHost, $TargetPort)
 
     Write-Host ""
-    Write-Host "02. Install temporary outbound deny rule"
-    $params = @{
-        DisplayName = $RuleName
+    Write-Host "02. Install temporary outbound deny rules"
+
+    $paramsVenv = @{
+        DisplayName = $RuleNameVenv
         Direction = "Outbound"
         Action = "Block"
         Program = $Py
         Profile = "Any"
         Enabled = "True"
     }
-    New-NetFirewallRule @params | Out-Null
+    New-NetFirewallRule @paramsVenv | Out-Null
 
-    $rule = Get-NetFirewallRule -DisplayName $RuleName -ErrorAction Stop
-    Write-Host "RULE ENABLED    : $($rule.Enabled)"
-    Write-Host "RULE ACTION     : $($rule.Action)"
+    $paramsBase = @{
+        DisplayName = $RuleNameBase
+        Direction = "Outbound"
+        Action = "Block"
+        Program = $BasePy
+        Profile = "Any"
+        Enabled = "True"
+    }
+    New-NetFirewallRule @paramsBase | Out-Null
+
+    foreach ($ruleName in @($RuleNameVenv,$RuleNameBase)) {
+        $rule = Get-NetFirewallRule -DisplayName $ruleName -ErrorAction Stop
+        $app = $rule | Get-NetFirewallApplicationFilter
+        Write-Host ("RULE            : {0}" -f $rule.DisplayName)
+        Write-Host ("RULE ENABLED    : {0}" -f $rule.Enabled)
+        Write-Host ("RULE ACTION     : {0}" -f $rule.Action)
+        Write-Host ("RULE PROGRAM    : {0}" -f $app.Program)
+    }
 
     Write-Host ""
     Write-Host "03. Verify network denial"
@@ -131,8 +157,11 @@ finally {
     Write-Host ""
     Write-Host "04. Cleanup temporary firewall rule"
     Remove-FuaRule
-    $left = Get-NetFirewallRule -DisplayName $RuleName -ErrorAction SilentlyContinue
-    if ($left) {
+    $left = @(
+        Get-NetFirewallRule -DisplayName $RuleNameVenv -ErrorAction SilentlyContinue
+        Get-NetFirewallRule -DisplayName $RuleNameBase -ErrorAction SilentlyContinue
+    ) | Where-Object { $_ }
+    if ($left.Count -gt 0) {
         Write-Host "RULE CLEANUP    : FAIL"
     } else {
         Write-Host "RULE CLEANUP    : PASS"
