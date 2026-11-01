@@ -7,99 +7,94 @@ $ErrorActionPreference = "Stop"
 Write-Host "=== FUA-001 STAGE 2.01C / WSL2 NATIVE DOCKER ENGINE BOOTSTRAP ==="
 Write-Host ("DISTRO              : {0}" -f $Distro)
 
-function Run-Root([string]$Command) {
-    & wsl.exe -d $Distro -u root -- bash -lc $Command
-    if ($LASTEXITCODE -ne 0) { throw "WSL root command failed: $Command" }
+function WslRoot {
+    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Args)
+    & wsl.exe -d $Distro -u root -- @Args
+    if ($LASTEXITCODE -ne 0) { throw "WSL root command failed: $($Args -join ' ')" }
 }
 
-function Run-User([string]$Command) {
-    & wsl.exe -d $Distro -- bash -lc $Command
-    if ($LASTEXITCODE -ne 0) { throw "WSL user command failed: $Command" }
+function WslUser {
+    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Args)
+    & wsl.exe -d $Distro -- @Args
+    if ($LASTEXITCODE -ne 0) { throw "WSL user command failed: $($Args -join ' ')" }
 }
 
 Write-Host ""
 Write-Host "01. Verify WSL distro"
 $distros = (& wsl.exe -l -q) -replace [char]0,''
 if ($distros -notcontains $Distro) { throw "WSL distro not found: $Distro" }
-Run-User 'uname -a; id'
+WslUser uname -a
+WslUser id
 Write-Host "WSL DISTRO          : PASS"
 
 Write-Host ""
 Write-Host "02. Ensure systemd is enabled"
-& wsl.exe -d $Distro -- bash -lc 'test "$(ps -p 1 -o comm=)" = "systemd"'
-if ($LASTEXITCODE -ne 0) {
+$pid1 = (& wsl.exe -d $Distro -- ps -p 1 -o comm=).Trim()
+if ($pid1 -ne "systemd") {
+    Write-Host ("PID1                : {0}" -f $pid1)
     Write-Host "SYSTEMD             : NOT ACTIVE"
-    Write-Host "ACTION              : safely enabling systemd in /etc/wsl.conf"
+    Write-Host "ACTION              : enable systemd in /etc/wsl.conf"
 
-    $enableSystemd = @'
-set -euo pipefail
-cp -a /etc/wsl.conf /etc/wsl.conf.fua-backup 2>/dev/null || true
-if grep -q '^[boot]' /etc/wsl.conf 2>/dev/null; then
-  if grep -q '^systemd=' /etc/wsl.conf; then
-    sed -i 's/^systemd=.*/systemd=true/' /etc/wsl.conf
-  else
-    sed -i '/^[boot]/a systemd=true' /etc/wsl.conf
-  fi
-else
-  printf '
-[boot]
-systemd=true
-' >> /etc/wsl.conf
-fi
-cat /etc/wsl.conf
-'@
-    Run-Root $enableSystemd
+    WslRoot cp -a /etc/wsl.conf /etc/wsl.conf.fua-backup
+    & wsl.exe -d $Distro -u root -- sh -c "grep -q '^\[boot\]' /etc/wsl.conf || printf '\n[boot]\n' >> /etc/wsl.conf"
+    if ($LASTEXITCODE -ne 0) { throw "failed to ensure [boot] section" }
+    & wsl.exe -d $Distro -u root -- sh -c "grep -q '^systemd=' /etc/wsl.conf && sed -i 's/^systemd=.*/systemd=true/' /etc/wsl.conf || sed -i '/^\[boot\]/a systemd=true' /etc/wsl.conf"
+    if ($LASTEXITCODE -ne 0) { throw "failed to enable systemd in wsl.conf" }
+
+    & wsl.exe -d $Distro -- cat /etc/wsl.conf
     & wsl.exe --terminate $Distro
     Start-Sleep -Seconds 3
 }
 
-Run-User 'test "$(ps -p 1 -o comm=)" = "systemd"; systemctl is-system-running --wait || true'
+$pid1 = (& wsl.exe -d $Distro -- ps -p 1 -o comm=).Trim()
+if ($pid1 -ne "systemd") { throw "systemd did not become PID 1" }
 Write-Host "SYSTEMD             : PASS"
 
 Write-Host ""
-Write-Host "03. Remove stale Docker Desktop CLI shim only"
-Run-Root 'if [ -L /usr/bin/docker ] && readlink /usr/bin/docker | grep -q "/mnt/wsl/docker-desktop"; then rm -f /usr/bin/docker; fi'
-Write-Host "DESKTOP CLI SHIM    : CLEARED"
+Write-Host "03. Remove only stale Docker Desktop CLI symlink"
+$dockerLink = (& wsl.exe -d $Distro -- readlink /usr/bin/docker 2>$null)
+if ($dockerLink -like "/mnt/wsl/docker-desktop/*") {
+    WslRoot rm -f /usr/bin/docker
+    Write-Host "DESKTOP CLI SHIM    : REMOVED"
+} else {
+    Write-Host "DESKTOP CLI SHIM    : NOT PRESENT"
+}
 
 Write-Host ""
-Write-Host "04. Install native Docker Engine from Docker APT repository"
-$installDocker = @'
-set -euo pipefail
-export DEBIAN_FRONTEND=noninteractive
+Write-Host "04. Install native Docker Engine"
+WslRoot env DEBIAN_FRONTEND=noninteractive apt-get update
+WslRoot env DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl
+WslRoot install -m 0755 -d /etc/apt/keyrings
+WslRoot curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+WslRoot chmod a+r /etc/apt/keyrings/docker.asc
 
-apt-get update
-apt-get install -y ca-certificates curl
+$codename = (& wsl.exe -d $Distro -- sh -c ". /etc/os-release; printf %s \$VERSION_CODENAME").Trim()
+$arch = (& wsl.exe -d $Distro -- dpkg --print-architecture).Trim()
+if (-not $codename -or -not $arch) { throw "failed to resolve Ubuntu codename/architecture" }
 
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
+$repoLine = "deb [arch=$arch signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $codename stable"
+& wsl.exe -d $Distro -u root -- sh -c "printf '%s\n' '$repoLine' > /etc/apt/sources.list.d/docker.list"
+if ($LASTEXITCODE -ne 0) { throw "failed to configure Docker apt repository" }
 
-. /etc/os-release
-ARCH="$(dpkg --print-architecture)"
-echo "deb [arch=$ARCH signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $VERSION_CODENAME stable" > /etc/apt/sources.list.d/docker.list
-
-apt-get update
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-systemctl enable docker
-systemctl restart docker
-'@
-Run-Root $installDocker
+WslRoot env DEBIAN_FRONTEND=noninteractive apt-get update
+WslRoot env DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+WslRoot systemctl enable docker
+WslRoot systemctl restart docker
 Write-Host "DOCKER INSTALL      : PASS"
 
 Write-Host ""
-Write-Host "05. Grant current WSL user Docker access"
-$userName = (& wsl.exe -d $Distro -- bash -lc 'id -un').Trim()
-Run-Root "usermod -aG docker $userName"
+Write-Host "05. Grant user Docker access"
+$userName = (& wsl.exe -d $Distro -- id -un).Trim()
+WslRoot usermod -aG docker $userName
 & wsl.exe --terminate $Distro
 Start-Sleep -Seconds 3
 Write-Host ("DOCKER GROUP USER   : {0}" -f $userName)
 
 Write-Host ""
 Write-Host "06. Verify native engine"
-Run-User 'docker version'
-Run-User 'docker info --format "OSTYPE={{.OSType}} DRIVER={{.Driver}} ROOT={{.DockerRootDir}}"'
-Run-User 'docker run --rm hello-world >/dev/null'
+WslUser docker version
+WslUser docker info
+WslUser docker run --rm hello-world
 Write-Host "NATIVE DOCKER       : PASS"
 
 Write-Host ""
