@@ -52,11 +52,32 @@ Write-Host ("INSTALL PERMIT    : {0}" -f $Manifest.installation_permit)
 Write-Host ("PRODUCTION READY  : {0}" -f $Manifest.production_ready)
 Write-Host ("NEXT GATES        : {0}" -f (($Manifest.next_factory_gates) -join ", "))
 
-if ($Manifest.installation_permit -ne "DENIED") {
-    throw "reliability gate requires installation permit to remain DENIED before human acceptance"
+$TestingStatuses = @(
+    "INSTALLATION_APPROVED_FOR_TESTING",
+    "PRODUCT_TEST_IN_PROGRESS",
+    "PRODUCT_TEST_VALIDATED",
+    "PILOT_TEST_IN_PROGRESS",
+    "PILOT_TEST_VALIDATED",
+    "PRODUCTION_READINESS_REVIEW"
+)
+
+if ($TestingStatuses -contains $Manifest.status) {
+    if ($Manifest.installation_permit -ne "PASS") {
+        throw "testing phase requires installation permit PASS"
+    }
+    if ($Manifest.production_ready -ne $false) {
+        throw "testing phase requires production_ready=false"
+    }
+    Write-Host "RELEASE PHASE     : CONTROLLED_TESTING"
 }
-if ($Manifest.production_ready -ne $false) {
-    throw "reliability gate requires production_ready=false before human acceptance"
+else {
+    if ($Manifest.installation_permit -ne "DENIED") {
+        throw "pre-acceptance phase requires installation permit DENIED"
+    }
+    if ($Manifest.production_ready -ne $false) {
+        throw "pre-acceptance phase requires production_ready=false"
+    }
+    Write-Host "RELEASE PHASE     : PRE_ACCEPTANCE"
 }
 
 Write-Host ""
