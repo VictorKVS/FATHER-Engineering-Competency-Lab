@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "PRODUCT_TEST_VALIDATED",
+  "status": "PILOT_TEST_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "PILOT_TEST",
     "PRODUCTION_READINESS_REVIEW"
   ],
   "mandatory_governance_sections": [
@@ -263,5 +262,12 @@
     "reliability_gate": "PASS",
     "sandbox_stress": "PASS",
     "fault_recovery": "PASS"
+  },
+  "pilot_test_evm": {
+    "status": "PASS",
+    "pilot_missions": "PASS",
+    "product_regression": "PASS",
+    "api_ci": "PASS",
+    "security_ci": "PASS"
   }
 }
