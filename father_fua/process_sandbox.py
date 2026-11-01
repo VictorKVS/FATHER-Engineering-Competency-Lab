@@ -139,7 +139,7 @@ class WindowsProcessSandbox:
         allowed_executables: Sequence[str],
         timeout_seconds: float = 10.0,
         max_output_chars: int = 100_000,
-        active_process_limit: int | None = 1,
+        active_process_limit: int | None = 2,
         process_memory_limit_mb: int | None = 256,
         job_memory_limit_mb: int | None = 384,
     ) -> None:
