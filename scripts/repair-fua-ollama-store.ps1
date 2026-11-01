@@ -57,8 +57,41 @@ New-Item -ItemType Directory -Force -Path $targetManifests | Out-Null
 New-Item -ItemType Directory -Force -Path $targetBlobs | Out-Null
 
 Write-Host ""
-Write-Host "04. Copy manifests"
-Copy-Item -Path (Join-Path $sourceManifests "*") -Destination $targetManifests -Recurse -Force
+Write-Host "04. Reconcile manifests without overwriting identical files"
+$manifestCopied = 0
+$manifestExisting = 0
+$manifestConflicts = @()
+
+foreach ($src in Get-ChildItem $sourceManifests -Recurse -File) {
+    $relative = $src.FullName.Substring($sourceManifests.Length).TrimStart('\')
+    $dest = Join-Path $targetManifests $relative
+    $destDir = Split-Path -Parent $dest
+    New-Item -ItemType Directory -Force -Path $destDir | Out-Null
+
+    if (Test-Path $dest) {
+        $srcHash = (Get-FileHash $src.FullName -Algorithm SHA256).Hash
+        $dstHash = (Get-FileHash $dest -Algorithm SHA256).Hash
+        if ($srcHash -eq $dstHash) {
+            $manifestExisting++
+            continue
+        }
+
+        $manifestConflicts += "$relative source=$srcHash target=$dstHash"
+        continue
+    }
+
+    Copy-Item $src.FullName $dest
+    $manifestCopied++
+}
+
+Write-Host "MANIFEST EXISTING : $manifestExisting"
+Write-Host "MANIFEST COPIED   : $manifestCopied"
+
+if ($manifestConflicts.Count -gt 0) {
+    Write-Host "MANIFEST CONFLICTS:"
+    $manifestConflicts | ForEach-Object { Write-Host $_ }
+    throw "target store contains conflicting manifests; refusing overwrite"
+}
 
 Write-Host ""
 Write-Host "05. Materialize missing blobs into target store"
