@@ -11,10 +11,49 @@ if (-not $docker) {
     exit 30
 }
 
-docker info *> $null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "DOCKER CONTAINMENT RESULT: BLOCKED - DOCKER_ENGINE_UNAVAILABLE"
-    exit 31
+$oldEap = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+& docker info *> $null
+$dockerInfoCode = $LASTEXITCODE
+$ErrorActionPreference = $oldEap
+
+if ($dockerInfoCode -ne 0) {
+    $DockerDesktopCandidates = @(
+        "$Env:ProgramFiles\Docker\Docker\Docker Desktop.exe",
+        "$Env:LocalAppData\Docker\Docker Desktop.exe"
+    ) | Where-Object { Test-Path $_ }
+
+    if ($DockerDesktopCandidates.Count -gt 0) {
+        $DockerDesktop = $DockerDesktopCandidates | Select-Object -First 1
+        Write-Host ("DOCKER ENGINE    : NOT_RUNNING")
+        Write-Host ("DOCKER DESKTOP   : STARTING {0}" -f $DockerDesktop)
+        Start-Process -FilePath $DockerDesktop | Out-Null
+
+        $ready = $false
+        for ($i=1; $i -le 60; $i++) {
+            Start-Sleep -Seconds 2
+            $oldEap = $ErrorActionPreference
+            $ErrorActionPreference = "Continue"
+            & docker info *> $null
+            $probeCode = $LASTEXITCODE
+            $ErrorActionPreference = $oldEap
+
+            if ($probeCode -eq 0) {
+                $ready = $true
+                break
+            }
+        }
+
+        if (-not $ready) {
+            Write-Host "DOCKER CONTAINMENT RESULT: BLOCKED - DOCKER_ENGINE_START_TIMEOUT"
+            exit 31
+        }
+        Write-Host "DOCKER ENGINE    : READY"
+    }
+    else {
+        Write-Host "DOCKER CONTAINMENT RESULT: BLOCKED - DOCKER_ENGINE_UNAVAILABLE"
+        exit 31
+    }
 }
 
 $Image = "python:3.12-alpine"
