@@ -94,42 +94,48 @@ if ($LASTEXITCODE -eq 0) {
 }
 Write-Host ""
 Write-Host "04. Start WSL-native minikube profile"
-$start = @'
-set -euo pipefail
-export PATH="$HOME/.local/bin:$PATH"
 
-if minikube status -p otus-k8s >/tmp/fua-mk-status.txt 2>&1; then
-  cat /tmp/fua-mk-status.txt
-else
-  minikube delete -p otus-k8s >/dev/null 2>&1 || true
-  minikube start -p otus-k8s \
-    --driver=docker \
-    --container-runtime=containerd \
-    --cpus=4 \
-    --memory=6144
-fi
-'@
-& wsl.exe -d $Distro -- bash -lc $start
-if ($LASTEXITCODE -ne 0) { throw "WSL-native minikube start failed" }
+$mk = "/home/vik/.local/bin/minikube"
+
+& wsl.exe -d $Distro -- $mk status -p $Profile
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "MINIKUBE PROFILE    : ALREADY RUNNING"
+} else {
+    & wsl.exe -d $Distro -- $mk delete -p $Profile
+    # delete is best-effort for absent/incomplete profiles
+    & wsl.exe -d $Distro -- $mk start -p $Profile --driver=docker --container-runtime=containerd --cpus=4 --memory=6144
+    if ($LASTEXITCODE -ne 0) { throw "WSL-native minikube start failed" }
+}
+
+& wsl.exe -d $Distro -- $mk status -p $Profile
+if ($LASTEXITCODE -ne 0) { throw "WSL-native minikube status failed" }
+
 Write-Host "WSL MINIKUBE        : PASS"
-
 Write-Host ""
 Write-Host "05. Kubernetes API / node readiness"
-$verify = @'
-set -euo pipefail
-export PATH="$HOME/.local/bin:$PATH"
-minikube update-context -p otus-k8s
-test "$(kubectl config current-context)" = "otus-k8s"
-kubectl cluster-info
-kubectl get nodes -o wide
-kubectl wait --for=condition=Ready node --all --timeout=120s
-kubectl get pods -n kube-system -o wide
-'@
-& wsl.exe -d $Distro -- bash -lc $verify
-if ($LASTEXITCODE -ne 0) { throw "WSL Kubernetes API/readiness verification failed" }
+
+$kubectl = "/home/vik/.local/bin/kubectl"
+
+& wsl.exe -d $Distro -- $mk update-context -p $Profile
+if ($LASTEXITCODE -ne 0) { throw "minikube update-context failed" }
+
+$currentContext = (& wsl.exe -d $Distro -- $kubectl config current-context).Trim()
+if ($currentContext -ne $Profile) { throw "unexpected kubectl context: $currentContext" }
+
+& wsl.exe -d $Distro -- $kubectl cluster-info
+if ($LASTEXITCODE -ne 0) { throw "kubectl cluster-info failed" }
+
+& wsl.exe -d $Distro -- $kubectl get nodes -o wide
+if ($LASTEXITCODE -ne 0) { throw "kubectl get nodes failed" }
+
+& wsl.exe -d $Distro -- $kubectl wait --for=condition=Ready node --all --timeout=120s
+if ($LASTEXITCODE -ne 0) { throw "node readiness wait failed" }
+
+& wsl.exe -d $Distro -- $kubectl get pods -n kube-system -o wide
+if ($LASTEXITCODE -ne 0) { throw "kube-system pod query failed" }
+
 Write-Host "NODE READY          : PASS"
 Write-Host "KUBE-SYSTEM         : PASS"
-
 Write-Host ""
 Write-Host "06. Isolation decision"
 Write-Host "WINDOWS MINIKUBE    : BLOCKED_BY_HOST_TOOLING"
