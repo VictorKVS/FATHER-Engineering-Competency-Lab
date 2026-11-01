@@ -7,7 +7,9 @@ if (-not (Test-Path $Py)) { throw ".venv Python not found" }
 
 Write-Host "=== FUA-001 FINAL EVIDENCE AUDIT EVM ==="
 
-& $Py -c @'
+$TempPy = Join-Path $env:TEMP "fua-final-evidence-audit.py"
+
+@'
 from pathlib import Path
 from father_fua.evidence_auditor import audit_repository, repository_gate
 
@@ -22,9 +24,16 @@ gate=repository_gate(root)
 print("REPOSITORY GATE :",gate)
 
 raise SystemExit(0 if gate=="PASS" else 20)
-'@
+'@ | Set-Content -Path $TempPy -Encoding UTF8
 
-$Code=$LASTEXITCODE
+try {
+    & $Py $TempPy
+    $Code=$LASTEXITCODE
+}
+finally {
+    Remove-Item $TempPy -Force -ErrorAction SilentlyContinue
+}
+
 if ($Code -ne 0) {
     throw "final evidence audit failed with exit code $Code"
 }
