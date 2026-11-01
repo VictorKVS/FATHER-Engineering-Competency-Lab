@@ -1,5 +1,6 @@
 from __future__ import annotations
 import hashlib
+import json
 import time
 from dataclasses import dataclass, field
 
@@ -14,8 +15,10 @@ class Approval:
     approval_id: str = ""
 
 
-def action_hash(action: str) -> str:
-    return hashlib.sha256(action.encode()).hexdigest()
+def action_hash(action: str, payload: dict | None = None) -> str:
+    envelope={"action":action,"payload":payload}
+    raw=json.dumps(envelope,sort_keys=True,separators=(",",":")).encode()
+    return hashlib.sha256(raw).hexdigest()
 
 
 def verify_approval(
@@ -24,11 +27,12 @@ def verify_approval(
     *,
     now: float | None = None,
     requester: str | None = None,
+    payload: dict | None = None,
 ) -> bool:
     current = time.time() if now is None else now
     if approval.decision != "APPROVE":
         return False
-    if approval.action_hash != action_hash(action):
+    if approval.action_hash != action_hash(action,payload):
         return False
     if approval.expires_at < current:
         return False
@@ -51,12 +55,19 @@ class ApprovalReplayGuard:
         *,
         requester: str,
         now: float | None = None,
+        payload: dict | None = None,
     ) -> bool:
         if not approval.approval_id:
             return False
         if approval.approval_id in self.consumed_ids:
             return False
-        if not verify_approval(approval, action, now=now, requester=requester):
+        if not verify_approval(
+            approval,
+            action,
+            now=now,
+            requester=requester,
+            payload=payload,
+        ):
             return False
         self.consumed_ids.add(approval.approval_id)
         return True
