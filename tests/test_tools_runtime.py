@@ -81,3 +81,23 @@ def test_tool_runtime_rejects_invalid_registration():
         rt.register(ToolSpec("",False,("ANALYST",)),lambda p:p)
     with pytest.raises(ValueError):
         rt.register(ToolSpec("x",False,()),lambda p:p)
+
+
+def test_tool_call_budget_can_reset_between_scopes_without_losing_audit():
+    rt=ToolRuntime()
+    rt.register(ToolSpec("limited",False,("ANALYST",),max_calls=1),lambda p:p)
+
+    assert rt.execute("limited",{"x":1},role="ANALYST",policy_allow=True)=={"x":1}
+    assert rt.calls_used("limited")==1
+    audit_len=len(rt.audit)
+
+    rt.reset_call_budget("limited")
+    assert rt.calls_used("limited")==0
+    assert len(rt.audit)==audit_len
+    assert rt.execute("limited",{"x":2},role="ANALYST",policy_allow=True)=={"x":2}
+
+
+def test_tool_call_budget_reset_rejects_unknown_tool():
+    rt=ToolRuntime()
+    with pytest.raises(KeyError):
+        rt.reset_call_budget("missing")
