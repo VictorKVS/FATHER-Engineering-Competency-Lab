@@ -19,3 +19,17 @@ Safety:
 
 PASS means NETWORK_ISOLATION_BASELINE only.
 It does not by itself prove restricted token/AppContainer or filesystem ACL confinement.
+
+
+## v0.2 test correction
+
+The first target-EVM run used 127.0.0.1:11434 as the deny target. That is not sufficient evidence for ordinary outbound egress isolation because Windows treats loopback as a distinct filtering/IPC scenario.
+
+The corrected EVM test:
+1. finds a reachable external TCP endpoint before the firewall rule;
+2. records that exact host/port;
+3. installs the temporary program-scoped outbound block;
+4. requires a new connection from the same Python executable to the same external endpoint to fail;
+5. removes the rule in finally.
+
+Loopback/Ollama connectivity is no longer used as the proof target for external egress isolation.
