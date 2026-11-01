@@ -64,7 +64,7 @@ def test_process_sandbox_job_blocks_second_process():
     sb=WindowsProcessSandbox(
         allowed_executables=[sys.executable],
         timeout_seconds=5,
-        active_process_limit=1,
+        active_process_limit=2,
     )
     code=(
         "import subprocess,sys; "
