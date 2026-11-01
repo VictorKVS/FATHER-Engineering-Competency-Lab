@@ -1,3 +1,8 @@
+def test_process_sandbox_module_imports():
+    import father_fua.process_sandbox as module
+    assert hasattr(module, "WindowsProcessSandbox")
+
+
 import os
 import sys
 import time
