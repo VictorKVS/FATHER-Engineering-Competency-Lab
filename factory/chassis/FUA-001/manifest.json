@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "FINAL_EVIDENCE_AUDIT_VALIDATED",
+  "status": "TARGET_EVM_RELIABILITY_GATE_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -217,5 +217,14 @@
     "status": "PASS",
     "finding_count": 0,
     "repository_gate": "PASS"
+  },
+  "reliability_gate_evm": {
+    "status": "PASS",
+    "regression_suite": "PASS",
+    "process_tree_limit": "PASS",
+    "process_tree_error_type": "OSError",
+    "memory_limit": "PASS",
+    "final_evidence_audit": "PASS",
+    "finding_count": 0
   }
 }
