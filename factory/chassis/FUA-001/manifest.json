@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_REAL_MODEL_BENCHMARK_AND_POLYGON_VALIDATED",
+  "status": "TARGET_EVM_PROCESS_SANDBOX_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,8 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "REAL_SANDBOX_ISOLATION",
+    "NETWORK_ISOLATION_BASELINE",
+    "FILESYSTEM_ACL_OR_RESTRICTED_TOKEN_BASELINE",
     "FULL_POLYGON_REAL_RUNTIME",
     "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
@@ -172,5 +173,14 @@
       "AUTHORITY_ESCALATION"
     ],
     "audit_ok": true
+  },
+  "process_sandbox_evm": {
+    "status": "PASS",
+    "allowlisted_process": true,
+    "environment_scrubbing": true,
+    "cmd_denied": true,
+    "timeout_termination": true,
+    "temp_workdir": true,
+    "final_sandbox_certified": false
   }
 }
