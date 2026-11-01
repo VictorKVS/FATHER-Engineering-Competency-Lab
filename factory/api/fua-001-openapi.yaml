@@ -251,6 +251,26 @@ paths:
               schema:
                 $ref: "#/components/schemas/Readiness"
 
+  /v1/assembly/run:
+    post:
+      tags: [00.Control]
+      operationId: runFullAssembly
+      summary: Execute the FUA-001 full 01-26 integration path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssemblyMissionRequest"
+      responses:
+        "200":
+          description: Full assembly integration result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssemblyMissionResult"
+        "401": { $ref: "#/components/responses/Forbidden" }
+
 components:
   securitySchemes:
     bearerAuth:
@@ -293,6 +313,29 @@ components:
           schema: { $ref: "#/components/schemas/Problem" }
 
   schemas:
+    AssemblyMissionRequest:
+      type: object
+      additionalProperties: false
+      required: [mission]
+      properties:
+        mission: { type: string, minLength: 1 }
+
+    AssemblyMissionResult:
+      type: object
+      additionalProperties: true
+      required: [mission_id, status, instance_id, prompt_sha256, state_sha256, evidence_id, evidence_sha256, readiness, audit_ok, answer]
+      properties:
+        mission_id: { type: string }
+        status: { type: string, enum: [PASS] }
+        instance_id: { type: string }
+        prompt_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        state_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        evidence_id: { type: string }
+        evidence_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        readiness: { type: string, enum: [DENIED, PASS] }
+        audit_ok: { type: boolean }
+        answer: { type: object }
+
     Health:
       type: object
       additionalProperties: false
