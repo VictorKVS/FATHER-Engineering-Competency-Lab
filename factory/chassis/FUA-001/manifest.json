@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_FULL_ASSEMBLY_VALIDATED",
+  "status": "AUTONOMOUS_BASELINE_01_60_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -81,15 +81,11 @@
   },
   "next_factory_gates": [
     "REAL_LOCAL_MODEL_DISCOVERY",
-    "REAL_LOCAL_MODEL_ADAPTER",
-    "MODEL_CAPABILITY_HEALTH_TEST",
-    "PROMPT_MODEL_COMPATIBILITY",
-    "REAL_MODEL_MISSION_EXECUTION",
+    "REAL_LOCAL_MODEL_MISSION",
+    "MODEL_SPECIFIC_COMPATIBILITY_EVIDENCE",
     "REAL_SANDBOX_ISOLATION",
-    "COMPATIBILITY_HARDENING",
-    "RED_TEAM",
-    "FULL_POLYGON",
-    "EVIDENCE_AUDIT",
+    "FULL_POLYGON_REAL_RUNTIME",
+    "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
   ],
   "mandatory_governance_sections": [
@@ -104,5 +100,22 @@
     "full_01_26_assembly": "PASS",
     "audit_chain": "PASS",
     "evidence_sha256": "70817f8ba002ff9c69cd29e4d48eaa02fa65fc690b752d50e69278ba4324f24a"
+  },
+  "autonomous_hardening": {
+    "pytest": "161_PASS",
+    "failures": 0,
+    "sast": "PASS",
+    "sca": "PASS",
+    "secret_scan": "PASS",
+    "sbom": "PASS",
+    "polygon_lite": "PASS",
+    "red_team_lite": "PASS",
+    "sandbox_hardening": "PASS",
+    "model_transport_loopback_only": "PASS",
+    "dlp_input_validation": "PASS",
+    "governance_30_60": "IMPLEMENTED_BASELINE",
+    "backup_restore_proof": "PASS",
+    "incident_lifecycle_proof": "PASS",
+    "performance_measurement": "IMPLEMENTED"
   }
 }
