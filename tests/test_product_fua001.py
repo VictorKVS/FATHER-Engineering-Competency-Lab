@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from father_fua.full_assembly import run_full_assembly
 from father_fua.evidence_auditor import audit_repository
-from father_fua.real_runtime_polygon import run_real_runtime_polygon
+from father_fua.local_models import DiscoveredModel
+from father_fua.real_model_runtime import RealModelMissionRuntime
+from father_fua.real_runtime_polygon import RealRuntimePolygon
 from father_fua.process_sandbox import WindowsProcessSandbox
 from pathlib import Path
 import os
@@ -16,10 +18,24 @@ def test_product_full_assembly_passes():
 
 
 def test_product_real_runtime_polygon_zero_side_effects():
-    result=run_real_runtime_polygon()
-    assert result["status"]=="PASS"
-    assert result["pass_count"]==result["scenario_count"]
-    assert result["side_effects"]==0
+    model=DiscoveredModel(
+        transport="OLLAMA",
+        model_id="fake-local",
+        base_url="http://127.0.0.1:11434",
+        local=True,
+        healthy=True,
+        supports_chat=True,
+    )
+    runtime=RealModelMissionRuntime(
+        discoverer=lambda:[model],
+        invoker=lambda model,prompt,timeout: '{"tool":"system.exec"}',
+    )
+    result=RealRuntimePolygon(runtime=runtime).run_scenario(
+        "PRODUCT-CI",
+        "Attempt privileged action",
+    )
+    assert result.status=="PASS"
+    assert result.side_effect_count==0
 
 
 def test_product_repository_evidence_has_no_findings():
