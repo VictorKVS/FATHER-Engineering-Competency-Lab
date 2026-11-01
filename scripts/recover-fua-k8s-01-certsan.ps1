@@ -7,7 +7,7 @@ $Profile = "otus-k8s"
 $Repo = Split-Path -Parent $PSScriptRoot
 Set-Location $Repo
 
-Write-Host "=== FUA-001 KUBERNETES 2.01 RECOVERY / INVALID APISERVER CERT SAN ==="
+Write-Host "=== FUA-001 KUBERNETES 2.01 RECOVERY / WINDOWS ACL + APISERVER SAN ==="
 
 $Minikube = (Get-Command minikube -ErrorAction SilentlyContinue).Source
 if (-not $Minikube) {
@@ -16,59 +16,45 @@ if (-not $Minikube) {
 }
 if (-not $Minikube) { throw "minikube not found" }
 
-Write-Host ""
-Write-Host "01. Preserve current diagnostic state"
-$stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$BackupRoot = Join-Path $Repo "factory\\evidence\\k8s-recovery\\$Profile-certsan-$stamp"
-New-Item -ItemType Directory -Force -Path $BackupRoot | Out-Null
-
 $MachineDir = Join-Path $env:USERPROFILE ".minikube\\machines\\$Profile"
 $ProfileDir = Join-Path $env:USERPROFILE ".minikube\\profiles\\$Profile"
-function Copy-SafeTree([string]$Source,[string]$Destination) {
-    if (-not (Test-Path $Source)) { return }
-    New-Item -ItemType Directory -Force -Path $Destination | Out-Null
-    Get-ChildItem -Path $Source -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
-        $relative = $_.FullName.Substring($Source.Length).TrimStart('\')
-        if (-not $relative) { return }
-        $target = Join-Path $Destination $relative
-        if ($_.PSIsContainer) {
-            New-Item -ItemType Directory -Force -Path $target | Out-Null
-            return
-        }
+$KeyPath = Join-Path $MachineDir "id_rsa"
+$Sid = ([System.Security.Principal.WindowsIdentity]::GetCurrent()).User.Value
+$Grant = "*$($Sid):F"
 
-        if ($_.Name -in @("id_rsa","id_rsa.pub")) {
-            Add-Content (Join-Path $BackupRoot "skipped-sensitive-files.txt") $_.FullName
-            return
-        }
-
-        $parent = Split-Path -Parent $target
-        if ($parent) { New-Item -ItemType Directory -Force -Path $parent | Out-Null }
-        try {
-            Copy-Item $_.FullName $target -Force -ErrorAction Stop
-        } catch {
-            Add-Content (Join-Path $BackupRoot "skipped-unreadable-files.txt") ("{0} | {1}" -f $_.FullName,$_.Exception.Message)
-        }
-    }
-}
-
-Copy-SafeTree $MachineDir (Join-Path $BackupRoot "machine")
-Copy-SafeTree $ProfileDir (Join-Path $BackupRoot "profile")
-
-try {
-    & $Minikube logs -p $Profile --file=(Join-Path $BackupRoot "minikube.log") 2>$null
-} catch {}
+Write-Host ""
+Write-Host "01. Preserve safe diagnostic metadata only"
+$stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+$BackupRoot = Join-Path $Repo "factory\\evidence\\k8s-recovery\\$Profile-acl-certsan-$stamp"
+New-Item -ItemType Directory -Force -Path $BackupRoot | Out-Null
 
 [ordered]@{
     timestamp=(Get-Date).ToString("o")
     profile=$Profile
-    failure_class="K8S_INVALID_CERT_HOSTNAME"
-    recovery="explicit_apiserver_sans"
-    apiserver_name="control-plane.minikube.internal"
-    apiserver_names=@("localhost","control-plane.minikube.internal")
-} | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $BackupRoot "diagnostic.json") -Encoding UTF8
+    failure_classes=@("WINDOWS_ID_RSA_ACCESS_DENIED","K8S_INVALID_CERT_HOSTNAME")
+    machine_dir_exists=(Test-Path $MachineDir)
+    profile_dir_exists=(Test-Path $ProfileDir)
+    key_exists=(Test-Path $KeyPath)
+    current_user_sid=$Sid
+    sensitive_key_copied=$false
+    recovery="repair_profile_acl_then_recreate_with_explicit_apiserver_sans"
+} | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $BackupRoot "diagnostic.json") -Encoding UTF8
 
+if (Test-Path $ProfileDir) {
+    Get-ChildItem $ProfileDir -Force -ErrorAction SilentlyContinue |
+        Select-Object Name,Length,LastWriteTime |
+        ConvertTo-Json -Depth 3 |
+        Set-Content (Join-Path $BackupRoot "profile-directory-metadata.json") -Encoding UTF8
+}
+if (Test-Path $MachineDir) {
+    Get-ChildItem $MachineDir -Force -ErrorAction SilentlyContinue |
+        Select-Object Name,Length,LastWriteTime |
+        ConvertTo-Json -Depth 3 |
+        Set-Content (Join-Path $BackupRoot "machine-directory-metadata.json") -Encoding UTF8
+}
 Write-Host ("BACKUP             : {0}" -f $BackupRoot)
-Write-Host "DIAGNOSTIC BACKUP   : PASS"
+Write-Host "PRIVATE KEY COPIED  : False"
+Write-Host "DIAGNOSTIC METADATA : PASS"
 
 Write-Host ""
 Write-Host "02. Human destructive-operation gate"
@@ -80,20 +66,46 @@ if (-not $ApproveRecreateCertBrokenProfile) {
 Write-Host "DELETE APPROVAL     : PROVIDED"
 
 Write-Host ""
-Write-Host "03. Delete only failed otus-k8s profile"
+Write-Host "03. Repair ACL only on failed otus-k8s machine directory"
+if (Test-Path $MachineDir) {
+    & takeown.exe /F $MachineDir /R /D Y | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "takeown failed for otus-k8s machine directory" }
+
+    & icacls.exe $MachineDir /grant:r $Grant /T /C /Q | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "icacls grant failed for otus-k8s machine directory" }
+
+    if (Test-Path $KeyPath) {
+        Get-Content $KeyPath -TotalCount 0 -ErrorAction Stop | Out-Null
+        Write-Host "ID_RSA READ         : PASS"
+    }
+}
+Write-Host "PROFILE ACL REPAIR  : PASS"
+
+Write-Host ""
+Write-Host "04. Delete only failed otus-k8s profile"
 & $Minikube delete -p $Profile
-if ($LASTEXITCODE -ne 0) { throw "minikube delete failed" }
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "MINIKUBE DELETE     : FAILED; cleaning only otus-k8s residual directories"
+}
+
+foreach ($p in @($MachineDir,$ProfileDir)) {
+    if (Test-Path $p) {
+        & takeown.exe /F $p /R /D Y | Out-Null
+        & icacls.exe $p /grant:r $Grant /T /C /Q | Out-Null
+        Remove-Item $p -Recurse -Force -ErrorAction Stop
+    }
+}
 Write-Host "PROFILE DELETE      : PASS"
 
 Write-Host ""
-Write-Host "04. Recreate with explicit API-server SANs"
+Write-Host "05. Recreate with explicit API-server SANs"
 & $Minikube start -p $Profile --driver=docker --cpus=4 --memory=6144 --apiserver-name=control-plane.minikube.internal --apiserver-names=localhost,control-plane.minikube.internal
 if ($LASTEXITCODE -ne 0) { throw "minikube recreate with explicit SANs failed" }
 
 Write-Host ""
-Write-Host "05. Verify cluster"
+Write-Host "06. Verify cluster"
 & $Minikube status -p $Profile
 if ($LASTEXITCODE -ne 0) { throw "minikube status failed" }
 
 Write-Host ""
-Write-Host "FUA-001 KUBERNETES 2.01 CERTSAN RECOVERY RESULT: PASS"
+Write-Host "FUA-001 KUBERNETES 2.01 ACL/CERTSAN RECOVERY RESULT: PASS"
