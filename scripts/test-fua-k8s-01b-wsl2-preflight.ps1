@@ -55,37 +55,43 @@ if ($LASTEXITCODE -eq 0) {
 }
 Write-Host ""
 Write-Host "03. User-local Kubernetes toolchain"
-$bootstrap = @'
-set -euo pipefail
-mkdir -p "$HOME/.local/bin"
-export PATH="$HOME/.local/bin:$PATH"
 
-if ! command -v curl >/dev/null 2>&1; then
-  echo "CURL_MISSING"
-  exit 20
-fi
+& wsl.exe -d $Distro -- mkdir -p /home/vik/.local/bin
+if ($LASTEXITCODE -ne 0) { throw "failed to create ~/.local/bin" }
 
-if ! command -v minikube >/dev/null 2>&1; then
-  curl -fL --retry 3 --connect-timeout 20 \
-    https://storage.googleapis.com/minikube/releases/v1.39.0/minikube-linux-amd64 \
-    -o "$HOME/.local/bin/minikube"
-  chmod 0755 "$HOME/.local/bin/minikube"
-fi
+& wsl.exe -d $Distro -- test -x /home/vik/.local/bin/minikube
+if ($LASTEXITCODE -ne 0) {
+    & wsl.exe -d $Distro -- curl -fL --retry 3 --connect-timeout 20 https://storage.googleapis.com/minikube/releases/v1.39.0/minikube-linux-amd64 -o /home/vik/.local/bin/minikube
+    if ($LASTEXITCODE -ne 0) { throw "failed to download minikube" }
+    & wsl.exe -d $Distro -- chmod 0755 /home/vik/.local/bin/minikube
+    if ($LASTEXITCODE -ne 0) { throw "failed to chmod minikube" }
+}
 
-if ! command -v kubectl >/dev/null 2>&1; then
-  curl -fL --retry 3 --connect-timeout 20 \
-    https://dl.k8s.io/release/v1.37.1/bin/linux/amd64/kubectl \
-    -o "$HOME/.local/bin/kubectl"
-  chmod 0755 "$HOME/.local/bin/kubectl"
-fi
+& wsl.exe -d $Distro -- test -x /home/vik/.local/bin/kubectl
+if ($LASTEXITCODE -ne 0) {
+    & wsl.exe -d $Distro -- curl -fL --retry 3 --connect-timeout 20 https://dl.k8s.io/release/v1.37.1/bin/linux/amd64/kubectl -o /home/vik/.local/bin/kubectl
+    if ($LASTEXITCODE -ne 0) { throw "failed to download kubectl" }
+    & wsl.exe -d $Distro -- chmod 0755 /home/vik/.local/bin/kubectl
+    if ($LASTEXITCODE -ne 0) { throw "failed to chmod kubectl" }
+}
 
-minikube version
-kubectl version --client
-'@
-& wsl.exe -d $Distro -- bash -lc $bootstrap
-if ($LASTEXITCODE -ne 0) { throw "WSL Kubernetes toolchain bootstrap failed" }
+& wsl.exe -d $Distro -- /home/vik/.local/bin/minikube version
+if ($LASTEXITCODE -ne 0) { throw "minikube version check failed" }
+
+& wsl.exe -d $Distro -- /home/vik/.local/bin/kubectl version --client
+if ($LASTEXITCODE -ne 0) { throw "kubectl version check failed" }
+
 Write-Host "WSL TOOLCHAIN       : PASS"
 
+Write-Host ""
+Write-Host "03A. Registry/network reachability"
+& wsl.exe -d $Distro -- curl -I -L --connect-timeout 10 --max-time 20 https://registry-1.docker.io/v2/
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "DOCKER HUB NETWORK  : PASS"
+} else {
+    Write-Host "DOCKER HUB NETWORK  : DEGRADED"
+    Write-Host "NOTE                : Native Docker is healthy, but external registry access is timing out"
+}
 Write-Host ""
 Write-Host "04. Start WSL-native minikube profile"
 $start = @'
