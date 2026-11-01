@@ -39,7 +39,7 @@ jobs:
         run: bandit -r father_fua -q
 
       - name: Dependency audit - pip-audit
-        run: pip-audit
+        run: pip-audit -r requirements-runtime.txt
 
       - name: Secret scan
         run: |
