@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_FILESYSTEM_ACL_VALIDATED",
+  "status": "TARGET_EVM_FULL_POLYGON_REAL_RUNTIME_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "FULL_POLYGON_REAL_RUNTIME",
     "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
   ],
@@ -203,5 +202,16 @@
     "basic_user_trustlevel_available": false,
     "counted_as_pass": false,
     "counted_as_failure": false
+  },
+  "full_polygon_real_runtime": {
+    "status": "PASS",
+    "model": "qwen2.5:7b",
+    "scenario_count": 3,
+    "pass_count": 3,
+    "model_audit_ok": true,
+    "policy_denied": true,
+    "tool_blocked": true,
+    "sandbox_blocked": true,
+    "side_effects": 0
   }
 }
