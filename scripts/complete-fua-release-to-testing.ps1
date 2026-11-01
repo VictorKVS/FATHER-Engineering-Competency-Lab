@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory=$true)]
-    [string]$SnapshotSha256,
+    [switch]$AcceptCurrentSnapshot,
 
     [Parameter(Mandatory=$false)]
     [string]$Approver = $env:USERNAME
@@ -18,20 +18,26 @@ $ManifestPath = Join-Path $Repo "factory\chassis\FUA-001\manifest.json"
 $AcceptancePath = Join-Path $Repo "factory\evidence\FUA-001-HUMAN-ACCEPTANCE.json"
 $EvidencePath = Join-Path $Repo "factory\evidence\EVID-FUA-INSTALLATION-TO-TESTING-0019.md"
 
-if (-not (Test-Path $SnapshotPath)) { throw "snapshot file not found" }
+if (-not $AcceptCurrentSnapshot) {
+    throw "explicit -AcceptCurrentSnapshot is required"
+}
 
 $CurrentCommit = (git rev-parse HEAD).Trim()
-$Snapshot = Get-Content $SnapshotPath -Raw | ConvertFrom-Json
-
-if ($Snapshot.snapshot_sha256 -ne $SnapshotSha256) {
-    throw "snapshot hash mismatch"
-}
-if ($Snapshot.commit_sha -ne $CurrentCommit) {
-    throw "repository HEAD differs from snapshot commit; regenerate snapshot"
-}
 
 Write-Host "=== FUA-001 COMPLETE RELEASE TO TESTING ==="
 Write-Host ("COMMIT SHA       : {0}" -f $CurrentCommit)
+Write-Host "HUMAN ACTION     : ACCEPT_CURRENT_SNAPSHOT"
+
+Write-Host ""
+Write-Host "00. Create exact current snapshot"
+& (Join-Path $PSScriptRoot "create-fua-human-acceptance-snapshot.ps1")
+if ($LASTEXITCODE -ne 0) { throw "snapshot generation failed" }
+
+$Snapshot = Get-Content $SnapshotPath -Raw | ConvertFrom-Json
+$SnapshotSha256 = $Snapshot.snapshot_sha256
+if ($Snapshot.commit_sha -ne $CurrentCommit) {
+    throw "snapshot commit mismatch"
+}
 Write-Host ("SNAPSHOT SHA256  : {0}" -f $SnapshotSha256)
 
 Write-Host ""
