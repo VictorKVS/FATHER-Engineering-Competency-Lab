@@ -296,5 +296,25 @@
     "approved_execution_profile": "DOCKER_CONTAINED_ONLY",
     "windows_host_native_execution": "NOT_APPROVED",
     "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
+  },
+  "flight_test_program": {
+    "stage": "1.02_ENDURANCE_SOAK",
+    "maiden_flight": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
+      "real_model": "qwen2.5:7b",
+      "real_model_sorties": 5,
+      "hostile_sorties": "3/3",
+      "side_effects": 0,
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "next": [
+      "1.02_ENDURANCE_SOAK",
+      "1.03_TURBULENCE_FAULT_INJECTION",
+      "1.04_SECURITY_COMBAT_SORTIES",
+      "1.05_RESOURCE_PERFORMANCE_ENVELOPE",
+      "1.06_FLIGHT_CERTIFICATION_REVIEW"
+    ]
   }
 }
