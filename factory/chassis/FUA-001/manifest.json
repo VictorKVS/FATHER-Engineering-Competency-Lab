@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_REAL_MODEL_DISCOVERY_VALIDATED",
+  "status": "TARGET_EVM_REAL_MODEL_PREFLIGHT_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -82,9 +82,9 @@
   "next_factory_gates": [
     "REAL_LOCAL_MODEL_MISSION",
     "MODEL_SPECIFIC_COMPATIBILITY_EVIDENCE",
-    "REAL_MODEL_LATENCY_EVIDENCE",
+    "REAL_MODEL_LATENCY_BENCHMARK",
+    "REAL_MODEL_POLYGON",
     "REAL_SANDBOX_ISOLATION",
-    "FULL_POLYGON_REAL_RUNTIME",
     "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
   ],
@@ -132,5 +132,15 @@
       "deepseek-r1:7b",
       "llama3.2:1b"
     ]
+  },
+  "real_model_preflight": {
+    "model": "qwen2.5:7b",
+    "already_loaded": true,
+    "warmup_ms": 280,
+    "warmup_response": "READY",
+    "load_duration_ns": 2877600,
+    "eval_count": 2,
+    "done": true,
+    "status": "PASS"
   }
 }
