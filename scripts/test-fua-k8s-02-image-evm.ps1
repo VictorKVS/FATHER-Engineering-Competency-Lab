@@ -28,7 +28,14 @@ Write-Host "01. Prerequisites"
 & wsl.exe -d $Distro -- docker version --format "CLIENT={{.Client.Version}} SERVER={{.Server.Version}}"
 if ($LASTEXITCODE -ne 0) { throw "native Docker Engine unavailable in WSL" }
 & wsl.exe -d $Distro -- $Minikube status -p $Profile
-if ($LASTEXITCODE -ne 0) { throw "minikube profile is not running" }
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "MINIKUBE STATUS     : NOT RUNNING"
+    Write-Host "ACTION              : START EXISTING PROFILE"
+    & wsl.exe -d $Distro -- $Minikube start -p $Profile
+    if ($LASTEXITCODE -ne 0) { throw "existing minikube profile failed to start" }
+    & wsl.exe -d $Distro -- $Minikube status -p $Profile
+    if ($LASTEXITCODE -ne 0) { throw "minikube profile is not running after start" }
+}
 Write-Host "PREREQUISITES       : PASS"
 
 Write-Host ""
