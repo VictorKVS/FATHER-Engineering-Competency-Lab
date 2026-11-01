@@ -55,3 +55,17 @@ def test_real_model_runtime_prefers_general_text_model():
     ]
     rt=RealModelMissionRuntime(discoverer=lambda:models)
     assert rt.choose_model().model_id=="qwen2.5:7b"
+
+
+
+def test_real_model_runtime_retries_once_after_timeout():
+    calls={"n":0}
+    def invoker(model,prompt,timeout):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise TimeoutError("cold start")
+        return "warmed response"
+    rt=RealModelMissionRuntime(discoverer=lambda:[MODEL],invoker=invoker)
+    r=rt.run("mission",timeout=1.0)
+    assert r.response=="warmed response"
+    assert calls["n"]==2
