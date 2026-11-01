@@ -19,3 +19,12 @@ It does not prove:
 - restricted token/AppContainer;
 - defense against privileged/native escape;
 - container/VM isolation.
+
+## v0.2 SID handling correction
+
+The first target-EVM run showed that icacls did not resolve the raw SID token in /deny and returned a name/SID mapping error.
+
+The runner now:
+- passes the trustee as *SID, which is icacls numeric-SID form;
+- verifies the resulting ACL text contains the current SID before executing the denial probe;
+- removes the deny ACE using the same numeric-SID form during cleanup.
