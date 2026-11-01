@@ -201,13 +201,35 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
 
     next_gates = manifest.get("next_factory_gates") or []
     if testing_phase:
-        required_next = {"PRODUCT_TEST", "PILOT_TEST", "PRODUCTION_READINESS_REVIEW"}
+        expected_next_by_status = {
+            "INSTALLATION_APPROVED_FOR_TESTING": {
+                "PRODUCT_TEST",
+                "PILOT_TEST",
+                "PRODUCTION_READINESS_REVIEW",
+            },
+            "PRODUCT_TEST_IN_PROGRESS": {
+                "PILOT_TEST",
+                "PRODUCTION_READINESS_REVIEW",
+            },
+            "PRODUCT_TEST_VALIDATED": {
+                "PILOT_TEST",
+                "PRODUCTION_READINESS_REVIEW",
+            },
+            "PILOT_TEST_IN_PROGRESS": {
+                "PRODUCTION_READINESS_REVIEW",
+            },
+            "PILOT_TEST_VALIDATED": {
+                "PRODUCTION_READINESS_REVIEW",
+            },
+            "PRODUCTION_READINESS_REVIEW": set(),
+        }
+        required_next = expected_next_by_status.get(status, set())
         if not required_next.issubset(set(next_gates)):
             findings.append(
                 AuditFinding(
                     "HIGH",
                     "TESTING_NEXT_GATES_INCOMPLETE",
-                    f"next_factory_gates={next_gates}",
+                    f"status={status} next_factory_gates={next_gates} expected_at_least={sorted(required_next)}",
                 )
             )
     else:
