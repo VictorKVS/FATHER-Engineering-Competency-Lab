@@ -63,6 +63,21 @@ try {
 
     $ready = Invoke-RestMethod -Uri "http://127.0.0.1:8091/v1/agents/FUA-EVM-001/readiness" -Headers $Headers
     Write-Host "INSTALLATION PERMIT: $($ready.installation_permit)"
+
+    Write-Host "
+=== 04. FULL ASSEMBLY API ==="
+    $AssemblyBody = @{ mission = "FATHER universal agent architecture" } | ConvertTo-Json
+    $assembly = Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8091/v1/assembly/run" -Headers $Headers -ContentType "application/json" -Body $AssemblyBody
+
+    Write-Host "ASSEMBLY STATUS : $($assembly.status)"
+    Write-Host "AUDIT OK        : $($assembly.audit_ok)"
+    Write-Host "READINESS       : $($assembly.readiness)"
+    Write-Host "EVIDENCE SHA256 : $($assembly.evidence_sha256)"
+
+    if ($assembly.status -ne "PASS") { throw "Full assembly mission failed" }
+    if (-not $assembly.audit_ok) { throw "Audit chain verification failed" }
+    if ($assembly.readiness -ne "DENIED") { throw "Prototype must remain non-production-ready" }
+    if ($assembly.evidence_sha256.Length -ne 64) { throw "Evidence hash invalid" }
     Write-Host "BLOCKING GATES: $($ready.blocking_gates -join ', ')"
 
     if ($ready.installation_permit -ne "DENIED") {
