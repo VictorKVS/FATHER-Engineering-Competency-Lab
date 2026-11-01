@@ -298,7 +298,7 @@
     "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
   },
   "flight_test_program": {
-    "stage": "1.05_RESOURCE_PERFORMANCE_ENVELOPE",
+    "stage": "1.06_FLIGHT_CERTIFICATION_REVIEW",
     "maiden_flight": {
       "status": "PASS",
       "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
@@ -346,6 +346,23 @@
       "side_effects": 0,
       "reliability": "PASS",
       "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "performance": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-05-PERFORMANCE-0029",
+      "integrated_missions": 200,
+      "real_model_sorties": 30,
+      "success_rate": 1,
+      "avg_latency_ms": 421,
+      "p50_latency_ms": 282,
+      "p95_latency_ms": 367,
+      "p99_latency_ms": 4930,
+      "max_latency_ms": 4930,
+      "cold_start_outlier_ms": 4930,
+      "windows_resources": "PASS",
+      "docker_resources": "PASS",
+      "reliability": "PASS",
       "flight_recorder": "PASS"
     }
   }
