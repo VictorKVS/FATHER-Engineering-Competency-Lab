@@ -24,3 +24,8 @@ class Budget:
             raise RuntimeError("money budget exceeded")
         self.tokens_used += tokens
         self.money_used += money
+
+    def reset_usage(self) -> None:
+        """Reset usage for a new budget scope while preserving configured limits."""
+        self.tokens_used = 0
+        self.money_used = 0.0
