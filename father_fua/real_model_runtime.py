@@ -46,7 +46,18 @@ class RealModelMissionRuntime:
         ]
         if not models:
             raise LookupError("no healthy local chat model discovered")
-        models.sort(key=lambda m: (m.transport != "OLLAMA", m.model_id.lower()))
+        preferred = (
+            "qwen2.5:7b",
+            "deepseek-r1:7b",
+            "qwen2.5:3b",
+            "llama3.2:1b",
+            "qwen2.5-coder:7b-instruct-q4_K_M",
+            "qwen2.5-coder:1.5b",
+            "qwen3-vl:8b-instruct-q4_K_M",
+            "llava:7b",
+        )
+        rank = {name: i for i, name in enumerate(preferred)}
+        models.sort(key=lambda m: (rank.get(m.model_id, len(rank)), m.model_id.lower()))
         return models[0]
 
     def run(self, mission: str, *, timeout: float = 60.0) -> RealModelMissionResult:
