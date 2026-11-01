@@ -1,0 +1,47 @@
+{
+  "schema": "father.fua_package_index.v1",
+  "chassis_id": "FUA-001",
+  "version": "0.2",
+  "status": "APPROVED_DESIGN_BASELINE",
+  "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
+  "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
+  "api_contract": "factory/api/fua-001-openapi.yaml",
+  "api_design": "factory/api/FUA-001-API-DESIGN.md",
+  "test_standard": "factory/standards/FATHER-TEST-BLOCK-STANDARD-v0.1.md",
+  "research": "factory/research/FUA-001-REFERENCE-AGENT-STUDY.md",
+  "drafted_blocks": [
+    "01-IDENTITY",
+    "02-ROLE",
+    "03-GOAL",
+    "04-TASK-PLANNER",
+    "05-STATE",
+    "06-MEMORY",
+    "07-PROMPT-RUNTIME"
+  ],
+  "next_blocks": [
+    "08-RAG-RUNTIME",
+    "09-KNOWLEDGE-RUNTIME",
+    "10-TOOL-RUNTIME",
+    "11-MODEL-ROUTER",
+    "12-POLICY-ENGINE",
+    "13-EVALUATOR",
+    "14-AUDIT",
+    "15-OBSERVABILITY",
+    "16-SKILL-RUNTIME",
+    "17-CONTEXT-MANAGER",
+    "18-REFLECTION-LEARNING",
+    "19-HUMAN-APPROVAL",
+    "20-EXECUTION-SANDBOX",
+    "21-COST-RESOURCE-CONTROLLER",
+    "22-EVIDENCE-MANAGER",
+    "23-COMPATIBILITY-MANAGER",
+    "24-FAILURE-RECOVERY",
+    "25-RELEASE-READINESS-GATE",
+    "26-SECURITY-OPERATING-LAYER"
+  ],
+  "mandatory_governance_sections": [
+    "30-60"
+  ],
+  "installation_permit": "DENIED",
+  "production_ready": false
+}
