@@ -27,9 +27,9 @@ def test_process_sandbox_rejects_non_allowlisted_executable():
 
 
 def test_process_sandbox_scrubs_parent_environment(monkeypatch):
-    monkeypatch.setenv("FUA_PARENT_SECRET","do-not-leak")
+    monkeypatch.setenv("FUA_PARENT_CANARY","CANARY")
     sb=WindowsProcessSandbox(allowed_executables=[sys.executable],timeout_seconds=5)
-    code="import os; print(os.environ.get('FUA_PARENT_SECRET','MISSING'))"
+    code="import os; print(os.environ.get('FUA_PARENT_CANARY','MISSING'))"
     r=sb.run(sys.executable,["-c",code])
     assert r.stdout.strip()=="MISSING"
 
@@ -47,3 +47,31 @@ def test_process_sandbox_preserves_minimal_windows_runtime_env():
     r=sb.run(sys.executable,["-c",code])
     assert r.returncode==0
     assert "True" in r.stdout
+
+
+
+def test_process_sandbox_rejects_invalid_resource_limits():
+    with pytest.raises(ValueError):
+        WindowsProcessSandbox(allowed_executables=[sys.executable],active_process_limit=0)
+    with pytest.raises(ValueError):
+        WindowsProcessSandbox(allowed_executables=[sys.executable],process_memory_limit_mb=0)
+    with pytest.raises(ValueError):
+        WindowsProcessSandbox(allowed_executables=[sys.executable],job_memory_limit_mb=-1)
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows Job Object enforcement")
+def test_process_sandbox_job_blocks_second_process():
+    sb=WindowsProcessSandbox(
+        allowed_executables=[sys.executable],
+        timeout_seconds=5,
+        active_process_limit=1,
+    )
+    code=(
+        "import subprocess,sys; "
+        "\ntry: subprocess.run([sys.executable,'-c','print(1)'],check=True,capture_output=True)"
+        "\nexcept Exception as e: print('SPAWN=DENIED',type(e).__name__)"
+        "\nelse: print('SPAWN=ALLOWED')"
+    )
+    r=sb.run(sys.executable,["-c",code])
+    assert "SPAWN=DENIED" in r.stdout
+    assert "SPAWN=ALLOWED" not in r.stdout
