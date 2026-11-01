@@ -76,7 +76,7 @@ try {
 if (-not $ProfileExists) {
     Write-Host "PROFILE             : NOT FOUND"
     Write-Host "ACTION              : CREATE NON-DESTRUCTIVE PROFILE"
-    & $Minikube start -p $Profile --driver=$ExpectedDriver --cpus=4 --memory=6144
+    & $Minikube start -p $Profile --driver=$ExpectedDriver --cpus=4 --memory=6144 --apiserver-name=control-plane.minikube.internal --apiserver-names=localhost,control-plane.minikube.internal
     if ($LASTEXITCODE -ne 0) { throw "minikube profile creation/start failed" }
 } else {
     Write-Host "PROFILE             : FOUND"
@@ -93,7 +93,7 @@ if (-not $ProfileExists) {
     }
     if (-not $running) {
         Write-Host "ACTION              : START EXISTING PROFILE"
-        & $Minikube start -p $Profile
+        & $Minikube start -p $Profile --apiserver-name=control-plane.minikube.internal --apiserver-names=localhost,control-plane.minikube.internal
         if ($LASTEXITCODE -ne 0) { throw "minikube start existing profile failed" }
     }
 }
