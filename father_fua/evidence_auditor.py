@@ -39,6 +39,8 @@ REQUIRED_RUNTIME_FILES = (
     "father_fua/sandbox.py",
     "father_fua/process_sandbox.py",
     "father_fua/real_runtime_polygon.py",
+    "father_fua/human_acceptance.py",
+    "father_fua/installation_gate.py",
 )
 
 REQUIRED_TEST_FILES = (
@@ -49,6 +51,8 @@ REQUIRED_TEST_FILES = (
     "tests/test_process_sandbox.py",
     "tests/test_real_model_contract.py",
     "tests/test_real_runtime_polygon.py",
+    "tests/test_human_acceptance.py",
+    "tests/test_installation_gate.py",
 )
 
 
