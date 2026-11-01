@@ -54,9 +54,14 @@ try {
     $aclLines = & icacls.exe $ProtectedDir
     $aclLines | ForEach-Object { Write-Host $_ }
     $aclText = $aclLines -join [Environment]::NewLine
-    if ($aclText -notmatch [regex]::Escape($Sid)) {
-        throw "deny ACE was not materialized for current SID"
+    $AccountName = $identity.Name
+    $hasDenyModify = $aclLines | Where-Object {
+        $_ -match [regex]::Escape($AccountName) -and $_ -match "\(DENY\)\(M\)"
+    } | Select-Object -First 1
+    if (-not $hasDenyModify) {
+        throw "deny ACE was not materialized for current account"
     }
+    Write-Host ("DENY ACE        : PASS ({0})" -f $AccountName)
 
     Write-Host ""
     Write-Host "03. Verify outside write denial"
