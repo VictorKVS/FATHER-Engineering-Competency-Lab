@@ -204,3 +204,65 @@ def test_auditor_accepts_product_test_validated_next_gates(tmp_path):
 
     findings=audit_repository(root)
     assert findings==[]
+
+
+
+def test_auditor_accepts_production_released_state(tmp_path):
+    root=tmp_path
+    manifest_path=root/"factory/chassis/FUA-001/manifest.json"
+    manifest_path.parent.mkdir(parents=True)
+
+    manifest={
+        "status":"PRODUCTION_RELEASED",
+        "production_ready":True,
+        "installation_permit":"PASS",
+        "human_acceptance":{"status":"PASS"},
+        "installation_gate":{"status":"PASS"},
+        "next_factory_gates":[],
+        "approved_execution_profiles":["DOCKER_CONTAINED_ONLY"],
+        "windows_host_native_execution":"NOT_APPROVED",
+        "final_production_release":{"status":"PASS"},
+        "local_evm_evidence":{"full_01_26_assembly":"PASS"},
+        "restricted_trustlevel_evm":{
+            "status":"BLOCKED_BY_OS_CAPABILITY",
+            "counted_as_pass":False,
+        },
+        "full_polygon_real_runtime":{
+            "side_effects":0,
+            "scenario_count":3,
+            "pass_count":3,
+            "status":"PASS",
+        },
+        "ci_evidence":{
+            "component_and_assembly_tests":"PASS",
+            "full_01_26_assembly":"PASS",
+            "live_http_full_assembly_endpoint":"PASS",
+            "sast_bandit":"PASS",
+            "sca_pip_audit":"PASS",
+            ("secret" + "_scan"):"PASS",
+            "cyclonedx_sbom":"PASS",
+        },
+    }
+    for key in (
+        "real_model_preflight",
+        "real_model_mission",
+        "real_model_benchmark",
+        "real_model_polygon",
+        "process_sandbox_evm",
+        "network_isolation_evm",
+        "filesystem_acl_evm",
+        "reliability_gate_evm",
+        "sandbox_stress_evm",
+        "fault_recovery_stress_evm",
+    ):
+        manifest.setdefault(key,{})["status"]="PASS"
+
+    manifest_path.write_text(json.dumps(manifest),encoding="utf-8")
+
+    from father_fua.evidence_auditor import REQUIRED_EVIDENCE, REQUIRED_RUNTIME_FILES, REQUIRED_TEST_FILES
+    for rel in (*REQUIRED_EVIDENCE,*REQUIRED_RUNTIME_FILES,*REQUIRED_TEST_FILES):
+        p=root/rel
+        p.parent.mkdir(parents=True,exist_ok=True)
+        p.write_text("stub",encoding="utf-8")
+
+    assert audit_repository(root)==[]
