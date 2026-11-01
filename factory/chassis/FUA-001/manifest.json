@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "RESTRICTED_TOKEN_OR_LOW_INTEGRITY_BASELINE",
     "FULL_POLYGON_REAL_RUNTIME",
     "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
@@ -198,5 +197,11 @@
     "error_type": "PermissionError",
     "sentinel_unchanged": true,
     "cleanup": true
+  },
+  "restricted_trustlevel_evm": {
+    "status": "BLOCKED_BY_OS_CAPABILITY",
+    "basic_user_trustlevel_available": false,
+    "counted_as_pass": false,
+    "counted_as_failure": false
   }
 }
