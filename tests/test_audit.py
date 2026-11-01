@@ -14,3 +14,11 @@ def test_tamper_breaks_chain():
     a.append(kind="mission", actor="user", correlation_id="C1", detail={"x":1})
     a.events[0] = replace(a.events[0], detail={"x":2})
     assert a.verify() is False
+
+
+
+def test_timestamp_tamper_breaks_chain():
+    a = AuditLog()
+    a.append(kind="mission", actor="user", correlation_id="C1", detail={"x":1})
+    a.events[0] = replace(a.events[0], ts=a.events[0].ts + 1)
+    assert a.verify() is False
