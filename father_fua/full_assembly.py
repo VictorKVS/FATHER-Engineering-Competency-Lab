@@ -109,10 +109,10 @@ class FullFUAAssemblyRuntime:
         if not authorize_duty(self.role,"mission.execute"):
             raise PermissionError("role blocks mission")
 
-        # Tool max_calls is a mission-scoped safety budget, not a lifetime fuse.
-        # Preserve tool registrations/audit history while starting each mission
-        # with a fresh execution allowance.
+        # Mission-scoped safety budgets must not become lifetime fuses.
+        # Keep audit/metrics/history, but reset per-mission execution allowances.
         self.tools.reset_call_budget()
+        self.budget.reset_usage()
 
         mission_id=str(uuid.uuid4())
         corr=mission_id
