@@ -43,9 +43,19 @@ try {
 
     Write-Host ""
     Write-Host "02. Apply NTFS deny outside sandbox workdir"
-    & icacls.exe $ProtectedDir /deny ("$Sid" + ":(OI)(CI)(M)") | Out-Host
+    $IcaclsSid = "*" + $Sid
+    & icacls.exe $ProtectedDir /deny ($IcaclsSid + ":(OI)(CI)(M)") | Out-Host
     if ($LASTEXITCODE -ne 0) {
         throw "icacls deny failed"
+    }
+
+    Write-Host ""
+    Write-Host "02A. Verify deny ACE"
+    $aclLines = & icacls.exe $ProtectedDir
+    $aclLines | ForEach-Object { Write-Host $_ }
+    $aclText = $aclLines -join [Environment]::NewLine
+    if ($aclText -notmatch [regex]::Escape($Sid)) {
+        throw "deny ACE was not materialized for current SID"
     }
 
     Write-Host ""
@@ -93,7 +103,7 @@ finally {
     Write-Host "04. Cleanup ACL and temporary directories"
 
     if (Test-Path $ProtectedDir) {
-        & icacls.exe $ProtectedDir /remove:d $Sid /T /C | Out-Null
+        & icacls.exe $ProtectedDir /remove:d ("*" + $Sid) /T /C | Out-Null
         & icacls.exe $ProtectedDir /reset /T /C | Out-Null
     }
 
