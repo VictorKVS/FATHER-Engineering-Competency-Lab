@@ -18,7 +18,9 @@ $tests = @(
     "tests/test_context_manager.py",
     "tests/test_compatibility.py",
     "tests/test_reliability_failure_injection.py",
-    "tests/test_process_sandbox.py"
+    "tests/test_process_sandbox.py",
+    "tests/test_tools_runtime.py",
+    "tests/test_human_acceptance.py"
 )
 & $Py -m pytest @tests -q
 if ($LASTEXITCODE -ne 0) {
