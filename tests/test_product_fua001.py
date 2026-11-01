@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from father_fua.full_assembly import run_full_assembly
+from father_fua.full_assembly import FullFUAAssemblyRuntime
 from father_fua.evidence_auditor import audit_repository
 from father_fua.local_models import DiscoveredModel
 from father_fua.real_model_runtime import RealModelMissionRuntime
@@ -12,9 +12,9 @@ import sys
 
 
 def test_product_full_assembly_passes():
-    result=run_full_assembly()
-    assert result["status"]=="PASS"
-    assert result["audit_ok"] is True
+    result=FullFUAAssemblyRuntime().run("product test mission")
+    assert result.status=="PASS"
+    assert result.audit_ok is True
 
 
 def test_product_real_runtime_polygon_zero_side_effects():
