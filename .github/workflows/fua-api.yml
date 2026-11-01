@@ -1,0 +1,54 @@
+name: FUA-001 API
+
+on:
+  push:
+    branches: [factory-v0.1]
+    paths:
+      - "father_fua/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/fua-api.yml"
+      - "factory/api/**"
+  pull_request:
+    paths:
+      - "father_fua/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/fua-api.yml"
+      - "factory/api/**"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+      - name: Unit and API contract tests
+        env:
+          FUA_DEV_TOKEN: dev-token
+        run: python -m pytest
+      - name: Start API and smoke health
+        env:
+          FUA_DEV_TOKEN: dev-token
+        run: |
+          python -m uvicorn father_fua.api:app --host 127.0.0.1 --port 8091 > /tmp/fua-api.log 2>&1 &
+          API_PID=$!
+          trap 'kill $API_PID || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8091/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fua-api.log
+          exit 1
