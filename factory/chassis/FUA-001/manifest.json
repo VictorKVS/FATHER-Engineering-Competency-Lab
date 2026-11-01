@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "PRODUCTION_READINESS_REVIEW",
+  "status": "PRODUCTION_READINESS_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,7 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "PRODUCTION_READINESS_REVIEW"
+    "FINAL_HUMAN_RELEASE_DECISION"
   ],
   "mandatory_governance_sections": [
     "30-60"
@@ -285,5 +285,11 @@
   "approved_execution_profiles": [
     "DOCKER_CONTAINED_ONLY"
   ],
-  "windows_host_native_execution": "NOT_APPROVED"
+  "windows_host_native_execution": "NOT_APPROVED",
+  "production_readiness_review": {
+    "status": "PASS",
+    "finding_count": 0,
+    "approved_execution_profile": "DOCKER_CONTAINED_ONLY",
+    "windows_host_native_execution": "NOT_APPROVED"
+  }
 }
