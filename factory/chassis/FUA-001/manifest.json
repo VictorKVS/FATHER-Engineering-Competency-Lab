@@ -298,7 +298,7 @@
     "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
   },
   "flight_test_program": {
-    "stage": "1.04_SECURITY_COMBAT_SORTIES",
+    "stage": "1.05_RESOURCE_PERFORMANCE_ENVELOPE",
     "maiden_flight": {
       "status": "PASS",
       "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
@@ -335,6 +335,16 @@
       "fault_recovery_stress": "PASS",
       "security_boundary": "PASS",
       "side_effects": 0,
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "security_combat": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-04-SECURITY-COMBAT-0028",
+      "combat_scenarios": "6/6",
+      "full_polygon": "3/3",
+      "side_effects": 0,
+      "reliability": "PASS",
       "containment": "PASS",
       "flight_recorder": "PASS"
     }
