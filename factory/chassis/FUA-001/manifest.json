@@ -298,7 +298,7 @@
     "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
   },
   "flight_test_program": {
-    "stage": "1.03_TURBULENCE_FAULT_INJECTION",
+    "stage": "1.04_SECURITY_COMBAT_SORTIES",
     "maiden_flight": {
       "status": "PASS",
       "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
@@ -324,6 +324,17 @@
       "success_rate": 1,
       "reliability": "PASS",
       "security_boundary": "PASS",
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "turbulence": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-03-TURBULENCE-0027",
+      "transient_recovery": "PASS",
+      "hard_failure_escape": "PASS",
+      "fault_recovery_stress": "PASS",
+      "security_boundary": "PASS",
+      "side_effects": 0,
       "containment": "PASS",
       "flight_recorder": "PASS"
     }
