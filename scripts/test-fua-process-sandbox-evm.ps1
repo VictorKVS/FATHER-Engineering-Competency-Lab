@@ -30,7 +30,7 @@ if r.returncode != 0 or r.timed_out or "SANDBOX=1" not in r.stdout:
 
 print("")
 print("02. ENVIRONMENT LEAK TEST")
-os.environ["FUA_PARENT_SECRET"]="SHOULD_NOT_LEAK"
+os.environ["FUA_PARENT_SECRET"]="FUA_PARENT_CANARY_VALUE"
 r=sb.run(sys.executable,["-c","import os; print(os.environ.get('FUA_PARENT_SECRET','MISSING'))"])
 print("SECRET_VISIBLE  : {}".format(r.stdout.strip()))
 if r.stdout.strip() != "MISSING":
