@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_PROCESS_SANDBOX_VALIDATED",
+  "status": "TARGET_EVM_NETWORK_ISOLATION_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "NETWORK_ISOLATION_BASELINE",
     "FILESYSTEM_ACL_OR_RESTRICTED_TOKEN_BASELINE",
     "FULL_POLYGON_REAL_RUNTIME",
     "FINAL_EVIDENCE_AUDIT",
@@ -182,5 +181,13 @@
     "timeout_termination": true,
     "temp_workdir": true,
     "final_sandbox_certified": false
+  },
+  "network_isolation_evm": {
+    "status": "PASS",
+    "baseline_target": "api.github.com:443",
+    "venv_python": "G:\\1\\FATHER-Engineering-Competency-Lab\\.venv\\Scripts\\python.exe",
+    "base_python": "C:\\Users\\1\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+    "deny_error": "PermissionError",
+    "cleanup": true
   }
 }
