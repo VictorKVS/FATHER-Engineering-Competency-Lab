@@ -24,6 +24,7 @@ def test_premature_production_ready_is_critical(tmp_path):
     dest=tmp_path/"factory/chassis/FUA-001"
     dest.mkdir(parents=True)
     manifest=json.loads(src.read_text(encoding="utf-8"))
+    manifest["status"]="PRODUCT_TEST_VALIDATED"
     manifest["production_ready"]=True
     (dest/"manifest.json").write_text(json.dumps(manifest),encoding="utf-8")
     findings=audit_repository(tmp_path)
