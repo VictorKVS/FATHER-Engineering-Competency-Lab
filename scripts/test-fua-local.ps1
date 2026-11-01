@@ -18,7 +18,9 @@ $Py = Join-Path $Repo ".venv\Scripts\python.exe"
 $Pip = Join-Path $Repo ".venv\Scripts\pip.exe"
 
 & $Py -m pip install --upgrade pip
+if ($LASTEXITCODE -ne 0) { throw "pip upgrade failed" }
 & $Pip install -e ".[test]"
+if ($LASTEXITCODE -ne 0) { throw "FUA install failed" }
 
 Write-Host "
 === 01. PYTEST ==="
