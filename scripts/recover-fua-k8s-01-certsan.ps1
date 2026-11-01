@@ -24,8 +24,35 @@ New-Item -ItemType Directory -Force -Path $BackupRoot | Out-Null
 
 $MachineDir = Join-Path $env:USERPROFILE ".minikube\\machines\\$Profile"
 $ProfileDir = Join-Path $env:USERPROFILE ".minikube\\profiles\\$Profile"
-if (Test-Path $MachineDir) { Copy-Item $MachineDir (Join-Path $BackupRoot "machine") -Recurse -Force }
-if (Test-Path $ProfileDir) { Copy-Item $ProfileDir (Join-Path $BackupRoot "profile") -Recurse -Force }
+function Copy-SafeTree([string]$Source,[string]$Destination) {
+    if (-not (Test-Path $Source)) { return }
+    New-Item -ItemType Directory -Force -Path $Destination | Out-Null
+    Get-ChildItem -Path $Source -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
+        $relative = $_.FullName.Substring($Source.Length).TrimStart('\')
+        if (-not $relative) { return }
+        $target = Join-Path $Destination $relative
+        if ($_.PSIsContainer) {
+            New-Item -ItemType Directory -Force -Path $target | Out-Null
+            return
+        }
+
+        if ($_.Name -in @("id_rsa","id_rsa.pub")) {
+            Add-Content (Join-Path $BackupRoot "skipped-sensitive-files.txt") $_.FullName
+            return
+        }
+
+        $parent = Split-Path -Parent $target
+        if ($parent) { New-Item -ItemType Directory -Force -Path $parent | Out-Null }
+        try {
+            Copy-Item $_.FullName $target -Force -ErrorAction Stop
+        } catch {
+            Add-Content (Join-Path $BackupRoot "skipped-unreadable-files.txt") ("{0} | {1}" -f $_.FullName,$_.Exception.Message)
+        }
+    }
+}
+
+Copy-SafeTree $MachineDir (Join-Path $BackupRoot "machine")
+Copy-SafeTree $ProfileDir (Join-Path $BackupRoot "profile")
 
 try {
     & $Minikube logs -p $Profile --file=(Join-Path $BackupRoot "minikube.log") 2>$null
