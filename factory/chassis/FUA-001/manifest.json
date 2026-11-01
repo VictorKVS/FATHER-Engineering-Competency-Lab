@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_REAL_MODEL_PREFLIGHT_VALIDATED",
+  "status": "TARGET_EVM_REAL_MODEL_MISSION_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "REAL_LOCAL_MODEL_MISSION",
     "MODEL_SPECIFIC_COMPATIBILITY_EVIDENCE",
     "REAL_MODEL_LATENCY_BENCHMARK",
     "REAL_MODEL_POLYGON",
@@ -142,5 +141,18 @@
     "eval_count": 2,
     "done": true,
     "status": "PASS"
-  }
+  },
+  "real_model_mission": {
+    "status": "PASS",
+    "model": "qwen3-vl:8b-instruct-q4_K_M",
+    "transport": "OLLAMA",
+    "latency_ms": 7171,
+    "response_sha256": "a64eed601929e512cb5c454152428fd8fc4863565cf1ecbdd4b50222d33dceca",
+    "evidence_sha256": "cbd7cc651d29ed9a83c77dc0ab5a94416c92546395e6338f5187d3f0f092ecf3",
+    "audit_ok": true,
+    "response_length": 416
+  },
+  "known_defects": [
+    "STAGE_RUNNER_BYPASSED_MODEL_PREFERENCE_PATCHED"
+  ]
 }
