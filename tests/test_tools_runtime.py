@@ -40,3 +40,44 @@ def test_tool_rate_limit_enforced():
         rt.execute("limited",{"x":2},role="ANALYST",policy_allow=True)
     assert rt.calls_used("limited")==1
     assert rt.audit[-1]["status"]=="RATE_LIMITED"
+
+
+
+def test_tool_runtime_audits_denials_and_handler_failures():
+    rt=ToolRuntime()
+
+    def failing_handler(payload):
+        raise RuntimeError("handler failure")
+
+    rt.register(
+        ToolSpec("admin",True,("ANALYST",),max_calls=2),
+        failing_handler,
+    )
+
+    with pytest.raises(PermissionError):
+        rt.execute("missing",{},role="ANALYST",policy_allow=True)
+    assert rt.audit[-1]["status"]=="DENIED"
+    assert rt.audit[-1]["reason"]=="UNKNOWN_TOOL"
+
+    with pytest.raises(PermissionError):
+        rt.execute("admin",{},role="ANALYST",policy_allow=False)
+    assert rt.audit[-1]["status"]=="DENIED"
+    assert rt.audit[-1]["reason"]=="POLICY"
+
+    with pytest.raises(PermissionError):
+        rt.execute("admin",{},role="ANALYST",policy_allow=True,human_approved=False)
+    assert rt.audit[-1]["reason"]=="HUMAN_APPROVAL"
+
+    with pytest.raises(RuntimeError):
+        rt.execute("admin",{},role="ANALYST",policy_allow=True,human_approved=True)
+    assert rt.audit[-1]["status"]=="FAILED"
+    assert rt.audit[-1]["error_type"]=="RuntimeError"
+    assert rt.calls_used("admin")==0
+
+
+def test_tool_runtime_rejects_invalid_registration():
+    rt=ToolRuntime()
+    with pytest.raises(ValueError):
+        rt.register(ToolSpec("",False,("ANALYST",)),lambda p:p)
+    with pytest.raises(ValueError):
+        rt.register(ToolSpec("x",False,()),lambda p:p)
