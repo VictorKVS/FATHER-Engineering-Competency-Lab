@@ -68,12 +68,18 @@ Invoke-WslRoot @("install","-m","0755","-d","/etc/apt/keyrings")
 Invoke-WslRoot @("curl","-fsSL","https://download.docker.com/linux/ubuntu/gpg","-o","/etc/apt/keyrings/docker.asc")
 Invoke-WslRoot @("chmod","a+r","/etc/apt/keyrings/docker.asc")
 
-$codename = (& wsl.exe -d $Distro -- sh -c ". /etc/os-release; printf %s \$VERSION_CODENAME").Trim()
+$osRelease = & wsl.exe -d $Distro -- cat /etc/os-release
+if ($LASTEXITCODE -ne 0) { throw "failed to read /etc/os-release" }
+
+$codenameLine = $osRelease | Where-Object { $_ -like "VERSION_CODENAME=*" } | Select-Object -First 1
+if (-not $codenameLine) { throw "VERSION_CODENAME not found in /etc/os-release" }
+$codename = ($codenameLine -split "=",2)[1].Trim().Trim('"')
+
 $arch = (& wsl.exe -d $Distro -- dpkg --print-architecture).Trim()
 if (-not $codename -or -not $arch) { throw "failed to resolve Ubuntu codename/architecture" }
 
 $repoLine = "deb [arch=$arch signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $codename stable"
-& wsl.exe -d $Distro -u root -- sh -c "printf '%s\n' '$repoLine' > /etc/apt/sources.list.d/docker.list"
+$repoLine | & wsl.exe -d $Distro -u root -- tee /etc/apt/sources.list.d/docker.list | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "failed to configure Docker apt repository" }
 
 Invoke-WslRoot @("env","DEBIAN_FRONTEND=noninteractive","apt-get","update")
