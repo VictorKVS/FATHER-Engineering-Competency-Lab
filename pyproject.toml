@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "father-fua"
 version = "0.1.0"
@@ -15,6 +19,9 @@ test = [
   "httpx>=0.27,<1",
   "pyyaml>=6,<7",
 ]
+
+[tool.setuptools]
+packages = ["father_fua"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
