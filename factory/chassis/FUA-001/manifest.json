@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_FULL_POLYGON_REAL_RUNTIME_VALIDATED",
+  "status": "FINAL_EVIDENCE_AUDIT_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,7 +80,6 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "FINAL_EVIDENCE_AUDIT",
     "HUMAN_ACCEPTANCE"
   ],
   "mandatory_governance_sections": [
@@ -213,5 +212,10 @@
     "tool_blocked": true,
     "sandbox_blocked": true,
     "side_effects": 0
+  },
+  "final_evidence_audit": {
+    "status": "PASS",
+    "finding_count": 0,
+    "repository_gate": "PASS"
   }
 }
