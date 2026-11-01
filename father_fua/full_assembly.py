@@ -202,7 +202,8 @@ class FullFUAAssemblyRuntime:
             content="mission result available for review",
             provenance=f"mission:{mission_id}",
         )
-        assert proposal.approved is False
+        if proposal.approved:
+            raise RuntimeError("learning proposal must not self-approve")
 
         privileged_action="release.production"
         approval=Approval(
