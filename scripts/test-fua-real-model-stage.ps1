@@ -33,8 +33,8 @@ for i, model in enumerate(models, 1):
 if not compatible:
     raise SystemExit(21)
 
-selected = compatible[0]
-runtime = RealModelMissionRuntime(discoverer=lambda: [selected])
+runtime = RealModelMissionRuntime(discoverer=lambda: compatible)
+selected = runtime.choose_model()
 print("WARMUP          : starting selected local model")
 result = runtime.run(
     "In one short paragraph, explain what a universal AI agent chassis is. "
