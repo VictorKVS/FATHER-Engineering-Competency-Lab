@@ -13,3 +13,12 @@ configuration file machines/otus-k8s/config.json is missing.
 
 ## Result
 After recovery PASS, re-run scripts/test-fua-k8s-01-preflight-evm.ps1.
+
+
+## Windows Docker-driver certificate hardening
+
+Cluster creation pins valid API server certificate names:
+- control-plane.minikube.internal
+- localhost
+
+This avoids fail-open reliance on an automatically generated empty certSAN observed on the target Windows/Docker environment.
