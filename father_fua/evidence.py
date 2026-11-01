@@ -1,5 +1,6 @@
 from __future__ import annotations
 import hashlib
+import hmac
 import json
 import time
 from dataclasses import dataclass
@@ -75,4 +76,4 @@ def verify_evidence(e: Evidence) -> bool:
         correlation_id=e.correlation_id,
         created_at=e.created_at,
     )
-    return expected == e.sha256
+    return hmac.compare_digest(expected, e.sha256)
