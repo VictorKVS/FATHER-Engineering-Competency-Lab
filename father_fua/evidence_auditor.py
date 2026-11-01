@@ -82,11 +82,9 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
         if not (root/rel).exists():
             findings.append(AuditFinding("HIGH","TEST_MISSING",rel))
 
-    if manifest.get("production_ready") is not False:
-        findings.append(AuditFinding("CRITICAL","PREMATURE_PRODUCTION_READY","production_ready must remain false"))
-
     status = manifest.get("status")
     permit = manifest.get("installation_permit")
+    production_phase = status == "PRODUCTION_RELEASED"
     testing_phase = status in {
         "INSTALLATION_APPROVED_FOR_TESTING",
         "PRODUCT_TEST_IN_PROGRESS",
@@ -96,7 +94,58 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
         "PRODUCTION_READINESS_REVIEW",
     }
 
-    if testing_phase:
+    if production_phase:
+        if manifest.get("production_ready") is not True:
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PRODUCTION_RELEASE_WITHOUT_READY_STATE",
+                    "PRODUCTION_RELEASED requires production_ready=true",
+                )
+            )
+        if permit != "PASS":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PRODUCTION_RELEASE_WITHOUT_INSTALLATION_PERMIT",
+                    f"status={status} permit={permit}",
+                )
+            )
+        final_release = manifest.get("final_production_release") or {}
+        if final_release.get("status") != "PASS":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "FINAL_RELEASE_NOT_PROVEN",
+                    str(final_release.get("status")),
+                )
+            )
+        profiles = set(manifest.get("approved_execution_profiles") or [])
+        if "DOCKER_CONTAINED_ONLY" not in profiles:
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PRODUCTION_PROFILE_NOT_APPROVED",
+                    str(sorted(profiles)),
+                )
+            )
+        if manifest.get("windows_host_native_execution") != "NOT_APPROVED":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "WINDOWS_NATIVE_POLICY_INVALID",
+                    str(manifest.get("windows_host_native_execution")),
+                )
+            )
+    elif testing_phase:
+        if manifest.get("production_ready") is not False:
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PREMATURE_PRODUCTION_READY",
+                    "production_ready must remain false before final production release",
+                )
+            )
         if permit != "PASS":
             findings.append(
                 AuditFinding(
@@ -124,6 +173,14 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
                 )
             )
     else:
+        if manifest.get("production_ready") is not False:
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PREMATURE_PRODUCTION_READY",
+                    "production_ready must remain false before controlled testing",
+                )
+            )
         if permit != "DENIED":
             findings.append(
                 AuditFinding(
@@ -200,7 +257,16 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
         )
 
     next_gates = manifest.get("next_factory_gates") or []
-    if testing_phase:
+    if production_phase:
+        if next_gates:
+            findings.append(
+                AuditFinding(
+                    "HIGH",
+                    "PRODUCTION_RELEASE_HAS_PENDING_FACTORY_GATES",
+                    f"next_factory_gates={next_gates}",
+                )
+            )
+    elif testing_phase:
         expected_next_by_status = {
             "INSTALLATION_APPROVED_FOR_TESTING": {
                 "PRODUCT_TEST",
