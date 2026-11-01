@@ -24,11 +24,25 @@ Write-Host "WSL DISTRO          : PASS"
 
 Write-Host ""
 Write-Host "02. Docker Desktop WSL integration"
+
+# Docker Desktop 4.97 on this target exposes the proxy socket under /mnt/wsl,
+# while /var/run is ephemeral across WSL restarts. Repair only the runtime
+# symlink when the Docker Desktop proxy exists; do not install/replace Docker.
+$proxy = "/mnt/wsl/docker-desktop/shared-sockets/guest-services/docker.proxy.sock"
+& wsl.exe -d $Distro -- test -S $proxy
+if ($LASTEXITCODE -eq 0) {
+    & wsl.exe -d $Distro -u root -- ln -sf $proxy /var/run/docker.sock
+    if ($LASTEXITCODE -ne 0) { throw "failed to restore /var/run/docker.sock runtime symlink" }
+    Write-Host "DOCKER SOCKET LINK  : RESTORED"
+} else {
+    Write-Host "DOCKER PROXY SOCKET : NOT FOUND"
+}
+
 & wsl.exe -d $Distro -- bash -lc 'docker version --format "DOCKER_CLIENT={{.Client.Version}} DOCKER_SERVER={{.Server.Version}}"; docker info --format "OSTYPE={{.OSType}} DRIVER={{.Driver}}"'
 if ($LASTEXITCODE -ne 0) {
     Write-Host "DOCKER IN WSL       : BLOCKED"
-    Write-Host "REASON              : Docker Desktop WSL integration is not available in this distro"
-    Write-Host "ACTION              : Enable Docker Desktop -> Settings -> Resources -> WSL Integration -> Ubuntu-22.04"
+    Write-Host "REASON              : Docker Desktop proxy/socket is unavailable inside this distro"
+    Write-Host "ACTION              : Start Docker Desktop and enable WSL Integration for Ubuntu-22.04"
     exit 2
 }
 Write-Host "DOCKER IN WSL       : PASS"
