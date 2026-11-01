@@ -12,6 +12,8 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Path, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field
 
+from father_fua.full_assembly import FullFUAAssemblyRuntime
+
 
 APP_VERSION = "0.1.0"
 DEV_TOKEN = os.getenv("FUA_DEV_TOKEN", "dev-token")
@@ -94,6 +96,10 @@ class MemoryWriteRequest(StrictModel):
     content: str = Field(min_length=1)
     provenance: str = Field(min_length=1)
     confidence: float = Field(default=1.0, ge=0, le=1)
+
+
+class AssemblyMissionRequest(StrictModel):
+    mission: str = Field(min_length=1)
 
 
 class PromptAssemblyRequest(StrictModel):
@@ -326,3 +332,29 @@ def readiness(agent_id: str, _: str = Depends(require_auth)) -> dict:
 @app.get("/v1/audit")
 def audit(_: str = Depends(require_auth)) -> dict:
     return {"events": store.audit}
+
+
+
+@app.post("/v1/assembly/run")
+def run_full_assembly(req: AssemblyMissionRequest, _: str = Depends(require_auth)) -> dict:
+    runtime = FullFUAAssemblyRuntime()
+    runtime.rag.register(
+        source_id="API-BOOTSTRAP",
+        content="FATHER universal agent architecture runtime evidence",
+        provenance="api:bootstrap",
+        classification="INTERNAL",
+        trust="REVIEWED",
+    )
+    result = runtime.run(req.mission)
+    return {
+        "mission_id": result.mission_id,
+        "status": result.status,
+        "instance_id": result.identity_instance_id,
+        "prompt_sha256": result.prompt_sha256,
+        "state_sha256": result.state_sha256,
+        "evidence_id": result.evidence.evidence_id,
+        "evidence_sha256": result.evidence.sha256,
+        "readiness": result.readiness,
+        "audit_ok": result.audit_ok,
+        "answer": result.answer,
+    }
