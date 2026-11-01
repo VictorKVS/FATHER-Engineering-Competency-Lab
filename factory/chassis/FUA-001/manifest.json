@@ -298,7 +298,7 @@
     "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
   },
   "flight_test_program": {
-    "stage": "1.06_FLIGHT_CERTIFICATION_REVIEW",
+    "stage": "STAGE_1_FLIGHT_TEST_PROGRAM_COMPLETE",
     "maiden_flight": {
       "status": "PASS",
       "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
@@ -364,6 +364,14 @@
       "docker_resources": "PASS",
       "reliability": "PASS",
       "flight_recorder": "PASS"
-    }
+    },
+    "certification": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-CERTIFICATE-0030",
+      "certified_profile": "DOCKER_CONTAINED_ONLY",
+      "windows_host_native_execution": "NOT_APPROVED",
+      "open_high_critical": 0
+    },
+    "complete": true
   }
 }
