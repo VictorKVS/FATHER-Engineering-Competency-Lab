@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "TARGET_EVM_FAULT_RECOVERY_STRESS_VALIDATED",
+  "status": "READY_FOR_HUMAN_ACCEPTANCE",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -239,5 +239,11 @@
     "security_denial_no_retry": "100/100",
     "audit_tamper_detection": "50/50",
     "evidence_tamper_detection": "100/100"
+  },
+  "release_precheck": {
+    "status": "IMPLEMENTED",
+    "exact_snapshot_required": true,
+    "human_acceptance_required": true,
+    "fail_closed": true
   }
 }
