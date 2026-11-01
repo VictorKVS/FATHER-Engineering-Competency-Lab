@@ -75,3 +75,16 @@ def test_process_sandbox_job_blocks_second_process():
     r=sb.run(sys.executable,["-c",code])
     assert "SPAWN=DENIED" in r.stdout
     assert "SPAWN=ALLOWED" not in r.stdout
+
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows venv topology")
+def test_windows_venv_two_process_baseline():
+    sb=WindowsProcessSandbox(
+        allowed_executables=[sys.executable],
+        timeout_seconds=5,
+        active_process_limit=2,
+    )
+    r=sb.run(sys.executable,["-c","print('VENV_BASELINE=PASS')"])
+    assert r.returncode==0
+    assert "VENV_BASELINE=PASS" in r.stdout
