@@ -70,12 +70,37 @@ def review_production_readiness(root: str | Path) -> list[ProductionReadinessFin
             message="Hostile native-code containment is not certified for any approved production profile.",
         ))
 
-    if manifest.get("production_ready") is not False:
+    status=manifest.get("status")
+    if status=="PRODUCTION_RELEASED":
+        if manifest.get("production_ready") is not True:
+            findings.append(ProductionReadinessFinding(
+                code="RELEASED_WITHOUT_PRODUCTION_READY",
+                severity="CRITICAL",
+                status="BLOCK",
+                message="PRODUCTION_RELEASED requires production_ready=true.",
+            ))
+        final_release=manifest.get("final_production_release") or {}
+        if final_release.get("status")!="PASS":
+            findings.append(ProductionReadinessFinding(
+                code="FINAL_RELEASE_NOT_PASS",
+                severity="CRITICAL",
+                status="BLOCK",
+                message="Production release evidence is not PASS.",
+            ))
+        profiles=set(manifest.get("approved_execution_profiles") or [])
+        if "DOCKER_CONTAINED_ONLY" not in profiles:
+            findings.append(ProductionReadinessFinding(
+                code="APPROVED_PRODUCTION_PROFILE_MISSING",
+                severity="CRITICAL",
+                status="BLOCK",
+                message="Released state requires DOCKER_CONTAINED_ONLY profile.",
+            ))
+    elif manifest.get("production_ready") is not False:
         findings.append(ProductionReadinessFinding(
             code="PREMATURE_PRODUCTION_READY",
             severity="CRITICAL",
             status="BLOCK",
-            message="production_ready must remain false during review.",
+            message="production_ready must remain false before final release.",
         ))
 
     return findings
