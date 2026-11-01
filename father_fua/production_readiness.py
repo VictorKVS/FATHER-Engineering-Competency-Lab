@@ -40,22 +40,34 @@ def review_production_readiness(root: str | Path) -> list[ProductionReadinessFin
                 message=f"{key}: expected {expected}, got {actual}",
             ))
 
+    docker_containment=manifest.get("docker_native_containment_evm") or {}
+    docker_profile_pass=(
+        docker_containment.get("status")=="PASS"
+        and docker_containment.get("network_none") is True
+        and docker_containment.get("read_only_rootfs") is True
+        and docker_containment.get("non_root") is True
+        and docker_containment.get("cap_drop_all") is True
+        and docker_containment.get("no_new_privileges") is True
+        and docker_containment.get("no_host_mounts") is True
+        and docker_containment.get("memory_limit") is True
+    )
+
     restricted=manifest.get("restricted_trustlevel_evm") or {}
-    if restricted.get("status")=="BLOCKED_BY_OS_CAPABILITY":
+    if restricted.get("status")=="BLOCKED_BY_OS_CAPABILITY" and not docker_profile_pass:
         findings.append(ProductionReadinessFinding(
             code="OS_TRUST_BOUNDARY_NOT_PROVEN",
             severity="HIGH",
             status="BLOCK",
-            message="Restricted token / AppContainer / Low Integrity boundary not proven on target OS.",
+            message="Windows restricted-token boundary is unavailable and equivalent Docker containment is not proven.",
         ))
 
     process_sb=manifest.get("process_sandbox_evm") or {}
-    if process_sb.get("final_sandbox_certified") is not True:
+    if process_sb.get("final_sandbox_certified") is not True and not docker_profile_pass:
         findings.append(ProductionReadinessFinding(
             code="FINAL_NATIVE_CONTAINMENT_NOT_CERTIFIED",
             severity="HIGH",
             status="BLOCK",
-            message="Hostile native-code containment is not certified.",
+            message="Hostile native-code containment is not certified for any approved production profile.",
         ))
 
     if manifest.get("production_ready") is not False:
