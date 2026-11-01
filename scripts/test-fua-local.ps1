@@ -34,11 +34,14 @@ $Proc = Start-Process -FilePath $Py -ArgumentList "-m","uvicorn","father_fua.api
 
 try {
     $ok = $false
-    1..30 | ForEach-Object {
+    for ($i = 1; $i -le 30; $i++) {
         Start-Sleep -Milliseconds 300
         try {
             $h = Invoke-RestMethod "http://127.0.0.1:8091/health"
-            if ($h.status -eq "ok") { $ok = $true; break }
+            if ($h.status -eq "ok") {
+                $ok = $true
+                break
+            }
         } catch {}
     }
     if (-not $ok) { throw "API did not become healthy" }
