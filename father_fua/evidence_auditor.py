@@ -25,6 +25,8 @@ REQUIRED_EVIDENCE = (
     "factory/evidence/EVID-FUA-FILESYSTEM-ACL-EVM-0012.md",
     "factory/evidence/EVID-FUA-RESTRICTED-TRUSTLEVEL-EVM-0013.md",
     "factory/evidence/EVID-FUA-FULL-POLYGON-REAL-RUNTIME-0014.md",
+    "factory/evidence/EVID-FUA-FINAL-EVIDENCE-AUDIT-0015.md",
+    "factory/evidence/EVID-FUA-RELIABILITY-GATE-EVM-0016.md",
 )
 
 REQUIRED_RUNTIME_FILES = (
@@ -93,6 +95,7 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
         "network_isolation_evm": "PASS",
         "filesystem_acl_evm": "PASS",
         "full_polygon_real_runtime": "PASS",
+        "reliability_gate_evm": "PASS",
     }
     for key, expected in required_target_gates.items():
         actual = (manifest.get(key) or {}).get("status")
