@@ -29,6 +29,7 @@ REQUIRED_EVIDENCE = (
     "factory/evidence/EVID-FUA-RELIABILITY-GATE-EVM-0016.md",
     "factory/evidence/EVID-FUA-SANDBOX-STRESS-EVM-0017.md",
     "factory/evidence/EVID-FUA-FAULT-RECOVERY-STRESS-EVM-0018.md",
+    "factory/evidence/EVID-FUA-INSTALLATION-TO-TESTING-0019.md",
 )
 
 REQUIRED_RUNTIME_FILES = (
@@ -84,8 +85,53 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
     if manifest.get("production_ready") is not False:
         findings.append(AuditFinding("CRITICAL","PREMATURE_PRODUCTION_READY","production_ready must remain false"))
 
-    if manifest.get("installation_permit") != "DENIED":
-        findings.append(AuditFinding("CRITICAL","PREMATURE_INSTALLATION_PERMIT","installation permit must remain DENIED"))
+    status = manifest.get("status")
+    permit = manifest.get("installation_permit")
+    testing_phase = status in {
+        "INSTALLATION_APPROVED_FOR_TESTING",
+        "PRODUCT_TEST_IN_PROGRESS",
+        "PRODUCT_TEST_VALIDATED",
+        "PILOT_TEST_IN_PROGRESS",
+        "PILOT_TEST_VALIDATED",
+        "PRODUCTION_READINESS_REVIEW",
+    }
+
+    if testing_phase:
+        if permit != "PASS":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "TESTING_PHASE_WITHOUT_INSTALLATION_PERMIT",
+                    f"status={status} permit={permit}",
+                )
+            )
+        human = manifest.get("human_acceptance") or {}
+        if human.get("status") != "PASS":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "TESTING_PHASE_WITHOUT_HUMAN_ACCEPTANCE",
+                    str(human.get("status")),
+                )
+            )
+        install = manifest.get("installation_gate") or {}
+        if install.get("status") != "PASS":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "TESTING_PHASE_WITHOUT_INSTALLATION_GATE",
+                    str(install.get("status")),
+                )
+            )
+    else:
+        if permit != "DENIED":
+            findings.append(
+                AuditFinding(
+                    "CRITICAL",
+                    "PREMATURE_INSTALLATION_PERMIT",
+                    "installation permit must remain DENIED before controlled-testing approval",
+                )
+            )
 
     local=manifest.get("local_evm_evidence") or {}
     if local.get("full_01_26_assembly") != "PASS":
@@ -153,14 +199,26 @@ def audit_repository(root: str | Path) -> list[AuditFinding]:
             )
         )
 
-    if "HUMAN_ACCEPTANCE" not in (manifest.get("next_factory_gates") or []):
-        findings.append(
-            AuditFinding(
-                "HIGH",
-                "HUMAN_ACCEPTANCE_NOT_PENDING",
-                "human acceptance must remain pending before release",
+    next_gates = manifest.get("next_factory_gates") or []
+    if testing_phase:
+        required_next = {"PRODUCT_TEST", "PILOT_TEST", "PRODUCTION_READINESS_REVIEW"}
+        if not required_next.issubset(set(next_gates)):
+            findings.append(
+                AuditFinding(
+                    "HIGH",
+                    "TESTING_NEXT_GATES_INCOMPLETE",
+                    f"next_factory_gates={next_gates}",
+                )
             )
-        )
+    else:
+        if "HUMAN_ACCEPTANCE" not in next_gates:
+            findings.append(
+                AuditFinding(
+                    "HIGH",
+                    "HUMAN_ACCEPTANCE_NOT_PENDING",
+                    "human acceptance must remain pending before release",
+                )
+            )
 
     ci=manifest.get("ci_evidence") or {}
     for key in (
