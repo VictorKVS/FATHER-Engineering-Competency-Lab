@@ -94,6 +94,13 @@ else:
         throw "protected directory write was not denied"
     }
 
+    Write-Host ""
+    Write-Host "03A. Remove deny ACE for post-check"
+    & icacls.exe $ProtectedDir /remove:d ("*" + $Sid) /T /C | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        throw "failed to remove deny ACE for sentinel verification"
+    }
+
     $sentinel = Get-Content $ProtectedFile -Raw -ErrorAction Stop
     if ($sentinel.Trim() -ne "ORIGINAL") {
         throw "protected sentinel was modified"
