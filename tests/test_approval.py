@@ -45,3 +45,28 @@ def test_approval_rejects_requester_mismatch():
         approval_id="A3",
     )
     assert verify_approval(a,"tool.admin",requester="mallory") is False
+
+
+
+def test_approval_is_bound_to_payload():
+    payload={"target":"prod","version":"1.2.3"}
+    a = Approval(
+        action_hash("release.production",payload),
+        "bob",
+        "APPROVE",
+        time.time()+60,
+        requester="alice",
+        approval_id="A4",
+    )
+    assert verify_approval(
+        a,
+        "release.production",
+        requester="alice",
+        payload=payload,
+    ) is True
+    assert verify_approval(
+        a,
+        "release.production",
+        requester="alice",
+        payload={"target":"prod","version":"9.9.9"},
+    ) is False
