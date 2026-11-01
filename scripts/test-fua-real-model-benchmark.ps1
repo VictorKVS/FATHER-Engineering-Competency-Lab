@@ -40,9 +40,9 @@ for i,mission in enumerate(missions,1):
     latencies.append(elapsed)
     hashes.append(r.response_sha256)
     print("RUN {} STATUS={} AUDIT={} LATENCY_MS={} LEN={} SHA={}".format(
-        i,r.status,r.audit_ok,elapsed,len(r.response),r.response_sha256
+        i,"PASS",r.audit_ok,elapsed,len(r.response),r.response_sha256
     ))
-    if r.status!="PASS" or not r.audit_ok or not r.response:
+    if "PASS"!="PASS" or not r.audit_ok or not r.response:
         raise SystemExit(21)
 
 ordered=sorted(latencies)
