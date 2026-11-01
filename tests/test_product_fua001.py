@@ -60,6 +60,11 @@ def test_product_release_state_preserves_release_invariants():
         "INSTALLATION_APPROVED_FOR_TESTING",
         "PRODUCT_TEST_IN_PROGRESS",
         "PRODUCT_TEST_VALIDATED",
+        "PILOT_TEST_IN_PROGRESS",
+        "PILOT_TEST_VALIDATED",
+        "PRODUCTION_READINESS_REVIEW",
+        "PRODUCTION_READINESS_VALIDATED",
+        "PRODUCTION_RELEASED",
     }
 
 
