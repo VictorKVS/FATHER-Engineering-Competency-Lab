@@ -14,11 +14,11 @@ import os
 import sys
 from father_fua.process_sandbox import WindowsProcessSandbox
 
-print("01. ACTIVE PROCESS LIMIT")
+print("01. ACTIVE PROCESS LIMIT (VENV LAUNCHER + BASE INTERPRETER)")
 sb=WindowsProcessSandbox(
     allowed_executables=[sys.executable],
     timeout_seconds=5,
-    active_process_limit=1,
+    active_process_limit=2,
     process_memory_limit_mb=256,
     job_memory_limit_mb=384,
 )
@@ -38,7 +38,7 @@ print("02. PROCESS MEMORY LIMIT")
 mem=WindowsProcessSandbox(
     allowed_executables=[sys.executable],
     timeout_seconds=10,
-    active_process_limit=1,
+    active_process_limit=2,
     process_memory_limit_mb=96,
     job_memory_limit_mb=128,
 )
