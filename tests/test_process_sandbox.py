@@ -38,3 +38,12 @@ def test_process_sandbox_times_out():
     sb=WindowsProcessSandbox(allowed_executables=[sys.executable],timeout_seconds=0.2)
     r=sb.run(sys.executable,["-c","import time; time.sleep(5)"])
     assert r.timed_out is True
+
+
+
+def test_process_sandbox_preserves_minimal_windows_runtime_env():
+    sb=WindowsProcessSandbox(allowed_executables=[sys.executable],timeout_seconds=5)
+    code="import os,sys; print(bool(os.environ.get('SystemRoot'))); print(sys.version_info[:2])"
+    r=sb.run(sys.executable,["-c",code])
+    assert r.returncode==0
+    assert "True" in r.stdout
