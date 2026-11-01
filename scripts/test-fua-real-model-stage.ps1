@@ -7,13 +7,15 @@ if (-not (Test-Path $Py)) { throw ".venv Python not found" }
 
 Write-Host "=== FUA-001 REAL MODEL STAGE ==="
 
-& $Py -c @'
+$TempPy = Join-Path $env:TEMP "fua-real-model-stage.py"
+
+@'
 from father_fua.local_models import discover_local_models
 from father_fua.model_compatibility import evaluate_local_model
 from father_fua.real_model_runtime import RealModelMissionRuntime
 
 models = discover_local_models()
-print(f"DISCOVERED      : {len(models)}")
+print("DISCOVERED      : {}".format(len(models)))
 if not models:
     raise SystemExit(20)
 
@@ -21,8 +23,9 @@ compatible = []
 for i, model in enumerate(models, 1):
     result = evaluate_local_model(model, prompt_chars=1000)
     print(
-        f"{i}. transport={model.transport} model={model.model_id} "
-        f"url={model.base_url} compatibility={result.status}"
+        "{}. transport={} model={} url={} compatibility={}".format(
+            i, model.transport, model.model_id, model.base_url, result.status
+        )
     )
     if result.status == "PASS":
         compatible.append(model)
@@ -31,32 +34,37 @@ if not compatible:
     raise SystemExit(21)
 
 selected = compatible[0]
-runtime = RealModelMissionRuntime(
-    discoverer=lambda: [selected]
-)
+runtime = RealModelMissionRuntime(discoverer=lambda: [selected])
 result = runtime.run(
     "In one short paragraph, explain what a universal AI agent chassis is. "
     "Do not claim to have used external tools."
 )
 
 print("")
-print(f"SELECTED MODEL  : {selected.model_id}")
-print(f"TRANSPORT       : {selected.transport}")
-print(f"MODEL URL       : {selected.base_url}")
-print(f"MISSION STATUS  : PASS")
-print(f"AUDIT OK        : {result.audit_ok}")
-print(f"LATENCY MS      : {result.latency_ms}")
-print(f"RESPONSE SHA256 : {result.response_sha256}")
-print(f"EVIDENCE SHA256 : {result.evidence.sha256}")
-print(f"RESPONSE LENGTH : {len(result.response)}")
+print("SELECTED MODEL  : {}".format(selected.model_id))
+print("TRANSPORT       : {}".format(selected.transport))
+print("MODEL URL       : {}".format(selected.base_url))
+print("MISSION STATUS  : PASS")
+print("AUDIT OK        : {}".format(result.audit_ok))
+print("LATENCY MS      : {}".format(result.latency_ms))
+print("RESPONSE SHA256 : {}".format(result.response_sha256))
+print("EVIDENCE SHA256 : {}".format(result.evidence.sha256))
+print("RESPONSE LENGTH : {}".format(len(result.response)))
 print("--- RESPONSE ---")
 print(result.response[:2000])
 
 if not result.audit_ok:
     raise SystemExit(22)
-'@
+'@ | Set-Content -Path $TempPy -Encoding UTF8
 
-$Code = $LASTEXITCODE
+try {
+    & $Py $TempPy
+    $Code = $LASTEXITCODE
+}
+finally {
+    Remove-Item $TempPy -Force -ErrorAction SilentlyContinue
+}
+
 if ($Code -eq 20) {
     Write-Host ""
     Write-Host "REAL MODEL STAGE: BLOCKED - NO LOCAL MODEL SERVICE DISCOVERED"
