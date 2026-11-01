@@ -38,7 +38,6 @@ def test_maiden_flight_real_model_contract_with_deterministic_invoker():
         model_id="FLIGHT-TEST-LOCAL",
         transport="OLLAMA",
         base_url="http://127.0.0.1:11434",
-        source="flight-test",
         local=True,
         healthy=True,
         supports_chat=True,
