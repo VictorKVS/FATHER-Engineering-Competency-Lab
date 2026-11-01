@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "CI_FULL_ASSEMBLY_SECURITY_VALIDATED",
+  "status": "TARGET_EVM_FULL_ASSEMBLY_VALIDATED",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,10 +80,11 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "LOCAL_EVM_FULL_ASSEMBLY",
-    "LOCAL_EVM_LIVE_HTTP",
-    "LOCAL_RESOURCE_EVIDENCE",
-    "REAL_MODEL_INTEGRATION",
+    "REAL_LOCAL_MODEL_DISCOVERY",
+    "REAL_LOCAL_MODEL_ADAPTER",
+    "MODEL_CAPABILITY_HEALTH_TEST",
+    "PROMPT_MODEL_COMPATIBILITY",
+    "REAL_MODEL_MISSION_EXECUTION",
     "REAL_SANDBOX_ISOLATION",
     "COMPATIBILITY_HARDENING",
     "RED_TEAM",
@@ -95,5 +96,13 @@
     "30-60"
   ],
   "installation_permit": "DENIED",
-  "production_ready": false
+  "production_ready": false,
+  "local_evm_evidence": {
+    "package_build": "PASS",
+    "test_suite": "89_PASS",
+    "live_http": "PASS",
+    "full_01_26_assembly": "PASS",
+    "audit_chain": "PASS",
+    "evidence_sha256": "70817f8ba002ff9c69cd29e4d48eaa02fa65fc690b752d50e69278ba4324f24a"
+  }
 }
