@@ -69,7 +69,7 @@ class RoleProfile(StrictModel):
 
 
 class MissionRequest(StrictModel):
-    mission: str = Field(min_length=1)
+    mission: str = Field(min_length=1, max_length=10000)
     success_criteria: list[str] = Field(min_length=1)
     failure_criteria: list[str] = Field(min_length=1)
     constraints: list[str]
@@ -99,7 +99,7 @@ class MemoryWriteRequest(StrictModel):
 
 
 class AssemblyMissionRequest(StrictModel):
-    mission: str = Field(min_length=1)
+    mission: str = Field(min_length=1, max_length=10000)
 
 
 class PromptAssemblyRequest(StrictModel):
