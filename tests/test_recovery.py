@@ -27,3 +27,15 @@ def test_retry_does_not_repeat_permission_error():
     with pytest.raises(PermissionError):
         retry(op, attempts=5)
     assert n["x"] == 1
+
+
+
+def test_retry_does_not_repeat_validation_error():
+    import pytest
+    n={"x":0}
+    def op():
+        n["x"] += 1
+        raise ValueError("invalid input")
+    with pytest.raises(ValueError):
+        retry(op, attempts=5)
+    assert n["x"] == 1
