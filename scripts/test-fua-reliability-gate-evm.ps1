@@ -61,7 +61,22 @@ $TestingStatuses = @(
     "PRODUCTION_READINESS_REVIEW"
 )
 
-if ($TestingStatuses -contains $Manifest.status) {
+if ($Manifest.status -eq "PRODUCTION_RELEASED") {
+    if ($Manifest.installation_permit -ne "PASS") {
+        throw "production phase requires installation permit PASS"
+    }
+    if ($Manifest.production_ready -ne $true) {
+        throw "production phase requires production_ready=true"
+    }
+    if ($Manifest.approved_execution_profiles -notcontains "DOCKER_CONTAINED_ONLY") {
+        throw "production phase requires DOCKER_CONTAINED_ONLY profile"
+    }
+    if ($Manifest.windows_host_native_execution -ne "NOT_APPROVED") {
+        throw "production phase requires Windows host native execution NOT_APPROVED"
+    }
+    Write-Host "RELEASE PHASE     : PRODUCTION"
+}
+elseif ($TestingStatuses -contains $Manifest.status) {
     if ($Manifest.installation_permit -ne "PASS") {
         throw "testing phase requires installation permit PASS"
     }
