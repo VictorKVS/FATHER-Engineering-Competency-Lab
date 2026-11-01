@@ -375,14 +375,13 @@
     "complete": true
   },
   "kubernetes_stage": {
-    "stage": "2.01B_WSL2_KUBERNETES_PREFLIGHT",
+    "stage": "2.02_FUA_IMAGE",
     "status": "IN_PROGRESS",
     "cluster_profile": "otus-k8s",
     "driver": "docker",
     "inherited_certified_profile": "DOCKER_CONTAINED_ONLY",
     "destructive_reset_allowed": false,
     "next": [
-      "2.01_KUBERNETES_PREFLIGHT",
       "2.02_FUA_IMAGE",
       "2.03_DEPLOYMENT_SERVICE",
       "2.04_CONFIG_SECRET",
@@ -397,6 +396,17 @@
     ],
     "windows_host_minikube": "BLOCKED_BY_HOST_TOOLING",
     "execution_host": "WSL2_UBUNTU_22_04",
-    "container_runtime": "containerd"
+    "container_runtime": "containerd",
+    "preflight": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-K8S-01-PREFLIGHT-0031",
+      "execution_host": "WSL2_UBUNTU_22_04",
+      "docker_engine": "29.9.2",
+      "minikube": "1.39.0",
+      "kubectl": "1.37.1",
+      "kubernetes": "1.37.0",
+      "node_ready": "PASS",
+      "kube_system": "PASS"
+    }
   }
 }
