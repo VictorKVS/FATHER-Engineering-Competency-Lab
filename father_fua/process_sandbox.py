@@ -126,7 +126,9 @@ class WindowsProcessSandbox:
 
         workdir = tempfile.mkdtemp(prefix="fua-sandbox-")
         env = {
-            "PATH": str(Path(exe).parent),
+            "PATH": os.environ.get("SystemRoot", r"C:\\Windows") + r"\\System32;" + str(Path(exe).parent),
+            "SystemRoot": os.environ.get("SystemRoot", r"C:\\Windows"),
+            "WINDIR": os.environ.get("WINDIR", os.environ.get("SystemRoot", r"C:\\Windows")),
             "TEMP": workdir,
             "TMP": workdir,
             "PYTHONNOUSERSITE": "1",
