@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-NON_RETRYABLE = (PermissionError,)
+NON_RETRYABLE = (PermissionError, ValueError)
 
 
 def retry(operation, *, attempts: int, retryable_exceptions: tuple[type[BaseException], ...] = (Exception,)):
