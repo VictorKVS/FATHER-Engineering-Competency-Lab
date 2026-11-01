@@ -15,3 +15,24 @@ def test_unsupported_transport_rejected():
         assert "unsupported" in str(exc)
     else:
         raise AssertionError("unsupported transport must be rejected")
+
+
+
+def test_external_model_endpoint_rejected():
+    from father_fua.local_models import _parse_loopback_http
+    try:
+        _parse_loopback_http("http://example.com:8000/v1")
+    except ValueError as exc:
+        assert "loopback" in str(exc)
+    else:
+        raise AssertionError("external endpoint must be rejected")
+
+
+def test_file_scheme_rejected():
+    from father_fua.local_models import _parse_loopback_http
+    try:
+        _parse_loopback_http("file:///etc/passwd")
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("file scheme must be rejected")
