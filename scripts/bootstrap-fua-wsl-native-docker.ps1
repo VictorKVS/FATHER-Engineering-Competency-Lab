@@ -7,24 +7,24 @@ $ErrorActionPreference = "Stop"
 Write-Host "=== FUA-001 STAGE 2.01C / WSL2 NATIVE DOCKER ENGINE BOOTSTRAP ==="
 Write-Host ("DISTRO              : {0}" -f $Distro)
 
-function WslRoot {
-    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Args)
-    & wsl.exe -d $Distro -u root -- @Args
-    if ($LASTEXITCODE -ne 0) { throw "WSL root command failed: $($Args -join ' ')" }
+function Invoke-WslRoot {
+    param([string[]]$CommandArgs)
+    & wsl.exe -d $Distro -u root -- @CommandArgs
+    if ($LASTEXITCODE -ne 0) { throw "WSL root command failed: $($CommandArgs -join ' ')" }
 }
 
-function WslUser {
-    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Args)
-    & wsl.exe -d $Distro -- @Args
-    if ($LASTEXITCODE -ne 0) { throw "WSL user command failed: $($Args -join ' ')" }
+function Invoke-WslUser {
+    param([string[]]$CommandArgs)
+    & wsl.exe -d $Distro -- @CommandArgs
+    if ($LASTEXITCODE -ne 0) { throw "WSL user command failed: $($CommandArgs -join ' ')" }
 }
 
 Write-Host ""
 Write-Host "01. Verify WSL distro"
 $distros = (& wsl.exe -l -q) -replace [char]0,''
 if ($distros -notcontains $Distro) { throw "WSL distro not found: $Distro" }
-WslUser uname -a
-WslUser id
+Invoke-WslUser @("uname","-a")
+Invoke-WslUser @("id")
 Write-Host "WSL DISTRO          : PASS"
 
 Write-Host ""
@@ -35,7 +35,7 @@ if ($pid1 -ne "systemd") {
     Write-Host "SYSTEMD             : NOT ACTIVE"
     Write-Host "ACTION              : enable systemd in /etc/wsl.conf"
 
-    WslRoot cp -a /etc/wsl.conf /etc/wsl.conf.fua-backup
+    Invoke-WslRoot @("cp","-a","/etc/wsl.conf","/etc/wsl.conf.fua-backup")
     & wsl.exe -d $Distro -u root -- sh -c "grep -q '^\[boot\]' /etc/wsl.conf || printf '\n[boot]\n' >> /etc/wsl.conf"
     if ($LASTEXITCODE -ne 0) { throw "failed to ensure [boot] section" }
     & wsl.exe -d $Distro -u root -- sh -c "grep -q '^systemd=' /etc/wsl.conf && sed -i 's/^systemd=.*/systemd=true/' /etc/wsl.conf || sed -i '/^\[boot\]/a systemd=true' /etc/wsl.conf"
@@ -54,7 +54,7 @@ Write-Host ""
 Write-Host "03. Remove only stale Docker Desktop CLI symlink"
 $dockerLink = (& wsl.exe -d $Distro -- readlink /usr/bin/docker 2>$null)
 if ($dockerLink -like "/mnt/wsl/docker-desktop/*") {
-    WslRoot rm -f /usr/bin/docker
+    Invoke-WslRoot @("rm","-f","/usr/bin/docker")
     Write-Host "DESKTOP CLI SHIM    : REMOVED"
 } else {
     Write-Host "DESKTOP CLI SHIM    : NOT PRESENT"
@@ -62,11 +62,11 @@ if ($dockerLink -like "/mnt/wsl/docker-desktop/*") {
 
 Write-Host ""
 Write-Host "04. Install native Docker Engine"
-WslRoot env DEBIAN_FRONTEND=noninteractive apt-get update
-WslRoot env DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl
-WslRoot install -m 0755 -d /etc/apt/keyrings
-WslRoot curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-WslRoot chmod a+r /etc/apt/keyrings/docker.asc
+Invoke-WslRoot @("env","DEBIAN_FRONTEND=noninteractive","apt-get","update")
+Invoke-WslRoot @("env","DEBIAN_FRONTEND=noninteractive","apt-get","install","-y","ca-certificates","curl")
+Invoke-WslRoot @("install","-m","0755","-d","/etc/apt/keyrings")
+Invoke-WslRoot @("curl","-fsSL","https://download.docker.com/linux/ubuntu/gpg","-o","/etc/apt/keyrings/docker.asc")
+Invoke-WslRoot @("chmod","a+r","/etc/apt/keyrings/docker.asc")
 
 $codename = (& wsl.exe -d $Distro -- sh -c ". /etc/os-release; printf %s \$VERSION_CODENAME").Trim()
 $arch = (& wsl.exe -d $Distro -- dpkg --print-architecture).Trim()
@@ -76,25 +76,25 @@ $repoLine = "deb [arch=$arch signed-by=/etc/apt/keyrings/docker.asc] https://dow
 & wsl.exe -d $Distro -u root -- sh -c "printf '%s\n' '$repoLine' > /etc/apt/sources.list.d/docker.list"
 if ($LASTEXITCODE -ne 0) { throw "failed to configure Docker apt repository" }
 
-WslRoot env DEBIAN_FRONTEND=noninteractive apt-get update
-WslRoot env DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-WslRoot systemctl enable docker
-WslRoot systemctl restart docker
+Invoke-WslRoot @("env","DEBIAN_FRONTEND=noninteractive","apt-get","update")
+Invoke-WslRoot @("env","DEBIAN_FRONTEND=noninteractive","apt-get","install","-y","docker-ce","docker-ce-cli","containerd.io","docker-buildx-plugin","docker-compose-plugin")
+Invoke-WslRoot @("systemctl","enable","docker")
+Invoke-WslRoot @("systemctl","restart","docker")
 Write-Host "DOCKER INSTALL      : PASS"
 
 Write-Host ""
 Write-Host "05. Grant user Docker access"
 $userName = (& wsl.exe -d $Distro -- id -un).Trim()
-WslRoot usermod -aG docker $userName
+Invoke-WslRoot @("usermod","-aG","docker",$userName)
 & wsl.exe --terminate $Distro
 Start-Sleep -Seconds 3
 Write-Host ("DOCKER GROUP USER   : {0}" -f $userName)
 
 Write-Host ""
 Write-Host "06. Verify native engine"
-WslUser docker version
-WslUser docker info
-WslUser docker run --rm hello-world
+Invoke-WslUser @("docker","version")
+Invoke-WslUser @("docker","info")
+Invoke-WslUser @("docker","run","--rm","hello-world")
 Write-Host "NATIVE DOCKER       : PASS"
 
 Write-Host ""
