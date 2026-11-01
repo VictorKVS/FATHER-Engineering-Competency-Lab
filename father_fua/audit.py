@@ -28,15 +28,17 @@ class AuditLog:
 
     def append(self, *, kind: str, actor: str, correlation_id: str, detail: dict) -> AuditEvent:
         prev = self.events[-1].event_hash if self.events else "GENESIS"
+        ts = time.time()
         payload = {
             "seq": len(self.events) + 1,
+            "ts": ts,
             "kind": kind,
             "actor": actor,
             "correlation_id": correlation_id,
             "detail": detail,
             "prev_hash": prev,
         }
-        ev = AuditEvent(ts=time.time(), event_hash=self._hash(payload), **payload)
+        ev = AuditEvent(event_hash=self._hash(payload), **payload)
         self.events.append(ev)
         return ev
 
@@ -45,6 +47,7 @@ class AuditLog:
         for idx, ev in enumerate(self.events, start=1):
             payload = {
                 "seq": ev.seq,
+                "ts": ev.ts,
                 "kind": ev.kind,
                 "actor": ev.actor,
                 "correlation_id": ev.correlation_id,
