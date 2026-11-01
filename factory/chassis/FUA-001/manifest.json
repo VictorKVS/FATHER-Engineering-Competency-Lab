@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "PILOT_TEST_VALIDATED",
+  "status": "PRODUCTION_READINESS_REVIEW",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -269,5 +269,21 @@
     "product_regression": "PASS",
     "api_ci": "PASS",
     "security_ci": "PASS"
-  }
+  },
+  "docker_native_containment_evm": {
+    "status": "PASS",
+    "profile": "DOCKER_CONTAINED_ONLY",
+    "network_none": true,
+    "read_only_rootfs": true,
+    "non_root": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "no_host_mounts": true,
+    "memory_limit": true,
+    "memory_max_bytes": 268435456
+  },
+  "approved_execution_profiles": [
+    "DOCKER_CONTAINED_ONLY"
+  ],
+  "windows_host_native_execution": "NOT_APPROVED"
 }
