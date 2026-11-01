@@ -28,12 +28,46 @@ try {
     Remove-FuaRule
 
     Write-Host ""
-    Write-Host "01. Baseline connectivity"
-    $baseline = & $Py -c "import socket; s=socket.create_connection(('127.0.0.1',11434),3); s.close(); print('CONNECT=PASS')"
-    if ($LASTEXITCODE -ne 0 -or $baseline -notmatch "CONNECT=PASS") {
-        throw "baseline loopback connectivity to Ollama is not available"
+    Write-Host "01. Baseline external connectivity"
+    $ProbePy = Join-Path $env:TEMP "fua-network-baseline.py"
+@'
+import socket
+
+targets=[
+    ("api.github.com",443),
+    ("www.microsoft.com",443),
+    ("1.1.1.1",443),
+]
+for host,port in targets:
+    try:
+        s=socket.create_connection((host,port),3)
+    except OSError:
+        continue
+    else:
+        s.close()
+        print("CONNECT=PASS")
+        print("TARGET_HOST={}".format(host))
+        print("TARGET_PORT={}".format(port))
+        raise SystemExit(0)
+print("CONNECT=FAIL")
+raise SystemExit(20)
+'@ | Set-Content -Path $ProbePy -Encoding UTF8
+
+    try {
+        $baseline = & $Py $ProbePy
+        $baselineCode = $LASTEXITCODE
     }
-    Write-Host $baseline
+    finally {
+        Remove-Item $ProbePy -Force -ErrorAction SilentlyContinue
+    }
+
+    $baseline | ForEach-Object { Write-Host $_ }
+    if ($baselineCode -ne 0 -or $baseline -notmatch "CONNECT=PASS") {
+        throw "no external baseline endpoint was reachable"
+    }
+
+    $TargetHost = (($baseline | Where-Object { $_ -like "TARGET_HOST=*" }) -replace "^TARGET_HOST=","")
+    $TargetPort = [int](($baseline | Where-Object { $_ -like "TARGET_PORT=*" }) -replace "^TARGET_PORT=","")
 
     Write-Host ""
     Write-Host "02. Install temporary outbound deny rule"
@@ -56,8 +90,13 @@ try {
     $TempPy = Join-Path $env:TEMP "fua-network-deny-check.py"
     @'
 import socket
+import sys
+
+host=sys.argv[1]
+port=int(sys.argv[2])
+
 try:
-    s=socket.create_connection(("127.0.0.1",11434),2)
+    s=socket.create_connection((host,port),3)
 except OSError as e:
     print("NETWORK_DENY=PASS")
     print("ERROR_TYPE={}".format(type(e).__name__))
@@ -68,7 +107,7 @@ else:
 '@ | Set-Content -Path $TempPy -Encoding UTF8
 
     try {
-        & $Py $TempPy
+        & $Py $TempPy $TargetHost $TargetPort
         $Code = $LASTEXITCODE
     }
     finally {
