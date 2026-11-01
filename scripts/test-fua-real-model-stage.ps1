@@ -35,9 +35,11 @@ if not compatible:
 
 selected = compatible[0]
 runtime = RealModelMissionRuntime(discoverer=lambda: [selected])
+print("WARMUP          : starting selected local model")
 result = runtime.run(
     "In one short paragraph, explain what a universal AI agent chassis is. "
-    "Do not claim to have used external tools."
+    "Do not claim to have used external tools.",
+    timeout=300.0,
 )
 
 print("")
