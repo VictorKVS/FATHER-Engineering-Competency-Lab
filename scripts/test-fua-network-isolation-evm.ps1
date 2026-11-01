@@ -62,12 +62,18 @@ raise SystemExit(20)
     }
 
     $baseline | ForEach-Object { Write-Host $_ }
-    if ($baselineCode -ne 0 -or $baseline -notmatch "CONNECT=PASS") {
+
+    $connectLine = $baseline | Where-Object { $_ -eq "CONNECT=PASS" } | Select-Object -First 1
+    $hostLine = $baseline | Where-Object { $_ -like "TARGET_HOST=*" } | Select-Object -First 1
+    $portLine = $baseline | Where-Object { $_ -like "TARGET_PORT=*" } | Select-Object -First 1
+
+    if ($baselineCode -ne 0 -or -not $connectLine -or -not $hostLine -or -not $portLine) {
         throw "no external baseline endpoint was reachable"
     }
 
-    $TargetHost = (($baseline | Where-Object { $_ -like "TARGET_HOST=*" }) -replace "^TARGET_HOST=","")
-    $TargetPort = [int](($baseline | Where-Object { $_ -like "TARGET_PORT=*" }) -replace "^TARGET_PORT=","")
+    $TargetHost = $hostLine -replace "^TARGET_HOST=",""
+    $TargetPort = [int]($portLine -replace "^TARGET_PORT=","")
+    Write-Host ("BASELINE TARGET : {0}:{1}" -f $TargetHost, $TargetPort)
 
     Write-Host ""
     Write-Host "02. Install temporary outbound deny rule"
