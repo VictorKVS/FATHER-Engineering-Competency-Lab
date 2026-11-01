@@ -97,6 +97,7 @@ Write-Host ""
 Write-Host "05. Materialize missing blobs into target store"
 $copied = 0
 $linked = 0
+$symlinked = 0
 $existing = 0
 
 foreach ($blob in Get-ChildItem $sourceBlobs -File) {
@@ -109,14 +110,22 @@ foreach ($blob in Get-ChildItem $sourceBlobs -File) {
     try {
         New-Item -ItemType HardLink -Path $dest -Target $blob.FullName -ErrorAction Stop | Out-Null
         $linked++
-    } catch {
-        Copy-Item $blob.FullName $dest -Force
-        $copied++
-    }
+        continue
+    } catch {}
+
+    try {
+        New-Item -ItemType SymbolicLink -Path $dest -Target $blob.FullName -ErrorAction Stop | Out-Null
+        $symlinked++
+        continue
+    } catch {}
+
+    Copy-Item $blob.FullName $dest -Force
+    $copied++
 }
 
 Write-Host "EXISTING BLOBS : $existing"
 Write-Host "HARDLINKED     : $linked"
+Write-Host "SYMLINKED      : $symlinked"
 Write-Host "COPIED         : $copied"
 
 Write-Host ""
