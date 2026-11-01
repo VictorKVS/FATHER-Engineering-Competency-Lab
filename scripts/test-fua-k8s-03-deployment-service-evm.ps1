@@ -64,13 +64,44 @@ Write-Host ("ENDPOINTS           : {0}" -f $endpoints)
 Write-Host "SERVICE             : PASS"
 
 Write-Host ""
-Write-Host "05. Service path health"
-$py = "import urllib.request; print(urllib.request.urlopen('http://fua-001.father-system.svc.cluster.local:8080/health',timeout=5).read().decode())"
-$health = & wsl.exe -d $Distro -- $Kubectl exec -n father-system deployment/fua-001 -- python -c $py
-if ($LASTEXITCODE -ne 0) { throw "service-path health request failed" }
-if (-not ($health -match '"status":"ok"')) { throw "unexpected service health payload: $health" }
-Write-Host ("SERVICE HEALTH      : {0}" -f $health)
-Write-Host "SERVICE PATH        : PASS"
+Write-Host "05. Service ClusterIP health"
+$pyIp = "import urllib.request; print(urllib.request.urlopen('http://" + $clusterIp + ":8080/health',timeout=5).read().decode())"
+$healthIp = & wsl.exe -d $Distro -- $Kubectl exec -n father-system deployment/fua-001 -- python -c $pyIp
+if ($LASTEXITCODE -ne 0) {
+    & wsl.exe -d $Distro -- $Kubectl get pods -n father-system -o wide
+    & wsl.exe -d $Distro -- $Kubectl get service,endpoints,endpointslice -n father-system
+    throw "ClusterIP service-path health request failed"
+}
+if (-not ($healthIp -match '"status":"ok"')) { throw "unexpected ClusterIP health payload: $healthIp" }
+Write-Host ("CLUSTERIP HEALTH    : {0}" -f $healthIp)
+Write-Host "SERVICE ROUTING     : PASS"
 
+Write-Host ""
+Write-Host "06. CoreDNS readiness and Service DNS"
+& wsl.exe -d $Distro -- $Kubectl rollout status deployment/coredns -n kube-system --timeout=180s
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "COREDNS             : BLOCKED"
+    & wsl.exe -d $Distro -- $Kubectl get pods -n kube-system -o wide
+    & wsl.exe -d $Distro -- $Kubectl describe deployment/coredns -n kube-system
+    & wsl.exe -d $Distro -- $Kubectl get events -n kube-system --sort-by=.lastTimestamp
+    throw "CoreDNS did not become available"
+}
+Write-Host "COREDNS             : PASS"
+
+$pyDns = "import socket,urllib.request; h='fua-001.father-system.svc.cluster.local'; print('DNS='+socket.gethostbyname(h)); print(urllib.request.urlopen('http://'+h+':8080/health',timeout=5).read().decode())"
+$healthDns = & wsl.exe -d $Distro -- $Kubectl exec -n father-system deployment/fua-001 -- python -c $pyDns
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "SERVICE DNS         : BLOCKED"
+    & wsl.exe -d $Distro -- $Kubectl exec -n father-system deployment/fua-001 -- cat /etc/resolv.conf
+    & wsl.exe -d $Distro -- $Kubectl get service kube-dns -n kube-system -o wide
+    & wsl.exe -d $Distro -- $Kubectl get endpoints kube-dns -n kube-system -o wide
+    & wsl.exe -d $Distro -- $Kubectl logs -n kube-system deployment/coredns --tail=100
+    & wsl.exe -d $Distro -- $Kubectl get events -A --sort-by=.lastTimestamp
+    throw "service DNS resolution failed"
+}
+if (-not ($healthDns -match '"status":"ok"')) { throw "unexpected DNS service health payload: $healthDns" }
+Write-Host $healthDns
+Write-Host "SERVICE DNS         : PASS"
+Write-Host "SERVICE PATH        : PASS"
 Write-Host ""
 Write-Host "FUA-001 STAGE 2.03 DEPLOYMENT SERVICE RESULT: PASS"
