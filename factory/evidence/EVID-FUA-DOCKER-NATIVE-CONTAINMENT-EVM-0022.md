@@ -1,0 +1,36 @@
+# FUA-001 Evidence Record — DOCKER NATIVE CONTAINMENT EVM 0022
+
+Evidence ID: EVID-FUA-DOCKER-NATIVE-CONTAINMENT-EVM-0022
+Date: 2026-11-01
+Environment: target Windows workstation with Docker Desktop / WSL2
+Status: PASS
+
+## Docker / WSL prerequisite
+DOCKER_DESKTOP=4.97.0
+DOCKER_ENGINE=READY
+DOCKER_CONTEXT=desktop-linux
+
+## Native containment controls
+NON_ROOT=PASS
+UID=65534
+GID=65534
+
+READ_ONLY_ROOTFS=PASS
+TMPFS_WRITE=PASS
+
+NETWORK_NONE=PASS
+NO_HOST_MOUNTS=PASS
+
+CAP_DROP_ALL=PASS
+NO_NEW_PRIVILEGES=PASS
+
+MEMORY_LIMIT=PASS
+MEMORY_MAX_BYTES=268435456
+
+## Gate decision
+DOCKER_NATIVE_CONTAINMENT=PASS
+APPROVED_EXECUTION_PROFILE=DOCKER_CONTAINED_ONLY
+WINDOWS_HOST_NATIVE_EXECUTION=NOT_APPROVED
+
+This evidence proves the approved Docker-contained execution profile.
+It does not certify arbitrary native execution directly on the Windows host.
