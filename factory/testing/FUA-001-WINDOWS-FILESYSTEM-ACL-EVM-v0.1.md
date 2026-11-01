@@ -28,3 +28,11 @@ The runner now:
 - passes the trustee as *SID, which is icacls numeric-SID form;
 - verifies the resulting ACL text contains the current SID before executing the denial probe;
 - removes the deny ACE using the same numeric-SID form during cleanup.
+## v0.3 ACL display-name correction
+
+The target EVM confirmed that icacls accepted the numeric *SID trustee but displayed the resulting ACE using the resolved account name (for example DESKTOP-...\\user) rather than the literal SID.
+
+The runner now verifies:
+- current WindowsIdentity.Name is present in the ACL output;
+- the matching ACE includes (DENY)(M);
+- only then proceeds to the real write-denial probe.
