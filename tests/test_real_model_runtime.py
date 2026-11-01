@@ -44,3 +44,14 @@ def test_real_model_runtime_policy_deny_blocks_call():
     with pytest.raises(PermissionError):
         rt.run("mission")
     assert called["value"] is False
+
+
+
+def test_real_model_runtime_prefers_general_text_model():
+    models=[
+        DiscoveredModel("OLLAMA","http://127.0.0.1:11434","qwen3-vl:8b-instruct-q4_K_M",True,True,True),
+        DiscoveredModel("OLLAMA","http://127.0.0.1:11434","qwen2.5:7b",True,True,True),
+        DiscoveredModel("OLLAMA","http://127.0.0.1:11434","llava:7b",True,True,True),
+    ]
+    rt=RealModelMissionRuntime(discoverer=lambda:models)
+    assert rt.choose_model().model_id=="qwen2.5:7b"
