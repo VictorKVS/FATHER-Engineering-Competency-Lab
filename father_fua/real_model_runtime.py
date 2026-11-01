@@ -60,7 +60,7 @@ class RealModelMissionRuntime:
         models.sort(key=lambda m: (rank.get(m.model_id, len(rank)), m.model_id.lower()))
         return models[0]
 
-    def run(self, mission: str, *, timeout: float = 60.0) -> RealModelMissionResult:
+    def run(self, mission: str, *, timeout: float = 300.0) -> RealModelMissionResult:
         if not mission or len(mission) > 10000:
             raise ValueError("invalid mission length")
 
@@ -116,7 +116,12 @@ class RealModelMissionRuntime:
         )
 
         started = time.perf_counter()
-        response = self.invoker(model, prompt, timeout)
+        try:
+            response = self.invoker(model, prompt, timeout)
+        except TimeoutError:
+            # First load of a local model can be substantially slower than steady-state.
+            # Retry once with a larger bounded timeout rather than classifying cold start as failure.
+            response = self.invoker(model, prompt, max(timeout * 2, 600.0))
         latency_ms = int((time.perf_counter() - started) * 1000)
 
         response_sha = hashlib.sha256(response.encode("utf-8")).hexdigest()
