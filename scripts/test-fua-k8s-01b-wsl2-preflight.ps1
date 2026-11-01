@@ -128,11 +128,28 @@ if ($LASTEXITCODE -ne 0) { throw "kubectl cluster-info failed" }
 & wsl.exe -d $Distro -- $kubectl get nodes -o wide
 if ($LASTEXITCODE -ne 0) { throw "kubectl get nodes failed" }
 
-& wsl.exe -d $Distro -- $kubectl wait --for=condition=Ready node --all --timeout=120s
-if ($LASTEXITCODE -ne 0) { throw "node readiness wait failed" }
+& wsl.exe -d $Distro -- $kubectl wait --for=condition=Ready node --all --timeout=300s
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "NODE READY          : BLOCKED"
+    Write-Host "DIAGNOSTICS         : collecting node, kube-system and events"
+    & wsl.exe -d $Distro -- $kubectl describe node
+    & wsl.exe -d $Distro -- $kubectl get pods -n kube-system -o wide
+    & wsl.exe -d $Distro -- $kubectl get events -A --sort-by=.lastTimestamp
+    throw "node readiness wait failed"
+}
 
 & wsl.exe -d $Distro -- $kubectl get pods -n kube-system -o wide
 if ($LASTEXITCODE -ne 0) { throw "kube-system pod query failed" }
+
+$badPods = & wsl.exe -d $Distro -- $kubectl get pods -n kube-system --no-headers
+if ($LASTEXITCODE -ne 0) { throw "kube-system pod status query failed" }
+$bad = $badPods | Where-Object { $_ -match 'Pending|Failed|Unknown|CrashLoopBackOff|ImagePullBackOff|ErrImagePull' }
+if ($bad) {
+    Write-Host "KUBE-SYSTEM         : BLOCKED"
+    $bad | ForEach-Object { Write-Host $_ }
+    & wsl.exe -d $Distro -- $kubectl get events -n kube-system --sort-by=.lastTimestamp
+    throw "unhealthy kube-system pods detected"
+}
 
 Write-Host "NODE READY          : PASS"
 Write-Host "KUBE-SYSTEM         : PASS"
