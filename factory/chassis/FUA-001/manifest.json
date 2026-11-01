@@ -375,7 +375,7 @@
     "complete": true
   },
   "kubernetes_stage": {
-    "stage": "2.01_KUBERNETES_PREFLIGHT",
+    "stage": "2.01B_WSL2_KUBERNETES_PREFLIGHT",
     "status": "IN_PROGRESS",
     "cluster_profile": "otus-k8s",
     "driver": "docker",
@@ -394,6 +394,9 @@
       "2.10_FAILURE_RECOVERY",
       "2.11_KUBERNETES_SECURITY_POLYGON",
       "2.12_KUBERNETES_CERTIFICATION"
-    ]
+    ],
+    "windows_host_minikube": "BLOCKED_BY_HOST_TOOLING",
+    "execution_host": "WSL2_UBUNTU_22_04",
+    "container_runtime": "containerd"
   }
 }
