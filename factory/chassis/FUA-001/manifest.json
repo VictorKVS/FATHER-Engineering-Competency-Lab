@@ -2,7 +2,7 @@
   "schema": "father.fua_package_index.v1",
   "chassis_id": "FUA-001",
   "version": "0.2",
-  "status": "READY_FOR_HUMAN_ACCEPTANCE",
+  "status": "INSTALLATION_APPROVED_FOR_TESTING",
   "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
   "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
   "api_contract": "factory/api/fua-001-openapi.yaml",
@@ -80,12 +80,14 @@
     "sbom_artifact_id": 13079748266
   },
   "next_factory_gates": [
-    "HUMAN_ACCEPTANCE"
+    "PRODUCT_TEST",
+    "PILOT_TEST",
+    "PRODUCTION_READINESS_REVIEW"
   ],
   "mandatory_governance_sections": [
     "30-60"
   ],
-  "installation_permit": "DENIED",
+  "installation_permit": "PASS",
   "production_ready": false,
   "local_evm_evidence": {
     "package_build": "PASS",
@@ -245,5 +247,15 @@
     "exact_snapshot_required": true,
     "human_acceptance_required": true,
     "fail_closed": true
+  },
+  "human_acceptance": {
+    "status": "PASS",
+    "snapshot_sha256": "98fdf8d12647cade407705189c30fdc8036dcfec4a36267695aa4826b56b6496",
+    "commit_sha": "0b22cc7440b54dca45c8226cf4238b9b73d435fb",
+    "human_action": "ACCEPT_CURRENT_SNAPSHOT"
+  },
+  "installation_gate": {
+    "status": "PASS",
+    "snapshot_sha256": "98fdf8d12647cade407705189c30fdc8036dcfec4a36267695aa4826b56b6496"
   }
 }
