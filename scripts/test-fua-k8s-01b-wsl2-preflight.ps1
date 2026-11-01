@@ -23,30 +23,36 @@ Invoke-WSL 'uname -a; printf "WSL_VERSION_HINT="; uname -r'
 Write-Host "WSL DISTRO          : PASS"
 
 Write-Host ""
-Write-Host "02. Docker Desktop WSL integration"
+Write-Host "02. Docker provider inside WSL"
 
-# Docker Desktop 4.97 on this target exposes the proxy socket under /mnt/wsl,
-# while /var/run is ephemeral across WSL restarts. Repair only the runtime
-# symlink when the Docker Desktop proxy exists; do not install/replace Docker.
-$proxy = "/mnt/wsl/docker-desktop/shared-sockets/guest-services/docker.proxy.sock"
-& wsl.exe -d $Distro -- test -S $proxy
+# Prefer a native Docker Engine installed inside Ubuntu. This removes the
+# dependency on Docker Desktop's WSL proxy, which is unstable on the target host.
+& wsl.exe -d $Distro -- bash -lc 'docker version >/tmp/fua-docker-version.txt 2>&1 && docker info --format "OSTYPE={{.OSType}} DRIVER={{.Driver}}"'
 if ($LASTEXITCODE -eq 0) {
-    & wsl.exe -d $Distro -u root -- ln -sf $proxy /var/run/docker.sock
-    if ($LASTEXITCODE -ne 0) { throw "failed to restore /var/run/docker.sock runtime symlink" }
-    Write-Host "DOCKER SOCKET LINK  : RESTORED"
+    & wsl.exe -d $Distro -- bash -lc 'cat /tmp/fua-docker-version.txt | sed -n "1,24p"'
+    Write-Host "DOCKER PROVIDER      : WSL_NATIVE_OR_WORKING_SOCKET"
+    Write-Host "DOCKER IN WSL       : PASS"
 } else {
-    Write-Host "DOCKER PROXY SOCKET : NOT FOUND"
-}
+    $proxy = "/mnt/wsl/docker-desktop/shared-sockets/guest-services/docker.proxy.sock"
+    & wsl.exe -d $Distro -- test -S $proxy
+    if ($LASTEXITCODE -eq 0) {
+        & wsl.exe -d $Distro -u root -- ln -sf $proxy /var/run/docker.sock
+        if ($LASTEXITCODE -ne 0) { throw "failed to restore /var/run/docker.sock runtime symlink" }
+        Write-Host "DOCKER SOCKET LINK  : RESTORED"
+    } else {
+        Write-Host "DOCKER PROXY SOCKET : NOT FOUND"
+    }
 
-& wsl.exe -d $Distro -- bash -lc 'docker version --format "DOCKER_CLIENT={{.Client.Version}} DOCKER_SERVER={{.Server.Version}}"; docker info --format "OSTYPE={{.OSType}} DRIVER={{.Driver}}"'
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "DOCKER IN WSL       : BLOCKED"
-    Write-Host "REASON              : Docker Desktop proxy/socket is unavailable inside this distro"
-    Write-Host "ACTION              : Start Docker Desktop and enable WSL Integration for Ubuntu-22.04"
-    exit 2
+    & wsl.exe -d $Distro -- bash -lc 'docker version --format "DOCKER_CLIENT={{.Client.Version}} DOCKER_SERVER={{.Server.Version}}"; docker info --format "OSTYPE={{.OSType}} DRIVER={{.Driver}}"'
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "DOCKER IN WSL       : BLOCKED"
+        Write-Host "REASON              : no working native Docker Engine or Docker Desktop proxy"
+        Write-Host "ACTION              : run scripts/bootstrap-fua-wsl-native-docker.ps1"
+        exit 2
+    }
+    Write-Host "DOCKER PROVIDER      : DOCKER_DESKTOP_PROXY"
+    Write-Host "DOCKER IN WSL       : PASS"
 }
-Write-Host "DOCKER IN WSL       : PASS"
-
 Write-Host ""
 Write-Host "03. User-local Kubernetes toolchain"
 $bootstrap = @'
