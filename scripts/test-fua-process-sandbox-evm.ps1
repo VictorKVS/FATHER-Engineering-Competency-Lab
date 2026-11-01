@@ -23,7 +23,8 @@ print("01. ALLOWLISTED PROCESS")
 r=sb.run(sys.executable,["-c","import os; print('SANDBOX='+os.environ.get('FUA_SANDBOX','0')); print('CWD='+os.getcwd())"])
 print("RETURN_CODE     : {}".format(r.returncode))
 print("TIMED_OUT       : {}".format(r.timed_out))
-print(r.stdout.strip())
+print("STDOUT          : {}".format(r.stdout.strip()))
+print("STDERR          : {}".format(r.stderr.strip()))
 if r.returncode != 0 or r.timed_out or "SANDBOX=1" not in r.stdout:
     raise SystemExit(20)
 
