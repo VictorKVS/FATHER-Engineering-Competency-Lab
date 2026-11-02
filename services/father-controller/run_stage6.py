@@ -28,7 +28,25 @@ def add_check(name, passed, details):
     print(("PASS" if passed else "FAIL"), name, json.dumps(details,ensure_ascii=False))
     return bool(passed)
 
-print("=== KNOWLEDGE SLOT PROBE ===")
+def write_and_exit(code):
+    evidence["result"]="PASS" if code==0 else "FAIL"
+    (BASE/"evidence/stage6_evidence.json").write_text(
+        json.dumps(evidence,ensure_ascii=False,indent=2),
+        encoding="utf-8"
+    )
+    print("\nRESULT:",evidence["result"])
+    print("EVIDENCE:",BASE/"evidence/stage6_evidence.json")
+    raise SystemExit(code)
+
+print("=== BACKEND PREFLIGHT ===")
+health=assembler.brain("qwen-analysis").health()
+backend_ok=health.get("status")=="ok"
+add_check("ollama_health",backend_ok,health)
+if not backend_ok:
+    print("STOP: Ollama backend unavailable. Benchmark not started; DB remains clean.")
+    write_and_exit(1)
+
+print("\n=== KNOWLEDGE SLOT PROBE ===")
 ib=assembler.competency("ib_demo")
 kb=FolderKnowledge(ib.knowledge_dir,fallback_on_empty=True)
 probe=kb.search(KnowledgeQuery(text="Перечисли нормативные документы в подключенной БЗ.",top_k=5))
@@ -42,6 +60,10 @@ add_check("knowledge_probe",probe_ok,{
     "sources":[x.get("source") for x in probe.items],
     "expected_present":{x:(x.lower() in probe_text.lower()) for x in expected}
 })
+
+if not probe_ok:
+    print("STOP: Knowledge Slot probe failed. Brain benchmark not started.")
+    write_and_exit(1)
 
 print("\n=== IB COMPETENCY BENCHMARK ===")
 ib_passes=0
@@ -67,6 +89,7 @@ for test in ib.tests:
             "task_id":test["id"],
             "brain_id":brain_id,
             "ok":result.ok,
+            "error":result.metadata.get("error"),
             "quality_score":quality["score"],
             "quality_passed":quality["passed"],
             "knowledge_hits":result.metadata.get("knowledge_hits"),
@@ -82,10 +105,7 @@ add_check("ib_at_least_one_model_passes",ib_passes>=1,{
     "total_models":len(brains_cfg)
 })
 
-all_delivery_ok=all(
-    (r.get("knowledge_hits") or 0)>0
-    for r in evidence["runs"]
-)
+all_delivery_ok=all((r.get("knowledge_hits") or 0)>0 for r in evidence["runs"])
 add_check("knowledge_delivered_to_all_brains",all_delivery_ok,{
     "delivery":[
         {"brain_id":r["brain_id"],"hits":r["knowledge_hits"],"modes":r["knowledge_modes"]}
@@ -93,19 +113,19 @@ add_check("knowledge_delivered_to_all_brains",all_delivery_ok,{
     ]
 })
 
+all_runtime_ok=all(r.get("ok") for r in evidence["runs"])
+add_check("all_brain_calls_completed",all_runtime_ok,{
+    "runtime":[
+        {"brain_id":r["brain_id"],"ok":r["ok"],"error":r["error"]}
+        for r in evidence["runs"]
+    ]
+})
+
 ranking=zoo.ranking("ib-knowledge")
 evidence["ib_ranking"]=ranking
 
-all_ok=all(c["passed"] for c in evidence["checks"])
-evidence["result"]="PASS" if all_ok else "FAIL"
-
-(BASE/"evidence/stage6_evidence.json").write_text(
-    json.dumps(evidence,ensure_ascii=False,indent=2),
-    encoding="utf-8"
-)
-
 print("\n=== RANKING ib-knowledge ===")
 print(json.dumps(ranking,ensure_ascii=False,indent=2))
-print("\nRESULT:",evidence["result"])
-print("EVIDENCE:",BASE/"evidence/stage6_evidence.json")
-raise SystemExit(0 if all_ok else 1)
+
+all_ok=all(c["passed"] for c in evidence["checks"])
+write_and_exit(0 if all_ok else 1)
