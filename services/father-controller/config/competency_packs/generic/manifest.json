@@ -1,0 +1,48 @@
+{
+  "id": "generic",
+  "version": "1.1",
+  "system_prompt": "Ты инженерный агент FATHER. Отвечай по-русски, точно, кратко и опирайся на подключенную БЗ.",
+  "knowledge_dir": "knowledge",
+  "tests": [
+    {
+      "id": "generic-001",
+      "task_type": "architecture",
+      "prompt": "Что такое Brain Slot в FATHER?",
+      "rubric": {
+        "required_groups": [
+          ["brain slot"],
+          ["замен", "смен"],
+          ["llm", "модел"],
+          ["агент"]
+        ],
+        "forbidden_terms": [
+          "менталл логический модел",
+          "резервного функционала",
+          "несколько задач одновременно"
+        ],
+        "min_chars": 40,
+        "max_chars": 500,
+        "pass_score": 75
+      }
+    },
+    {
+      "id": "generic-002",
+      "task_type": "architecture",
+      "prompt": "Что такое Knowledge Slot в FATHER?",
+      "rubric": {
+        "required_groups": [
+          ["knowledge slot"],
+          ["баз", "знан"],
+          ["замен", "смен"],
+          ["агент"]
+        ],
+        "forbidden_terms": [
+          "несколько задач одновременно"
+        ],
+        "min_chars": 35,
+        "max_chars": 500,
+        "pass_score": 75
+      }
+    }
+  ]
+}
