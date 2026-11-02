@@ -1,0 +1,24 @@
+{
+  "brains": {
+    "llama-small": {
+      "adapter": "ollama",
+      "model": "llama3.2:1b",
+      "base_url": "http://127.0.0.1:11434"
+    },
+    "qwen-analysis": {
+      "adapter": "ollama",
+      "model": "qwen2.5:7b",
+      "base_url": "http://127.0.0.1:11434"
+    },
+    "qwen-coder": {
+      "adapter": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "base_url": "http://127.0.0.1:11434"
+    },
+    "deepseek-reasoning": {
+      "adapter": "ollama",
+      "model": "deepseek-r1:7b",
+      "base_url": "http://127.0.0.1:11434"
+    }
+  }
+}
