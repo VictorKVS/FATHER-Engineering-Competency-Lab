@@ -1,0 +1,6 @@
+{
+  "agent_id": "father-lab-agent",
+  "brain_id": "qwen-analysis",
+  "competency_id": "generic",
+  "knowledge": "folder"
+}
