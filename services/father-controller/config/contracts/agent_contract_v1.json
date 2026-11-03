@@ -1,0 +1,42 @@
+{
+  "contract_version": "1.0",
+  "required": [
+    "agent_id",
+    "name",
+    "version",
+    "role",
+    "status",
+    "manifest",
+    "capabilities",
+    "required_slots",
+    "supported_brains",
+    "inputs",
+    "outputs",
+    "tool_profile",
+    "knowledge_profile",
+    "memory_profile",
+    "security_profile",
+    "tests",
+    "benchmarks"
+  ],
+  "lifecycle_status": [
+    "planned",
+    "experimental",
+    "tested",
+    "approved",
+    "deprecated"
+  ],
+  "slot_types": [
+    "brain",
+    "prompt",
+    "knowledge",
+    "memory",
+    "tools",
+    "workflow",
+    "input",
+    "output",
+    "security",
+    "observability"
+  ],
+  "notes": "Agent is a reusable worker definition. Brain/model is replaceable and is not the agent identity."
+}
