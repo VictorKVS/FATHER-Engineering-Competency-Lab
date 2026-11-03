@@ -1,0 +1,23 @@
+{
+  "profile_id": "father-single-llm-v1",
+  "agent_manifest": "config/agents/father_general.json",
+  "brain_id": "qwen-analysis",
+  "competency_id": "generic",
+  "input_adapters": [
+    "api",
+    "file"
+  ],
+  "output_adapters": [
+    "json",
+    "file"
+  ],
+  "knowledge_adapter": "folder",
+  "retrieval": {
+    "mode": "lexical-bootstrap",
+    "top_k": 5,
+    "semantic_vector_ready": false
+  },
+  "tool_slot": true,
+  "context_bus": true,
+  "handoff_ready": true
+}
