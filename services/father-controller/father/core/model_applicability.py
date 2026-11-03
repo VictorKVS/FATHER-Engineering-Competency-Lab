@@ -50,8 +50,7 @@ class ModelApplicabilityEngine:
                 score+=30
                 reasons.append("modality_match")
             else:
-                score-=100
-                penalties.append("modality_mismatch")
+                continue
 
             strengths=set(m.get("strengths",[]))
             spec=profile["specialization"]
