@@ -55,8 +55,8 @@ class ModelApplicabilityEngine:
             strengths=set(m.get("strengths",[]))
             spec=profile["specialization"]
             aliases={
-                "general":{"general analysis","multilingual","structured_output"},
-                "rag":{"rag","retrieval-support"},
+                "general":{"general analysis","multilingual","structured_output","lightweight","general"},
+                "rag":{"rag"},
                 "coding":{"coding","code_generation","code_reasoning","devsecops"},
                 "reasoning":{"reasoning","multi_step_analysis","planning","critical_analysis"},
                 "vision":{"vision","document_understanding","image_analysis"}
