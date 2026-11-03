@@ -1,0 +1,22 @@
+{
+  "product_id": "father-general-single-v1",
+  "agent_manifest": "config/agents/father_general.json",
+  "brain_id": "qwen-analysis",
+  "competency_id": "generic",
+  "inputs": [
+    "api",
+    "file"
+  ],
+  "outputs": [
+    "json",
+    "file"
+  ],
+  "knowledge": {
+    "adapter": "folder"
+  },
+  "retrieval": {
+    "top_k": 5
+  },
+  "tools": "default",
+  "context_bus": true
+}
