@@ -1,0 +1,296 @@
+{
+  "kb_version": "1.0",
+  "purpose": "FATHER model applicability knowledge base",
+  "selection_principle": "choose the simplest model that satisfies task requirements; escalate when complexity, modality, context, or specialization require it",
+  "task_dimensions": {
+    "modality": [
+      "text",
+      "vision"
+    ],
+    "complexity_levels": {
+      "1": "simple transform/classification/extraction/short summarization",
+      "2": "general QA, RAG synthesis, structured output, routine architecture",
+      "3": "specialized coding or multi-constraint analysis",
+      "4": "deep multi-step reasoning, difficult planning, adversarial/critical analysis"
+    },
+    "specializations": [
+      "general",
+      "rag",
+      "coding",
+      "reasoning",
+      "edge",
+      "vision",
+      "structured_output"
+    ],
+    "latency_classes": [
+      "fast",
+      "medium",
+      "slow"
+    ],
+    "resource_classes": [
+      "light",
+      "medium",
+      "heavy"
+    ]
+  },
+  "decision_ladder": [
+    {
+      "stage": 1,
+      "condition": "task is simple, local, text-only, low risk",
+      "prefer": [
+        "llama-small"
+      ]
+    },
+    {
+      "stage": 2,
+      "condition": "general analysis, RAG synthesis, Russian text, JSON/structured output",
+      "prefer": [
+        "qwen-analysis"
+      ]
+    },
+    {
+      "stage": 3,
+      "condition": "code generation, repair, code reasoning",
+      "prefer": [
+        "qwen-coder"
+      ]
+    },
+    {
+      "stage": 4,
+      "condition": "deep multi-step reasoning or difficult planning",
+      "prefer": [
+        "deepseek-reasoning"
+      ]
+    },
+    {
+      "stage": 5,
+      "condition": "image/document/chart understanding is required",
+      "prefer": [
+        "qwen3-vl-vision",
+        "llava-vision"
+      ]
+    },
+    {
+      "stage": 6,
+      "condition": "no single model satisfies requirements",
+      "prefer": [
+        "multi-brain handoff"
+      ]
+    }
+  ],
+  "models": {
+    "llama-small": {
+      "brain_id": "llama-small",
+      "runtime_model": "llama3.2:1b",
+      "registered": true,
+      "installed": true,
+      "modality": [
+        "text"
+      ],
+      "context_window_tokens": 131072,
+      "strengths": [
+        "edge",
+        "lightweight",
+        "rewriting",
+        "summarization",
+        "retrieval-support"
+      ],
+      "weaknesses": [
+        "complex reasoning",
+        "specialized coding",
+        "high-stakes analysis"
+      ],
+      "recommended_complexity": [
+        1,
+        2
+      ],
+      "latency_class": "fast",
+      "resource_class": "light",
+      "source_notes": [
+        "Official Ollama page positions 1B for personal information management, multilingual retrieval, rewriting, and edge/local use."
+      ],
+      "sources": [
+        "https://ollama.com/library/llama3.2"
+      ]
+    },
+    "qwen-analysis": {
+      "brain_id": "qwen-analysis",
+      "runtime_model": "qwen2.5:7b",
+      "registered": true,
+      "installed": true,
+      "modality": [
+        "text"
+      ],
+      "context_window_tokens": 32768,
+      "strengths": [
+        "general analysis",
+        "rag",
+        "structured_output",
+        "json",
+        "multilingual",
+        "coding-adjacent",
+        "math-adjacent"
+      ],
+      "weaknesses": [
+        "not code-specialized",
+        "slower than 1B edge model",
+        "not vision"
+      ],
+      "recommended_complexity": [
+        2,
+        3
+      ],
+      "latency_class": "medium",
+      "resource_class": "medium",
+      "local_evidence": {
+        "stage24_rank": 1,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 5849.69
+      },
+      "source_notes": [
+        "Ollama describes stronger instruction following, structured data/JSON, multilingual support, coding and math improvements."
+      ],
+      "sources": [
+        "https://ollama.com/library/qwen2.5"
+      ]
+    },
+    "qwen-coder": {
+      "brain_id": "qwen-coder",
+      "runtime_model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "registered": true,
+      "installed": true,
+      "modality": [
+        "text"
+      ],
+      "context_window_tokens": 32768,
+      "strengths": [
+        "coding",
+        "code_generation",
+        "code_fixing",
+        "code_reasoning",
+        "devsecops"
+      ],
+      "weaknesses": [
+        "overkill for simple chat",
+        "not vision",
+        "slower than general model in local Stage24"
+      ],
+      "recommended_complexity": [
+        2,
+        3
+      ],
+      "latency_class": "slow",
+      "resource_class": "medium",
+      "local_evidence": {
+        "stage24_rank": 3,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 22613.3
+      },
+      "source_notes": [
+        "Official Ollama model card highlights code generation, code reasoning and code fixing."
+      ],
+      "sources": [
+        "https://ollama.com/library/qwen2.5-coder"
+      ]
+    },
+    "deepseek-reasoning": {
+      "brain_id": "deepseek-reasoning",
+      "runtime_model": "deepseek-r1:7b",
+      "registered": true,
+      "installed": true,
+      "modality": [
+        "text"
+      ],
+      "context_window_tokens": 131072,
+      "strengths": [
+        "reasoning",
+        "multi_step_analysis",
+        "planning",
+        "critical_analysis"
+      ],
+      "weaknesses": [
+        "high latency on current host",
+        "overkill for routine tasks",
+        "not code-specialized",
+        "not vision"
+      ],
+      "recommended_complexity": [
+        3,
+        4
+      ],
+      "latency_class": "slow",
+      "resource_class": "medium",
+      "local_evidence": {
+        "stage24_rank": 4,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 30073.04
+      },
+      "source_notes": [
+        "Official Ollama card identifies DeepSeek-R1 as a reasoning model family."
+      ],
+      "sources": [
+        "https://ollama.com/library/deepseek-r1"
+      ]
+    },
+    "qwen3-vl-vision": {
+      "brain_id": null,
+      "runtime_model": "qwen3-vl:8b-instruct-q4_K_M",
+      "registered": false,
+      "installed": true,
+      "modality": [
+        "text",
+        "vision"
+      ],
+      "strengths": [
+        "vision",
+        "document_understanding",
+        "image_analysis"
+      ],
+      "weaknesses": [
+        "not yet registered in FATHER Brain Registry",
+        "not yet benchmarked locally"
+      ],
+      "recommended_complexity": [
+        2,
+        3
+      ],
+      "latency_class": "unknown",
+      "resource_class": "medium",
+      "local_evidence": {
+        "status": "installed_not_benchmarked"
+      },
+      "sources": []
+    },
+    "llava-vision": {
+      "brain_id": null,
+      "runtime_model": "llava:7b",
+      "registered": false,
+      "installed": true,
+      "modality": [
+        "text",
+        "vision"
+      ],
+      "strengths": [
+        "vision",
+        "image_question_answering"
+      ],
+      "weaknesses": [
+        "not yet registered in FATHER Brain Registry",
+        "not yet benchmarked locally"
+      ],
+      "recommended_complexity": [
+        2,
+        3
+      ],
+      "latency_class": "unknown",
+      "resource_class": "medium",
+      "local_evidence": {
+        "status": "installed_not_benchmarked"
+      },
+      "sources": []
+    }
+  }
+}
