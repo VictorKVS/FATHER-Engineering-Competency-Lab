@@ -3,10 +3,11 @@ import time
 from pathlib import Path
 
 class WorkflowOrchestrator:
-    def __init__(self, router, assembler, audit_path):
+    def __init__(self, router, assembler, audit_path, policy_gate=None):
         self.router=router
         self.assembler=assembler
         self.audit_path=Path(audit_path)
+        self.policy_gate=policy_gate
         self.audit_path.parent.mkdir(parents=True,exist_ok=True)
 
     def _audit(self, run_id, stage, status, details):
@@ -29,6 +30,7 @@ class WorkflowOrchestrator:
             "task_type":task_type,
             "event_source":event.source,
             "route":None,
+            "policy":[],
             "agent_id":None,
             "brain_id":None,
             "competency_id":None,
@@ -57,6 +59,14 @@ class WorkflowOrchestrator:
         state["agent_id"]=route["agent_id"]
         step("route","ok",route)
 
+        if self.policy_gate:
+            decision=self.policy_gate.check_agent(route["agent_id"],task_type)
+            state["policy"].append(decision)
+            step("policy_agent","ok" if decision["allowed"] else "denied",decision)
+            if not decision["allowed"]:
+                state["status"]="denied"
+                return state
+
         agent,_=self.assembler.assemble(route["manifest_path"])
         state["brain_id"]=agent.brain.brain_id
         state["competency_id"]=agent.competency_id
@@ -67,6 +77,14 @@ class WorkflowOrchestrator:
         })
 
         if tool_call:
+            if self.policy_gate:
+                decision=self.policy_gate.check_tool(agent.agent_id,tool_call["name"])
+                state["policy"].append(decision)
+                step("policy_tool","ok" if decision["allowed"] else "denied",decision)
+                if not decision["allowed"]:
+                    state["status"]="denied"
+                    return state
+
             tool_result=agent.call_tool(tool_call["name"],tool_call.get("arguments",{}))
             state["tool"]={
                 "name":tool_result.name,
