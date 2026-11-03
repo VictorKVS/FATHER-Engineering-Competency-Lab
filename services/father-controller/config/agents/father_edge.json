@@ -1,0 +1,6 @@
+{
+  "agent_id": "father-edge-agent",
+  "brain_id": "llama-small",
+  "competency_id": "generic",
+  "knowledge": "folder"
+}
