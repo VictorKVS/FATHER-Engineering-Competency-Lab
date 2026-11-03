@@ -1,0 +1,6 @@
+{
+  "agent_id": "father-coder-agent",
+  "brain_id": "qwen-coder",
+  "competency_id": "generic",
+  "knowledge": "folder"
+}
