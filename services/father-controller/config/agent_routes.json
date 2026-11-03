@@ -1,0 +1,9 @@
+{
+  "default_agent_id": "father-general-agent",
+  "routes": {
+    "architecture": "father-general-agent",
+    "ib-knowledge": "father-ib-agent",
+    "coding": "father-coder-agent",
+    "edge": "father-edge-agent"
+  }
+}
