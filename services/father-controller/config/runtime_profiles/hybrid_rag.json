@@ -1,0 +1,28 @@
+{
+  "profile_id": "father-single-llm-hybrid-rag-v1",
+  "agent_manifest": "config/agents/father_general.json",
+  "brain_id": "qwen-analysis",
+  "competency_id": "generic",
+  "input_adapters": [
+    "api",
+    "file"
+  ],
+  "output_adapters": [
+    "json",
+    "file"
+  ],
+  "knowledge_adapter": "hybrid-folder",
+  "retrieval": {
+    "mode": "hybrid-semantic-lexical",
+    "top_k": 3,
+    "embedding_provider": "ollama",
+    "embedding_model": "bge-m3",
+    "vector_index": "in-memory-cosine",
+    "semantic_weight": 0.7,
+    "lexical_weight": 0.3,
+    "persistent_vector_db": false
+  },
+  "tool_slot": true,
+  "context_bus": true,
+  "handoff_ready": true
+}
