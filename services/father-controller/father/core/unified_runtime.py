@@ -41,7 +41,7 @@ class UnifiedAgentRuntime:
         messages.append({"role":"user","content":envelope.input_text})
         return messages
 
-    def run(self, event, task_type="message"):
+    def run(self, event, task_type="message", tool_call=None):
         task_id=f"agent-{int(time.time()*1000)}"
         envelope=ContextEnvelope(
             task_id=task_id,
@@ -56,6 +56,24 @@ class UnifiedAgentRuntime:
 
         knowledge=self._retrieve(envelope.input_text)
         envelope.add_knowledge(knowledge)
+
+        tool_result=None
+        if tool_call:
+            tool_result=self.agent.call_tool(
+                tool_call["name"],
+                tool_call.get("arguments",{})
+            )
+            envelope.artifacts["tool_result"]={
+                "name":tool_result.name,
+                "ok":tool_result.ok,
+                "result":tool_result.result,
+                "error":tool_result.error
+            }
+            envelope.add_history(
+                "system",
+                "Результат инструмента "+tool_result.name+": "+str(tool_result.result),
+                producer="tool:"+tool_result.name
+            )
 
         response=self.agent.brain.generate(
             BrainRequest(messages=self._messages(envelope))
@@ -84,6 +102,12 @@ class UnifiedAgentRuntime:
             "knowledge_sources":[x.get("source") for x in knowledge],
             "knowledge_modes":[x.get("retrieval_mode","unknown") for x in knowledge],
             "content":response.content,
+            "tool":{
+                "name":tool_result.name,
+                "ok":tool_result.ok,
+                "result":tool_result.result,
+                "error":tool_result.error
+            } if tool_result else None,
             "envelope":{
                 "task_id":envelope.task_id,
                 "task_type":envelope.task_type,
