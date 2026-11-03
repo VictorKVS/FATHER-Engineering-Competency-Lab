@@ -3,11 +3,12 @@ import time
 from pathlib import Path
 
 class WorkflowOrchestrator:
-    def __init__(self, router, assembler, audit_path, policy_gate=None):
+    def __init__(self, router, assembler, audit_path, policy_gate=None, sandbox=None):
         self.router=router
         self.assembler=assembler
         self.audit_path=Path(audit_path)
         self.policy_gate=policy_gate
+        self.sandbox=sandbox
         self.audit_path.parent.mkdir(parents=True,exist_ok=True)
 
     def _audit(self, run_id, stage, status, details):
@@ -31,6 +32,7 @@ class WorkflowOrchestrator:
             "event_source":event.source,
             "route":None,
             "policy":[],
+            "sandbox":[],
             "agent_id":None,
             "brain_id":None,
             "competency_id":None,
@@ -85,17 +87,37 @@ class WorkflowOrchestrator:
                     state["status"]="denied"
                     return state
 
-            tool_result=agent.call_tool(tool_call["name"],tool_call.get("arguments",{}))
-            state["tool"]={
-                "name":tool_result.name,
-                "ok":tool_result.ok,
-                "result":tool_result.result,
-                "error":tool_result.error
-            }
-            step("tool","ok" if tool_result.ok else "error",state["tool"])
-            if not tool_result.ok:
-                state["status"]="failed"
-                return state
+            if self.sandbox:
+                sandbox_result=self.sandbox.execute(
+                    agent,
+                    tool_call["name"],
+                    tool_call.get("arguments",{})
+                )
+                state["sandbox"].append(sandbox_result)
+                step("sandbox","ok" if sandbox_result["ok"] else "blocked",sandbox_result)
+                if not sandbox_result["ok"]:
+                    state["status"]="denied" if sandbox_result.get("blocked") else "failed"
+                    return state
+
+                state["tool"]={
+                    "name":sandbox_result["tool_name"],
+                    "ok":sandbox_result["ok"],
+                    "result":sandbox_result.get("result"),
+                    "error":sandbox_result.get("error")
+                }
+                step("tool","ok",state["tool"])
+            else:
+                tool_result=agent.call_tool(tool_call["name"],tool_call.get("arguments",{}))
+                state["tool"]={
+                    "name":tool_result.name,
+                    "ok":tool_result.ok,
+                    "result":tool_result.result,
+                    "error":tool_result.error
+                }
+                step("tool","ok" if tool_result.ok else "error",state["tool"])
+                if not tool_result.ok:
+                    state["status"]="failed"
+                    return state
 
         result=agent.run(event)
         state["result"]={
@@ -116,6 +138,7 @@ class WorkflowOrchestrator:
         step("complete",state["status"],{
             "agent_id":state["agent_id"],
             "brain_id":state["brain_id"],
-            "tool_used":bool(tool_call)
+            "tool_used":bool(tool_call),
+            "sandboxed":bool(self.sandbox and tool_call)
         })
         return state
