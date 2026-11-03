@@ -1,0 +1,1 @@
+# Stage 21 — Reproducible Release Verification\n\nVerifies the live father/ and config/ file set against the Stage 20 BOM, checks for missing/extra critical files, validates SHA-256 hashes, and confirms the release manifest/external anchor bindings.\n\nRun with `FATHER_UPDATE.ps1`.\n
