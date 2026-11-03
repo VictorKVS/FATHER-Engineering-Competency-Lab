@@ -6,6 +6,7 @@ from father.core.hybrid_knowledge import HybridFolderKnowledge, OllamaEmbeddingC
 from father.core.io import ApiInputAdapter, FileInputAdapter
 from father.core.runtime_io import RuntimeJsonOutputAdapter, RuntimeFileOutputAdapter
 from father.core.unified_runtime import UnifiedAgentRuntime
+from father.core.block_registry import BlockRegistry
 
 class FactoryBuildError(RuntimeError):
     pass
@@ -14,6 +15,7 @@ class ProductFactory:
     def __init__(self,base_dir):
         self.base=Path(base_dir)
         self.assembler=AgentAssembler(self.base)
+        self.registry=BlockRegistry(self.base/"config/blocks.json")
 
     def load_spec(self,path):
         p=Path(path)
@@ -52,6 +54,9 @@ class ProductFactory:
         knowledge_type=(spec.get("knowledge") or {}).get("adapter")
         if knowledge_type not in {"folder","hybrid-folder","null"}:
             problems.append({"kind":"unsupported_knowledge","adapter":knowledge_type})
+
+        registry_check=self.registry.compatible(spec)
+        problems.extend(registry_check["problems"])
 
         return {"ok":not problems,"problems":problems}
 
@@ -135,6 +140,7 @@ class ProductFactory:
             "outputs":sorted(outputs),
             "tools":[x["name"] for x in agent.tools.list()],
             "context_bus":bool(spec.get("context_bus",True)),
+            "registry":self.registry.health(),
             "status":"ready"
         }
 
