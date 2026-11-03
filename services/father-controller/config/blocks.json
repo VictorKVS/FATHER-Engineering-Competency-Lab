@@ -1,0 +1,126 @@
+{
+  "registry_version": "1.0",
+  "blocks": {
+    "brain": {
+      "qwen-analysis": {
+        "type": "brain",
+        "provider": "ollama",
+        "capabilities": [
+          "analysis",
+          "architecture",
+          "rag"
+        ],
+        "model": "qwen2.5:7b"
+      },
+      "llama-small": {
+        "type": "brain",
+        "provider": "ollama",
+        "capabilities": [
+          "lightweight",
+          "general"
+        ],
+        "model": "llama3.2:1b"
+      },
+      "qwen-coder": {
+        "type": "brain",
+        "provider": "ollama",
+        "capabilities": [
+          "coding",
+          "devsecops"
+        ],
+        "model": "qwen2.5-coder:7b-instruct-q4_K_M"
+      },
+      "deepseek-reasoning": {
+        "type": "brain",
+        "provider": "ollama",
+        "capabilities": [
+          "reasoning",
+          "analysis"
+        ],
+        "model": "deepseek-r1:7b"
+      }
+    },
+    "competency": {
+      "generic": {
+        "type": "competency",
+        "capabilities": [
+          "architecture",
+          "general"
+        ]
+      },
+      "ib_demo": {
+        "type": "competency",
+        "capabilities": [
+          "ib-knowledge",
+          "security"
+        ]
+      }
+    },
+    "knowledge": {
+      "folder": {
+        "type": "knowledge",
+        "capabilities": [
+          "lexical",
+          "folder"
+        ],
+        "requires_embedding": false
+      },
+      "hybrid-folder": {
+        "type": "knowledge",
+        "capabilities": [
+          "semantic",
+          "lexical",
+          "hybrid"
+        ],
+        "requires_embedding": true
+      },
+      "null": {
+        "type": "knowledge",
+        "capabilities": [
+          "none"
+        ],
+        "requires_embedding": false
+      }
+    },
+    "input": {
+      "api": {
+        "type": "input",
+        "capabilities": [
+          "json",
+          "request"
+        ]
+      },
+      "file": {
+        "type": "input",
+        "capabilities": [
+          "text-file"
+        ]
+      }
+    },
+    "output": {
+      "json": {
+        "type": "output",
+        "capabilities": [
+          "json"
+        ]
+      },
+      "file": {
+        "type": "output",
+        "capabilities": [
+          "file",
+          "json"
+        ]
+      }
+    },
+    "tool_profile": {
+      "default": {
+        "type": "tool_profile",
+        "capabilities": [
+          "echo",
+          "calculator",
+          "get_time"
+        ]
+      }
+    }
+  }
+}
