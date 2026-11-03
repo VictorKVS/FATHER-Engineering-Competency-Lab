@@ -1,0 +1,66 @@
+{
+  "default": {
+    "allow_task_types": [
+      "*"
+    ],
+    "allow_tools": [
+      "echo"
+    ],
+    "deny_tools": []
+  },
+  "agents": {
+    "father-general-agent": {
+      "allow_task_types": [
+        "architecture",
+        "unknown-task"
+      ],
+      "allow_tools": [
+        "echo",
+        "calculator"
+      ],
+      "deny_tools": []
+    },
+    "father-ib-agent": {
+      "allow_task_types": [
+        "ib-knowledge"
+      ],
+      "allow_tools": [
+        "echo"
+      ],
+      "deny_tools": [
+        "calculator"
+      ]
+    },
+    "father-edge-agent": {
+      "allow_task_types": [
+        "edge"
+      ],
+      "allow_tools": [
+        "echo"
+      ],
+      "deny_tools": [
+        "calculator"
+      ]
+    },
+    "father-coder-agent": {
+      "allow_task_types": [
+        "coding"
+      ],
+      "allow_tools": [
+        "echo",
+        "calculator"
+      ],
+      "deny_tools": []
+    },
+    "father-lab-agent": {
+      "allow_task_types": [
+        "*"
+      ],
+      "allow_tools": [
+        "echo",
+        "calculator"
+      ],
+      "deny_tools": []
+    }
+  }
+}
