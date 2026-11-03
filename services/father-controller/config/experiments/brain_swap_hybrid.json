@@ -1,0 +1,108 @@
+{
+  "experiment_id": "hybrid-rag-brain-suite-v1",
+  "agent_manifest": "config/agents/father_general.json",
+  "brains": [
+    "qwen-analysis",
+    "llama-small",
+    "qwen-coder",
+    "deepseek-reasoning"
+  ],
+  "embedding_model": "bge-m3",
+  "rag_corpus": "config/rag_stage23",
+  "semantic_weight": 0.7,
+  "lexical_weight": 0.3,
+  "top_k": 3,
+  "tasks": [
+    {
+      "id": "architecture-brain-slot",
+      "task_type": "architecture",
+      "prompt": "Как в FATHER заменить одну LLM на другую без переписывания агента?",
+      "rubric": {
+        "required_groups": [
+          [
+            "brain slot"
+          ],
+          [
+            "замен",
+            "смен"
+          ],
+          [
+            "llm",
+            "модел"
+          ],
+          [
+            "агент"
+          ]
+        ],
+        "forbidden_terms": [],
+        "min_chars": 40,
+        "max_chars": 700,
+        "pass_score": 75
+      }
+    },
+    {
+      "id": "rag-knowledge-slot",
+      "task_type": "architecture",
+      "prompt": "Как Knowledge Slot получает релевантные сведения из документов перед генерацией ответа?",
+      "rubric": {
+        "required_groups": [
+          [
+            "knowledge slot"
+          ],
+          [
+            "rag",
+            "retrieval"
+          ],
+          [
+            "источник",
+            "source"
+          ],
+          [
+            "вектор",
+            "embedding",
+            "semantic"
+          ]
+        ],
+        "forbidden_terms": [],
+        "min_chars": 50,
+        "max_chars": 900,
+        "pass_score": 75
+      }
+    },
+    {
+      "id": "industrial-safety",
+      "task_type": "architecture",
+      "prompt": "Почему LLM нельзя напрямую подключать к исполнительному механизму промышленной системы?",
+      "rubric": {
+        "required_groups": [
+          [
+            "policy",
+            "политик"
+          ],
+          [
+            "sandbox",
+            "песоч"
+          ],
+          [
+            "adapter",
+            "адаптер"
+          ],
+          [
+            "безопас",
+            "контрол"
+          ]
+        ],
+        "forbidden_terms": [],
+        "min_chars": 50,
+        "max_chars": 900,
+        "pass_score": 75
+      }
+    }
+  ],
+  "ranking_order": [
+    "errors asc",
+    "pass_rate desc",
+    "avg_quality desc",
+    "avg_latency_ms asc"
+  ]
+}
