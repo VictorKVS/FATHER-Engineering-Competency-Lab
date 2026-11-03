@@ -16,7 +16,8 @@
       ],
       "allow_tools": [
         "echo",
-        "calculator"
+        "calculator",
+        "get_time"
       ],
       "deny_tools": []
     },
