@@ -73,11 +73,11 @@ print("\n=== BLOCK: UNSANDBOXED TOOL ===")
 state_unknown=workflow.run(
     event,
     "architecture",
-    tool_call={"name":"not-sandboxed-tool","arguments":{}}
+    tool_call={"name":"get_time","arguments":{}}
 )
 evidence["runs"].append(state_unknown)
 stages_unknown=[x["stage"] for x in state_unknown["transitions"]]
-add("sandbox_blocks_unknown_tool",
+add("sandbox_blocks_unsandboxed_tool",
     state_unknown["status"]=="denied"
     and "sandbox" in stages_unknown
     and "tool" not in stages_unknown
