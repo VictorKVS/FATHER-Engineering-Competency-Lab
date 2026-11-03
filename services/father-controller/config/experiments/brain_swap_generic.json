@@ -1,0 +1,23 @@
+{
+  "experiment_id": "generic-brain-swap-v1",
+  "agent_manifest": "config/agents/father_general.json",
+  "competency_id": "generic",
+  "brains": [
+    "qwen-analysis",
+    "llama-small",
+    "qwen-coder",
+    "deepseek-reasoning"
+  ],
+  "ranking_order": [
+    "errors asc",
+    "pass_rate desc",
+    "avg_quality desc",
+    "avg_latency_ms asc"
+  ],
+  "frozen_conditions": [
+    "same prompt",
+    "same knowledge context",
+    "same task",
+    "same rubric"
+  ]
+}
