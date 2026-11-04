@@ -1,5 +1,5 @@
 {
-  "registry_version": "1.0",
+  "registry_version": "2.0",
   "blocks": {
     "brain": {
       "qwen-analysis": {
@@ -10,7 +10,30 @@
           "architecture",
           "rag"
         ],
-        "model": "qwen2.5:7b"
+        "model": "qwen2.5:7b",
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "llama-small": {
         "type": "brain",
@@ -19,7 +42,30 @@
           "lightweight",
           "general"
         ],
-        "model": "llama3.2:1b"
+        "model": "llama3.2:1b",
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "qwen-coder": {
         "type": "brain",
@@ -28,7 +74,30 @@
           "coding",
           "devsecops"
         ],
-        "model": "qwen2.5-coder:7b-instruct-q4_K_M"
+        "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "deepseek-reasoning": {
         "type": "brain",
@@ -37,7 +106,30 @@
           "reasoning",
           "analysis"
         ],
-        "model": "deepseek-r1:7b"
+        "model": "deepseek-r1:7b",
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     },
     "competency": {
@@ -46,14 +138,60 @@
         "capabilities": [
           "architecture",
           "general"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "ib_demo": {
         "type": "competency",
         "capabilities": [
           "ib-knowledge",
           "security"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     },
     "knowledge": {
@@ -63,7 +201,30 @@
           "lexical",
           "folder"
         ],
-        "requires_embedding": false
+        "requires_embedding": false,
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "hybrid-folder": {
         "type": "knowledge",
@@ -72,14 +233,60 @@
           "lexical",
           "hybrid"
         ],
-        "requires_embedding": true
+        "requires_embedding": true,
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "null": {
         "type": "knowledge",
         "capabilities": [
           "none"
         ],
-        "requires_embedding": false
+        "requires_embedding": false,
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     },
     "input": {
@@ -88,13 +295,59 @@
         "capabilities": [
           "json",
           "request"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "file": {
         "type": "input",
         "capabilities": [
           "text-file"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     },
     "output": {
@@ -102,14 +355,60 @@
         "type": "output",
         "capabilities": [
           "json"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       },
       "file": {
         "type": "output",
         "capabilities": [
           "file",
           "json"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     },
     "tool_profile": {
@@ -119,7 +418,30 @@
           "echo",
           "calculator",
           "get_time"
-        ]
+        ],
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": []
+        }
       }
     }
   }
