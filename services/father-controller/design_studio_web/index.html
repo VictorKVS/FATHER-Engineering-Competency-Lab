@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FATHER Design Studio</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="eyebrow">FATHER ENGINEERING PLATFORM</div>
+    <h1>Design Studio</h1>
+  </div>
+  <div class="topActions">
+    <span id="healthBadge" class="badge">CONNECTING</span>
+    <button id="loadReference">Reference design</button>
+    <button id="validateBtn">Validate</button>
+    <button id="autoBtn" class="primary">Auto Complete</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <aside class="catalog">
+    <div class="panelTitle">COMPONENTS</div>
+    <input id="search" placeholder="Search agents / blocks">
+    <div class="tabs">
+      <button data-tab="agents" class="active">Agents</button>
+      <button data-tab="blocks">Blocks</button>
+    </div>
+    <div id="catalogList" class="catalogList"></div>
+  </aside>
+
+  <main class="canvasWrap">
+    <div class="canvasHeader">
+      <div>
+        <strong id="projectName">Untitled Product</strong>
+        <span id="chassisLabel">C2 KNOWLEDGE / RAG</span>
+      </div>
+      <div id="canvasStatus" class="statusLine">Drop components onto the field</div>
+    </div>
+    <section id="canvas" class="canvas">
+      <svg id="edges" class="edges"></svg>
+      <div class="gridHint">DESIGN CANVAS</div>
+    </section>
+  </main>
+
+  <aside class="inspector">
+    <div class="panelTitle">INSPECTOR</div>
+    <div id="inspectorEmpty" class="empty">Select a node</div>
+    <div id="inspectorContent" class="hidden"></div>
+    <div class="divider"></div>
+    <div class="panelTitle">COMPATIBILITY</div>
+    <div id="compatibility" class="compatibility">
+      <div class="muted">Run validation or Auto Complete.</div>
+    </div>
+  </aside>
+</div>
+
+<footer class="bottombar">
+  <div id="summary">0 nodes · 0 edges</div>
+  <div class="pipeline">
+    <span>DESIGN</span><b>→</b><span>BUILD</span><b>→</b><span>BENCH</span><b>→</b><span>RELEASE</span>
+  </div>
+  <div id="gate" class="gate neutral">NOT CHECKED</div>
+</footer>
+
+<div id="autoModal" class="modal hidden">
+  <div class="modalCard">
+    <div class="modalHead">
+      <h2>Auto Assembly</h2>
+      <button id="closeModal">×</button>
+    </div>
+    <label>What should FATHER build?</label>
+    <textarea id="reqTask">Собери локального агента для анализа архитектуры и ответов с базой знаний.</textarea>
+    <div class="formGrid">
+      <label>Specialization<input id="reqSpec" value="rag"></label>
+      <label>Complexity<input id="reqComplexity" type="number" min="1" max="4" value="2"></label>
+      <label>Capabilities<input id="reqCaps" value="general,architecture,rag"></label>
+      <label>Inputs<input id="reqInputs" value="api,file"></label>
+    </div>
+    <button id="runAuto" class="primary full">Analyze / Auto Complete</button>
+    <pre id="autoResult"></pre>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
