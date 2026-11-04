@@ -18,7 +18,6 @@ if(-not $env:OLLAMA_MODELS){
 if($env:OLLAMA_MODELS){Write-Host "OLLAMA_MODELS=$env:OLLAMA_MODELS" -ForegroundColor DarkGray}
 
 if ($env:OLLAMA_MODELS) {
-  Write-Host "OLLAMA_MODELS=$env:OLLAMA_MODELS" -ForegroundColor DarkGray
   $root = Split-Path $env:OLLAMA_MODELS -Qualifier
   if ($root) {
     try {
@@ -41,7 +40,24 @@ $optional=@(
 
 function Has-Model([string]$m) {
   $list = & $ollama list 2>$null
-  return ($list -match [regex]::Escape($m)) -or ($list -match [regex]::Escape(($m -split ':')[0]))
+  return ($list -match [regex]::Escape($m))
+}
+
+function Pull-WithRetry([string]$m, [int]$attempts=4) {
+  for($i=1; $i -le $attempts; $i++) {
+    Write-Host "PULL $m (attempt $i/$attempts)" -ForegroundColor Yellow
+    & $ollama pull $m
+    if($LASTEXITCODE -eq 0 -and (Has-Model $m)) {
+      Write-Host "READY $m" -ForegroundColor Green
+      return $true
+    }
+    if($i -lt $attempts) {
+      $delay = 5 * $i
+      Write-Warning "Pull failed for $m. Retrying in $delay sec..."
+      Start-Sleep -Seconds $delay
+    }
+  }
+  return $false
 }
 
 function Ensure-Model([string]$m, [bool]$requiredModel) {
@@ -50,16 +66,11 @@ function Ensure-Model([string]$m, [bool]$requiredModel) {
     return $true
   }
 
-  Write-Host "PULL $m" -ForegroundColor Yellow
-  & $ollama pull $m
-
-  if ($LASTEXITCODE -eq 0 -and (Has-Model $m)) {
-    Write-Host "READY $m" -ForegroundColor Green
-    return $true
-  }
+  $ok = Pull-WithRetry $m 4
+  if($ok){ return $true }
 
   if ($requiredModel) {
-    throw "Required Story model failed to pull: $m"
+    throw "Required Story model failed to pull after retries: $m"
   }
 
   Write-Warning "Optional Story model unavailable: $m. Story Bench will continue without it."
@@ -80,6 +91,5 @@ Write-Host "=== STORY CORE MODELS READY ===" -ForegroundColor Green
 Write-Host "Required: qwen2.5:7b + ministral-3:8b" -ForegroundColor Green
 if ($optionalReady -lt $optional.Count) {
   Write-Host "Optional mistral-nemo is not required for the first benchmark." -ForegroundColor Yellow
-  Write-Host "You can retry it later after the model drive is stable." -ForegroundColor Yellow
 }
-Write-Host "Next: .\RUN_FATHER_STORY_BENCH.ps1" -ForegroundColor Cyan
+Write-Host "Next: ./RUN_FATHER_STORY_BENCH.ps1" -ForegroundColor Cyan
