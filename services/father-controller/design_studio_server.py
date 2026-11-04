@@ -7,6 +7,7 @@ from father.core.agent_zoo import AgentZoo
 from father.core.block_registry import BlockRegistry
 from father.core.design_studio import DesignStudioProject
 from father.core.auto_assembly import AutoAssemblyPlanner
+from father.core.model_intelligence import ModelIntelligenceRegistry
 
 BASE=Path(__file__).resolve().parent
 WEB=BASE/"design_studio_web"
@@ -21,6 +22,7 @@ blocks=BlockRegistry(
     BASE/"config/contracts/block_contract_v1.json"
 )
 planner=AutoAssemblyPlanner(BASE)
+model_intelligence=ModelIntelligenceRegistry(BASE/"config/model_intelligence.json")
 
 MIME={
     ".html":"text/html; charset=utf-8",
@@ -35,7 +37,9 @@ def catalog():
         "agents":agents.list(),
         "blocks":blocks.list(),
         "agent_health":agents.validate(),
-        "block_health":blocks.health()
+        "block_health":blocks.health(),
+        "models":model_intelligence.list(),
+        "model_intelligence_health":model_intelligence.health()
     }
 
 class Handler(BaseHTTPRequestHandler):
@@ -61,12 +65,17 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path=urlparse(self.path).path
         if path=="/api/health":
-            return self._send(200,{"status":"ok","service":"father-design-studio","version":"0.1"})
+            return self._send(200,{"status":"ok","service":"father-design-studio","version":"0.2","model_intelligence":model_intelligence.health()})
         if path=="/api/catalog":
             return self._send(200,catalog())
         if path=="/api/project/reference":
             project=DesignStudioProject.load(BASE,"config/design_projects/father_general_design.json")
             return self._send(200,project.project)
+        if path=="/api/models":
+            return self._send(200,{"models":model_intelligence.list(),"health":model_intelligence.health()})
+        if path.startswith("/api/models/"):
+            model_id=path.split("/",3)[3]
+            return self._send(200,model_intelligence.get(model_id))
 
         if path=="/":
             path="/index.html"
@@ -89,6 +98,19 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200,result)
             if path=="/api/auto-assemble":
                 return self._send(200,planner.plan(data))
+            if path=="/api/models/create":
+                return self._send(201,model_intelligence.create_candidate(data))
+            if path.startswith("/api/models/") and path.endswith("/claims"):
+                model_id=path.split("/")[3]
+                return self._send(201,model_intelligence.add_claim(model_id,data))
+            if path.startswith("/api/models/") and "/claims/" in path and path.endswith("/status"):
+                parts=path.split("/")
+                model_id=parts[3]
+                claim_id=parts[5]
+                return self._send(200,model_intelligence.set_claim_status(model_id,claim_id,data.get("status"),data.get("confidence")))
+            if path.startswith("/api/models/") and path.endswith("/admission"):
+                model_id=path.split("/")[3]
+                return self._send(200,model_intelligence.set_admission(model_id,data.get("status")))
             return self._send(404,{"error":"not_found"})
         except Exception as e:
             return self._send(400,{"error":type(e).__name__,"message":str(e)})
