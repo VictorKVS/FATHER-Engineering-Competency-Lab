@@ -8,3 +8,9 @@ if ($LASTEXITCODE -ne 0) { throw "Factory MVP-07 failed" }
 Write-Host "=== FATHER FACTORY MVP-07: PASS ===" -ForegroundColor Green
 Write-Host "Evidence: evidence\factory_mvp07_design_studio_ui.json"
 Write-Host "Start UI: .\START_FATHER_DESIGN_STUDIO.ps1" -ForegroundColor Yellow
+
+
+Write-Host ""
+Write-Host "=== HANDOFF TO FACTORY MVP-08 ===" -ForegroundColor Cyan
+& .\RUN_FATHER_MVP08.ps1
+if ($LASTEXITCODE -ne 0) { throw "Factory MVP-08 failed" }
