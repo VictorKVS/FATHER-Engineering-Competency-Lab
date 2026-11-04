@@ -18,3 +18,13 @@ $('#run').onclick=async()=>{
 };
 $('#useResult').onclick=()=>{$('#source').value=$('#result').value;$('#instruction').value='';window.scrollTo({top:0,behavior:'smooth'})};
 $('#copy').onclick=async()=>{await navigator.clipboard.writeText($('#result').value);$('#status').textContent='Скопировано'};
+
+(async()=>{
+  try{
+    const r=await fetch('/api/health');
+    const j=await r.json();
+    if(document.querySelector('#brainBadge')) document.querySelector('#brainBadge').textContent='ONE BRAIN · '+j.model;
+  }catch(e){
+    if(document.querySelector('#brainBadge')) document.querySelector('#brainBadge').textContent='ONE BRAIN · offline';
+  }
+})();
