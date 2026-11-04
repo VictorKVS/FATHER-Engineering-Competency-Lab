@@ -1,0 +1,162 @@
+{
+  "project_id": "design-father-general-001",
+  "name": "FATHER General Single-Brain Design",
+  "version": "0.1",
+  "chassis": "C2_KNOWLEDGE_RAG",
+  "nodes": [
+    {
+      "node_id": "input-api",
+      "kind": "block",
+      "block_type": "input",
+      "ref": "api",
+      "position": {
+        "x": 80,
+        "y": 160
+      }
+    },
+    {
+      "node_id": "input-file",
+      "kind": "block",
+      "block_type": "input",
+      "ref": "file",
+      "position": {
+        "x": 80,
+        "y": 260
+      }
+    },
+    {
+      "node_id": "agent-main",
+      "kind": "agent",
+      "ref": "father-general-agent",
+      "manifest": "config/agents/father_general.json",
+      "position": {
+        "x": 320,
+        "y": 210
+      }
+    },
+    {
+      "node_id": "brain-main",
+      "kind": "block",
+      "block_type": "brain",
+      "ref": "qwen-analysis",
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "node_id": "competency-main",
+      "kind": "block",
+      "block_type": "competency",
+      "ref": "generic",
+      "position": {
+        "x": 560,
+        "y": 200
+      }
+    },
+    {
+      "node_id": "knowledge-main",
+      "kind": "block",
+      "block_type": "knowledge",
+      "ref": "folder",
+      "position": {
+        "x": 560,
+        "y": 280
+      }
+    },
+    {
+      "node_id": "tools-main",
+      "kind": "block",
+      "block_type": "tool_profile",
+      "ref": "default",
+      "position": {
+        "x": 560,
+        "y": 360
+      }
+    },
+    {
+      "node_id": "output-json",
+      "kind": "block",
+      "block_type": "output",
+      "ref": "json",
+      "position": {
+        "x": 820,
+        "y": 180
+      }
+    },
+    {
+      "node_id": "output-file",
+      "kind": "block",
+      "block_type": "output",
+      "ref": "file",
+      "position": {
+        "x": 820,
+        "y": 280
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input-api",
+      "to": "agent-main",
+      "relation": "feeds"
+    },
+    {
+      "from": "input-file",
+      "to": "agent-main",
+      "relation": "feeds"
+    },
+    {
+      "from": "brain-main",
+      "to": "agent-main",
+      "relation": "fills_slot"
+    },
+    {
+      "from": "competency-main",
+      "to": "agent-main",
+      "relation": "fills_slot"
+    },
+    {
+      "from": "knowledge-main",
+      "to": "agent-main",
+      "relation": "fills_slot"
+    },
+    {
+      "from": "tools-main",
+      "to": "agent-main",
+      "relation": "fills_slot"
+    },
+    {
+      "from": "agent-main",
+      "to": "output-json",
+      "relation": "emits"
+    },
+    {
+      "from": "agent-main",
+      "to": "output-file",
+      "relation": "emits"
+    }
+  ],
+  "product": {
+    "product_id": "father-general-design-v1",
+    "agent_manifest": "config/agents/father_general.json",
+    "brain_id": "qwen-analysis",
+    "competency_id": "generic",
+    "inputs": [
+      "api",
+      "file"
+    ],
+    "outputs": [
+      "json",
+      "file"
+    ],
+    "knowledge": {
+      "adapter": "folder"
+    },
+    "retrieval": {
+      "top_k": 5
+    },
+    "tools": "default",
+    "context_bus": true
+  }
+}
