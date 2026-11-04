@@ -31,8 +31,9 @@ class AgentZoo:
         roles=set()
 
         for agent_id,meta in self.agents.items():
+            effective={"agent_id":agent_id,**meta}
             for field in required:
-                if field not in meta:
+                if field not in effective:
                     problems.append({"kind":"missing_field","agent_id":agent_id,"field":field})
 
             if allowed_status and meta.get("status") not in allowed_status:
