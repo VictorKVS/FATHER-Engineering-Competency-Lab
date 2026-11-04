@@ -187,6 +187,116 @@ class ModelIntelligenceRegistry:
         self.save()
         return self.get(model_id)
 
+    def add_economic_profile(self,model_id,payload):
+        m=self.models.get(model_id)
+        if not m:
+            raise ModelIntelligenceError("unknown model: "+model_id)
+
+        requests_per_month=float(payload.get("requests_per_month",0) or 0)
+        human_minutes=float(payload.get("human_minutes_per_task",0) or 0)
+        human_hourly_cost=float(payload.get("human_hourly_cost",0) or 0)
+        review_minutes=float(payload.get("review_minutes_per_task",0) or 0)
+
+        local_fixed=float(payload.get("local_fixed_monthly_cost",0) or 0)
+        local_variable=float(payload.get("local_variable_cost_per_task",0) or 0)
+        cloud_variable=float(payload.get("cloud_cost_per_task",0) or 0)
+        api_variable=float(payload.get("api_cost_per_task",0) or 0)
+
+        manual_per_task=(human_minutes/60.0)*human_hourly_cost
+        review_per_task=(review_minutes/60.0)*human_hourly_cost
+
+        options={
+            "local": local_fixed + requests_per_month*(local_variable+review_per_task),
+            "cloud": requests_per_month*(cloud_variable+review_per_task),
+            "external_api": requests_per_month*(api_variable+review_per_task)
+        }
+        manual_monthly=requests_per_month*manual_per_task
+        savings={k:manual_monthly-v for k,v in options.items()}
+        best=min(options,key=options.get) if options else None
+
+        profile={
+            "profile_id":payload.get("profile_id") or "profile-"+str(len(m.setdefault("economics",{}).setdefault("profiles",[]))+1).zfill(3),
+            "name":payload.get("name","default"),
+            "requests_per_month":requests_per_month,
+            "human_minutes_per_task":human_minutes,
+            "human_hourly_cost":human_hourly_cost,
+            "review_minutes_per_task":review_minutes,
+            "manual_monthly_cost":round(manual_monthly,2),
+            "deployment_monthly_cost":{k:round(v,2) for k,v in options.items()},
+            "monthly_savings":{k:round(v,2) for k,v in savings.items()},
+            "best_deployment":best,
+            "best_monthly_cost":round(options.get(best,0),2) if best else None,
+            "best_monthly_saving":round(savings.get(best,0),2) if best else None
+        }
+
+        econ=m.setdefault("economics",{"status":"NOT_CALCULATED","profiles":[]})
+        econ.setdefault("profiles",[]).append(profile)
+        econ["status"]="CALCULATED"
+        m["updated_at"]=self._now()
+        self.save()
+        return deepcopy(profile)
+
+    def set_league_role(self,model_id,task_class,role,score=None):
+        if model_id not in self.models:
+            raise ModelIntelligenceError("unknown model: "+model_id)
+        allowed={"CHAMPION","CHALLENGER","BASELINE","UNRANKED"}
+        role=str(role or "").upper()
+        if role not in allowed:
+            raise ModelIntelligenceError("invalid league role")
+        m=self.models[model_id]
+        league=m.setdefault("league",{"status":"UNRANKED","role":None})
+        roles=league.setdefault("task_classes",{})
+        roles[task_class]={
+            "role":role,
+            "score":score,
+            "updated_at":self._now()
+        }
+        if role!="UNRANKED":
+            league["status"]="RANKED"
+            league["role"]=role
+        m["updated_at"]=self._now()
+        self.save()
+        return deepcopy(roles[task_class])
+
+    def league(self,task_class):
+        rows=[]
+        order={"CHAMPION":0,"CHALLENGER":1,"BASELINE":2,"UNRANKED":9}
+        for model_id,m in self.models.items():
+            info=(m.get("league") or {}).get("task_classes",{}).get(task_class)
+            if not info:
+                continue
+            rows.append({
+                "model_id":model_id,
+                "role":info.get("role","UNRANKED"),
+                "score":info.get("score"),
+                "admission_status":m.get("admission_status"),
+                "economics":m.get("economics",{})
+            })
+        return sorted(rows,key=lambda x:(order.get(x["role"],9),-(x["score"] or 0)))
+
+    def application_matrix(self):
+        rows=[]
+        for model_id,m in self.models.items():
+            profiles=(m.get("economics") or {}).get("profiles",[])
+            rows.append({
+                "model_id":model_id,
+                "admission_status":m.get("admission_status"),
+                "modalities":m.get("modalities",[]),
+                "complexity_range":m.get("complexity_range",[]),
+                "resource_class":m.get("resource_class"),
+                "latency_class":m.get("latency_class"),
+                "deployment":m.get("deployment",[]),
+                "commercial_use":m.get("commercial_use"),
+                "bench_rank":(m.get("benchmark_evidence") or {}).get("stage24_rank"),
+                "quality":(m.get("benchmark_evidence") or {}).get("stage24_avg_quality"),
+                "latency_ms":(m.get("benchmark_evidence") or {}).get("stage24_avg_latency_ms"),
+                "economics_profiles":len(profiles),
+                "best_deployment":profiles[-1].get("best_deployment") if profiles else None,
+                "best_monthly_cost":profiles[-1].get("best_monthly_cost") if profiles else None,
+                "best_monthly_saving":profiles[-1].get("best_monthly_saving") if profiles else None
+            })
+        return sorted(rows,key=lambda x:x["model_id"])
+
     def health(self):
         problems=[]
         for model_id,m in self.models.items():
