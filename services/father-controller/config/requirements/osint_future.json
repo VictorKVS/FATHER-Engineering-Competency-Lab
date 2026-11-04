@@ -1,0 +1,23 @@
+{
+  "requirement_id": "req-osint-future-001",
+  "product_id": "father-osint-future-v1",
+  "task": "Собери исследовательского агента для OSINT с Telegram входом.",
+  "modality": "text",
+  "specialization": "reasoning",
+  "complexity": 3,
+  "capabilities": [
+    "research",
+    "evidence",
+    "entity-graph"
+  ],
+  "competency_id": "generic",
+  "inputs": [
+    "api",
+    "telegram"
+  ],
+  "outputs": [
+    "json"
+  ],
+  "knowledge": "folder",
+  "tools": "default"
+}
