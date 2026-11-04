@@ -1,0 +1,55 @@
+{
+  "story_id": "demo-key-warehouse",
+  "title": "Ключ от склада",
+  "scenes": [
+    {"id":"s1","order_no":1,"location":"Старый склад","time_label":"вечер"},
+    {"id":"s2","order_no":2,"location":"Станция метро","time_label":"через час"},
+    {"id":"s3","order_no":3,"location":"Дом Анны","time_label":"позже вечером"}
+  ],
+  "characters": [
+    {"id":"anna","name":"Анна"},
+    {"id":"ivan","name":"Иван"},
+    {"id":"petr","name":"Пётр"},
+    {"id":"sergey","name":"Сергей"},
+    {"id":"nikolay","name":"Николай"}
+  ],
+  "events": [
+    {"id":"e1","scene_id":"s1","kind":"violence","summary":"Иван ударил Петра металлической трубой","actor":"ivan","target":"petr"},
+    {"id":"e2","scene_id":"s1","kind":"witness","summary":"Анна увидела нападение Ивана на Петра","actor":"anna","target":"e1"},
+    {"id":"e3","scene_id":"s1","kind":"acquisition","summary":"Иван поднял латунный ключ и положил в карман","actor":"ivan","target":"key17"},
+    {"id":"e4","scene_id":"s2","kind":"statement","summary":"Иван сказал Сергею, что был дома","actor":"ivan","target":"sergey"},
+    {"id":"e5","scene_id":"s2","kind":"statement","summary":"Иван обвинил Николая в убийстве Петра","actor":"ivan","target":"sergey"},
+    {"id":"e6","scene_id":"s3","kind":"state_change","summary":"Анна сняла серое пальто","actor":"anna","target":"grey_coat"},
+    {"id":"e7","scene_id":"s3","kind":"discovery","summary":"Анна прочитала записку про ключ №17","actor":"anna","target":"note17"}
+  ],
+  "objects": [
+    {"id":"key17","name":"Латунный ключ №17","location":"карман Ивана","owner":"ivan"},
+    {"id":"grey_coat","name":"Серое пальто","location":"дом Анны","owner":"anna"},
+    {"id":"note17","name":"Записка про архив","location":"стол Анны","owner":"anna"}
+  ],
+  "claims": [
+    {"id":"c1","text":"Иван напал на Петра","truth_status":"TRUE","source_event":"e1"},
+    {"id":"c2","text":"Иван весь вечер был дома","truth_status":"FALSE","source_event":"e4"},
+    {"id":"c3","text":"Николай убил Петра","truth_status":"UNVERIFIED","source_event":"e5"},
+    {"id":"c4","text":"Архив открывается ключом №17","truth_status":"UNVERIFIED","source_event":"e7"}
+  ],
+  "perspectives": [
+    {"claim_id":"c1","character":"anna","state":"KNOWS"},
+    {"claim_id":"c1","character":"ivan","state":"KNOWS"},
+    {"claim_id":"c1","character":"sergey","state":"DOES_NOT_KNOW"},
+    {"claim_id":"c2","character":"ivan","state":"KNOWS_FALSE"},
+    {"claim_id":"c2","character":"sergey","state":"BELIEVES"},
+    {"claim_id":"c3","character":"ivan","state":"CLAIMS"},
+    {"claim_id":"c3","character":"sergey","state":"BELIEVES"},
+    {"claim_id":"c4","character":"anna","state":"KNOWS"}
+  ],
+  "statements": [
+    {"id":"st1","scene_id":"s2","speaker":"ivan","listener":"sergey","content":"Я весь вечер был дома","claim_id":"c2","truth_status":"LIE"},
+    {"id":"st2","scene_id":"s2","speaker":"ivan","listener":"sergey","content":"Скорее всего, Петра убил Николай","claim_id":"c3","truth_status":"UNVERIFIED"}
+  ],
+  "plot_threads": [
+    {"id":"pt1","title":"Кто напал на Петра","status":"OPEN"},
+    {"id":"pt2","title":"Что открывает ключ №17","status":"OPEN"},
+    {"id":"pt3","title":"Раскроет ли Анна правду","status":"OPEN"}
+  ]
+}
