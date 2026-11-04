@@ -139,6 +139,35 @@
           </label>
         </div>
         <button id="miAddClaim" class="primary full">Add verified fact</button>
+        <div class="divider"></div>
+        <div class="panelTitle">ECONOMICS PROFILE</div>
+        <div class="formGrid">
+          <label>Requests / month<input id="miReqMonth" type="number" value="1000"></label>
+          <label>Human minutes / task<input id="miHumanMin" type="number" value="20"></label>
+          <label>Human hourly cost<input id="miHumanCost" type="number" value="1200"></label>
+          <label>Review minutes / task<input id="miReviewMin" type="number" value="3"></label>
+          <label>Local fixed / month<input id="miLocalFixed" type="number" value="3000"></label>
+          <label>Local variable / task<input id="miLocalVar" type="number" value="1"></label>
+          <label>Cloud / task<input id="miCloudVar" type="number" value="8"></label>
+          <label>External API / task<input id="miApiVar" type="number" value="15"></label>
+        </div>
+        <button id="miCalcEconomics" class="primary full">Calculate Economics</button>
+        <div class="divider"></div>
+        <div class="panelTitle">MODEL LEAGUE</div>
+        <div class="formGrid">
+          <label>Task class<input id="miTaskClass" value="rag"></label>
+          <label>Role
+            <select id="miLeagueRole">
+              <option>CHAMPION</option>
+              <option>CHALLENGER</option>
+              <option>BASELINE</option>
+              <option>UNRANKED</option>
+            </select>
+          </label>
+          <label>Score<input id="miLeagueScore" type="number" value="90"></label>
+        </div>
+        <button id="miSetLeague" class="primary full">Set League Role</button>
+        <button id="miShowMatrix" class="full">Show Application Matrix</button>
         <pre id="miResult"></pre>
       </section>
     </div>
