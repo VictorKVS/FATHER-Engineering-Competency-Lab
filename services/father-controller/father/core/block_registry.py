@@ -2,10 +2,13 @@ import json
 from pathlib import Path
 
 class BlockRegistry:
-    def __init__(self,path):
+    def __init__(self,path,contract_path=None):
         self.path=Path(path)
         self.data=json.loads(self.path.read_text(encoding="utf-8"))
         self.blocks=self.data.get("blocks",{})
+        self.contract={}
+        if contract_path:
+            self.contract=json.loads(Path(contract_path).read_text(encoding="utf-8"))
 
     def health(self):
         ids=[]
@@ -22,8 +25,49 @@ class BlockRegistry:
                     })
         return {
             "status":"ok" if self.blocks and not problems else "error",
+            "registry_version":self.data.get("registry_version"),
             "types":sorted(self.blocks),
             "blocks":len(ids),
+            "problems":problems
+        }
+
+    def contract_health(self):
+        required=self.contract.get("required",[])
+        allowed_status=set(self.contract.get("lifecycle_status",[]))
+        problems=[]
+        total=0
+        for block_type,items in self.blocks.items():
+            for block_id,meta in items.items():
+                total+=1
+                effective={"id":block_id,**meta}
+                for field in required:
+                    if field not in effective:
+                        problems.append({
+                            "kind":"missing_field",
+                            "block_type":block_type,
+                            "block_id":block_id,
+                            "field":field
+                        })
+                if allowed_status and meta.get("status") not in allowed_status:
+                    problems.append({
+                        "kind":"invalid_status",
+                        "block_type":block_type,
+                        "block_id":block_id,
+                        "status":meta.get("status")
+                    })
+                sec=meta.get("security") or {}
+                for field in self.contract.get("security_fields",[]):
+                    if field not in sec:
+                        problems.append({
+                            "kind":"missing_security_field",
+                            "block_type":block_type,
+                            "block_id":block_id,
+                            "field":field
+                        })
+        return {
+            "ok":not problems,
+            "blocks":total,
+            "contract_version":self.contract.get("contract_version"),
             "problems":problems
         }
 
@@ -32,6 +76,9 @@ class BlockRegistry:
 
     def get(self,block_type,block_id):
         return self.blocks[block_type][block_id]
+
+    def card(self,block_type,block_id):
+        return {"id":block_id,**self.get(block_type,block_id)}
 
     def list(self,block_type=None):
         if block_type:
@@ -44,6 +91,22 @@ class BlockRegistry:
             for k,v in items.items():
                 out.append({"type":t,"id":k,**v})
         return sorted(out,key=lambda x:(x["type"],x["id"]))
+
+    def capability_candidates(self,capability,block_type=None):
+        rows=[]
+        types=[block_type] if block_type else sorted(self.blocks)
+        for t in types:
+            for block_id,meta in self.blocks.get(t,{}).items():
+                if capability in meta.get("capabilities",[]):
+                    rows.append({
+                        "type":t,
+                        "id":block_id,
+                        "status":meta.get("status"),
+                        "capabilities":meta.get("capabilities",[]),
+                        "resources":meta.get("resources",{}),
+                        "security":meta.get("security",{})
+                    })
+        return sorted(rows,key=lambda x:(x["type"],x["id"]))
 
     def compatible(self,spec):
         problems=[]
