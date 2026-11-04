@@ -73,6 +73,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200,project.project)
         if path=="/api/models":
             return self._send(200,{"models":model_intelligence.list(),"health":model_intelligence.health()})
+        if path=="/api/models/matrix":
+            return self._send(200,{"rows":model_intelligence.application_matrix()})
         if path.startswith("/api/models/"):
             model_id=path.split("/",3)[3]
             return self._send(200,model_intelligence.get(model_id))
@@ -111,6 +113,14 @@ class Handler(BaseHTTPRequestHandler):
             if path.startswith("/api/models/") and path.endswith("/admission"):
                 model_id=path.split("/")[3]
                 return self._send(200,model_intelligence.set_admission(model_id,data.get("status")))
+            if path.startswith("/api/models/") and path.endswith("/economics"):
+                model_id=path.split("/")[3]
+                return self._send(201,model_intelligence.add_economic_profile(model_id,data))
+            if path.startswith("/api/models/") and path.endswith("/league"):
+                model_id=path.split("/")[3]
+                return self._send(201,model_intelligence.set_league_role(model_id,data.get("task_class","general"),data.get("role"),data.get("score")))
+            if path=="/api/models/league":
+                return self._send(200,{"task_class":data.get("task_class","general"),"rows":model_intelligence.league(data.get("task_class","general"))})
             return self._send(404,{"error":"not_found"})
         except Exception as e:
             return self._send(400,{"error":type(e).__name__,"message":str(e)})
