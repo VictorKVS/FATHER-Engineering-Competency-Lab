@@ -1,0 +1,16 @@
+{
+  "bench_version": "1.0",
+  "required_checks": [
+    "product_spec_valid",
+    "product_build_ready",
+    "runtime_executes",
+    "nonempty_output",
+    "knowledge_path_operational",
+    "brain_matches_spec",
+    "io_contract_matches",
+    "tool_profile_loaded"
+  ],
+  "acceptance_rule": "all required checks must PASS",
+  "ready_status": "READY",
+  "blocked_status": "BLOCKED"
+}
