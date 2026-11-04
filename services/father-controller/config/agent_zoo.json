@@ -8,44 +8,17 @@
       "role": "general",
       "status": "tested",
       "manifest": "config/agents/father_general.json",
-      "capabilities": [
-        "general",
-        "architecture",
-        "rag"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "input",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "llama-small",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "api",
-        "file"
-      ],
-      "outputs": [
-        "json",
-        "file"
-      ],
+      "capabilities": ["general","architecture","rag"],
+      "required_slots": ["brain","prompt","knowledge","tools","input","output"],
+      "supported_brains": ["qwen-analysis","llama-small","deepseek-reasoning"],
+      "inputs": ["api","file"],
+      "outputs": ["json","file"],
       "tool_profile": "default",
       "knowledge_profile": "folder",
       "memory_profile": "none",
       "security_profile": "policy-sandbox-bootstrap",
-      "tests": [
-        "stage22",
-        "stage24",
-        "stage26"
-      ],
-      "benchmarks": [
-        "stage24"
-      ]
+      "tests": ["stage22","stage24","stage26"],
+      "benchmarks": ["stage24"]
     },
     "father-coder-agent": {
       "name": "Coder Agent",
@@ -53,42 +26,17 @@
       "role": "coder",
       "status": "tested",
       "manifest": "config/agents/father_coder.json",
-      "capabilities": [
-        "coding",
-        "code-repair",
-        "devsecops"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "input",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-coder",
-        "qwen-analysis"
-      ],
-      "inputs": [
-        "api",
-        "file"
-      ],
-      "outputs": [
-        "json",
-        "file"
-      ],
+      "capabilities": ["coding","code-repair","devsecops"],
+      "required_slots": ["brain","prompt","knowledge","tools","input","output"],
+      "supported_brains": ["qwen-coder","qwen-analysis"],
+      "inputs": ["api","file"],
+      "outputs": ["json","file"],
       "tool_profile": "default",
       "knowledge_profile": "folder",
       "memory_profile": "none",
       "security_profile": "policy-sandbox-bootstrap",
-      "tests": [
-        "stage9",
-        "stage26"
-      ],
-      "benchmarks": [
-        "stage24"
-      ]
+      "tests": ["stage9","stage26"],
+      "benchmarks": ["stage24"]
     },
     "father-ib-agent": {
       "name": "Information Security Analyst",
@@ -96,40 +44,16 @@
       "role": "security-analyst",
       "status": "experimental",
       "manifest": "config/agents/father_ib.json",
-      "capabilities": [
-        "ib-knowledge",
-        "security",
-        "compliance"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "input",
-        "output",
-        "security"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "api",
-        "file"
-      ],
-      "outputs": [
-        "json",
-        "file"
-      ],
+      "capabilities": ["ib-knowledge","security","compliance"],
+      "required_slots": ["brain","prompt","knowledge","tools","input","output","security"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["api","file"],
+      "outputs": ["json","file"],
       "tool_profile": "default",
       "knowledge_profile": "folder",
       "memory_profile": "none",
       "security_profile": "strict-domain-policy",
-      "tests": [
-        "stage9",
-        "stage12"
-      ],
+      "tests": ["stage9","stage12"],
       "benchmarks": []
     },
     "father-edge-agent": {
@@ -138,40 +62,17 @@
       "role": "edge",
       "status": "experimental",
       "manifest": "config/agents/father_edge.json",
-      "capabilities": [
-        "lightweight",
-        "edge",
-        "local"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "input",
-        "output"
-      ],
-      "supported_brains": [
-        "llama-small"
-      ],
-      "inputs": [
-        "api",
-        "file"
-      ],
-      "outputs": [
-        "json",
-        "file"
-      ],
+      "capabilities": ["lightweight","edge","local"],
+      "required_slots": ["brain","prompt","knowledge","tools","input","output"],
+      "supported_brains": ["llama-small"],
+      "inputs": ["api","file"],
+      "outputs": ["json","file"],
       "tool_profile": "default",
       "knowledge_profile": "folder",
       "memory_profile": "none",
       "security_profile": "policy-sandbox-bootstrap",
-      "tests": [
-        "stage9"
-      ],
-      "benchmarks": [
-        "stage24"
-      ]
+      "tests": ["stage9"],
+      "benchmarks": ["stage24"]
     },
     "father-lab-agent": {
       "name": "Lab Agent",
@@ -179,44 +80,17 @@
       "role": "lab",
       "status": "experimental",
       "manifest": "config/agents/father_lab.json",
-      "capabilities": [
-        "experiments",
-        "benchmark",
-        "general"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "input",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "llama-small",
-        "qwen-coder",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "api",
-        "file"
-      ],
-      "outputs": [
-        "json",
-        "file"
-      ],
+      "capabilities": ["experiments","benchmark","general"],
+      "required_slots": ["brain","prompt","knowledge","tools","input","output"],
+      "supported_brains": ["qwen-analysis","llama-small","qwen-coder","deepseek-reasoning"],
+      "inputs": ["api","file"],
+      "outputs": ["json","file"],
       "tool_profile": "default",
       "knowledge_profile": "folder",
       "memory_profile": "none",
       "security_profile": "lab-policy",
-      "tests": [
-        "stage9",
-        "stage24"
-      ],
-      "benchmarks": [
-        "stage24"
-      ]
+      "tests": ["stage9","stage24"],
+      "benchmarks": ["stage24"]
     },
     "father-planner-agent": {
       "name": "Planner",
@@ -224,26 +98,11 @@
       "role": "planner",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "planning",
-        "decomposition"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "plan"
-      ],
+      "capabilities": ["planning","decomposition"],
+      "required_slots": ["brain","prompt","memory","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["context"],
+      "outputs": ["plan"],
       "tool_profile": "none",
       "knowledge_profile": "optional",
       "memory_profile": "working",
@@ -257,29 +116,11 @@
       "role": "researcher",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "research",
-        "retrieval",
-        "evidence"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "findings"
-      ],
+      "capabilities": ["research","retrieval","evidence"],
+      "required_slots": ["brain","prompt","knowledge","tools","memory","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["context"],
+      "outputs": ["findings"],
       "tool_profile": "research",
       "knowledge_profile": "hybrid",
       "memory_profile": "working",
@@ -293,28 +134,11 @@
       "role": "analyst",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "analysis",
-        "synthesis",
-        "comparison"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "analysis"
-      ],
+      "capabilities": ["analysis","synthesis","comparison"],
+      "required_slots": ["brain","prompt","knowledge","memory","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["context"],
+      "outputs": ["analysis"],
       "tool_profile": "default",
       "knowledge_profile": "hybrid",
       "memory_profile": "working",
@@ -328,27 +152,11 @@
       "role": "critic",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "critique",
-        "verification",
-        "risk-review"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "deepseek-reasoning",
-        "qwen-analysis"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "critique"
-      ],
+      "capabilities": ["critique","verification","risk-review"],
+      "required_slots": ["brain","prompt","memory","output"],
+      "supported_brains": ["deepseek-reasoning","qwen-analysis"],
+      "inputs": ["context"],
+      "outputs": ["critique"],
       "tool_profile": "none",
       "knowledge_profile": "optional",
       "memory_profile": "working",
@@ -362,26 +170,11 @@
       "role": "synthesizer",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "synthesis",
-        "finalization"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "final"
-      ],
+      "capabilities": ["synthesis","finalization"],
+      "required_slots": ["brain","prompt","memory","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["context"],
+      "outputs": ["final"],
       "tool_profile": "none",
       "knowledge_profile": "optional",
       "memory_profile": "working",
@@ -395,29 +188,11 @@
       "role": "architect",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "architecture",
-        "requirements",
-        "tradeoffs"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "knowledge",
-        "tools",
-        "memory",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "architecture"
-      ],
+      "capabilities": ["architecture","requirements","tradeoffs"],
+      "required_slots": ["brain","prompt","knowledge","tools","memory","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["context"],
+      "outputs": ["architecture"],
       "tool_profile": "default",
       "knowledge_profile": "hybrid",
       "memory_profile": "working",
@@ -431,28 +206,11 @@
       "role": "devops",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "devops",
-        "deployment",
-        "infrastructure"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "tools",
-        "security",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-coder",
-        "qwen-analysis"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "changes"
-      ],
+      "capabilities": ["devops","deployment","infrastructure"],
+      "required_slots": ["brain","prompt","tools","security","output"],
+      "supported_brains": ["qwen-coder","qwen-analysis"],
+      "inputs": ["context"],
+      "outputs": ["changes"],
       "tool_profile": "devops",
       "knowledge_profile": "optional",
       "memory_profile": "working",
@@ -466,28 +224,11 @@
       "role": "devsecops",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "devsecops",
-        "security-testing",
-        "supply-chain"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "tools",
-        "security",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-coder",
-        "qwen-analysis"
-      ],
-      "inputs": [
-        "context"
-      ],
-      "outputs": [
-        "findings"
-      ],
+      "capabilities": ["devsecops","security-testing","supply-chain"],
+      "required_slots": ["brain","prompt","tools","security","output"],
+      "supported_brains": ["qwen-coder","qwen-analysis"],
+      "inputs": ["context"],
+      "outputs": ["findings"],
       "tool_profile": "security-tools",
       "knowledge_profile": "hybrid",
       "memory_profile": "working",
@@ -501,28 +242,11 @@
       "role": "evaluator",
       "status": "planned",
       "manifest": null,
-      "capabilities": [
-        "evaluation",
-        "benchmark",
-        "regression"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "datasets",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis",
-        "deepseek-reasoning"
-      ],
-      "inputs": [
-        "candidate",
-        "dataset"
-      ],
-      "outputs": [
-        "scorecard"
-      ],
+      "capabilities": ["evaluation","benchmark","regression"],
+      "required_slots": ["brain","prompt","datasets","output"],
+      "supported_brains": ["qwen-analysis","deepseek-reasoning"],
+      "inputs": ["candidate","dataset"],
+      "outputs": ["scorecard"],
       "tool_profile": "none",
       "knowledge_profile": "none",
       "memory_profile": "none",
@@ -536,38 +260,18 @@
       "role": "creative-writer",
       "status": "experimental",
       "manifest": "config/agents/father_story.json",
-      "capabilities": [
-        "story-writing",
-        "continuation",
-        "rewriting",
-        "style-adaptation",
-        "clarification-following"
-      ],
-      "required_slots": [
-        "brain",
-        "prompt",
-        "input",
-        "output"
-      ],
-      "supported_brains": [
-        "qwen-analysis"
-      ],
-      "inputs": [
-        "text",
-        "file",
-        "clarification"
-      ],
-      "outputs": [
-        "text"
-      ],
+      "capabilities": ["story-writing","continuation","rewriting","style-adaptation","clarification-following"],
+      "required_slots": ["brain","prompt","input","output"],
+      "supported_brains": ["story-single-brain"],
+      "inputs": ["text","file","clarification"],
+      "outputs": ["text"],
       "tool_profile": "none",
       "knowledge_profile": "optional",
       "memory_profile": "session",
       "security_profile": "default",
-      "tests": [
-        "story-mvp01"
-      ],
-      "benchmarks": []
+      "tests": ["story-mvp01","story-bench-v1"],
+      "benchmarks": ["story-bench-v1"],
+      "notes": "Exactly one active LLM selected from Story Model config after controlled benchmark."
     }
   }
 }
