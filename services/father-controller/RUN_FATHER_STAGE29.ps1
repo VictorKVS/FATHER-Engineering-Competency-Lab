@@ -2,10 +2,10 @@ $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 Write-Host "=== FATHER ADAPTIVE BRAIN ROUTER / STAGE 29 ===" -ForegroundColor Cyan
 
-& .TEST_FATHER_OLLAMA.ps1
+& .\TEST_FATHER_OLLAMA.ps1
 if ($LASTEXITCODE -ne 0) {
   Write-Host "Ollama preflight failed. Attempting one recovery..." -ForegroundColor Yellow
-  & .TEST_FATHER_OLLAMA.ps1 -Recover
+  & .\TEST_FATHER_OLLAMA.ps1 -Recover
   if ($LASTEXITCODE -ne 0) { throw "Ollama preflight/recovery failed" }
 }
 
