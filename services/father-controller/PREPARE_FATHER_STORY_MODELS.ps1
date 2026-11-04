@@ -11,6 +11,12 @@ if (-not $ollama) { throw "Ollama executable not found" }
 Write-Host "=== FATHER STORY MODEL PREPARE ===" -ForegroundColor Cyan
 & $ollama --version
 
+if(-not $env:OLLAMA_MODELS){
+  $persisted=[Environment]::GetEnvironmentVariable("OLLAMA_MODELS","User")
+  if($persisted){$env:OLLAMA_MODELS=$persisted}
+}
+if($env:OLLAMA_MODELS){Write-Host "OLLAMA_MODELS=$env:OLLAMA_MODELS" -ForegroundColor DarkGray}
+
 if ($env:OLLAMA_MODELS) {
   Write-Host "OLLAMA_MODELS=$env:OLLAMA_MODELS" -ForegroundColor DarkGray
   $root = Split-Path $env:OLLAMA_MODELS -Qualifier
