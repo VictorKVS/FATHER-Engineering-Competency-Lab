@@ -1,0 +1,35 @@
+{
+  "config_version": "1.0",
+  "agent_id": "father-story-agent",
+  "selection_mode": "single_llm",
+  "active_model": "qwen2.5:7b",
+  "active_brain_id": "qwen-analysis",
+  "status": "BASELINE_PENDING_STORY_BENCH",
+  "candidates": [
+    {
+      "id": "ministral-3-8b",
+      "runtime_model": "ministral-3:8b",
+      "role": "CHALLENGER",
+      "provider": "ollama",
+      "local": true,
+      "approx_size_gb": 6
+    },
+    {
+      "id": "qwen-story-baseline",
+      "runtime_model": "qwen2.5:7b",
+      "role": "BASELINE",
+      "provider": "ollama",
+      "local": true,
+      "approx_size_gb": 4.7
+    },
+    {
+      "id": "mistral-nemo-12b",
+      "runtime_model": "mistral-nemo",
+      "role": "CHALLENGER",
+      "provider": "ollama",
+      "local": true,
+      "approx_size_gb": 7.1
+    }
+  ],
+  "promotion_rule": "winner must pass the same story benchmark set; only one model is active in Story Agent at a time"
+}
