@@ -1,12 +1,24 @@
 {
   "agent_id": "father-story-agent",
-  "brain_id": "qwen-analysis",
-  "runtime_model": "qwen2.5:7b",
+  "brain_id": "story-single-brain",
+  "runtime_model": "config/story_model_config.json#active_model",
   "single_llm": true,
   "role": "creative-writer",
-  "modes": ["CONTINUE","REWRITE","SIMILAR","EDIT"],
-  "inputs": ["text","file","clarification"],
-  "outputs": ["text"],
+  "modes": [
+    "CONTINUE",
+    "REWRITE",
+    "SIMILAR",
+    "EDIT"
+  ],
+  "inputs": [
+    "text",
+    "file",
+    "clarification"
+  ],
+  "outputs": [
+    "text"
+  ],
   "memory": "browser-session-history",
-  "status": "experimental"
+  "status": "experimental",
+  "model_selection": "single_llm_after_story_bench"
 }
