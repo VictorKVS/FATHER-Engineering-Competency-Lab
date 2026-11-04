@@ -7,7 +7,13 @@ from urllib.parse import urlparse
 BASE=Path(__file__).resolve().parent
 WEB=BASE/"story_studio_web"
 OLLAMA_URL="http://127.0.0.1:11434/api/chat"
-MODEL="qwen2.5:7b"
+CONFIG_PATH=BASE/"config/story_model_config.json"
+
+def load_model_config():
+    return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+
+def active_model():
+    return load_model_config().get("active_model","qwen2.5:7b")
 
 SYSTEM_PROMPT="""Ты FATHER Story Agent — профессиональный соавтор художественных рассказов.
 Работай свободно и выразительно: сохраняй характеры, атмосферу, ритм, лексику и причинно-следственные связи.
@@ -28,7 +34,7 @@ MIME={
 
 def ollama_chat(messages,temperature=0.9):
     payload=json.dumps({
-        "model":MODEL,
+        "model":active_model(),
         "messages":messages,
         "stream":False,
         "options":{"temperature":temperature,"top_p":0.95}
@@ -65,7 +71,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         p=urlparse(self.path).path
         if p=="/api/health":
-            return self.send_data(200,{"status":"ok","service":"father-story-agent","model":MODEL,"single_llm":True})
+            return self.send_data(200,{"status":"ok","service":"father-story-agent","model":active_model(),"single_llm":True,"selection":load_model_config().get("status") })
         if p=="/":
             p="/index.html"
         target=(WEB/p.lstrip("/")).resolve()
@@ -109,8 +115,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_data(200,{
                 "ok":True,
                 "agent_id":"father-story-agent",
-                "brain_id":"qwen-analysis",
-                "runtime_model":MODEL,
+                "brain_id":load_model_config().get("active_brain_id","story-brain"),
+                "runtime_model":active_model(),
                 "mode":mode,
                 "content":out
             })
@@ -123,5 +129,5 @@ class Handler(BaseHTTPRequestHandler):
 if __name__=="__main__":
     host="127.0.0.1"; port=8091
     print(f"FATHER Story Studio: http://{host}:{port}")
-    print(f"Single LLM: {MODEL}")
+    print(f"Single LLM: {active_model()}")
     ThreadingHTTPServer((host,port),Handler).serve_forever()
