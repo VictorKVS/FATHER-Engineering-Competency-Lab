@@ -529,6 +529,45 @@
       "security_profile": "default",
       "tests": [],
       "benchmarks": []
+    },
+    "father-story-agent": {
+      "name": "Story Agent",
+      "version": "1.0",
+      "role": "creative-writer",
+      "status": "experimental",
+      "manifest": "config/agents/father_story.json",
+      "capabilities": [
+        "story-writing",
+        "continuation",
+        "rewriting",
+        "style-adaptation",
+        "clarification-following"
+      ],
+      "required_slots": [
+        "brain",
+        "prompt",
+        "input",
+        "output"
+      ],
+      "supported_brains": [
+        "qwen-analysis"
+      ],
+      "inputs": [
+        "text",
+        "file",
+        "clarification"
+      ],
+      "outputs": [
+        "text"
+      ],
+      "tool_profile": "none",
+      "knowledge_profile": "optional",
+      "memory_profile": "session",
+      "security_profile": "default",
+      "tests": [
+        "story-mvp01"
+      ],
+      "benchmarks": []
     }
   }
 }
