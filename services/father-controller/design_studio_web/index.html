@@ -16,6 +16,7 @@
     <span id="healthBadge" class="badge">CONNECTING</span>
     <button id="loadReference">Reference design</button>
     <button id="validateBtn">Validate</button>
+    <button id="modelsBtn">Model Intelligence</button>
     <button id="autoBtn" class="primary">Auto Complete</button>
   </div>
 </header>
@@ -27,6 +28,7 @@
     <div class="tabs">
       <button data-tab="agents" class="active">Agents</button>
       <button data-tab="blocks">Blocks</button>
+      <button data-tab="models">Models</button>
     </div>
     <div id="catalogList" class="catalogList"></div>
   </aside>
@@ -81,6 +83,65 @@
     </div>
     <button id="runAuto" class="primary full">Analyze / Auto Complete</button>
     <pre id="autoResult"></pre>
+  </div>
+</div>
+
+<div id="modelsModal" class="modal hidden">
+  <div class="modalCard modelModalCard">
+    <div class="modalHead">
+      <div><h2>Model Intelligence</h2><div class="muted">Discovery → Source verification → Bench → Admission</div></div>
+      <button id="closeModelsModal">×</button>
+    </div>
+    <div class="modelIntelligenceLayout">
+      <section>
+        <div class="panelTitle">MODEL REGISTRY</div>
+        <div id="modelRegistryList" class="modelRegistryList"></div>
+      </section>
+      <section>
+        <div class="panelTitle">CREATE CANDIDATE</div>
+        <div class="formGrid">
+          <label>Model ID<input id="miModelId" placeholder="new-model-8b"></label>
+          <label>Provider<input id="miProvider" placeholder="vendor / ollama / api"></label>
+          <label>Runtime model<input id="miRuntime" placeholder="vendor:model"></label>
+          <label>Version<input id="miVersion" placeholder="1.0 / 2026-11"></label>
+        </div>
+        <button id="miCreateModel" class="primary full">Create CANDIDATE</button>
+        <div class="divider"></div>
+        <div class="panelTitle">SOURCE CLAIM</div>
+        <label>Selected model<input id="miSelectedModel" readonly></label>
+        <div class="formGrid">
+          <label>Field<input id="miField" placeholder="license / pricing / context_window_tokens"></label>
+          <label>Value<input id="miValue" placeholder="Apache-2.0 / 128000 / ..."></label>
+          <label>Source URL<input id="miSource" placeholder="https://official..."></label>
+          <label>Source class
+            <select id="miSourceClass">
+              <option>OFFICIAL_PRIMARY</option>
+              <option>INDEPENDENT_BENCHMARK</option>
+              <option>FATHER_LOCAL_MEASUREMENT</option>
+              <option>DERIVED</option>
+            </select>
+          </label>
+          <label>Verification
+            <select id="miVerify">
+              <option>UNVERIFIED</option>
+              <option>SOURCE_CONFIRMED</option>
+              <option>FATHER_MEASURED</option>
+              <option>CONFLICT</option>
+            </select>
+          </label>
+          <label>Confidence
+            <select id="miConfidence">
+              <option>UNVERIFIED</option>
+              <option>LOW</option>
+              <option>MEDIUM</option>
+              <option>HIGH</option>
+            </select>
+          </label>
+        </div>
+        <button id="miAddClaim" class="primary full">Add verified fact</button>
+        <pre id="miResult"></pre>
+      </section>
+    </div>
   </div>
 </div>
 
