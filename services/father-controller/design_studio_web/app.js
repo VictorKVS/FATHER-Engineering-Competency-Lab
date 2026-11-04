@@ -176,6 +176,38 @@ async function addClaim(){
   await refreshModels();await selectModelForIntel(modelId);
 }
 
+async function calcEconomics(){
+  const modelId=$('#miSelectedModel').value.trim();if(!modelId)throw new Error('Select a model first');
+  const payload={
+    name:'ui-profile',
+    requests_per_month:Number($('#miReqMonth').value),
+    human_minutes_per_task:Number($('#miHumanMin').value),
+    human_hourly_cost:Number($('#miHumanCost').value),
+    review_minutes_per_task:Number($('#miReviewMin').value),
+    local_fixed_monthly_cost:Number($('#miLocalFixed').value),
+    local_variable_cost_per_task:Number($('#miLocalVar').value),
+    cloud_cost_per_task:Number($('#miCloudVar').value),
+    api_cost_per_task:Number($('#miApiVar').value)
+  };
+  const r=await api('/api/models/'+encodeURIComponent(modelId)+'/economics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  $('#miResult').textContent=JSON.stringify(r,null,2);
+  await refreshModels();
+}
+
+async function setLeague(){
+  const modelId=$('#miSelectedModel').value.trim();if(!modelId)throw new Error('Select a model first');
+  const payload={task_class:$('#miTaskClass').value.trim()||'general',role:$('#miLeagueRole').value,score:Number($('#miLeagueScore').value)};
+  const r=await api('/api/models/'+encodeURIComponent(modelId)+'/league',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const league=await api('/api/models/league',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task_class:payload.task_class})});
+  $('#miResult').textContent=JSON.stringify({updated:r,league:league},null,2);
+  await refreshModels();
+}
+
+async function showMatrix(){
+  const r=await api('/api/models/matrix');
+  $('#miResult').textContent=JSON.stringify(r.rows,null,2);
+}
+
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.tab=b.dataset.tab;renderCatalog()});
 $('#search').oninput=renderCatalog;$('#loadReference').onclick=loadReference;$('#validateBtn').onclick=validate;
 $('#autoBtn').onclick=()=>$('#autoModal').classList.remove('hidden');$('#closeModal').onclick=()=>$('#autoModal').classList.add('hidden');$('#runAuto').onclick=runAuto;
@@ -183,5 +215,8 @@ $('#modelsBtn').onclick=async()=>{$('#modelsModal').classList.remove('hidden');a
 $('#closeModelsModal').onclick=()=>$('#modelsModal').classList.add('hidden');
 $('#miCreateModel').onclick=()=>createModel().catch(e=>$('#miResult').textContent=e.message);
 $('#miAddClaim').onclick=()=>addClaim().catch(e=>$('#miResult').textContent=e.message);
+$('#miCalcEconomics').onclick=()=>calcEconomics().catch(e=>$('#miResult').textContent=e.message);
+$('#miSetLeague').onclick=()=>setLeague().catch(e=>$('#miResult').textContent=e.message);
+$('#miShowMatrix').onclick=()=>showMatrix().catch(e=>$('#miResult').textContent=e.message);
 
 (async()=>{try{await api('/api/health');$('#healthBadge').textContent='ONLINE';$('#healthBadge').style.background='#16442e';state.catalog=await api('/api/catalog');renderCatalog();renderModelRegistry(state.catalog.models||[]);await loadReference()}catch(e){$('#healthBadge').textContent='OFFLINE';console.error(e)}})();
