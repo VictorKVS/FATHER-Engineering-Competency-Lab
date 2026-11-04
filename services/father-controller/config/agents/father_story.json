@@ -1,0 +1,12 @@
+{
+  "agent_id": "father-story-agent",
+  "brain_id": "qwen-analysis",
+  "runtime_model": "qwen2.5:7b",
+  "single_llm": true,
+  "role": "creative-writer",
+  "modes": ["CONTINUE","REWRITE","SIMILAR","EDIT"],
+  "inputs": ["text","file","clarification"],
+  "outputs": ["text"],
+  "memory": "browser-session-history",
+  "status": "experimental"
+}
