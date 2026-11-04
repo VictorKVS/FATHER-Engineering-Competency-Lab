@@ -1,0 +1,25 @@
+{
+  "requirement_id": "req-general-rag-001",
+  "product_id": "father-auto-general-rag-v1",
+  "task": "Собери локального агента для анализа архитектуры и ответов с базой знаний.",
+  "modality": "text",
+  "specialization": "rag",
+  "complexity": 2,
+  "capabilities": [
+    "general",
+    "architecture",
+    "rag"
+  ],
+  "competency_id": "generic",
+  "inputs": [
+    "api",
+    "file"
+  ],
+  "outputs": [
+    "json",
+    "file"
+  ],
+  "knowledge": "folder",
+  "tools": "default",
+  "top_k": 5
+}
