@@ -102,6 +102,7 @@ class UnifiedAgentRuntime:
             "knowledge_sources":[x.get("source") for x in knowledge],
             "knowledge_modes":[x.get("retrieval_mode","unknown") for x in knowledge],
             "content":response.content,
+            "error":response.error,
             "tool":{
                 "name":tool_result.name,
                 "ok":tool_result.ok,
