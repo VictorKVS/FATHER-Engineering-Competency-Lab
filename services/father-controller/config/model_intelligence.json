@@ -1,0 +1,419 @@
+{
+  "registry_version": "1.0",
+  "principle": "no model becomes an operational brain from marketing claims alone; every critical field carries provenance and verification state",
+  "source_classes": [
+    "OFFICIAL_PRIMARY",
+    "INDEPENDENT_BENCHMARK",
+    "FATHER_LOCAL_MEASUREMENT",
+    "DERIVED"
+  ],
+  "confidence_levels": [
+    "HIGH",
+    "MEDIUM",
+    "LOW",
+    "UNVERIFIED"
+  ],
+  "verification_statuses": [
+    "UNVERIFIED",
+    "SOURCE_CONFIRMED",
+    "CONFLICT",
+    "FATHER_MEASURED",
+    "STALE"
+  ],
+  "admission_statuses": [
+    "DISCOVERED",
+    "DATA_COLLECTION",
+    "READY_FOR_BENCH",
+    "CHALLENGER",
+    "APPROVED_LOCAL",
+    "APPROVED_CONDITIONAL",
+    "REJECTED",
+    "DEPRECATED"
+  ],
+  "freshness_days": {
+    "pricing": 7,
+    "api_limits": 7,
+    "license": 30,
+    "model_specs": 30,
+    "benchmarks": 90
+  },
+  "required_for_bench": [
+    "identity",
+    "license",
+    "commercial_use",
+    "deployment",
+    "specs"
+  ],
+  "models": {
+    "llama-small": {
+      "model_id": "llama-small",
+      "provider": "local/ollama",
+      "runtime_model": "llama3.2:1b",
+      "version": "current",
+      "lifecycle": "working",
+      "admission_status": "APPROVED_LOCAL",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text"
+      ],
+      "strengths": [
+        "edge",
+        "lightweight",
+        "rewriting",
+        "summarization",
+        "retrieval-support"
+      ],
+      "weaknesses": [
+        "complex reasoning",
+        "specialized coding",
+        "high-stakes analysis"
+      ],
+      "complexity_range": [
+        1,
+        2
+      ],
+      "context_window_tokens": 131072,
+      "latency_class": "fast",
+      "resource_class": "light",
+      "benchmark_evidence": {},
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [
+        {
+          "claim_id": "legacy-0",
+          "field": "source_reference",
+          "value": "https://ollama.com/library/llama3.2",
+          "source_url": "https://ollama.com/library/llama3.2",
+          "source_class": "OFFICIAL_OR_PRIMARY",
+          "confidence": "MEDIUM",
+          "verification_status": "IMPORTED_UNVERIFIED",
+          "retrieved_at": null,
+          "notes": "Imported from model_knowledge_base.json; requires source-level verification."
+        }
+      ],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    },
+    "qwen-analysis": {
+      "model_id": "qwen-analysis",
+      "provider": "local/ollama",
+      "runtime_model": "qwen2.5:7b",
+      "version": "current",
+      "lifecycle": "working",
+      "admission_status": "APPROVED_LOCAL",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text"
+      ],
+      "strengths": [
+        "general analysis",
+        "rag",
+        "structured_output",
+        "json",
+        "multilingual",
+        "coding-adjacent",
+        "math-adjacent"
+      ],
+      "weaknesses": [
+        "not code-specialized",
+        "slower than 1B edge model",
+        "not vision"
+      ],
+      "complexity_range": [
+        2,
+        3
+      ],
+      "context_window_tokens": 32768,
+      "latency_class": "medium",
+      "resource_class": "medium",
+      "benchmark_evidence": {
+        "stage24_rank": 1,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 5849.69
+      },
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [
+        {
+          "claim_id": "legacy-0",
+          "field": "source_reference",
+          "value": "https://ollama.com/library/qwen2.5",
+          "source_url": "https://ollama.com/library/qwen2.5",
+          "source_class": "OFFICIAL_OR_PRIMARY",
+          "confidence": "MEDIUM",
+          "verification_status": "IMPORTED_UNVERIFIED",
+          "retrieved_at": null,
+          "notes": "Imported from model_knowledge_base.json; requires source-level verification."
+        }
+      ],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    },
+    "qwen-coder": {
+      "model_id": "qwen-coder",
+      "provider": "local/ollama",
+      "runtime_model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "version": "current",
+      "lifecycle": "working",
+      "admission_status": "APPROVED_LOCAL",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text"
+      ],
+      "strengths": [
+        "coding",
+        "code_generation",
+        "code_fixing",
+        "code_reasoning",
+        "devsecops"
+      ],
+      "weaknesses": [
+        "overkill for simple chat",
+        "not vision",
+        "slower than general model in local Stage24"
+      ],
+      "complexity_range": [
+        2,
+        3
+      ],
+      "context_window_tokens": 32768,
+      "latency_class": "slow",
+      "resource_class": "medium",
+      "benchmark_evidence": {
+        "stage24_rank": 3,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 22613.3
+      },
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [
+        {
+          "claim_id": "legacy-0",
+          "field": "source_reference",
+          "value": "https://ollama.com/library/qwen2.5-coder",
+          "source_url": "https://ollama.com/library/qwen2.5-coder",
+          "source_class": "OFFICIAL_OR_PRIMARY",
+          "confidence": "MEDIUM",
+          "verification_status": "IMPORTED_UNVERIFIED",
+          "retrieved_at": null,
+          "notes": "Imported from model_knowledge_base.json; requires source-level verification."
+        }
+      ],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    },
+    "deepseek-reasoning": {
+      "model_id": "deepseek-reasoning",
+      "provider": "local/ollama",
+      "runtime_model": "deepseek-r1:7b",
+      "version": "current",
+      "lifecycle": "working",
+      "admission_status": "APPROVED_LOCAL",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text"
+      ],
+      "strengths": [
+        "reasoning",
+        "multi_step_analysis",
+        "planning",
+        "critical_analysis"
+      ],
+      "weaknesses": [
+        "high latency on current host",
+        "overkill for routine tasks",
+        "not code-specialized",
+        "not vision"
+      ],
+      "complexity_range": [
+        3,
+        4
+      ],
+      "context_window_tokens": 131072,
+      "latency_class": "slow",
+      "resource_class": "medium",
+      "benchmark_evidence": {
+        "stage24_rank": 4,
+        "stage24_pass_rate": 1,
+        "stage24_avg_quality": 100,
+        "stage24_avg_latency_ms": 30073.04
+      },
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [
+        {
+          "claim_id": "legacy-0",
+          "field": "source_reference",
+          "value": "https://ollama.com/library/deepseek-r1",
+          "source_url": "https://ollama.com/library/deepseek-r1",
+          "source_class": "OFFICIAL_OR_PRIMARY",
+          "confidence": "MEDIUM",
+          "verification_status": "IMPORTED_UNVERIFIED",
+          "retrieved_at": null,
+          "notes": "Imported from model_knowledge_base.json; requires source-level verification."
+        }
+      ],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    },
+    "qwen3-vl-vision": {
+      "model_id": "qwen3-vl-vision",
+      "provider": "local/ollama",
+      "runtime_model": "qwen3-vl:8b-instruct-q4_K_M",
+      "version": "current",
+      "lifecycle": "candidate",
+      "admission_status": "DISCOVERED",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "strengths": [
+        "vision",
+        "document_understanding",
+        "image_analysis"
+      ],
+      "weaknesses": [
+        "not yet registered in FATHER Brain Registry",
+        "not yet benchmarked locally"
+      ],
+      "complexity_range": [
+        2,
+        3
+      ],
+      "context_window_tokens": null,
+      "latency_class": "unknown",
+      "resource_class": "medium",
+      "benchmark_evidence": {
+        "status": "installed_not_benchmarked"
+      },
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    },
+    "llava-vision": {
+      "model_id": "llava-vision",
+      "provider": "local/ollama",
+      "runtime_model": "llava:7b",
+      "version": "current",
+      "lifecycle": "candidate",
+      "admission_status": "DISCOVERED",
+      "installed": true,
+      "deployment": [
+        "local"
+      ],
+      "commercial_use": "UNVERIFIED",
+      "license": {
+        "value": "UNVERIFIED",
+        "status": "UNVERIFIED"
+      },
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "strengths": [
+        "vision",
+        "image_question_answering"
+      ],
+      "weaknesses": [
+        "not yet registered in FATHER Brain Registry",
+        "not yet benchmarked locally"
+      ],
+      "complexity_range": [
+        2,
+        3
+      ],
+      "context_window_tokens": null,
+      "latency_class": "unknown",
+      "resource_class": "medium",
+      "benchmark_evidence": {
+        "status": "installed_not_benchmarked"
+      },
+      "economics": {
+        "status": "NOT_CALCULATED",
+        "profiles": []
+      },
+      "league": {
+        "status": "UNRANKED",
+        "role": null
+      },
+      "claims": [],
+      "created_at": "2026-11-04",
+      "updated_at": "2026-11-04"
+    }
+  }
+}
