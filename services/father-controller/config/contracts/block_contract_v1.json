@@ -1,0 +1,38 @@
+{
+  "contract_version": "1.0",
+  "purpose": "Uniform FATHER block interface for Design Studio, compatibility checks, bench and release",
+  "required": [
+    "id",
+    "type",
+    "version",
+    "status",
+    "capabilities",
+    "inputs",
+    "outputs",
+    "dependencies",
+    "resources",
+    "permissions",
+    "security",
+    "tests",
+    "compatibility"
+  ],
+  "lifecycle_status": [
+    "planned",
+    "experimental",
+    "tested",
+    "approved",
+    "deprecated"
+  ],
+  "resource_classes": [
+    "light",
+    "medium",
+    "heavy",
+    "external"
+  ],
+  "security_fields": [
+    "profile",
+    "side_effects",
+    "approval_required"
+  ],
+  "notes": "Block id is the registry key. Runtime-specific fields such as model/provider/requires_embedding remain type-specific extensions."
+}
