@@ -130,7 +130,8 @@ for case in cases:
                 "ok":run_result["ok"],
                 "brain_id":run_result["brain_id"],
                 "knowledge_hits":run_result["knowledge_hits"],
-                "content_chars":len(run_result["content"] or "")
+                "content_chars":len(run_result["content"] or ""),
+                "error":run_result.get("error")
             }
         )
 
@@ -148,7 +149,8 @@ for case in cases:
             "ok":run_result["ok"],
             "brain_id":run_result["brain_id"],
             "content":run_result["content"],
-            "knowledge_hits":run_result["knowledge_hits"]
+            "knowledge_hits":run_result["knowledge_hits"],
+            "error":run_result.get("error")
         } if run_result else None
     })
 
