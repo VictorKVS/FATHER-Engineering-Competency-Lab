@@ -130,6 +130,44 @@
           ],
           "notes": []
         }
+      },
+      "qwen-analysis-fast": {
+        "type": "brain",
+        "provider": "ollama",
+        "capabilities": [
+          "analysis",
+          "rag",
+          "fast-analysis"
+        ],
+        "model": "qwen2.5:3b",
+        "version": "1.0",
+        "status": "experimental",
+        "inputs": [],
+        "outputs": [],
+        "dependencies": [],
+        "resources": {
+          "class": "light"
+        },
+        "permissions": [],
+        "security": {
+          "profile": "default",
+          "side_effects": false,
+          "approval_required": false
+        },
+        "tests": [
+          "text-analyst-value-mvp01",
+          "adaptive-role-router-mvp02"
+        ],
+        "compatibility": {
+          "chassis": [
+            "C1",
+            "C2",
+            "C5"
+          ],
+          "notes": [
+            "Role-gated analyst brain; quality gate >= 50."
+          ]
+        }
       }
     },
     "competency": {
