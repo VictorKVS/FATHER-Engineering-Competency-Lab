@@ -19,6 +19,11 @@
       "adapter": "ollama",
       "model": "deepseek-r1:7b",
       "base_url": "http://127.0.0.1:11434"
+    },
+    "qwen-analysis-fast": {
+      "adapter": "ollama",
+      "model": "qwen2.5:3b",
+      "base_url": "http://127.0.0.1:11434"
     }
   }
 }
