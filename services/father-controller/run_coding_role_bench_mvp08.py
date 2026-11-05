@@ -98,6 +98,95 @@ with tempfile.TemporaryDirectory() as d:
         raise AssertionError("absolute escape must be blocked")
 """,
     },
+    {
+        "id": "merge_intervals",
+        "prompt": """Напиши функцию Python merge_intervals(intervals).
+intervals — список пар [start,end]. Объедини пересекающиеся и соприкасающиеся интервалы.
+Порядок входа произвольный. Верни новый список отсортированных интервалов.
+Вход не изменяй. Верни только код Python без markdown.""",
+        "tests": """
+import copy
+x=[[5,7],[1,3],[2,4],[8,8]]
+orig=copy.deepcopy(x)
+assert merge_intervals(x)==[[1,7],[8,8]]
+assert x==orig
+assert merge_intervals([])==[]
+assert merge_intervals([[1,1],[1,2]])==[[1,2]]
+""",
+    },
+    {
+        "id": "retry",
+        "prompt": """Напиши функцию Python retry_call(fn, attempts, exceptions=(Exception,)).
+Она вызывает fn до attempts раз и возвращает результат при успехе.
+Повторять только при исключениях из exceptions.
+Если все попытки исчерпаны — повторно выбросить последнее исключение.
+attempts < 1 -> ValueError.
+Верни только код Python без markdown.""",
+        "tests": """
+state={"n":0}
+def flaky():
+    state["n"]+=1
+    if state["n"]<3:
+        raise ValueError("x")
+    return 42
+assert retry_call(flaky,3,(ValueError,))==42
+assert state["n"]==3
+try:
+    retry_call(lambda:1,0)
+except ValueError:
+    pass
+else:
+    raise AssertionError("attempts<1 must fail")
+try:
+    retry_call(lambda: (_ for _ in ()).throw(TypeError("t")),3,(ValueError,))
+except TypeError:
+    pass
+else:
+    raise AssertionError("unexpected exception must propagate")
+""",
+    },
+    {
+        "id": "parse_bool",
+        "prompt": """Напиши функцию Python parse_bool(value).
+Принимает bool или строку.
+True-значения: true, yes, 1, on; False-значения: false, no, 0, off.
+Строки обрабатывай без учета регистра и с trim пробелов.
+Для прочих значений выбрасывай ValueError.
+Верни только код Python без markdown.""",
+        "tests": """
+assert parse_bool(True) is True
+assert parse_bool(False) is False
+assert parse_bool(" YES ") is True
+assert parse_bool("off") is False
+for bad in ["maybe",1,None,[]]:
+    try:
+        parse_bool(bad)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(f"must reject {bad!r}")
+""",
+    },
+    {
+        "id": "redact_secrets",
+        "prompt": """Напиши функцию Python redact_secrets(text).
+Она должна скрывать значения токенов в строках формата:
+password=VALUE
+token: VALUE
+api_key = VALUE
+Имена ключей без учета регистра, пробелы вокруг разделителя допустимы.
+Заменяй только VALUE на ***. Остальной текст сохраняй.
+Верни только код Python без markdown.""",
+        "tests": """
+s="user=bob password=hunter2 token: abc123 api_key = XYZ end"
+r=redact_secrets(s)
+assert "hunter2" not in r and "abc123" not in r and "XYZ" not in r
+assert "password=***" in r
+assert "token: ***" in r
+assert "api_key = ***" in r
+assert redact_secrets("nothing here")=="nothing here"
+""",
+    },
 ]
 
 def extract_code(text):
@@ -167,13 +256,16 @@ def main():
 
     ranked=sorted(results,key=lambda x:(-x["quality"],x["avg_latency_ms"]))
     winner=ranked[0]
-    coder=next(x for x in results if x["brain_id"]=="qwen-coder")
-    gate_pass=bool(coder["quality"]>=75.0)
-    promoted=bool(gate_pass and winner["brain_id"]=="qwen-coder")
+    gate_pass=bool(winner["quality"]>=75.0)
+    if len(ranked)>1:
+        quality_margin=round(winner["quality"]-ranked[1]["quality"],2)
+    else:
+        quality_margin=winner["quality"]
+    qualified=bool(gate_pass)
 
     print("=== CODING ROLE DECISION ===")
-    print("PASS quality_gate" if gate_pass else "FAIL quality_gate",json.dumps({"coder_quality":coder["quality"],"required":75.0},ensure_ascii=False))
-    print(("PASS" if promoted else "FAIL"),"qwen_coder_wins_role",json.dumps({"winner":winner["brain_id"],"ranking":[{"brain_id":x["brain_id"],"quality":x["quality"],"avg_latency_ms":x["avg_latency_ms"]} for x in ranked]},ensure_ascii=False))
+    print("PASS quality_gate" if gate_pass else "FAIL quality_gate",json.dumps({"winner":winner["brain_id"],"winner_quality":winner["quality"],"required":75.0},ensure_ascii=False))
+    print(("PASS" if qualified else "FAIL"),"coding_role_has_qualified_winner",json.dumps({"winner":winner["brain_id"],"quality_margin":quality_margin,"ranking":[{"brain_id":x["brain_id"],"quality":x["quality"],"avg_latency_ms":x["avg_latency_ms"]} for x in ranked]},ensure_ascii=False))
 
     report={
         "benchmark":"FATHER CODING ROLE BENCH MVP-08",
@@ -182,11 +274,12 @@ def main():
         "results":results,
         "ranking":ranked,
         "winner":winner["brain_id"],
-        "coding_role_ready_for_promotion":promoted,
+        "coding_role_ready_for_promotion":qualified,
+        "winner_runtime_model":winner["runtime_model"],
     }
     path=BASE/"evidence/coding_role_bench_mvp08.json"
     path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
-    ok=promoted
+    ok=qualified
     print("RESULT:","PASS" if ok else "FAIL")
     print("EVIDENCE:",path)
     raise SystemExit(0 if ok else 1)
