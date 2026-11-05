@@ -102,12 +102,12 @@ with tempfile.TemporaryDirectory() as d:
     {
         "id": "merge_intervals",
         "prompt": """Напиши функцию Python merge_intervals(intervals).
-intervals — список пар [start,end]. Объедини пересекающиеся и соприкасающиеся интервалы.
+intervals — список пар [start,end]. Объедини интервалы, если они пересекаются или имеют общую границу: next_start <= current_end.
 Порядок входа произвольный. Верни новый список отсортированных интервалов.
 Вход не изменяй. Верни только код Python без markdown.""",
         "tests": """
 import copy
-x=[[5,7],[1,3],[2,4],[8,8]]
+x=[[5,7],[1,3],[3,5],[8,8]]
 orig=copy.deepcopy(x)
 assert merge_intervals(x)==[[1,7],[8,8]]
 assert x==orig
