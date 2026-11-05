@@ -1,0 +1,67 @@
+{
+  "schema": "FATHER_ROLE_MODEL_MATRIX_v1",
+  "principle": "no global best model; rank models per role after reliability, quality and thermal gates",
+  "gates": {
+    "reliability": {
+      "type": "hard",
+      "minimum": 0.95
+    },
+    "quality": {
+      "type": "role_specific"
+    },
+    "thermal": {
+      "type": "operational",
+      "review_at_c": 90,
+      "cooldown_target_c": 75
+    }
+  },
+  "roles": {
+    "text_analyst": {
+      "quality_gate": 50,
+      "champion_candidate": "qwen2.5:3b",
+      "challenger": "qwen2.5:7b",
+      "baseline": "llama3.2:1b",
+      "evidence": "evidence/text_analyst_value/value_matrix_latest.json",
+      "notes": "1B remains useful for fast/simple tasks but failed current analyst quality gate."
+    },
+    "reasoning": {
+      "quality_gate": null,
+      "champion_candidate": "deepseek-r1:7b",
+      "status": "REQUIRES_ROLE_BENCH",
+      "notes": "Do not infer reasoning champion from literary-analysis benchmark."
+    },
+    "coding": {
+      "quality_gate": null,
+      "champion_candidate": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "status": "REQUIRES_ROLE_BENCH"
+    },
+    "creative_writing": {
+      "quality_gate": null,
+      "champion_candidate": "ministral-3:8b",
+      "challengers": [
+        "qwen2.5:7b",
+        "qwen2.5:3b"
+      ],
+      "status": "REQUIRES_CREATIVE_SEMANTIC_REVIEW",
+      "notes": "ministral remains in creative lane despite failing text-analyst reliability qualification."
+    },
+    "edge_fast": {
+      "quality_gate": null,
+      "champion_candidate": "llama3.2:1b",
+      "status": "LOCAL_SPEED_EVIDENCE"
+    },
+    "vision": {
+      "quality_gate": null,
+      "candidates": [
+        "qwen3-vl:8b-instruct-q4_K_M",
+        "llava:7b"
+      ],
+      "status": "REQUIRES_VISION_BENCH"
+    }
+  },
+  "final_value_policy": {
+    "after_gates": true,
+    "formula": "0.60*QUALITY + 0.20*SPEED + 0.20*ECONOMY",
+    "note": "role-specific quality must pass before economic optimization"
+  }
+}
