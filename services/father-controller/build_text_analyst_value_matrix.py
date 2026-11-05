@@ -6,6 +6,8 @@ Q=BASE/"evidence/text_analyst_quality/quality_latest.json"
 E=BASE/"evidence/resource_energy"
 W=BASE/"evidence/text_analyst_value"
 OUT=W/"value_matrix_latest.json"
+QUALITY_GATE=50.0
+THERMAL_GATE_C=90.0
 
 MODELS=[
  "qwen2.5:3b",
@@ -53,7 +55,22 @@ for model in MODELS:
       "evidence_energy":str(ep)
     })
 
-valid=[r for r in rows if r.get("status")=="OK" and r.get("quality_score") is not None]
+eligible=[]
+for r in rows:
+    if r.get("status")!="OK" or r.get("quality_score") is None:
+        continue
+    if r["quality_score"] < QUALITY_GATE:
+        r["admission"]="DISQUALIFIED_QUALITY"
+        r["gate_reason"]=f"quality {r['quality_score']} < {QUALITY_GATE}"
+        continue
+    if r.get("gpu_temp_max_c") is not None and r["gpu_temp_max_c"] >= THERMAL_GATE_C:
+        r["admission"]="THERMAL_REVIEW_REQUIRED"
+        r["gate_reason"]=f"gpu temp {r['gpu_temp_max_c']}C >= {THERMAL_GATE_C}C project safety gate"
+    else:
+        r["admission"]="VALUE_ELIGIBLE"
+    eligible.append(r)
+
+valid=[r for r in eligible if r.get("admission")=="VALUE_ELIGIBLE"]
 if valid:
     lats=[r["avg_latency_ms"] for r in valid if r["avg_latency_ms"] is not None]
     ens=[r["energy_wh_per_task"] for r in valid if r["energy_wh_per_task"] is not None]
@@ -68,8 +85,10 @@ if valid:
 report={
   "benchmark":"FATHER TEXT ANALYST VALUE MATRIX MVP-01",
   "policy":{
-    "reliability":"already gated before quality phase",
-    "formula":"0.60*QUALITY + 0.20*SPEED + 0.20*ECONOMY",
+    "reliability":"gate before value phase",
+    "quality_gate":QUALITY_GATE,
+    "thermal_gate_c":THERMAL_GATE_C,
+    "formula":"0.60*QUALITY + 0.20*SPEED + 0.20*ECONOMY after gates",
     "economy_basis":"estimated system Wh/task; GPU watts/temp measured by nvidia-smi"
   },
   "rows":rows,
@@ -78,6 +97,9 @@ report={
 OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
 
 print("=== FATHER VALUE MATRIX ===")
+for r in rows:
+    if r.get("admission") and r.get("admission")!="VALUE_ELIGIBLE":
+        print("GATE",r["model"],r["admission"],r.get("gate_reason"))
 for i,r in enumerate(valid,1):
     print(f"{i}. {r['model']} | Q={r['quality_score']} | SPEED={r['speed_score']} | ECON={r['economy_score']} | VALUE={r['value_score']} | Wh/task={r['energy_wh_per_task']}")
 print("REPORT:",OUT)
