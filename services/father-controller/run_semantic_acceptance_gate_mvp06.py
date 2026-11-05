@@ -28,6 +28,8 @@ def compact(x):
         "accepted": x.get("accepted"),
         "status": x.get("status"),
         "semantic_score": x.get("semantic_score"),
+        "grounded_semantic_score": x.get("grounded_semantic_score"),
+        "judge_quality_score": x.get("judge_quality_score"),
         "critical_error": x.get("critical_error"),
         "scores": x.get("scores"),
         "claim_alignment": x.get("claim_alignment"),
@@ -77,8 +79,8 @@ def main():
               {"supported": bad.get("supported_claims"), "contradicted": bad.get("contradicted_claims"), "alignment": bad.get("claim_alignment")})
 
     ok &= add(rows, "semantic_gate_distinguishes_quality",
-              good.get("semantic_score", 0) > bad.get("semantic_score", 100),
-              {"good_score": good.get("semantic_score"), "bad_score": bad.get("semantic_score")})
+              good.get("grounded_semantic_score", 0) > bad.get("grounded_semantic_score", 100),
+              {"good_grounded": good.get("grounded_semantic_score"), "bad_grounded": bad.get("grounded_semantic_score"), "good_judge_quality": good.get("judge_quality_score"), "bad_judge_quality": bad.get("judge_quality_score")})
 
     ok &= add(rows, "judge_is_separate_brain",
               good.get("judge_brain") == "qwen-analysis" and good.get("judge_model") == "qwen2.5:7b",
