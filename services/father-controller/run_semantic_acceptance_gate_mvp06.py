@@ -34,6 +34,8 @@ def compact(x):
         "supported_claims": x.get("supported_claims"),
         "contradicted_claims": x.get("contradicted_claims"),
         "support_ratio": x.get("support_ratio"),
+        "alignment_complete": x.get("alignment_complete"),
+        "missing_claim_ids": x.get("missing_claim_ids"),
         "unsupported_claims": x.get("unsupported_claims"),
         "brief_reason": x.get("brief_reason"),
         "judge_brain": x.get("judge_brain"),
@@ -63,8 +65,12 @@ def main():
               compact(bad))
 
     ok &= add(rows, "good_answer_has_no_source_contradiction",
-              good.get("contradicted_claims") == 0 and good.get("supported_claims", 0) >= 2,
+              good.get("alignment_complete") and good.get("contradicted_claims") == 0 and good.get("supported_claims", 0) >= 2,
               {"supported": good.get("supported_claims"), "contradicted": good.get("contradicted_claims"), "alignment": good.get("claim_alignment")})
+
+    ok &= add(rows, "claim_alignment_is_complete",
+              good.get("alignment_complete") and bad.get("alignment_complete"),
+              {"good_missing": good.get("missing_claim_ids"), "bad_missing": bad.get("missing_claim_ids")})
 
     ok &= add(rows, "bad_answer_has_source_contradiction",
               bad.get("contradicted_claims", 0) >= 1,
