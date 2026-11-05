@@ -56,6 +56,10 @@ def main():
               x.get("escalated") and x.get("initial_brain")=="qwen-analysis-fast" and x.get("final_brain")=="qwen-analysis",
               compact(x))
 
+    ok &= add(rows,"final_rejection_is_not_reported_as_success",
+              (not x.get("ok")) and x.get("status")=="ESCALATION_EXHAUSTED" and x.get("reason")=="final_acceptance_failed",
+              {"ok":x.get("ok"),"status":x.get("status"),"reason":x.get("reason"),"final_acceptance":x.get("final_acceptance")})
+
     attempts=x.get("attempts") or []
     ok &= add(rows,"telemetry_records_both_attempts",
               len(attempts)==2 and all(a.get("latency_ms") is not None for a in attempts)
