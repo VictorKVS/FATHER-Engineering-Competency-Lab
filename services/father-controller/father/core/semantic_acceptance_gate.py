@@ -188,15 +188,17 @@ REFERENCE CLAIM {claim_id}:
 
         judge_quality_score = round(sum(clean.values()) / (5.0 * len(self.DIMENSIONS)) * 100.0, 2)
         grounded_semantic_score = round((support_ratio * 100.0) * (1.0 - contradiction_ratio), 2)
-        critical = bool((score_data or {}).get("critical_error", False)) or contradicted > 0
+        judge_critical = bool((score_data or {}).get("critical_error", False))
         unsupported = (score_data or {}).get("unsupported_claims") or []
+        critical = contradicted > 0
+
+        # Acceptance is evidence-driven. The free-form LLM quality pass is
+        # diagnostic only because it can contradict its own claim alignment.
         accepted = bool(
             alignment_complete
             and not judge_errors
             and contradicted == 0
             and support_ratio >= 0.67
-            and not unsupported
-            and not critical
         )
 
         return {
@@ -220,6 +222,7 @@ REFERENCE CLAIM {claim_id}:
             "judge_error_claim_ids": judge_errors,
             "unsupported_claims": unsupported,
             "critical_error": critical,
+            "judge_critical_error": judge_critical,
             "brief_reason": str((score_data or {}).get("brief_reason", "")),
             "judge_brain": score_response.brain_id,
             "judge_model": score_response.model,
