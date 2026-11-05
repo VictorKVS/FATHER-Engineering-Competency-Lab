@@ -53,11 +53,12 @@ class SemanticAcceptanceGate:
 ВАЖНО:
 1. REFERENCE CLAIMS ниже считаются истинными утверждениями источника.
 2. Сравнивай ОТВЕТ-КАНДИДАТ с каждым reference claim.
-3. Если ответ повторяет смысл reference claim — relation=SUPPORTED.
-4. Если ответ утверждает противоположное — relation=CONTRADICTED.
-5. Если ответ не касается claim — relation=NOT_ADDRESSED.
-6. НЕЛЬЗЯ называть contradiction само утверждение источника.
-7. Не используй внешние знания как доказательство.
+3. Верни один claim_alignment для КАЖДОГО REFERENCE CLAIM и сохрани его claim_id.
+4. Не пропускай claims: если ответ claim не затрагивает, верни NOT_ADDRESSED.
+5. Если ответ повторяет смысл reference claim — relation=SUPPORTED.
+6. Если ответ утверждает противоположное — relation=CONTRADICTED.
+7. НЕЛЬЗЯ называть contradiction само утверждение источника.
+8. Не используй внешние знания как доказательство.
 
 ЗАДАЧА:
 {task}
@@ -129,28 +130,45 @@ critical_error=true только если кандидат прямо проти
                 "latency_ms":latency_ms
             }
 
-        alignment=[]
-        supported=contradicted=addressed=0
-        for item in data.get("claim_alignment") or []:
+        raw_alignment=data.get("claim_alignment") or []
+        by_id={}
+        for item in raw_alignment:
+            cid=str(item.get("claim_id","")).upper().strip()
             rel=str(item.get("relation","")).upper()
             if rel not in {"SUPPORTED","CONTRADICTED","NOT_ADDRESSED"}:
                 rel="NOT_ADDRESSED"
-            row={
-                "claim_id":str(item.get("claim_id","")),
-                "relation":rel,
-                "reason":str(item.get("reason",""))
-            }
+            if cid:
+                by_id[cid]={
+                    "claim_id":cid,
+                    "relation":rel,
+                    "reason":str(item.get("reason",""))
+                }
+
+        alignment=[]
+        missing_claim_ids=[]
+        supported=contradicted=addressed=0
+        for i,_claim in enumerate(source_claims, start=1):
+            cid=f"C{i}"
+            row=by_id.get(cid)
+            if row is None:
+                missing_claim_ids.append(cid)
+                row={
+                    "claim_id":cid,
+                    "relation":"NOT_ADDRESSED",
+                    "reason":"judge_omitted_claim"
+                }
             alignment.append(row)
-            if rel=="SUPPORTED":
+            if row["relation"]=="SUPPORTED":
                 supported+=1
                 addressed+=1
-            elif rel=="CONTRADICTED":
+            elif row["relation"]=="CONTRADICTED":
                 contradicted+=1
                 addressed+=1
 
         claim_count=max(1,len(source_claims))
         support_ratio=round(supported/claim_count,4)
         contradiction_ratio=round(contradicted/claim_count,4)
+        alignment_complete=(len(missing_claim_ids)==0)
 
         scores=data.get("scores") or {}
         clean={}
@@ -176,6 +194,7 @@ critical_error=true только если кандидат прямо проти
             and hard_dims
             and not critical
             and support_ratio>0
+            and alignment_complete
         )
 
         return {
@@ -191,6 +210,8 @@ critical_error=true только если кандидат прямо проти
             "contradicted_claims":contradicted,
             "support_ratio":support_ratio,
             "contradiction_ratio":contradiction_ratio,
+            "alignment_complete":alignment_complete,
+            "missing_claim_ids":missing_claim_ids,
             "unsupported_claims":data.get("unsupported_claims") or [],
             "critical_error":critical,
             "brief_reason":str(data.get("brief_reason","")),
