@@ -25,7 +25,9 @@ class AdaptiveRoleRouter:
 
         if explicit:
             role=explicit
-        elif any(x in text for x in ["рассказ","сцен","диалог","продолж","перепиш","стиль","творч"]):
+        elif complexity<=1 and any(x in text for x in ["коротко","фразу","перефраз","перепиш","сократи","исправь"]):
+            role="edge_fast"
+        elif any(x in text for x in ["рассказ","сцен","диалог","продолж","стиль","творч"]) or (complexity>=2 and "перепиш" in text):
             role="creative_writing"
         elif any(x in text for x in ["код","python","api","рефактор","ошибк","функц","класс"]):
             role="coding"
