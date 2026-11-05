@@ -30,7 +30,10 @@ def compact(x):
         "semantic_score": x.get("semantic_score"),
         "critical_error": x.get("critical_error"),
         "scores": x.get("scores"),
-        "contradictions": x.get("contradictions"),
+        "claim_alignment": x.get("claim_alignment"),
+        "supported_claims": x.get("supported_claims"),
+        "contradicted_claims": x.get("contradicted_claims"),
+        "support_ratio": x.get("support_ratio"),
         "unsupported_claims": x.get("unsupported_claims"),
         "brief_reason": x.get("brief_reason"),
         "judge_brain": x.get("judge_brain"),
@@ -43,15 +46,29 @@ def main():
     rows = []
     ok = True
 
-    good = gate.evaluate(TASK, GOOD, CONTEXT)
+    claims = [
+        "Агент и модель разделены: модель является заменяемым Brain-слотом агента.",
+        "Один агент может работать с разными совместимыми моделями.",
+        "Модель выбирается по роли, качеству, скорости, экономике и ограничениям.",
+    ]
+
+    good = gate.evaluate(TASK, GOOD, CONTEXT, source_claims=claims)
     ok &= add(rows, "grounded_answer_passes_semantic_gate",
               good.get("ok") and good.get("accepted") and good.get("status") == "PASS",
               compact(good))
 
-    bad = gate.evaluate(TASK, BAD, CONTEXT)
+    bad = gate.evaluate(TASK, BAD, CONTEXT, source_claims=claims)
     ok &= add(rows, "contradictory_answer_is_rejected",
               bad.get("ok") and (not bad.get("accepted")) and bad.get("status") == "ESCALATE",
               compact(bad))
+
+    ok &= add(rows, "good_answer_has_no_source_contradiction",
+              good.get("contradicted_claims") == 0 and good.get("supported_claims", 0) >= 2,
+              {"supported": good.get("supported_claims"), "contradicted": good.get("contradicted_claims"), "alignment": good.get("claim_alignment")})
+
+    ok &= add(rows, "bad_answer_has_source_contradiction",
+              bad.get("contradicted_claims", 0) >= 1,
+              {"supported": bad.get("supported_claims"), "contradicted": bad.get("contradicted_claims"), "alignment": bad.get("claim_alignment")})
 
     ok &= add(rows, "semantic_gate_distinguishes_quality",
               good.get("semantic_score", 0) > bad.get("semantic_score", 100),
