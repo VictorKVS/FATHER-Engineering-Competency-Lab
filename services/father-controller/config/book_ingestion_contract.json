@@ -1,0 +1,35 @@
+{
+  "contract_version": "1.0",
+  "agent": "father-book-reader",
+  "accepted_extensions": [
+    ".txt", ".md", ".html", ".htm", ".fb2", ".xml",
+    ".docx", ".pdf", ".epub", ".mobi", ".azw", ".azw3"
+  ],
+  "pdf_modes": ["text", "vision_ocr", "mixed"],
+  "preserve_original": true,
+  "translation": {
+    "enabled": true,
+    "default_target_language": "ru",
+    "preserve_original": true,
+    "aligned_chunks": true,
+    "protect_named_entities": true,
+    "mark_uncertainty": true
+  },
+  "retain": [
+    "chapters",
+    "sections",
+    "pages",
+    "paragraphs",
+    "footnotes",
+    "endnotes",
+    "tables",
+    "images",
+    "captions",
+    "maps",
+    "diagrams",
+    "metadata"
+  ],
+  "converter_backends": {
+    "mobi_azw": ["calibre"]
+  }
+}
