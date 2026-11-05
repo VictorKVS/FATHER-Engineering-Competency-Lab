@@ -1,4 +1,4 @@
-import argparse, csv, json, os, subprocess, sys, threading, time
+import argparse, csv, json, os, re, subprocess, sys, threading, time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -54,8 +54,10 @@ def sample_once(cpu_idle_w,cpu_max_w,base_w):
 
 def run_meter(args):
     stamp=datetime.now().strftime("%Y%m%d_%H%M%S")
-    csv_path=OUT/f"resource_energy_{stamp}.csv"
-    json_path=OUT/f"resource_energy_{stamp}.json"
+    safe_label=re.sub(r"[^A-Za-z0-9_.-]+","_",args.label).strip("_") if args.label else ""
+    suffix=("_"+safe_label) if safe_label else ""
+    csv_path=OUT/f"resource_energy_{stamp}{suffix}.csv"
+    json_path=OUT/f"resource_energy_{stamp}{suffix}.json"
 
     rows=[]
     stop=threading.Event()
@@ -126,6 +128,7 @@ def run_meter(args):
 
     summary={
       "meter":"FATHER RESOURCE & ENERGY METER v1",
+      "label":args.label or None,
       "started_at":data[0]["ts"] if data else None,
       "duration_s":round(duration_s,2),
       "samples":len(data),
@@ -191,6 +194,7 @@ def run_meter(args):
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--interval",type=float,default=2.0)
+    ap.add_argument("--label",default="",help="logical workload/model label written to evidence and filenames")
     ap.add_argument("--price-per-kwh",type=float,default=float(os.getenv("FATHER_PRICE_PER_KWH","0") or 0))
     ap.add_argument("--currency",default=os.getenv("FATHER_ENERGY_CURRENCY","RUB"))
     ap.add_argument("--task-count",type=int,default=0)
