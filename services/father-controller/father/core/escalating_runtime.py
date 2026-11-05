@@ -120,7 +120,9 @@ class EscalatingRuntime:
         attempts.append({**second["telemetry"],"acceptance":second_gate})
 
         return {
-          "ok":second["result"].get("ok",False),
+          "ok":bool(second["result"].get("ok",False) and second_gate["accepted"]),
+          "reason":None if second_gate["accepted"] else "final_acceptance_failed",
+          "status":"ACCEPTED" if second_gate["accepted"] else "ESCALATION_EXHAUSTED",
           "escalated":True,
           "initial_brain":first["result"].get("brain_id"),
           "final_brain":second["result"].get("brain_id"),
