@@ -186,27 +186,26 @@ REFERENCE CLAIM {claim_id}:
                 value = 0.0
             clean[name] = max(0.0, min(5.0, value))
 
-        semantic_score = round(sum(clean.values()) / (5.0 * len(self.DIMENSIONS)) * 100.0, 2)
+        judge_quality_score = round(sum(clean.values()) / (5.0 * len(self.DIMENSIONS)) * 100.0, 2)
+        grounded_semantic_score = round((support_ratio * 100.0) * (1.0 - contradiction_ratio), 2)
         critical = bool((score_data or {}).get("critical_error", False)) or contradicted > 0
-        hard_dims = (
-            clean["factual_accuracy"] >= 3
-            and clean["source_grounding"] >= 3
-            and clean["task_fulfillment"] >= 3
-            and clean["hallucination_resistance"] >= 3
-        )
+        unsupported = (score_data or {}).get("unsupported_claims") or []
         accepted = bool(
-            semantic_score >= threshold
-            and hard_dims
+            alignment_complete
+            and not judge_errors
+            and contradicted == 0
+            and support_ratio >= 0.67
+            and not unsupported
             and not critical
-            and support_ratio > 0
-            and alignment_complete
         )
 
         return {
             "ok": True,
             "accepted": accepted,
             "status": "PASS" if accepted else "ESCALATE",
-            "semantic_score": semantic_score,
+            "semantic_score": grounded_semantic_score,
+            "grounded_semantic_score": grounded_semantic_score,
+            "judge_quality_score": judge_quality_score,
             "threshold": threshold,
             "scores": clean,
             "claim_alignment": alignment,
@@ -219,7 +218,7 @@ REFERENCE CLAIM {claim_id}:
             "alignment_complete": alignment_complete,
             "missing_claim_ids": [],
             "judge_error_claim_ids": judge_errors,
-            "unsupported_claims": (score_data or {}).get("unsupported_claims") or [],
+            "unsupported_claims": unsupported,
             "critical_error": critical,
             "brief_reason": str((score_data or {}).get("brief_reason", "")),
             "judge_brain": score_response.brain_id,
