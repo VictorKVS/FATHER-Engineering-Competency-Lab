@@ -2,7 +2,7 @@ $ErrorActionPreference="Stop"
 Set-Location $PSScriptRoot
 Write-Host "=== FATHER TEXT ANALYST QUALIFICATION BENCH MVP-01 ===" -ForegroundColor Cyan
 
-& "$PSScriptRoot\..\..\TEST_FATHER_OLLAMA.ps1"
+& "$PSScriptRoot\TEST_FATHER_OLLAMA.ps1"
 if($LASTEXITCODE -ne 0){ throw "Ollama preflight failed" }
 
 if(-not (Test-Path ".\evidence\book_ingestion\chunks.jsonl")){
