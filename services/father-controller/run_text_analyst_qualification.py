@@ -111,6 +111,8 @@ def main():
     ap.add_argument("--timeout",type=int,default=180)
     ap.add_argument("--models",nargs="*",default=None)
     ap.add_argument("--max-books",type=int,default=0)
+    ap.add_argument("--early-stop-after",type=int,default=5,help="minimum attempted calls before reliability early-stop")
+    ap.add_argument("--early-stop-timeouts",type=int,default=3,help="timeout count that disqualifies a model after early-stop-after calls")
     args=ap.parse_args()
 
     exam=json.loads(EXAM.read_text(encoding="utf-8"))
@@ -143,13 +145,18 @@ def main():
     print("PLANNED CALLS:",len(books)*len(questions)*len(models),flush=True)
 
     for model in models:
-        m={"model":model,"books":[],"status":"OK"}
+        m={"model":model,"books":[],"status":"OK","stop_reason":None}
+        attempted=0
+        timeout_count=0
+        disqualified=False
         print(f"\n=== MODEL {model} ===",flush=True)
         for book in books:
             b={"source_file":book,"answers":[]}
             print("BOOK",book,flush=True)
             book_chunks=by_book[book]
             for qi,q in enumerate(questions,1):
+                if disqualified:
+                    break
                 ctx=retrieve(q["q"],book_chunks,args.top_k)
                 ids=[c["chunk_id"] for c in ctx]
                 prompt=(
@@ -159,27 +166,56 @@ def main():
                   "\n\n".join(f"[{c['chunk_id']}] {c.get('text_original','')}" for c in ctx)
                 )
                 row={"question_id":q["id"],"level":q.get("level"),"category":q.get("category"),"question":q["q"],"chunks":ids}
+                attempted += 1
                 try:
                     ans,ms=ask(model,prompt,args.timeout)
                     row.update({"answer":ans,"latency_ms":ms,"technical":technical_metrics(ans,ids,q.get("category"))})
                     print(f" {qi:02d}/{len(questions)} OK {round(ms/1000,1)}s",flush=True)
                 except Exception as e:
-                    row["error"]=type(e).__name__+": "+str(e)
+                    et=type(e).__name__
+                    row["error"]=et+": "+str(e)
                     m["status"]="PARTIAL"
-                    print(f" {qi:02d}/{len(questions)} FAIL {type(e).__name__}",flush=True)
+                    if et=="TimeoutError":
+                        timeout_count += 1
+                    print(f" {qi:02d}/{len(questions)} FAIL {et}",flush=True)
                 b["answers"].append(row)
-            m["books"].append(b)
+
+                if b not in m["books"]:
+                    m["books"].append(b)
+                report["results"]=[x for x in report["results"] if x.get("model")!=model]+[m]
+                (OUT/"qualification_partial.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+
+                if attempted >= args.early_stop_after and timeout_count >= args.early_stop_timeouts:
+                    disqualified=True
+                    m["status"]="DISQUALIFIED_RELIABILITY"
+                    m["stop_reason"]={
+                      "kind":"EARLY_STOP_TIMEOUTS",
+                      "attempted":attempted,
+                      "timeouts":timeout_count,
+                      "threshold_after":args.early_stop_after,
+                      "threshold_timeouts":args.early_stop_timeouts
+                    }
+                    print(f" EARLY STOP {model}: {timeout_count} timeouts in {attempted} attempts",flush=True)
+                    break
+            if b not in m["books"]:
+                m["books"].append(b)
 
             report["results"]=[x for x in report["results"] if x.get("model")!=model]+[m]
             (OUT/"qualification_partial.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+            if disqualified:
+                break
 
         # aggregate technical/reliability metrics; semantic quality remains unscored
         rows=[a for b in m["books"] for a in b["answers"]]
         ok=[a for a in rows if "latency_ms" in a]
+        planned=len(books)*len(questions)
         m["summary"]={
-          "calls_total":len(rows),
+          "calls_planned":planned,
+          "calls_attempted":len(rows),
           "calls_completed":len(ok),
-          "completion_rate":round(len(ok)/max(1,len(rows)),4),
+          "timeouts":sum(1 for a in rows if str(a.get("error","")).startswith("TimeoutError")),
+          "completion_rate_attempted":round(len(ok)/max(1,len(rows)),4),
+          "completion_rate_planned":round(len(ok)/max(1,planned),4),
           "avg_latency_ms":round(sum(x["latency_ms"] for x in ok)/len(ok),2) if ok else None,
           "answers_with_source_refs":sum(1 for x in ok if x["technical"]["has_source_refs"]),
           "invalid_source_refs":sum(x["technical"]["invalid_source_ref_count"] for x in ok),
@@ -199,7 +235,7 @@ def main():
           "status":m["status"],
           **s
         })
-    comparison.sort(key=lambda x:(-x.get("completion_rate",0),x.get("avg_latency_ms") or 10**12))
+    comparison.sort(key=lambda x:(-x.get("completion_rate_planned",0),x.get("avg_latency_ms") or 10**12))
     comp={
       "note":"Reliability/technical ordering only. Do not select semantic champion until answer quality is reviewed.",
       "rows":comparison
