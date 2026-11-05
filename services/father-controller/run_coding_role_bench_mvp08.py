@@ -4,6 +4,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import urllib.request
 from pathlib import Path
 
 from father.contracts.types import BrainRequest
@@ -189,6 +190,41 @@ assert redact_secrets("nothing here")=="nothing here"
     },
 ]
 
+TRANSPORT_MARKERS = (
+    "Remote end closed connection",
+    "WinError 10054",
+    "Connection refused",
+    "timed out",
+)
+
+def ollama_preflight():
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:11434/api/tags", timeout=5) as r:
+            data=json.loads(r.read().decode("utf-8"))
+        return {"ok":True,"models":len(data.get("models",[]))}
+    except Exception as e:
+        return {"ok":False,"error":str(e)}
+
+def is_transport_error(error):
+    text=str(error or "")
+    return any(x.lower() in text.lower() for x in TRANSPORT_MARKERS)
+
+def generate_with_retry(brain, req, attempts=3):
+    last=None
+    total_latency=0.0
+    for n in range(1, attempts+1):
+        t0=time.perf_counter()
+        resp=brain.generate(req)
+        elapsed=round((time.perf_counter()-t0)*1000,2)
+        total_latency+=elapsed
+        last=resp
+        if not resp.error:
+            return resp, round(total_latency,2), n
+        if not is_transport_error(resp.error):
+            return resp, round(total_latency,2), n
+        time.sleep(2*n)
+    return last, round(total_latency,2), attempts
+
 def extract_code(text):
     raw=(text or "").strip()
     m=re.search(r"```(?:python)?\s*(.*?)```",raw,re.S|re.I)
@@ -210,6 +246,12 @@ def run_tests(code, tests):
             return {"passed":False,"returncode":None,"stdout":"","stderr":"TIMEOUT"}
 
 def main():
+    preflight=ollama_preflight()
+    print("OLLAMA PREFLIGHT",json.dumps(preflight,ensure_ascii=False))
+    if not preflight.get("ok"):
+        print("RESULT: INFRA_FAIL")
+        print("REASON: ollama_preflight_failed")
+        raise SystemExit(2)
     assembler=AgentAssembler(BASE)
     results=[]
     for brain_id, runtime_model in MODELS:
@@ -224,9 +266,7 @@ def main():
                 temperature=0.0,
                 max_tokens=900,
             )
-            t0=time.perf_counter()
-            resp=brain.generate(req)
-            latency=round((time.perf_counter()-t0)*1000,2)
+            resp,latency,retry_count=generate_with_retry(brain,req,attempts=3)
             total_latency+=latency
             code=extract_code(resp.content)
             test=run_tests(code,task["tests"]) if not resp.error else {"passed":False,"stderr":resp.error}
@@ -236,11 +276,18 @@ def main():
                 "passed":bool(test.get("passed")),
                 "latency_ms":latency,
                 "error":resp.error,
+                "transport_error":is_transport_error(resp.error),
+                "request_attempts":retry_count,
                 "stderr":test.get("stderr",""),
                 "code_chars":len(code),
             }
             model_rows.append(row)
             print(("PASS" if row["passed"] else "FAIL"),task["id"],json.dumps(row,ensure_ascii=False))
+        transport_failures=sum(1 for x in model_rows if x.get("transport_error"))
+        if transport_failures>=max(2,len(TASKS)//2):
+            print("INFRA_FAIL",brain_id,json.dumps({"transport_failures":transport_failures,"tasks":len(TASKS)},ensure_ascii=False))
+            print("RESULT: INFRA_FAIL")
+            raise SystemExit(2)
         quality=round(passed/len(TASKS)*100.0,2)
         avg_latency=round(total_latency/len(TASKS),2)
         results.append({
