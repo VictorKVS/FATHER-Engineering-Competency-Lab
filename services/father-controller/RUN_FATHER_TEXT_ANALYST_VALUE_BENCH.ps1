@@ -1,7 +1,8 @@
 param(
   [double]$PricePerKWh = 0,
   [string]$Currency = "RUB",
-  [int]$Questions = 12
+  [int]$Questions = 12,
+  [int]$CoolDownToC = 75
 )
 $ErrorActionPreference="Stop"
 Set-Location $PSScriptRoot
@@ -24,6 +25,14 @@ Write-Host "Models: $($models.Count) | Questions/model: $Questions" -ForegroundC
 
 foreach($m in $models){
   Write-Host ""
+  while($true){
+    $tempRaw = & nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>$null
+    if(-not $tempRaw){ break }
+    $temp = [int](($tempRaw | Select-Object -First 1).Trim())
+    if($temp -le $CoolDownToC){ break }
+    Write-Host "COOLDOWN: GPU $temp C > $CoolDownToC C. Waiting..." -ForegroundColor DarkYellow
+    Start-Sleep -Seconds 10
+  }
   Write-Host "=== VALUE MODEL: $m ===" -ForegroundColor Yellow
   python .\run_resource_energy_meter.py --label $m --price-per-kwh $PricePerKWh --currency $Currency --task-count $Questions -- python .\run_text_analyst_value_workload.py --model $m --questions $Questions
   if($LASTEXITCODE -ne 0){ throw "Value workload failed for $m" }
