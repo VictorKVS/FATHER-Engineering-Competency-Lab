@@ -83,7 +83,9 @@ def main():
         "text": "Объясни, почему в FATHER агент не равен модели и как выбирается модель.",
     }
     normal = runtime.run(task, SPEC, CONTEXT, CLAIMS, gpu_temp_c=70)
-    ok &= add(rows, "real_runtime_reaches_semantic_gate",
+    ok &= add(rows, "normal_grounded_runtime_is_accepted",
+              normal.get("ok") and
+              normal.get("status") == "ACCEPTED" and
               len(normal.get("attempts", [])) >= 1 and
               (normal.get("attempts") or [{}])[0].get("semantic") is not None,
               compact(normal))
