@@ -270,10 +270,47 @@ def main():
             total_latency+=latency
             code=extract_code(resp.content)
             test=run_tests(code,task["tests"]) if not resp.error else {"passed":False,"stderr":resp.error}
+            first_pass=bool(test.get("passed"))
+            repair_rounds=0
+
+            # Production-like coding agent loop:
+            # generate -> execute hidden tests -> repair from stderr -> retest.
+            while (not test.get("passed")) and (not resp.error) and repair_rounds < 2:
+                repair_rounds += 1
+                repair_prompt = f"""Исправь код по результатам тестов.
+Верни только полный исправленный код Python без markdown.
+
+ИСХОДНАЯ ЗАДАЧА:
+{task["prompt"]}
+
+ТЕКУЩИЙ КОД:
+{code}
+
+ОШИБКА ТЕСТОВ:
+{test.get("stderr","")}
+"""
+                repair_req=BrainRequest(
+                    messages=[{"role":"user","content":repair_prompt}],
+                    temperature=0.0,
+                    max_tokens=900,
+                )
+                repair_resp,repair_latency,repair_attempts=generate_with_retry(brain,repair_req,attempts=3)
+                total_latency+=repair_latency
+                latency=round(latency+repair_latency,2)
+                retry_count+=repair_attempts
+                if repair_resp.error:
+                    resp=repair_resp
+                    break
+                code=extract_code(repair_resp.content)
+                test=run_tests(code,task["tests"])
+                resp=repair_resp
+
             passed+=1 if test.get("passed") else 0
             row={
                 "task_id":task["id"],
                 "passed":bool(test.get("passed")),
+                "first_pass":first_pass,
+                "repair_rounds":repair_rounds,
                 "latency_ms":latency,
                 "error":resp.error,
                 "transport_error":is_transport_error(resp.error),
@@ -289,6 +326,8 @@ def main():
             print("RESULT: INFRA_FAIL")
             raise SystemExit(2)
         quality=round(passed/len(TASKS)*100.0,2)
+        first_passed=sum(1 for x in model_rows if x.get("first_pass"))
+        first_pass_quality=round(first_passed/len(TASKS)*100.0,2)
         avg_latency=round(total_latency/len(TASKS),2)
         results.append({
             "brain_id":brain_id,
@@ -296,10 +335,11 @@ def main():
             "passed":passed,
             "total":len(TASKS),
             "quality":quality,
+            "first_pass_quality":first_pass_quality,
             "avg_latency_ms":avg_latency,
             "tasks":model_rows,
         })
-        print("SUMMARY",brain_id,json.dumps({"quality":quality,"avg_latency_ms":avg_latency},ensure_ascii=False))
+        print("SUMMARY",brain_id,json.dumps({"first_pass_quality":first_pass_quality,"final_quality":quality,"avg_latency_ms":avg_latency},ensure_ascii=False))
 
     ranked=sorted(results,key=lambda x:(-x["quality"],x["avg_latency_ms"]))
     winner=ranked[0]
