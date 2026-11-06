@@ -1,0 +1,206 @@
+{
+  "schema_version": "0.1",
+  "knowledge_items": [
+    {
+      "knowledge_id": "KNOW-FACTORY-001",
+      "title": "Reusable chassis and standard block architecture",
+      "sources": [
+        "SRC-FATHER-CONCEPT-001",
+        "SRC-FATHER-LAB-001"
+      ],
+      "extract": "Products should be assembled from reusable chassis, standard blocks and configuration instead of rebuilding the system for every project.",
+      "decision": "ADR-0001",
+      "capabilities": [
+        "chassis_selection",
+        "block_composition",
+        "configuration_driven_assembly"
+      ],
+      "artifacts": [
+        "factory/chassis/C1_LIGHT_AGENT.json",
+        "factory/registry/blocks.json",
+        "factory/runtime/factory.py"
+      ],
+      "products": [
+        "FTH-PRODUCT-HELLO-001"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "knowledge_id": "KNOW-FACTORY-002",
+      "title": "Traceable engineering evidence loop",
+      "sources": [
+        "SRC-FATHER-README-001"
+      ],
+      "extract": "Engineering output must remain traceable from requirements through architecture, implementation, tests, defects and reusable patterns.",
+      "decision": "Factory evidence principle",
+      "capabilities": [
+        "audit",
+        "observability",
+        "evidence_generation"
+      ],
+      "artifacts": [
+        "FTH-BLOCK-AUDIT-001",
+        "FTH-BLOCK-OBS-001",
+        "factory/evidence/"
+      ],
+      "products": [
+        "FTH-PRODUCT-HELLO-001"
+      ],
+      "status": "MAPPED"
+    },
+    {
+      "knowledge_id": "KNOW-RESOURCE-MAP-001",
+      "title": "Topic-oriented resource index linked to engineering outputs",
+      "sources": [
+        "SRC-GITHUB-AIENG-RESOURCES-001"
+      ],
+      "extract": "Organize learning sources by engineering topic, then extend each topic with explicit mapping to capabilities, artifacts, products and evidence.",
+      "decision": "FATHER knowledge-to-product resource map",
+      "capabilities": [
+        "knowledge_management",
+        "provenance",
+        "product_traceability"
+      ],
+      "artifacts": [
+        "factory/RESOURCES.md",
+        "factory/registry/knowledge_map.json"
+      ],
+      "products": [
+        "FATHER Factory"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "knowledge_id": "KNOW-BOOK0001-CH01-001",
+      "title": "Prototype is not production",
+      "sources": [
+        "SRC-BOOK-0001"
+      ],
+      "extract": "Rapid LLM prototypes are easy to build, but production use requires explicit accuracy, reliability, latency and cost requirements plus understanding of model failure modes.",
+      "source_scope": "Chapter 1 / From Prototype to Production",
+      "decision": "Factory must separate prototype acceptance from production readiness.",
+      "capabilities": [
+        "production_readiness_gate",
+        "nonfunctional_requirements",
+        "failure_analysis"
+      ],
+      "artifacts": [
+        "future: FTH-BLOCK-PROD-GATE-001",
+        "future: FTH-BLOCK-EVAL-001"
+      ],
+      "products": [
+        "FATHER Factory",
+        "all production products"
+      ],
+      "status": "EXTRACTED"
+    },
+    {
+      "knowledge_id": "KNOW-BOOK0001-CH01-002",
+      "title": "Reference RAG prototype pipeline",
+      "sources": [
+        "SRC-BOOK-0001"
+      ],
+      "extract": "A PDF QA prototype consists of parsing, chunking, embeddings, vector storage, query embedding, similarity retrieval, LLM answer generation and conversation history.",
+      "source_scope": "Chapter 1 / Building Your First Chatbot Prototype",
+      "decision": "Represent RAG as replaceable standard blocks rather than one monolithic application.",
+      "capabilities": [
+        "document_parsing",
+        "chunking",
+        "embedding",
+        "vector_storage",
+        "retrieval",
+        "context_generation",
+        "conversation_state"
+      ],
+      "artifacts": [
+        "future: RAG block family",
+        "future: C2_KNOWLEDGE_RAG"
+      ],
+      "products": [
+        "ALINA",
+        "OSINT",
+        "CyberED",
+        "BOOKCRAFT"
+      ],
+      "status": "EXTRACTED"
+    },
+    {
+      "knowledge_id": "KNOW-BOOK0001-CH01-003",
+      "title": "Retrieval similarity is not answer relevance",
+      "sources": [
+        "SRC-BOOK-0001"
+      ],
+      "extract": "Embedding similarity can retrieve text similar to a query without guaranteeing that the text contains the answer or is relevant enough to answer it.",
+      "source_scope": "Chapter 1 / PDF chatbot retrieval discussion",
+      "decision": "Retriever output must be evaluated; similarity score alone cannot be treated as evidence of answerability.",
+      "capabilities": [
+        "retrieval_evaluation",
+        "reranking",
+        "answerability_check"
+      ],
+      "artifacts": [
+        "future: FTH-BLOCK-RERANK-001",
+        "future: FTH-BLOCK-RETRIEVAL-EVAL-001"
+      ],
+      "products": [
+        "ALINA",
+        "OSINT",
+        "all RAG products"
+      ],
+      "status": "EXTRACTED"
+    },
+    {
+      "knowledge_id": "KNOW-BOOK0001-CH01-004",
+      "title": "Model selection must be use-case constrained",
+      "sources": [
+        "SRC-BOOK-0001"
+      ],
+      "extract": "Production model selection should consider capabilities and limitations for the use case, including budget, evaluation criteria and benchmark performance.",
+      "source_scope": "Chapter 1 / From Prototype to Production",
+      "decision": "Model Router must depend on Model Registry capability and cost profiles rather than fixed model names.",
+      "capabilities": [
+        "model_selection",
+        "model_evaluation",
+        "budget_aware_routing"
+      ],
+      "artifacts": [
+        "FTH-BLOCK-MODEL-001",
+        "future: Model Zoo",
+        "future: FTH-BLOCK-EVAL-001"
+      ],
+      "products": [
+        "FATHER Factory",
+        "all LLM products"
+      ],
+      "status": "MAPPED"
+    },
+    {
+      "knowledge_id": "KNOW-BOOK0001-CH01-005",
+      "title": "Tools and autonomous task decomposition are first-class capabilities",
+      "sources": [
+        "SRC-BOOK-0001"
+      ],
+      "extract": "LLM applications can be extended with code interpreters, databases and APIs, and can decompose complex tasks into multiple steps and interact with their environment.",
+      "source_scope": "Chapter 1 / From Prototype to Production",
+      "decision": "Tools, permissions and orchestration must be independent Factory registries/blocks.",
+      "capabilities": [
+        "tool_use",
+        "external_system_access",
+        "task_decomposition",
+        "autonomous_decision"
+      ],
+      "artifacts": [
+        "future: Tool/MCP Registry",
+        "future: FTH-BLOCK-TOOLS-001",
+        "future: FTH-BLOCK-MCP-001"
+      ],
+      "products": [
+        "FATHER agents",
+        "OSINT",
+        "POLYGON",
+        "UAG"
+      ],
+      "status": "EXTRACTED"
+    }
+  ]
+}

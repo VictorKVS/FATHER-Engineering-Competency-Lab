@@ -1,0 +1,72 @@
+{
+  "schema": "father.fua_chassis.v1",
+  "id": "FUA-001",
+  "name": "FATHER Universal Agent",
+  "status": "DESIGN_CANDIDATE",
+  "numbering_standard": "military_hierarchical",
+  "reference_implementation": "Pydantic AI + Harness",
+  "reference_mode": "ADAPT_NOT_BLIND_FORK",
+  "core": [
+    "01.Identity",
+    "02.Role",
+    "03.Goal",
+    "04.Task Planner",
+    "05.State",
+    "06.Memory",
+    "07.Prompt Runtime",
+    "08.RAG Runtime",
+    "09.Knowledge Runtime",
+    "10.Tool Runtime",
+    "11.Model Router",
+    "12.Policy Engine",
+    "13.Evaluator",
+    "14.Audit",
+    "15.Observability"
+  ],
+  "extended": [
+    "16.Skill Runtime",
+    "17.Context Manager",
+    "18.Reflection / Learning",
+    "19.Human Approval",
+    "20.Execution Sandbox",
+    "21.Cost / Resource Controller",
+    "22.Evidence Manager",
+    "23.Compatibility Manager",
+    "24.Failure Recovery",
+    "25.Release / Readiness Gate"
+  ],
+  "specialization_contract": [
+    "ROLE_PACK",
+    "PROMPT_PACK",
+    "KNOWLEDGE_PACK",
+    "RAG_PROFILE",
+    "SKILL_PACK",
+    "TOOL_PACK",
+    "POLICY_PROFILE",
+    "TEST_SUITE"
+  ],
+  "required_properties": {
+    "model_swappable": true,
+    "provider_independent_contract": true,
+    "local_remote_models": true,
+    "typed_io": true,
+    "mcp_tools": true,
+    "rag": true,
+    "knowledge_base": true,
+    "memory": true,
+    "human_approval": true,
+    "evaluation": true,
+    "audit": true,
+    "observability": true,
+    "evidence": true,
+    "sandbox_ready": true
+  },
+  "scientific_patterns": [
+    "ReAct",
+    "Reflexion",
+    "CRITIC",
+    "Toolformer principle",
+    "MemGPT memory hierarchy"
+  ],
+  "polygon_required": true
+}

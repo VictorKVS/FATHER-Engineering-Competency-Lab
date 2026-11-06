@@ -1,0 +1,32 @@
+name: FATHER Factory v0.1
+
+on:
+  push:
+    branches: ["factory-v0.1"]
+    paths:
+      - "factory/**"
+      - ".github/workflows/factory-v01.yml"
+  pull_request:
+    paths:
+      - "factory/**"
+      - ".github/workflows/factory-v01.yml"
+
+jobs:
+  factory-proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Factory contract tests
+        run: python -m unittest factory.tests.test_factory -v
+
+      - name: Assemble reference product
+        run: python factory/runtime/factory.py factory/products/hello_factory.json
+
+      - name: Show evidence
+        run: cat factory/evidence/FTH-PRODUCT-HELLO-001-assembly.json

@@ -1,0 +1,540 @@
+openapi: 3.1.0
+info:
+  title: FUA-001 Control Plane API
+  version: 0.1.0
+  description: >
+    FATHER Universal Agent control-plane API. API access never bypasses
+    Identity, Role, Policy, Audit, Evidence, or Installation Permit gates.
+servers:
+  - url: http://127.0.0.1:8091
+    description: Local development
+security:
+  - bearerAuth: []
+
+tags:
+  - name: 00.Control
+  - name: 01.Identity
+  - name: 02.Role
+  - name: 03.Goal
+  - name: 04.Planner
+  - name: 05.State
+  - name: 06.Memory
+  - name: 07.Prompt
+  - name: 25.Readiness
+
+paths:
+  /health:
+    get:
+      tags: [00.Control]
+      security: []
+      operationId: healthCheck
+      responses:
+        "200":
+          description: Service health
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+
+  /v1/agents:
+    post:
+      tags: [01.Identity]
+      operationId: createAgentDefinition
+      summary: Register a logical FUA definition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgentDefinitionRequest"
+      responses:
+        "201":
+          description: Registered definition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentIdentity"
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+
+  /v1/agents/{agent_id}:
+    get:
+      tags: [01.Identity]
+      operationId: getAgentDefinition
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      responses:
+        "200":
+          description: Agent identity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentIdentity"
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /v1/agents/{agent_id}/instances:
+    post:
+      tags: [01.Identity]
+      operationId: createAgentInstance
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstanceRequest"
+      responses:
+        "201":
+          description: Runtime instance created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentInstance"
+
+  /v1/agents/{agent_id}/role:
+    get:
+      tags: [02.Role]
+      operationId: getEffectiveRole
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      responses:
+        "200":
+          description: Effective role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleProfile"
+
+  /v1/agents/{agent_id}/missions:
+    post:
+      tags: [03.Goal, 04.Planner]
+      operationId: submitMission
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MissionRequest"
+      responses:
+        "202":
+          description: Mission accepted after identity/role/policy validation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MissionAccepted"
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409":
+          description: Goal/role/policy conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /v1/agents/{agent_id}/plans/{plan_id}:
+    get:
+      tags: [04.Planner]
+      operationId: getPlan
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+        - $ref: "#/components/parameters/PlanId"
+      responses:
+        "200":
+          description: Versioned bounded execution plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plan"
+
+  /v1/agents/{agent_id}/state:
+    get:
+      tags: [05.State]
+      operationId: getState
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      responses:
+        "200":
+          description: Current verified state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StateSnapshot"
+
+  /v1/agents/{agent_id}/checkpoints:
+    post:
+      tags: [05.State]
+      operationId: createCheckpoint
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      responses:
+        "201":
+          description: Integrity-protected checkpoint
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Checkpoint"
+
+  /v1/agents/{agent_id}/memory/query:
+    post:
+      tags: [06.Memory]
+      operationId: queryMemory
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemoryQuery"
+      responses:
+        "200":
+          description: Scoped memory candidates
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoryQueryResult"
+
+  /v1/agents/{agent_id}/memory:
+    post:
+      tags: [06.Memory]
+      operationId: requestMemoryWrite
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemoryWriteRequest"
+      responses:
+        "202":
+          description: Write evaluated by memory policy; not an unconditional write
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoryWriteDecision"
+
+  /v1/agents/{agent_id}/prompts/assemble:
+    post:
+      tags: [07.Prompt]
+      operationId: assemblePrompt
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromptAssemblyRequest"
+      responses:
+        "200":
+          description: Versioned prompt assembly metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptAssemblyResult"
+
+  /v1/agents/{agent_id}/readiness:
+    get:
+      tags: [25.Readiness]
+      operationId: getReadiness
+      parameters:
+        - $ref: "#/components/parameters/AgentId"
+      responses:
+        "200":
+          description: Readiness and installation gates
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Readiness"
+
+  /v1/assembly/run:
+    post:
+      tags: [00.Control]
+      operationId: runFullAssembly
+      summary: Execute the FUA-001 full 01-26 integration path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssemblyMissionRequest"
+      responses:
+        "200":
+          description: Full assembly integration result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssemblyMissionResult"
+        "401": { $ref: "#/components/responses/Forbidden" }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    AgentId:
+      name: agent_id
+      in: path
+      required: true
+      schema: { type: string, minLength: 1 }
+    PlanId:
+      name: plan_id
+      in: path
+      required: true
+      schema: { type: string, minLength: 1 }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, minLength: 16, maxLength: 128 }
+
+  responses:
+    BadRequest:
+      description: Invalid contract
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Forbidden:
+      description: Policy denied
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+
+  schemas:
+    AssemblyMissionRequest:
+      type: object
+      additionalProperties: false
+      required: [mission]
+      properties:
+        mission: { type: string, minLength: 1 }
+
+    AssemblyMissionResult:
+      type: object
+      additionalProperties: true
+      required: [mission_id, status, instance_id, prompt_sha256, state_sha256, evidence_id, evidence_sha256, readiness, audit_ok, answer]
+      properties:
+        mission_id: { type: string }
+        status: { type: string, enum: [PASS] }
+        instance_id: { type: string }
+        prompt_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        state_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        evidence_id: { type: string }
+        evidence_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+        readiness: { type: string, enum: [DENIED, PASS] }
+        audit_ok: { type: boolean }
+        answer: { type: object }
+
+    Health:
+      type: object
+      additionalProperties: false
+      required: [status, version]
+      properties:
+        status: { type: string, enum: [ok, degraded] }
+        version: { type: string }
+
+    AgentDefinitionRequest:
+      type: object
+      additionalProperties: false
+      required: [agent_id, name, version, owner, mission_profile, environment, trust_level]
+      properties:
+        agent_id: { type: string }
+        name: { type: string }
+        version: { type: string }
+        owner: { type: string }
+        mission_profile: { type: string }
+        environment: { type: string }
+        trust_level: { type: string, enum: [UNTRUSTED, RESTRICTED, STANDARD, PRIVILEGED] }
+
+    AgentIdentity:
+      allOf:
+        - $ref: "#/components/schemas/AgentDefinitionRequest"
+        - type: object
+          required: [manifest_sha256]
+          properties:
+            manifest_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+
+    InstanceRequest:
+      type: object
+      additionalProperties: false
+      required: [environment]
+      properties:
+        environment: { type: string }
+
+    AgentInstance:
+      type: object
+      additionalProperties: false
+      required: [agent_id, instance_id, version, created_at]
+      properties:
+        agent_id: { type: string }
+        instance_id: { type: string }
+        version: { type: string }
+        created_at: { type: string, format: date-time }
+
+    RoleProfile:
+      type: object
+      additionalProperties: false
+      required: [primary_role, allowed_duties, forbidden_duties, jurisdiction, version]
+      properties:
+        primary_role: { type: string }
+        allowed_duties: { type: array, items: { type: string } }
+        forbidden_duties: { type: array, items: { type: string } }
+        jurisdiction: { type: array, items: { type: string } }
+        version: { type: string }
+
+    MissionRequest:
+      type: object
+      additionalProperties: false
+      required: [mission, success_criteria, failure_criteria, constraints]
+      properties:
+        mission: { type: string, minLength: 1 }
+        success_criteria: { type: array, minItems: 1, items: { type: string } }
+        failure_criteria: { type: array, minItems: 1, items: { type: string } }
+        constraints: { type: array, items: { type: string } }
+        priority: { type: integer, minimum: 0, maximum: 100 }
+        ttl_seconds: { type: integer, minimum: 1 }
+
+    MissionAccepted:
+      type: object
+      additionalProperties: false
+      required: [mission_id, goal_version, plan_id, status]
+      properties:
+        mission_id: { type: string }
+        goal_version: { type: string }
+        plan_id: { type: string }
+        status: { type: string, enum: [ACCEPTED, PENDING_APPROVAL] }
+
+    Plan:
+      type: object
+      additionalProperties: false
+      required: [plan_id, version, goal_id, tasks, status]
+      properties:
+        plan_id: { type: string }
+        version: { type: string }
+        goal_id: { type: string }
+        tasks:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [task_id, goal_link, status]
+            properties:
+              task_id: { type: string }
+              goal_link: { type: string }
+              status: { type: string }
+        status: { type: string }
+
+    StateSnapshot:
+      type: object
+      additionalProperties: false
+      required: [revision, session_id, state, integrity_sha256]
+      properties:
+        revision: { type: integer, minimum: 0 }
+        session_id: { type: string }
+        state: { type: string }
+        integrity_sha256: { type: string, pattern: "^[a-fA-F0-9]{64}$" }
+
+    Checkpoint:
+      type: object
+      additionalProperties: false
+      required: [checkpoint_id, revision, integrity_sha256]
+      properties:
+        checkpoint_id: { type: string }
+        revision: { type: integer }
+        integrity_sha256: { type: string }
+
+    MemoryQuery:
+      type: object
+      additionalProperties: false
+      required: [query, scope]
+      properties:
+        query: { type: string }
+        scope: { type: string }
+        limit: { type: integer, minimum: 1, maximum: 100, default: 10 }
+
+    MemoryQueryResult:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              memory_id: { type: string }
+              type: { type: string }
+              content: { type: string }
+              provenance: { type: string }
+              confidence: { type: number, minimum: 0, maximum: 1 }
+
+    MemoryWriteRequest:
+      type: object
+      additionalProperties: false
+      required: [type, scope, content, provenance]
+      properties:
+        type: { type: string, enum: [WORKING, EPISODIC, SEMANTIC, PROCEDURAL, USER_PROJECT] }
+        scope: { type: string }
+        content: { type: string }
+        provenance: { type: string }
+        confidence: { type: number, minimum: 0, maximum: 1 }
+
+    MemoryWriteDecision:
+      type: object
+      additionalProperties: false
+      required: [decision, reason, evidence_id]
+      properties:
+        decision: { type: string, enum: [ALLOW, DENY, QUARANTINE, REQUIRE_APPROVAL] }
+        reason: { type: string }
+        evidence_id: { type: string }
+
+    PromptAssemblyRequest:
+      type: object
+      additionalProperties: false
+      required: [prompt_pack, task_id, model_profile]
+      properties:
+        prompt_pack: { type: string }
+        task_id: { type: string }
+        model_profile: { type: string }
+        context_refs: { type: array, items: { type: string } }
+
+    PromptAssemblyResult:
+      type: object
+      additionalProperties: false
+      required: [prompt_version, prompt_sha256, compatibility, policy_decision]
+      properties:
+        prompt_version: { type: string }
+        prompt_sha256: { type: string }
+        compatibility: { type: string, enum: [PASS, WARN, FAIL] }
+        policy_decision: { type: string, enum: [ALLOW, DENY, REQUIRE_APPROVAL] }
+
+    Readiness:
+      type: object
+      additionalProperties: false
+      required: [lifecycle_status, installation_permit, blocking_gates]
+      properties:
+        lifecycle_status: { type: string }
+        installation_permit: { type: string, enum: [PASS, DENIED] }
+        blocking_gates: { type: array, items: { type: string } }
+
+    Problem:
+      type: object
+      additionalProperties: true
+      required: [type, title, status]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        trace_id: { type: string }

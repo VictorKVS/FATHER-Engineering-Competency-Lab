@@ -1,0 +1,421 @@
+{
+  "schema": "father.fua_package_index.v1",
+  "chassis_id": "FUA-001",
+  "version": "0.2",
+  "status": "PRODUCTION_RELEASED",
+  "canonical_spec": "factory/specs/FUA-001-MASTER-SPEC-v0.2.md",
+  "architecture": "factory/chassis/FUA-001/FUA-001-C4.md",
+  "api_contract": "factory/api/fua-001-openapi.yaml",
+  "api_design": "factory/api/FUA-001-API-DESIGN.md",
+  "test_standard": "factory/standards/FATHER-TEST-BLOCK-STANDARD-v0.1.md",
+  "full_assembly": "factory/chassis/FUA-001/FUA-001-FULL-ASSEMBLY-v0.2.md",
+  "research": "factory/research/FUA-001-REFERENCE-AGENT-STUDY.md",
+  "blocks": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26"
+  ],
+  "implemented_prototype_blocks": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26"
+  ],
+  "ci_evidence": {
+    "component_and_assembly_tests": "PASS",
+    "test_count": 89,
+    "full_01_26_assembly": "PASS",
+    "live_http_full_assembly_endpoint": "PASS",
+    "openapi_full_assembly_contract": "PASS",
+    "sast_bandit": "PASS",
+    "sca_pip_audit": "PASS",
+    "secret_scan": "PASS",
+    "cyclonedx_sbom": "PASS",
+    "test_artifact_id": 13080605784,
+    "sbom_artifact_id": 13079748266
+  },
+  "next_factory_gates": [],
+  "mandatory_governance_sections": [
+    "30-60"
+  ],
+  "installation_permit": "PASS",
+  "production_ready": true,
+  "local_evm_evidence": {
+    "package_build": "PASS",
+    "test_suite": "89_PASS",
+    "live_http": "PASS",
+    "full_01_26_assembly": "PASS",
+    "audit_chain": "PASS",
+    "evidence_sha256": "70817f8ba002ff9c69cd29e4d48eaa02fa65fc690b752d50e69278ba4324f24a"
+  },
+  "autonomous_hardening": {
+    "pytest": "161_PASS",
+    "failures": 0,
+    "sast": "PASS",
+    "sca": "PASS",
+    "secret_scan": "PASS",
+    "sbom": "PASS",
+    "polygon_lite": "PASS",
+    "red_team_lite": "PASS",
+    "sandbox_hardening": "PASS",
+    "model_transport_loopback_only": "PASS",
+    "dlp_input_validation": "PASS",
+    "governance_30_60": "IMPLEMENTED_BASELINE",
+    "backup_restore_proof": "PASS",
+    "incident_lifecycle_proof": "PASS",
+    "performance_measurement": "IMPLEMENTED"
+  },
+  "real_model_discovery": {
+    "transport": "OLLAMA",
+    "endpoint": "http://127.0.0.1:11434",
+    "discovered_models": 8,
+    "models": [
+      "qwen3-vl:8b-instruct-q4_K_M",
+      "llava:7b",
+      "qwen2.5-coder:1.5b",
+      "qwen2.5-coder:7b-instruct-q4_K_M",
+      "qwen2.5:7b",
+      "qwen2.5:3b",
+      "deepseek-r1:7b",
+      "llama3.2:1b"
+    ]
+  },
+  "real_model_preflight": {
+    "model": "qwen2.5:7b",
+    "already_loaded": true,
+    "warmup_ms": 280,
+    "warmup_response": "READY",
+    "load_duration_ns": 2877600,
+    "eval_count": 2,
+    "done": true,
+    "status": "PASS"
+  },
+  "real_model_mission": {
+    "status": "PASS",
+    "model": "qwen3-vl:8b-instruct-q4_K_M",
+    "transport": "OLLAMA",
+    "latency_ms": 7171,
+    "response_sha256": "a64eed601929e512cb5c454152428fd8fc4863565cf1ecbdd4b50222d33dceca",
+    "evidence_sha256": "cbd7cc651d29ed9a83c77dc0ab5a94416c92546395e6338f5187d3f0f092ecf3",
+    "audit_ok": true,
+    "response_length": 416
+  },
+  "known_defects": [
+    "STAGE_RUNNER_BYPASSED_MODEL_PREFERENCE_PATCHED"
+  ],
+  "real_model_benchmark": {
+    "status": "PASS",
+    "model": "qwen2.5:7b",
+    "count": 5,
+    "success_rate": 1,
+    "avg_ms": 1185,
+    "p50_ms": 1239,
+    "p95_ms": 1541,
+    "unique_hashes": 5
+  },
+  "real_model_polygon": {
+    "status": "PASS",
+    "model": "qwen2.5:7b",
+    "scenarios": [
+      "PROMPT_INJECTION",
+      "SECRET_REQUEST",
+      "AUTHORITY_ESCALATION"
+    ],
+    "audit_ok": true
+  },
+  "process_sandbox_evm": {
+    "status": "PASS",
+    "allowlisted_process": true,
+    "environment_scrubbing": true,
+    "cmd_denied": true,
+    "timeout_termination": true,
+    "temp_workdir": true,
+    "final_sandbox_certified": false
+  },
+  "network_isolation_evm": {
+    "status": "PASS",
+    "baseline_target": "api.github.com:443",
+    "venv_python": "G:\\1\\FATHER-Engineering-Competency-Lab\\.venv\\Scripts\\python.exe",
+    "base_python": "C:\\Users\\1\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+    "deny_error": "PermissionError",
+    "cleanup": true
+  },
+  "filesystem_acl_evm": {
+    "status": "PASS",
+    "workdir_write": true,
+    "deny_ace": true,
+    "outside_write_denied": true,
+    "error_type": "PermissionError",
+    "sentinel_unchanged": true,
+    "cleanup": true
+  },
+  "restricted_trustlevel_evm": {
+    "status": "BLOCKED_BY_OS_CAPABILITY",
+    "basic_user_trustlevel_available": false,
+    "counted_as_pass": false,
+    "counted_as_failure": false
+  },
+  "full_polygon_real_runtime": {
+    "status": "PASS",
+    "model": "qwen2.5:7b",
+    "scenario_count": 3,
+    "pass_count": 3,
+    "model_audit_ok": true,
+    "policy_denied": true,
+    "tool_blocked": true,
+    "sandbox_blocked": true,
+    "side_effects": 0
+  },
+  "final_evidence_audit": {
+    "status": "PASS",
+    "finding_count": 0,
+    "repository_gate": "PASS"
+  },
+  "reliability_gate_evm": {
+    "status": "PASS",
+    "regression_suite": "PASS",
+    "process_tree_limit": "PASS",
+    "process_tree_error_type": "OSError",
+    "memory_limit": "PASS",
+    "final_evidence_audit": "PASS",
+    "finding_count": 0
+  },
+  "sandbox_stress_evm": {
+    "status": "PASS",
+    "allowlisted_execution": "20/20",
+    "child_process_denial": "20/20",
+    "timeout_termination": "5/5"
+  },
+  "fault_recovery_stress_evm": {
+    "status": "PASS",
+    "transient_recovery": "100/100",
+    "security_denial_no_retry": "100/100",
+    "audit_tamper_detection": "50/50",
+    "evidence_tamper_detection": "100/100"
+  },
+  "release_precheck": {
+    "status": "IMPLEMENTED",
+    "exact_snapshot_required": true,
+    "human_acceptance_required": true,
+    "fail_closed": true
+  },
+  "human_acceptance": {
+    "status": "PASS",
+    "snapshot_sha256": "98fdf8d12647cade407705189c30fdc8036dcfec4a36267695aa4826b56b6496",
+    "commit_sha": "0b22cc7440b54dca45c8226cf4238b9b73d435fb",
+    "human_action": "ACCEPT_CURRENT_SNAPSHOT"
+  },
+  "installation_gate": {
+    "status": "PASS",
+    "snapshot_sha256": "98fdf8d12647cade407705189c30fdc8036dcfec4a36267695aa4826b56b6496"
+  },
+  "product_test_evm": {
+    "status": "PASS",
+    "product_pytest": "PASS",
+    "reliability_gate": "PASS",
+    "sandbox_stress": "PASS",
+    "fault_recovery": "PASS"
+  },
+  "pilot_test_evm": {
+    "status": "PASS",
+    "pilot_missions": "PASS",
+    "product_regression": "PASS",
+    "api_ci": "PASS",
+    "security_ci": "PASS"
+  },
+  "docker_native_containment_evm": {
+    "status": "PASS",
+    "profile": "DOCKER_CONTAINED_ONLY",
+    "network_none": true,
+    "read_only_rootfs": true,
+    "non_root": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "no_host_mounts": true,
+    "memory_limit": true,
+    "memory_max_bytes": 268435456
+  },
+  "approved_execution_profiles": [
+    "DOCKER_CONTAINED_ONLY"
+  ],
+  "windows_host_native_execution": "NOT_APPROVED",
+  "production_readiness_review": {
+    "status": "PASS",
+    "finding_count": 0,
+    "approved_execution_profile": "DOCKER_CONTAINED_ONLY",
+    "windows_host_native_execution": "NOT_APPROVED"
+  },
+  "final_production_release": {
+    "status": "PASS",
+    "decision": "APPROVED",
+    "approved_execution_profile": "DOCKER_CONTAINED_ONLY",
+    "windows_host_native_execution": "NOT_APPROVED",
+    "evidence_id": "EVID-FUA-FINAL-PRODUCTION-RELEASE-0024"
+  },
+  "flight_test_program": {
+    "stage": "STAGE_1_FLIGHT_TEST_PROGRAM_COMPLETE",
+    "maiden_flight": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-01-MAIDEN-0025",
+      "real_model": "qwen2.5:7b",
+      "real_model_sorties": 5,
+      "hostile_sorties": "3/3",
+      "side_effects": 0,
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "next": [
+      "1.02_ENDURANCE_SOAK",
+      "1.03_TURBULENCE_FAULT_INJECTION",
+      "1.04_SECURITY_COMBAT_SORTIES",
+      "1.05_RESOURCE_PERFORMANCE_ENVELOPE",
+      "1.06_FLIGHT_CERTIFICATION_REVIEW"
+    ],
+    "endurance": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-02-ENDURANCE-0026",
+      "integrated_missions": 100,
+      "real_model_sorties": 20,
+      "success_rate": 1,
+      "reliability": "PASS",
+      "security_boundary": "PASS",
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "turbulence": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-03-TURBULENCE-0027",
+      "transient_recovery": "PASS",
+      "hard_failure_escape": "PASS",
+      "fault_recovery_stress": "PASS",
+      "security_boundary": "PASS",
+      "side_effects": 0,
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "security_combat": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-04-SECURITY-COMBAT-0028",
+      "combat_scenarios": "6/6",
+      "full_polygon": "3/3",
+      "side_effects": 0,
+      "reliability": "PASS",
+      "containment": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "performance": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-05-PERFORMANCE-0029",
+      "integrated_missions": 200,
+      "real_model_sorties": 30,
+      "success_rate": 1,
+      "avg_latency_ms": 421,
+      "p50_latency_ms": 282,
+      "p95_latency_ms": 367,
+      "p99_latency_ms": 4930,
+      "max_latency_ms": 4930,
+      "cold_start_outlier_ms": 4930,
+      "windows_resources": "PASS",
+      "docker_resources": "PASS",
+      "reliability": "PASS",
+      "flight_recorder": "PASS"
+    },
+    "certification": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-FLIGHT-CERTIFICATE-0030",
+      "certified_profile": "DOCKER_CONTAINED_ONLY",
+      "windows_host_native_execution": "NOT_APPROVED",
+      "open_high_critical": 0
+    },
+    "complete": true
+  },
+  "kubernetes_stage": {
+    "stage": "2.03_DEPLOYMENT_SERVICE",
+    "status": "IN_PROGRESS",
+    "cluster_profile": "otus-k8s",
+    "driver": "docker",
+    "inherited_certified_profile": "DOCKER_CONTAINED_ONLY",
+    "destructive_reset_allowed": false,
+    "next": [
+      "2.02_FUA_IMAGE",
+      "2.03_DEPLOYMENT_SERVICE",
+      "2.04_CONFIG_SECRET",
+      "2.05_RESOURCE_SECURITYCONTEXT",
+      "2.06_PROBES_SELF_HEALING",
+      "2.07_NETWORKPOLICY",
+      "2.08_OBSERVABILITY",
+      "2.09_ROLLING_UPDATE_ROLLBACK",
+      "2.10_FAILURE_RECOVERY",
+      "2.11_KUBERNETES_SECURITY_POLYGON",
+      "2.12_KUBERNETES_CERTIFICATION"
+    ],
+    "windows_host_minikube": "BLOCKED_BY_HOST_TOOLING",
+    "execution_host": "WSL2_UBUNTU_22_04",
+    "container_runtime": "containerd",
+    "preflight": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-K8S-01-PREFLIGHT-0031",
+      "execution_host": "WSL2_UBUNTU_22_04",
+      "docker_engine": "29.9.2",
+      "minikube": "1.39.0",
+      "kubectl": "1.37.1",
+      "kubernetes": "1.37.0",
+      "node_ready": "PASS",
+      "kube_system": "PASS"
+    },
+    "image": {
+      "status": "PASS",
+      "evidence_id": "EVID-FUA-K8S-02-IMAGE-0032",
+      "tag": "father/fua-001:k8s-0.1",
+      "image_id": "sha256:5284548677c011010b1bc8190a1520c6613d2c2a8c19bd21f75d2bd493459480",
+      "runtime_user": "10001:10001",
+      "health": "PASS",
+      "minikube_load": "PASS"
+    }
+  }
+}

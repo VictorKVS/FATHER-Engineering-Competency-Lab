@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fua-001
+  namespace: father-system
+  labels:
+    app.kubernetes.io/name: fua-001
+    app.kubernetes.io/part-of: father
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fua-001
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fua-001
+        app.kubernetes.io/part-of: father
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: fua-001
+          image: father/fua-001:k8s-0.1
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 32Mi

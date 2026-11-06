@@ -1,0 +1,25 @@
+{
+  "product_id": "FTH-PRODUCT-HELLO-001",
+  "name": "HELLO_FACTORY",
+  "version": "0.1.0",
+  "chassis": "C1_LIGHT_AGENT",
+  "requirements": [
+    "accept a normalized request",
+    "route it through the standard runtime",
+    "enforce guardrails",
+    "produce audit and observability evidence"
+  ],
+  "blocks": [
+    "FTH-BLOCK-RUNTIME-001",
+    "FTH-BLOCK-ROUTER-001",
+    "FTH-BLOCK-MODEL-001",
+    "FTH-BLOCK-GUARD-001",
+    "FTH-BLOCK-AUDIT-001",
+    "FTH-BLOCK-OBS-001"
+  ],
+  "policies": {
+    "allowed_tools": [],
+    "budget_limit": 0,
+    "emergency_stop": true
+  }
+}
