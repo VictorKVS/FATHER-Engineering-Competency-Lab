@@ -42,31 +42,31 @@ def main():
     router=HybridRuntimeRouter(BASE)
 
     # 1. Routine text analyst must use economical 3B.
-    routine=router.plan({"role":"text_analyst","complexity":2,"text":"Кратко проанализируй архитектуру."},gpu_temp_c=70)
+    routine=router.plan({"role":"text_analyst","complexity":2,"text":"Кратко проанализируй архитектуру."},SPEC,gpu_temp_c=70)
     ok &= add(rows,"routine_text_routes_to_3b",
               routine.get("ok") and routine.get("brain_id")=="qwen-analysis-fast",
               routine)
 
     # 2. Complex text analyst must escalate to 7B.
-    complex_plan=router.plan({"role":"text_analyst","complexity":4,"text":"Проведи глубокий анализ архитектуры."},gpu_temp_c=70)
+    complex_plan=router.plan({"role":"text_analyst","complexity":4,"text":"Проведи глубокий анализ архитектуры."},SPEC,gpu_temp_c=70)
     ok &= add(rows,"complex_text_routes_to_7b",
               complex_plan.get("ok") and complex_plan.get("brain_id")=="qwen-analysis",
               complex_plan)
 
     # 3. Coding role remains conditional but routable.
-    coding=router.plan({"role":"coding","complexity":3,"text":"Напиши безопасную функцию Python."},gpu_temp_c=70)
+    coding=router.plan({"role":"coding","complexity":3,"text":"Напиши безопасную функцию Python."},SPEC,gpu_temp_c=70)
     ok &= add(rows,"coding_role_is_routable",
               coding.get("ok") and coding.get("brain_id")=="qwen-coder",
               coding)
 
     # 4. Edge-fast remains routable.
-    edge=router.plan({"role":"edge_fast","complexity":1,"text":"Сократи фразу."},gpu_temp_c=70)
+    edge=router.plan({"role":"edge_fast","complexity":1,"text":"Сократи фразу."},SPEC,gpu_temp_c=70)
     ok &= add(rows,"edge_routes_to_llama",
               edge.get("ok") and edge.get("brain_id")=="llama-small",
               edge)
 
     # 5. Thermal gate must block execution plans.
-    hot=router.plan({"role":"text_analyst","complexity":2,"text":"Анализ."},gpu_temp_c=91)
+    hot=router.plan({"role":"text_analyst","complexity":2,"text":"Анализ."},SPEC,gpu_temp_c=91)
     ok &= add(rows,"thermal_gate_blocks_hot_runtime",
               (not hot.get("ok")) and hot.get("reason")=="thermal_gate",
               hot)
