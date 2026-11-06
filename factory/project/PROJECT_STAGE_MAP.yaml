@@ -1,0 +1,70 @@
+project_stage_map:
+  id: NEXUS_PROJECT_STAGE_MAP
+  version: 1.0.0
+  numbering:
+    first: 0
+    last: 100
+    width: 3
+    immutable: true
+
+  ranges:
+    - range: "000-009"
+      lane: INTENT_AND_FACTORY_FOUNDATION
+      purpose: Idea, project initialization, product intent, requirements and initial design gates.
+    - range: "010-019"
+      lane: CORE_PLATFORM
+      purpose: Core project/platform architecture and contracts.
+    - range: "020-029"
+      lane: MODEL_TOOL_MEMORY_FABRIC
+      purpose: Models, tools, memory, reusable intelligence components.
+    - range: "030-039"
+      lane: AGENT_AND_WORKFLOW_RUNTIME
+      purpose: Agent runtime, orchestration and workflow execution.
+    - range: "040-049"
+      lane: DATA_KNOWLEDGE_EVIDENCE
+      purpose: Data, RAG, knowledge, provenance and evidence.
+    - range: "050-059"
+      lane: SECURITY_AND_ASSURANCE
+      purpose: Security, trust, policy, risk and compliance.
+    - range: "060-069"
+      lane: TEST_EVAL_OBSERVABILITY
+      purpose: Tests, evals, metrics, telemetry and observability.
+    - range: "070-079"
+      lane: RUNTIME_AND_DEVSECOPS
+      purpose: Infrastructure, CI/CD, deployment, supply chain and operations.
+    - range: "080-089"
+      lane: UI_AND_ENGINEERING_WORKSPACE
+      purpose: Engineering UI, editors, workspaces and operator interaction.
+    - range: "090-099"
+      lane: RELEASE_AND_POLYGON
+      purpose: Release candidate, Polygon, acceptance and release evidence.
+    - range: "100"
+      lane: PRODUCTION_PROVEN
+      purpose: Final production-proven gate.
+
+  canonical_named_stages:
+    "000": IDEA_INTAKE
+    "001": PROJECT_INITIALIZATION
+    "002": PRODUCT_INTENT
+    "003": BUSINESS_REQUIREMENTS
+    "004": BUSINESS_PROCESS
+    "005": SYSTEM_AND_DOMAIN
+    "006": SECURITY_AND_COMPLIANCE
+    "007": PROFESSION_AND_COMPETENCY
+    "008": KNOWLEDGE_REQUIREMENTS
+    "009": RESEARCH_PLAN
+    "100": PRODUCTION_PROVEN
+
+  default_stage:
+    state: LOCKED
+    applicability: UNASSESSED
+    gate: LOCKED
+    contract: FACTORY_STAGE_CONTRACT_V1
+
+  rules:
+    - every_project_contains_all_stage_numbers_000_to_100
+    - stage_number_is_stable_id
+    - stage_name_may_be_refined_without_renumbering
+    - stage_can_be_NOT_APPLICABLE_only_with_recorded_reason
+    - next_stage_cannot_start_until_previous_required_stage_is_APPROVED
+    - every_active_stage_uses_FACTORY_STAGE_CONTRACT_V1

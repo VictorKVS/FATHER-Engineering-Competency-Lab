@@ -1,0 +1,18 @@
+rag:
+  id: STORY_RAG_V1
+  version: 0.1.0
+  source:
+    - KNOWLEDGE_BASE.md
+  mode: LOCAL_SIMPLE_RETRIEVAL
+  chunking:
+    strategy: heading_sections
+    max_chunks: 4
+  query_fields:
+    - tone
+    - point_of_view
+    - tense
+    - characters
+    - unresolved_threads
+  rule:
+    - retrieved_knowledge_is_advisory
+    - story_source_facts_override_general_writing_guidance

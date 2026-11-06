@@ -1,0 +1,70 @@
+schema:
+  id: AGENT_CLONE_REQUEST_V1
+  version: 1.0.0
+
+  required:
+    - clone_id
+    - source_template
+    - target_identity
+    - overrides
+    - validation
+
+  fields:
+    clone_id: string
+
+    source_template:
+      agent_id: string
+      version: string
+      git_commit: string
+      required_gate: PASS
+
+    target_identity:
+      stable_id: string
+      public_name: string
+      code_name: string
+      purpose: string
+      domain: string
+
+    overrides:
+      role:
+        editable: true
+      prompt:
+        editable: true
+      rag:
+        editable: true
+      knowledge_base:
+        editable: true
+      tools:
+        editable: true
+      model_policy:
+        editable: true
+      training_program:
+        editable: true
+      eval_profile:
+        editable: true
+      acceptance:
+        editable: true
+
+    inherited:
+      package_structure: true
+      evidence_contract: true
+      handoff_contract: true
+      versioning: true
+      provenance: true
+      security_baseline: true
+      naming_registry_binding: true
+
+    validation:
+      required:
+        - schema_validation
+        - contract_tests
+        - intelligence_package_gate
+        - eval_suite
+        - ab_comparison_if_changed
+        - security_gate
+        - regression
+        - evidence_gate
+
+    output:
+      state: CLONED_DRAFT
+      new_agent_manifest: string

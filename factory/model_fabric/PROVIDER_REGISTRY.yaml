@@ -1,0 +1,35 @@
+provider_registry:
+  version: 0.1.0
+
+  providers:
+    - id: LOCAL_OLLAMA
+      type: LOCAL
+      protocol: OLLAMA_NATIVE_OR_CHAT_COMPLETIONS
+      default_base_url: http://127.0.0.1:11434
+
+    - id: LOCAL_LLAMA_CPP
+      type: LOCAL
+      protocol: CHAT_COMPLETIONS
+      default_base_url: http://127.0.0.1:8080
+
+    - id: LOCAL_LM_STUDIO
+      type: LOCAL
+      protocol: CHAT_COMPLETIONS
+      default_base_url: http://127.0.0.1:1234
+
+    - id: GIGACHAT_ONLINE
+      type: ONLINE
+      protocol: GIGACHAT_REST
+      base_url: https://api.giga.chat
+      auth:
+        secret_env: GIGACHAT_AUTH_KEY
+        token_scope_env: GIGACHAT_SCOPE
+      rules:
+        - secrets_never_committed
+        - access_token_is_runtime_only
+        - model_list_may_be_discovered_at_runtime
+
+  policy:
+    - provider_protocol_is_separate_from_provider_brand
+    - agent_contract_must_not_depend_on_provider
+    - provider_failure_may_trigger_policy_controlled_fallback

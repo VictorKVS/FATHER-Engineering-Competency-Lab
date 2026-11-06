@@ -1,0 +1,39 @@
+business_model:
+  id: ""
+  name: ""
+  version: 0.1.0
+  notation: BPMN_PLUS_FATHER
+  nodes:
+    - id: ""
+      type: actor|role|task|subprocess|system|agent|document|store|gateway|event|gate|metric|risk
+      name: ""
+      description: ""
+      icon: ""
+      position:
+        x: 0
+        y: 0
+      inputs: []
+      outputs: []
+      algorithm: []
+      metrics: []
+      tests: []
+      experiments: []
+      security: []
+  flows:
+    - id: ""
+      source: ""
+      target: ""
+      type: sequence|message|data|api|event|rework
+      name: ""
+      payload: ""
+      format: ""
+      volume: UNKNOWN
+      quality: UNKNOWN
+      sla: UNKNOWN
+      validation: UNKNOWN
+  metadata:
+    source_type: text|image|bpmn|svg|drawio|father_model
+    source_reference: ""
+    ambiguities: []
+    assumptions: []
+    confidence: UNKNOWN

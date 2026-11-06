@@ -1,0 +1,55 @@
+anti_hijack:
+  id: FATHER_ANTI_HIJACK
+  version: 0.1.0
+
+  threats:
+    - credential_theft
+    - repository_takeover
+    - malicious_dependency
+    - model_substitution
+    - prompt_or_rag_tampering
+    - configuration_tampering
+    - artifact_replacement
+    - unauthorized_agent_registration
+    - unauthorized_tool_binding
+    - insider_abuse
+
+  controls:
+    identity:
+      - mfa
+      - least_privilege
+      - short_lived_credentials_where_possible
+      - separate_human_and_service_accounts
+    repository:
+      - protected_branches
+      - required_reviews
+      - signed_or_verified_release_process
+      - immutable_release_tags
+    runtime:
+      - workload_identity
+      - secret_manager
+      - network_boundaries
+      - allowlisted_tools
+      - capability_tokens
+    artifacts:
+      - hash_verification
+      - sbom
+      - signed_manifest
+      - provenance_chain
+    agents:
+      - registry_identity
+      - versioned_prompt_rag_kb
+      - permission_profile
+      - tool_scope
+      - human_approval_for_high_impact_actions
+    recovery:
+      - offline_backup
+      - independent_admin_recovery
+      - key_rotation
+      - rollback_to_known_good_release
+
+  invariants:
+    - no_single_person_can_irreversibly_lock_the_platform
+    - no_agent_can_self_grant_privileges
+    - no_model_can_change_its_own_policy_or_identity
+    - no_release_is_trusted_without_integrity_verification

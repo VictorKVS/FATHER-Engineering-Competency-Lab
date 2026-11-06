@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Demo Autopilot 000–100</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./demo-autopilot.css">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body class="demo-auto-page">
+<div class="demo-shell">
+  <header class="demo-top">
+    <div>
+      <div class="eyebrow">NEXUS · DEMO AUTOPILOT</div>
+      <h1>Сквозной прогон фабрики 000 → 100</h1>
+      <p>Минимальная реализация каждого этапа. Все шлюзы — DEMO_AUTO_APPROVED. Production-valid = false.</p>
+    </div>
+    <div class="demo-actions">
+      <button class="ghost" onclick="location.href='./index.html'">← На главную</button>
+      <button class="primary" id="runAutopilot">ЗАПУСТИТЬ 000 → 100</button>
+    </div>
+  </header>
+
+  <section class="demo-summary">
+    <div><span>Проект</span><b>PRJ-STORY-001</b></div>
+    <div><span>Путь</span><b>G:\1\NEXUS-STORY-ENGINE</b></div>
+    <div><span>Режим</span><b>DEMO_AUTOPILOT</b></div>
+    <div><span>Статус</span><b id="runStatus">READY</b></div>
+    <div><span>Прогресс</span><b id="runProgress">0 / 101</b></div>
+  </section>
+
+  <main class="demo-main">
+    <section class="demo-card">
+      <div class="card-head">Линия 000–100</div>
+      <div id="stageGrid" class="demo-stage-grid"></div>
+    </section>
+
+    <section class="demo-card">
+      <div class="card-head">Текущий прогон</div>
+      <div id="runLog" class="run-log">Готов к запуску.</div>
+    </section>
+
+    <section class="demo-card">
+      <div class="card-head">Итог</div>
+      <div id="resultBox" class="result-box">
+        <span>После успешного прогона здесь появятся run_id, manifest, Git commit/push и STAGE 100.</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="./demo-autopilot.js"></script>
+<script src="./trace.js?v=20261030-1515"></script>
+<script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>

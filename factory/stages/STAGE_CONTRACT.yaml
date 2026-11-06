@@ -1,0 +1,50 @@
+stage_contract:
+  id: FACTORY_STAGE_CONTRACT_V1
+  version: 1.0.0
+
+  required_phases:
+    - INPUT
+    - INPUT_TEST
+    - SPECIALIST_WORK
+    - ARTIFACT_TEST
+    - EVIDENCE
+    - HUMAN_GATE
+
+  states:
+    - DRAFT
+    - INPUT_INVALID
+    - READY_FOR_WORK
+    - ANALYZED
+    - ARTIFACT_INVALID
+    - READY_FOR_GATE
+    - APPROVED
+    - HOLD
+    - REJECTED
+
+  gate_decisions:
+    - APPROVE
+    - HOLD
+    - REJECT
+
+  invariant:
+    - next_stage_requires_approved_previous_stage
+    - automatic_analysis_cannot_self_approve
+    - every_stage_has_input_test
+    - every_stage_has_artifact_test
+    - every_stage_writes_evidence
+    - every_human_decision_is_recorded
+    - rejected_or_hold_stage_cannot_advance
+    - artifact_versions_are_immutable_after_approval
+
+  evidence_required:
+    - stage_id
+    - run_id
+    - input_snapshot
+    - input_test_result
+    - produced_artifacts
+    - artifact_test_result
+    - specialist
+    - model_id_if_used
+    - human_gate
+    - timestamps
+    - git_commit_when_available

@@ -1,0 +1,67 @@
+version: 1
+schema: FATHER_MODEL_TOURNAMENT_STOPPING_V1
+title: Experiment Completion and Winner Decision
+
+minimum_evidence:
+  minimum_distinct_test_cases: 10
+  minimum_successful_runs_per_model: 10
+  stochastic_models:
+    repetitions_per_case_min: 3
+
+completion_conditions:
+  all_required_models_tested: true
+  all_required_metrics_collected: true
+  no_pending_runtime_failures: true
+  minimum_evidence_reached: true
+
+winner_rules:
+  hard_gate:
+    rule: any hard failure disqualifies model for that task profile
+  statistical_lead:
+    required: true
+    description: >
+      Winner must lead the runner-up by more than the configured practical
+      significance margin and the result must be stable across the evaluation set.
+  practical_significance:
+    default_score_margin: 0.03
+    task_override_allowed: true
+  stability:
+    min_win_rate: 0.70
+    max_rank_flip_rate: 0.20
+  pareto:
+    enabled: true
+    description: >
+      If no model dominates quality, latency and resources simultaneously,
+      retain the Pareto frontier instead of forcing a false single winner.
+
+terminal_states:
+  WINNER_CLEAR:
+    meaning: one model has passed gates and has stable practically meaningful lead
+  WINNER_BY_POLICY:
+    meaning: several models are statistically close; policy chooses by latency/cost/resource
+  PARETO_SET:
+    meaning: several models are optimal for different tradeoffs
+  TIE:
+    meaning: no meaningful difference detected
+  INSUFFICIENT_EVIDENCE:
+    meaning: more cases or repetitions required
+  ALL_FAILED:
+    meaning: every candidate failed one or more hard gates
+
+adaptive_testing:
+  enabled: true
+  rules:
+    - drop clearly dominated models after minimum evidence
+    - continue testing top contenders while rank remains unstable
+    - stop early only when winner_rules are satisfied
+    - add adversarial cases when top models are too close
+
+evidence_required:
+  - experiment_manifest
+  - frozen_inputs_hash
+  - model_fingerprints
+  - per_run_results
+  - metric_table
+  - hard_gate_report
+  - ranking_history
+  - final_decision

@@ -1,0 +1,61 @@
+schema:
+  id: RESEARCH_REQUEST_V1
+  owner: KNOWLEDGE_REASONING_ENGINEER
+  executor: OSINT_AGENT
+  required:
+    - request_id
+    - target_agent
+    - origin
+    - business_context
+    - knowledge_gap
+    - questions
+    - source_requirements
+    - evidence_requirements
+    - downstream_targets
+    - acceptance
+  fields:
+    request_id: string
+    target_agent: string
+    origin:
+      idea_id: string
+      requirement_ids: list
+      business_process_ids: list
+      decision_ids: list
+      competency_ids: list
+      risk_ids: list
+    business_context:
+      purpose: string
+      user_or_customer: string
+      value_expected: string
+      process_step: string
+      decision_supported: string
+    knowledge_gap:
+      description: string
+      why_it_matters: string
+      criticality: [LOW, MEDIUM, HIGH, CRITICAL]
+    questions:
+      type: list
+      item:
+        question_id: string
+        question: string
+        rationale: string
+        expected_evidence: list
+        priority: [LOW, MEDIUM, HIGH, CRITICAL]
+    source_requirements:
+      primary_sources_preferred: true
+      authority_levels: list
+      freshness_required: boolean
+      jurisdiction: list
+      languages: list
+    evidence_requirements:
+      provenance: true
+      corroboration: true
+      counter_evidence: true
+      confidence: true
+      timestamps: true
+    downstream_targets:
+      allowed: [PROMPT, RAG, KB, TOOL, POLICY, TRAINING, EVAL, ACCEPTANCE]
+    acceptance:
+      sufficiency_criteria: list
+      minimum_source_quality: string
+      unresolved_gap_policy: string

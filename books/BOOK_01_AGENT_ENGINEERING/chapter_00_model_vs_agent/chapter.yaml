@@ -1,0 +1,42 @@
+version: 1
+schema: FATHER_BOOK_CHAPTER_V1
+book_id: BOOK-01
+chapter_id: CH00
+slug: model-vs-agent
+title: Model is not Agent
+status: ACTIVE
+learning_goal: distinguish model capabilities from harness responsibilities
+product_target: AGENT_V1
+
+inputs:
+  - available_llm
+  - task_set
+
+artifacts:
+  - model_provider_contract
+  - minimal_agent_loop
+  - experiment_manifest
+  - trace
+  - evidence
+
+experiment:
+  baseline: DIRECT_LLM_CALL
+  candidate: MINIMAL_AGENT_HARNESS
+  invariant:
+    - model
+    - task
+    - sampling_config
+  metrics:
+    - task_success
+    - tool_use_correctness
+    - recovery
+    - steps
+    - latency
+    - token_usage
+
+gate:
+  state: HOLD
+  pass_requires:
+    - executable_run
+    - measured_results
+    - evidence_saved

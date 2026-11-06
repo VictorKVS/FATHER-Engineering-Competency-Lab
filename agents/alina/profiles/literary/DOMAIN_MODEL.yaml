@@ -1,0 +1,30 @@
+domain_model:
+  version: 0.1.0
+  entities:
+    CharacterCard:
+      key_fields: [character_id, name]
+      state_fields: [goals, knowledge, emotional_state, injuries, commitments]
+    LocationCard:
+      key_fields: [location_id, name]
+      state_fields: [description, constraints]
+    SceneCard:
+      key_fields: [scene_id]
+      state_fields: [location_id, participants, chronology, pov, tense]
+    StoryEvent:
+      key_fields: [event_id]
+      state_fields: [scene_id, actors, action, consequences]
+    RelationshipState:
+      key_fields: [subject_id, object_id, valid_from]
+      state_fields: [relation_type, strength, evidence_refs]
+    CanonState:
+      key_fields: [fact_id]
+      state_fields: [claim, status, source_ref, valid_from, valid_to]
+    ResearchProposal:
+      key_fields: [proposal_id]
+      state_fields: [proposal, rationale, confidence, source_refs]
+
+  invariants:
+    - canon_and_proposal_are_separate
+    - every_canon_fact_has_provenance
+    - relationship_changes_are_time_scoped
+    - character_knowledge_must_not_exceed_observed_or_inferred_scope

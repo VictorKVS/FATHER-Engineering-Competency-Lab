@@ -1,0 +1,16 @@
+eval:
+  id: ALINA_LITERARY_CONTINUITY_V02
+  hard_fail:
+    - output_contract_invalid
+    - explicit_source_fact_contradicted
+    - established_character_renamed
+    - canon_silently_overwritten
+    - rewrite_instead_of_continuation
+  score:
+    continuity: 30
+    character_consistency: 20
+    style_and_pov_match: 20
+    causal_coherence: 15
+    instruction_following: 10
+    forward_motion: 5
+  pass_threshold: 80

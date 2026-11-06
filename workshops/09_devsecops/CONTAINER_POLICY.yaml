@@ -1,0 +1,33 @@
+policy:
+  id: FATHER-CONTAINER-POLICY
+  version: 0.1.0
+  owner: TIMA
+  principle: minimum_sufficient_runtime
+  required_checks:
+    - build_success
+    - runtime_tests
+    - non_root_or_exception
+    - no_embedded_secrets
+    - sbom_generated
+    - vulnerability_scan
+    - base_image_provenance
+    - image_size_measured
+    - startup_time_measured
+    - build_only_dependencies_removed
+    - exposed_ports_justified
+  optimization:
+    preferred_patterns:
+      - multi_stage_build
+      - slim_runtime
+      - distroless_when_compatible
+      - alpine_when_compatible
+      - scratch_when_possible
+    forbidden_rule:
+      - fixed_global_size_limit
+  outputs:
+    - image_digest
+    - sbom
+    - vulnerability_report
+    - runtime_test_evidence
+    - benchmark_report
+    - gate_status

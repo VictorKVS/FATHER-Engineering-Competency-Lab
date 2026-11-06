@@ -1,0 +1,34 @@
+mvp:
+  id: MVP-1-ONE-AGENT-ONE-MODEL
+  status: IN_PROGRESS
+  agent: AG-001
+  profile: ALINA_LITERARY
+  capability: STORY_CONTINUATION
+  model:
+    id: MDL-QWEN25-14B-1M-Q4
+    file: Qwen2.5-14B-Instruct-1M-Q4_K_M.gguf
+    provider: LOCAL_LLAMA_CPP
+  scope:
+    - one_agent
+    - one_model
+    - one_prompt
+    - one_rag
+    - one_knowledge_base
+    - one_input_contract
+    - one_output_contract
+    - one_test
+    - one_evidence_record
+  hard_gate:
+    - model_server_ready
+    - inference_ready
+    - output_json_parseable
+    - output_contract_valid
+    - continuity_hard_fails_zero
+    - evidence_saved
+  forbidden_until_pass:
+    - second_agent
+    - model_abn
+    - external_tools
+    - graph_store
+    - vector_database
+    - multi_agent_workflow

@@ -1,0 +1,92 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://nexus.local/schemas/factory-evidence-v1.json"
+title: NEXUS Factory Evidence V1
+type: object
+required:
+  - schema
+  - evidence_id
+  - project_id
+  - stage_id
+  - run_id
+  - evidence_class
+  - input_test_result
+  - artifact_test_result
+  - produced_artifacts
+  - gate
+  - provenance
+  - timestamps
+properties:
+  schema:
+    const: NEXUS_FACTORY_EVIDENCE_V1
+  evidence_id:
+    type: string
+    minLength: 1
+  project_id:
+    type: string
+    minLength: 1
+  stage_id:
+    type: string
+    pattern: "^STAGE-[0-9]{3}$"
+  run_id:
+    type: string
+    minLength: 1
+  evidence_class:
+    enum: [DEMO_ONLY, ENGINEERING, RELEASE, PRODUCTION]
+  input_test_result:
+    type: object
+    required: [status]
+    properties:
+      status:
+        enum: [PASS, HOLD, FAIL]
+  artifact_test_result:
+    type: object
+    required: [status]
+    properties:
+      status:
+        enum: [PASS, HOLD, FAIL]
+  produced_artifacts:
+    type: array
+    items:
+      type: object
+      required: [path]
+      properties:
+        path:
+          type: string
+        sha256:
+          type: [string, "null"]
+        media_type:
+          type: [string, "null"]
+  gate:
+    type: object
+    required: [decision, production_valid]
+    properties:
+      decision:
+        enum: [APPROVE, HOLD, REJECT, DEMO_AUTO_APPROVED]
+      production_valid:
+        type: boolean
+      actor:
+        type: [string, "null"]
+  provenance:
+    type: object
+    required: [repository, commit_sha, workflow_run]
+    properties:
+      repository:
+        type: [string, "null"]
+      commit_sha:
+        type: [string, "null"]
+      workflow_run:
+        type: [string, "null"]
+      builder:
+        type: [string, "null"]
+      sbom:
+        type: [string, "null"]
+      attestation:
+        type: [string, "null"]
+  timestamps:
+    type: object
+    required: [started_at, completed_at]
+    properties:
+      started_at:
+        type: string
+      completed_at:
+        type: string

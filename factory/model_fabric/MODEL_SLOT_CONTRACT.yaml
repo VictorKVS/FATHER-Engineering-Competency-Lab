@@ -1,0 +1,49 @@
+model_slot:
+  schema: father.model_slot.v1
+
+  identity:
+    slot_id: ""
+    agent_id: ""
+    stage_id: ""
+
+  model:
+    provider: LOCAL|OPENAI|OTHER
+    family: ""
+    model_id: ""
+    version: ""
+    quantization: ""
+    runtime: ""
+    endpoint: ""
+
+  capabilities:
+    required:
+      - structured_output
+    optional:
+      - tool_calling
+      - vision
+      - long_context
+      - embeddings
+      - reasoning
+
+  parameters:
+    temperature: 0.0
+    top_p: 1.0
+    seed: 42
+    max_output_tokens: 4096
+    context_tokens: 8192
+
+  limits:
+    max_vram_mb: null
+    max_ram_mb: null
+    max_latency_ms: null
+    max_cost_per_run: null
+
+  fallback:
+    enabled: true
+    candidates: []
+
+  rules:
+    - agent_logic_must_not_depend_on_model_name
+    - model_change_must_not_change_input_output_contract
+    - raw_output_is_always_preserved
+    - exact_model_configuration_is_recorded_for_every_run

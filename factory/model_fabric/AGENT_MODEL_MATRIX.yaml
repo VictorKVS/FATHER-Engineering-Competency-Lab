@@ -1,0 +1,67 @@
+agent_model_matrix:
+  principle: model_is_replaceable_per_agent_and_stage
+
+  agents:
+    - agent: AG-000
+      name: PRODUCT_MANAGER
+      slots:
+        - discovery_reasoning
+        - economics_reasoning
+        - report_generation
+
+    - agent: AG-001
+      name: ALINA
+      slots:
+        - analytical_reasoning
+        - evidence_review
+        - process_design
+        - report_generation
+
+    - agent: AG-010
+      name: OSINT_EXPERT
+      slots:
+        - search_planning
+        - evidence_normalization
+        - evidence_quality_review
+
+    - agent: AG-005
+      name: PIONEER
+      slots:
+        - architecture_reasoning
+        - topology_review
+        - gate1_package_generation
+
+    - agent: AG-002
+      name: SECURITY_SPECIALIST
+      slots:
+        - applicability_reasoning
+        - threat_risk_analysis
+        - control_mapping
+
+    - agent: AG-004
+      name: FATHER_CODEX
+      slots:
+        - code_planning
+        - code_generation
+        - code_review
+
+    - agent: AG-006
+      name: TEST_ENGINEER
+      slots:
+        - test_design
+        - oracle_generation
+        - regression_analysis
+
+    - agent: AG-003
+      name: TIMA
+      slots:
+        - infrastructure_analysis
+        - devsecops_review
+        - deployment_planning
+
+  routing_rule:
+    - one_agent_may_use_multiple_models_by_slot
+    - one_model_may_serve_multiple_agents
+    - deterministic_tools_take_priority_when_they_can_prove_the_result
+    - local_model_is_default_when_it_meets_gate
+    - stronger_model_is_escalation_not_default

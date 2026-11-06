@@ -1,0 +1,168 @@
+run:
+  run_id: ALINA-T001-REF-001
+  case_id: ALINA-T001
+  run_type: REFERENCE
+  agent: AG-001
+  prompt_version: PROMPT_FACTORY_v0.1
+  rag_version: ALINA_FACTORY_RAG_v0.1
+  input_contract: agents/alina/INPUT_CONTRACT.yaml
+  output_contract: agents/alina/OUTPUT_CONTRACT.yaml
+
+  work_steps:
+    - step_id: S1
+      title: Goal and questions
+      status: DONE
+      result: >
+        Objective and three competing hypotheses accepted as the analytical frame.
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+    - step_id: S2
+      title: Evidence review
+      status: DONE
+      result: >
+        Six evidence items reviewed; no contradictory or unverified items were supplied.
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+    - step_id: S3
+      title: Alternative hypothesis review
+      status: DONE
+      result: >
+        H1 transport loss and H2 storage loss are contradicted by direct observations.
+        H3 deduplication semantics error is supported by downstream count, dedup log,
+        distinct source identities and the DEV provenance invariant.
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+    - step_id: S4
+      title: Claims
+      status: DONE
+      result_refs: [CLM-001,CLM-002,CLM-003,CLM-004]
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+    - step_id: S5
+      title: Sufficiency decision
+      status: DONE
+      result: >
+        GOOD sufficiency accepted for the bounded synthetic question. No live transport
+        test is required to establish where the synthetic loss occurred.
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+    - step_id: S6
+      title: Conclusion and handoff
+      status: DONE
+      result_refs: [CON-001,DEC-001]
+      evidence_refs: [E1,E2,E3,E4,E5,E6]
+
+  hypotheses:
+    - hypothesis_id: H1
+      name: transport_loss
+      status: REJECTED
+      evidence_refs: [E1]
+      reason: Transport recorded all 100 observations.
+
+    - hypothesis_id: H2
+      name: storage_loss
+      status: REJECTED
+      evidence_refs: [E2]
+      reason: Raw storage contains all 100 observations.
+
+    - hypothesis_id: H3
+      name: deduplication_semantics_error
+      status: SUPPORTED
+      evidence_refs: [E3,E4,E5,E6]
+      reason: >
+        Material output drops to 70 exactly where the deduplication log collapses
+        30 equal-payload observations that retain distinct provenance identities.
+
+  claims:
+    - claim_id: CLM-001
+      statement: The synthetic transport delivered all 100 observations to the pipeline boundary.
+      evidence_refs: [E1]
+      counter_evidence_refs: []
+      limitations: [synthetic_case]
+      status: ACCEPTED
+
+    - claim_id: CLM-002
+      statement: The raw store preserved all 100 observations.
+      evidence_refs: [E2]
+      counter_evidence_refs: []
+      limitations: [synthetic_case]
+      status: ACCEPTED
+
+    - claim_id: CLM-003
+      statement: The reduction from 100 raw observations to 70 materials occurred during or after deduplication rather than during transport or raw persistence.
+      evidence_refs: [E1,E2,E3,E4]
+      counter_evidence_refs: []
+      limitations:
+        - evidence localizes the loss to the materialization/deduplication boundary
+        - it does not by itself identify the exact code change required
+      status: ACCEPTED
+
+    - claim_id: CLM-004
+      statement: The 30 collapsed records represent independent observations despite equal text payloads because they have distinct source channel IDs and message IDs.
+      evidence_refs: [E5,E6]
+      counter_evidence_refs: []
+      limitations: [synthetic_case]
+      status: ACCEPTED
+
+  contradictions: []
+
+  sufficiency:
+    requested: GOOD
+    achieved: GOOD
+    accepted: true
+    reason: >
+      The evidence directly excludes transport and raw-storage loss and positively
+      identifies the deduplication decision that removed 30 provenance-distinct observations.
+
+  research_gaps: []
+
+  conclusions:
+    - conclusion_id: CON-001
+      statement: >
+        Within this synthetic DEV case, the missing 30 observations are best explained
+        by incorrect deduplication semantics that treated equal payload as equal observation.
+        The evidence does not support transport loss or raw-storage loss.
+      supporting_claims: [CLM-001,CLM-002,CLM-003,CLM-004]
+      limitations:
+        - synthetic case
+        - conclusion identifies the failing semantic boundary, not the implementation patch
+      sufficiency: GOOD
+      decision_record_ref: DEC-001
+
+  decisions:
+    - decision_id: DEC-001
+      decision: HANDOFF_FOR_ENGINEERING_REMEDIATION
+      reason: >
+        Analytical diagnosis is sufficient; implementation remediation belongs to engineering,
+        not ALINA.
+      input_refs: [E1,E2,E3,E4,E5,E6]
+      output_refs: [CLM-001,CLM-002,CLM-003,CLM-004,CON-001]
+      uncertainties:
+        - exact implementation change not determined
+      alternatives_considered:
+        - additional OSINT research
+        - live transport retest
+      algorithm_version: ALINA_FACTORY_v0.1
+      knowledge_version: ALINA_FACTORY_RAG_v0.1
+
+  handoff:
+    target_agent: AG-004
+    reason: >
+      Review deduplication implementation against the provenance-preservation invariant.
+    artifact_refs:
+      - CON-001
+      - CLM-003
+      - CLM-004
+      - E4
+      - E5
+      - E6
+
+  evidence_index:
+    - E1
+    - E2
+    - E3
+    - E4
+    - E5
+    - E6
+
+  run_status: DONE

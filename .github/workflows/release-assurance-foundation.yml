@@ -1,0 +1,33 @@
+name: Release assurance foundation
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  release-foundation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Record source provenance inputs
+        run: |
+          mkdir -p evidence/github
+          cat > evidence/github/source-context.json <<EOF
+          {
+            "repository": "${GITHUB_REPOSITORY}",
+            "commit_sha": "${GITHUB_SHA}",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "workflow_run_id": "${GITHUB_RUN_ID}",
+            "workflow_run_attempt": "${GITHUB_RUN_ATTEMPT}",
+            "ref": "${GITHUB_REF}"
+          }
+          EOF
+
+      - name: Foundation notice
+        run: |
+          echo "SBOM, artifact attestations and SLSA provenance are intentionally not marked PASS yet."
+          echo "This workflow only records the GitHub source/build context."

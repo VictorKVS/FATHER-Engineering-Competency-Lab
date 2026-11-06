@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Студия архитектуры знаний</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./knowledge.css">
+  <link rel="stylesheet" href="./i18n.css?v=20261030-1300">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body class="knowledge-page">
+<div class="knowledge-shell">
+  <aside class="knowledge-nav">
+    <a href="./alina.html?block=kb" class="back-link">← Инженер знаний и рассуждений</a>
+    <div class="knowledge-brand">
+      <div class="knowledge-mark">K</div>
+      <div><strong>Архитектура знаний</strong><small>ИНЖЕНЕРИЯ ИНТЕЛЛЕКТА</small></div>
+    </div>
+
+    <div class="section-label">СЛОИ ЗНАНИЙ</div>
+    <button class="layer-btn active" data-layer="common_foundation">01 · Общая основа</button>
+    <button class="layer-btn" data-layer="corporate_common">02 · Корпоративная база</button>
+    <button class="layer-btn" data-layer="profession_core">03 · Ядро профессии</button>
+    <button class="layer-btn" data-layer="specialist_domain">04 · Специализированная область</button>
+    <button class="layer-btn" data-layer="research_acquired">05 · Получено через OSINT</button>
+    <button class="layer-btn" data-layer="operational_dynamic">06 · Динамические / RAG</button>
+
+    <div class="knowledge-nav-foot">
+      <div class="health"><span></span>СТУДИЯ ЗНАНИЙ РАБОТАЕТ</div>
+      <small>Внутренний владелец: ALINA</small>
+    </div>
+  </aside>
+
+  <main class="knowledge-main">
+    <header class="knowledge-top">
+      <div>
+        <div class="eyebrow">ИНЖЕНЕРИЯ ЗНАНИЙ · ИНТЕЛЛЕКТ АГЕНТА</div>
+        <h1>Архитектура знаний Studio</h1>
+        <p>Проектирование, происхождение, структура и превращение знаний в проверяемые навыки агента</p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="analyzeKnowledge">Провести инженерный анализ</button>
+        <button class="ghost" id="buildGraph">Перестроить граф</button>
+        <button class="primary" id="saveKbProposal">Сохранить предложение по знаниям</button>
+      </div>
+    </header>
+
+    <section class="knowledge-status">
+      <div><span>Агент</span><b>AG-001</b></div>
+      <div><span>Слот модели</span><b>ALINA_MODEL_SLOT</b></div>
+      <div><span>Слой</span><b id="activeLayerLabel">Общая основа</b></div>
+      <div><span>Узлы</span><b id="nodeCount">6</b></div>
+      <div><span>Шлюз</span><b class="hold" id="knowledgeGate">HOLD</b></div>
+    </section>
+
+    <section class="knowledge-grid">
+      <aside class="knowledge-left">
+        <div class="studio-card">
+          <div class="card-head">Состав источников знаний</div>
+          <div class="source-stack">
+            <button data-source="early_roles">Ранние роли</button>
+            <button data-source="corporate">Корпоративные документы</button>
+            <button data-source="standards">Профессиональные стандарты</button>
+            <button data-source="regulation">Первичная нормативка</button>
+            <button data-source="training">Учебные материалы</button>
+            <button data-source="osint">Доказательства OSINT</button>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Конвейер загрузки знаний</div>
+          <div class="pipeline">
+            <span>Классификация</span><i>→</i>
+            <span>Нормализация</span><i>→</i>
+            <span>Дедупликация</span><i>→</i>
+            <span>Происхождение</span><i>→</i>
+            <span>Противоречия</span><i>→</i>
+            <span>Слой</span><i>→</i>
+            <span>Граф</span><i>→</i>
+            <span>Компетенция</span><i>→</i>
+            <span>Тесты</span>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Метрики знаний</div>
+          <div class="metric-list">
+            <span>Покрытие источниками <b>82%</b></span>
+            <span>Происхождение <b>91%</b></span>
+            <span>Компетенция coverage <b>74%</b></span>
+            <span>Устаревшие знания <b>4%</b></span>
+            <span>Противоречия <b>3</b></span>
+            <span>Осиротевшие узлы <b>7</b></span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="knowledge-center">
+        <div class="knowledge-toolbar">
+          <button class="studio-tab active" data-view="catalog">Каталог знаний</button>
+          <button class="studio-tab" data-view="graph">Граф</button>
+          <button class="studio-tab" data-view="skills">Формирование навыка</button>
+          <button class="studio-tab" data-view="ab">A/B и качество</button>
+        </div>
+        <div id="knowledgeStage" class="knowledge-stage"></div>
+      </section>
+
+      <aside class="knowledge-right">
+        <div class="studio-card">
+          <div class="card-head">Выбранный узел знания</div>
+          <div id="nodeInspector"></div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Привязка навыка</div>
+          <div id="skillBinding" class="skill-binding">
+            <p>Выберите узел знания.</p>
+          </div>
+        </div>
+
+        <div class="studio-card">
+          <div class="card-head">Пробелы для OSINT-исследования</div>
+          <div class="gap-list">
+            <button>RQ-018 · missing case law</button>
+            <button>RQ-024 · tool practice</button>
+            <button>RQ-031 · current market data</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./knowledge.js"></script>
+  <script src="./i18n.js?v=20261030-1300"></script>
+  <script src="./trace.js?v=20261030-1515"></script>
+  <script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>

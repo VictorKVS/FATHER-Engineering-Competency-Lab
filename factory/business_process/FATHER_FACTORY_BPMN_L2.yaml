@@ -1,0 +1,174 @@
+process:
+  id: FATHER-FACTORY-BPMN-L2
+  version: 0.1.0
+  pool: FATHER_FACTORY
+  workshops:
+    W00:
+      name: Intake and Formalization
+      steps:
+        - receive_request
+        - assign_product_id
+        - identify_customer_and_goal
+        - identify_constraints
+        - identify_ambiguities
+        - produce_customer_intent_package
+      decision:
+        unresolved_critical_ambiguity: HUMAN_GATE
+      output: customer_intent_package
+    W01:
+      name: Business Analysis
+      steps:
+        - build_context
+        - build_sipoc
+        - build_process_l0
+        - build_process_l1
+        - define_roles
+        - define_activities
+        - define_information_flows
+        - define_artifacts
+        - define_business_rules
+        - define_quality
+        - define_exceptions
+        - define_acceptance
+        - run_business_quality_gate
+      output: business_design_package
+    W02:
+      name: System Analysis
+      steps:
+        - derive_functional_requirements
+        - derive_nonfunctional_requirements
+        - define_system_context
+        - define_interfaces
+        - define_events
+        - define_data_contracts
+        - define_error_cases
+        - run_system_gate
+      output: system_design_package
+    W03:
+      name: Architecture
+      steps:
+        - select_patterns
+        - define_components
+        - define_responsibility_map
+        - define_topology
+        - define_runtime_boundaries
+        - define_deployment_assumptions
+        - run_architecture_gate
+      output: architecture_package
+    W04:
+      name: Data and Knowledge
+      steps:
+        - define_data_model
+        - define_sources
+        - define_knowledge_model
+        - define_rag
+        - define_graph
+        - define_provenance
+        - define_lifecycle
+      output: data_knowledge_package
+    W05:
+      name: AI and LLM Design
+      steps:
+        - define_ai_tasks
+        - define_model_roles
+        - define_model_contracts
+        - define_prompt_contracts
+        - define_context_strategy
+        - define_eval_strategy
+        - define_fallbacks
+      output: ai_configuration_package
+    W06:
+      name: Security
+      steps:
+        - define_trust_boundaries
+        - identify_assets
+        - identify_threats
+        - define_controls
+        - define_policy
+        - define_security_tests
+        - run_security_gate
+      output: security_package
+    W07:
+      name: Development and Assembly
+      steps:
+        - find_reusable_components
+        - select_reuse_wrap_adapt_build
+        - implement_missing_components
+        - integrate
+        - generate_build_manifest
+        - run_build_gate
+      output: build_artifact
+    W08:
+      name: QA and Test
+      steps:
+        - unit_tests
+        - integration_tests
+        - functional_tests
+        - ai_evals
+        - regression_tests
+        - evidence_check
+        - run_quality_gate
+      output: test_evidence
+    W09:
+      name: DevSecOps
+      steps:
+        - build_pipeline
+        - security_scans
+        - sbom
+        - package
+        - observability
+        - deployment_candidate
+      output: deployable_candidate
+    W10:
+      name: Optimization
+      steps:
+        - generate_candidates
+        - run_ab
+        - compare_metrics
+        - select_best_known_configuration
+        - regression_recheck
+      output: best_known_configuration
+    W11:
+      name: RC Freeze
+      steps:
+        - freeze_config
+        - freeze_model_versions
+        - freeze_hashes
+        - freeze_tests
+        - produce_rc_manifest
+      output: release_candidate
+    W12:
+      name: Polygon
+      steps:
+        - adversarial
+        - failure
+        - load
+        - chaos
+        - recovery
+        - security_exercises
+        - verdict
+      output: polygon_report
+    W13:
+      name: Acceptance
+      steps:
+        - review_release_package
+        - review_evidence
+        - accept_or_reject
+      output: acceptance_decision
+    W14:
+      name: Release
+      steps:
+        - package_product
+        - deploy_or_deliver
+        - commercial_handoff
+        - support_handoff
+      output: release_package
+    W15:
+      name: Production Experience
+      steps:
+        - collect_telemetry
+        - collect_defects
+        - collect_customer_feedback
+        - update_experience_store
+        - propose_factory_improvements
+      output: experience_events

@@ -1,0 +1,39 @@
+agent_package:
+  package_id: PKG-AG-STORY-001
+  agent_id: AG-STORY-001
+  package_standard: FATHER_AGENT_PACKAGE_V1
+  build_state: AS_BUILT_DRAFT
+  baseline_target: AS_BUILT_BASELINE
+
+  implementation:
+    agent: factory/agents/AG-STORY-001.demo.yaml
+    runtime: father_runtime/agent_executor.py
+    construct: father_runtime/agent_construct.py
+    adapters: father_runtime/adapters.py
+
+  intelligence:
+    role: ROLE-STORY-001
+    prompt: PROMPT-STORY-001
+    rag: RAG-STORY-001
+    knowledge_snapshot: KB-STORY-001
+
+  contracts:
+    input: factory/agents/story/STORY_INPUT_V1.yaml
+    output: factory/agents/story/STORY_OUTPUT_V1.yaml
+
+  security:
+    baseline: factory/agents/AGENT_SECURITY_BASELINE_V1.yaml
+    permissions: factory/agents/story/STORY_PERMISSIONS_V1.yaml
+    runtime_policy: factory/agents/story/STORY_RUNTIME_POLICY_V1.yaml
+    threat_model: factory/agents/AGENT_THREAT_MODEL_V1.md
+
+  evidence:
+    class: ENGINEERING
+    required: true
+
+  unresolved_before_as_built_pass:
+    - real_prompt_artifact_binding
+    - real_rag_binding
+    - real_knowledge_snapshot_binding
+    - real_model_adapter_run
+    - security_test_evidence

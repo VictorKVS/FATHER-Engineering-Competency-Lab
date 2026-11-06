@@ -1,0 +1,39 @@
+schema:
+  id: ENGINEERING_ROLE_HANDOFF_V1
+  version: 1.0.0
+
+  required:
+    - run_id
+    - from_role
+    - to_role
+    - artifacts
+    - decisions
+    - assumptions
+    - risks
+    - unresolved_questions
+    - evidence
+    - gate
+
+  fields:
+    run_id: string
+    from_role:
+      stable_id: string
+      artifact_versions: list
+    to_role:
+      stable_id: string
+    artifacts: list
+    decisions: list
+    assumptions: list
+    risks: list
+    unresolved_questions: list
+    evidence: list
+    metrics: map
+    gate:
+      status: [ACCEPT, HOLD, REJECT]
+      reason: string
+
+  rules:
+    - receiver_must_acknowledge
+    - unresolved_critical_question_blocks_accept
+    - assumptions_must_be_explicit
+    - evidence_refs_must_be_versioned

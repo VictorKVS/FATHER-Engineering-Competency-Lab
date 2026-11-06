@@ -1,0 +1,28 @@
+handoff:
+  id: PRODUCT_MANAGER_TO_ALINA
+  from: AG-000
+  to: AG-001
+  artifact: PRODUCT_DISCOVERY_PACKAGE
+
+  required:
+    - customer_intent
+    - stakeholders
+    - user_segments
+    - problem_statements
+    - facts
+    - hypotheses
+    - assumptions
+    - unknowns
+    - research_results
+    - value_proposition
+    - success_metrics
+    - scope
+    - non_scope
+    - product_risks
+    - evidence
+    - gate_status
+
+  acceptance:
+    gate_status: PASS
+    critical_unknowns: 0_or_explicitly_accepted
+    evidence_traceability: required

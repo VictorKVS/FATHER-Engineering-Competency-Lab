@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUS — Книги / Research Lab</title>
+<link rel="stylesheet" href="./styles.css?v=20261031">
+<link rel="stylesheet" href="./books.css?v=20261031">
+</head>
+<body>
+<div class="books-shell">
+<aside class="books-nav">
+<div class="brand"><div class="brand-mark">N</div><div><strong>NEXUS</strong><small>RESEARCH LAB</small></div></div>
+<a class="books-back" href="./index.html">← Конструктор агентов</a>
+<div class="books-nav-title">ИНЖЕНЕРНЫЕ КНИГИ</div><div id="bookNav"></div>
+<div class="books-nav-foot">Источник → Алгоритм → Код → Эксперимент → Метрики → Компонент</div>
+</aside>
+<main class="books-main">
+<header class="books-top"><div><div class="eyebrow">FATHER · RESEARCH-TO-ENGINEERING</div><h1>Инженерные книги</h1><p>Русские инженерные разборы источников с алгоритмами, микросервисами, экспериментами и доказательствами.</p></div><div class="books-kpis" id="catalogKpis"></div></header>
+<section class="pipeline-card"><span>SOURCE</span><i>→</i><span>CLAIM</span><i>→</i><span>ALGORITHM</span><i>→</i><span>IMPLEMENTATION</span><i>→</i><span>EXPERIMENT</span><i>→</i><span>METRICS</span><i>→</i><span>VERIFIED COMPONENT</span></section>
+<section class="books-grid" id="bookCards"></section>
+<section class="chapter-workbench"><div class="section-head"><div><span>АКТИВНАЯ КНИГА</span><h2 id="activeBookTitle">FATHER Agent Engineering</h2></div><div class="gate hold" id="bookGate">IN PROGRESS</div></div><div id="chapters"></div></section>
+<section class="metrics-lab"><div class="section-head"><div><span>МЕТРИКИ</span><h2>Экспериментальный контракт</h2></div><small>PASS только после измеренного прогона и сохранённого evidence</small></div><div class="metric-grid" id="metricGrid"></div></section>
+<section class="evidence-flow"><div><span>ТЕКУЩИЙ GATE</span><strong>HOLD</strong><p>Структура книги и метрики определены. Экспериментальные значения пока не подменяются фиктивными PASS.</p></div><div><span>СЛЕДУЮЩЕЕ ДОКАЗАТЕЛЬСТВО</span><strong>CH00 · Direct LLM vs Minimal Harness</strong><p>Одинаковая модель и задача; измеряем успех, шаги, tool-use, recovery, latency и tokens.</p></div></section>
+</main></div>
+<script src="./books.js?v=20261031"></script>
+</body></html>

@@ -1,0 +1,22 @@
+test:
+  id: STORY-T001
+  purpose: first single-agent single-model smoke test
+  input:
+    story_text: >
+      Антон остановился у старой теплицы. Внутри уже третий вечер подряд
+      горел свет, хотя после смерти деда туда никто не заходил.
+      Он достал из кармана ключ, но замок оказался открыт.
+    target_length: 300
+    constraints:
+      - continue in Russian
+      - preserve third-person narration
+      - do not explain the mystery immediately
+  expected:
+    must_continue_existing_scene: true
+    characters_preserved:
+      - Антон
+    unresolved_thread:
+      - light_in_greenhouse
+    hard_fail_if:
+      - Anton_is_renamed
+      - greenhouse_scene_is_abandoned_without_reason

@@ -1,0 +1,33 @@
+agent_devsecops_standard:
+  id: FATHER_AGENT_DEVSECOPS_V1
+  version: 1.0.0
+  required_pipeline:
+    - source_checkout
+    - dependency_lock_check
+    - secret_scan
+    - sast
+    - unit_tests
+    - contract_tests
+    - agent_security_tests
+    - dependency_scan
+    - sbom_generation
+    - package_build
+    - artifact_hash
+    - provenance_record
+    - release_gate
+  expected_tools:
+    secret_scan:
+      preferred: GitLeaks
+    sast:
+      preferred: Semgrep
+    python_security:
+      preferred: Bandit
+    dependency_scan:
+      preferred: Trivy
+    sbom:
+      preferred: CycloneDX
+  release_rule:
+    - no_critical_security_fail
+    - tests_pass
+    - sbom_exists
+    - evidence_complete

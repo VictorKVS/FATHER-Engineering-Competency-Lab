@@ -1,0 +1,69 @@
+test:
+  id: TEST-01-STORY-MODEL-SWAP
+  version: 1.0.0
+  purpose: >
+    Prove one agent/profile can execute the same story-continuation algorithm
+    while the underlying LLM is replaceable and selected by measurable gates.
+
+  fixed:
+    agent: AG-001
+    profile: ALINA_LITERARY
+    capability: STORY_CONTINUATION
+    prompt_version: 0.2.0
+    rag_version: ALINA_LITERARY_RAG_V02
+    kb_version: 0.2.0
+    input_contract: father.alina.literary.input.v1
+    output_contract: father.alina.literary.output.v1
+    eval: ALINA_LITERARY_CONTINUITY_V02
+
+  variable:
+    - model_id
+
+  modes:
+    sweep:
+      description: Run all eligible models on the same suite and build leaderboard.
+    failover:
+      description: Try candidates in policy order until one passes automatic gate.
+
+  automatic_gate:
+    hard_fail:
+      - output_contract_invalid
+      - continuation_empty
+      - continuity_object_missing
+      - model_id_missing
+      - canon_delta_not_array
+      - proposals_not_array
+    metrics:
+      contract_valid: 30
+      continuation_present: 20
+      continuity_complete: 20
+      canon_boundary_valid: 10
+      model_identity_present: 10
+      target_length_reasonable: 10
+    pass_threshold: 80
+
+  quality_gate:
+    source: ALINA_LITERARY_CONTINUITY_V02
+    pass_threshold: 80
+    status_until_reviewed: PENDING_QUALITY_REVIEW
+
+  routing:
+    strategy: SCORE_THEN_LATENCY
+    on_runtime_fail: NEXT_MODEL
+    on_hard_fail: NEXT_MODEL
+    on_score_below_threshold: NEXT_MODEL
+    on_pass: SELECT
+    fallback_when_none_pass: HOLD
+
+  evidence:
+    output_root: benchmark_results/test_01_story_model_swap
+    required:
+      - summary.json
+      - leaderboard.json
+      - selected_model.json
+      - REVIEW_BUNDLE.md
+      - per_model_evidence
+
+  publication:
+    git_allowed: true
+    automatic_push: explicit_flag_only

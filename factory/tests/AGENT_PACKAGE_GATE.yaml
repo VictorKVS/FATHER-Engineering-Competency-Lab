@@ -1,0 +1,42 @@
+gate:
+  id: AGENT_PACKAGE_GATE
+  version: 0.1.0
+  purpose: verify_all_registered_agents_have_minimum_factory_package
+
+required_components:
+  - ROLE
+  - PROMPT
+  - ALGORITHM
+  - RAG
+  - KNOWLEDGE_BASE
+  - INPUT_CONTRACT
+  - OUTPUT_CONTRACT
+  - API_HANDOFF
+  - CHECKLIST
+  - EVALS
+  - EXPERIENCE
+  - STATUS
+  - TEST_PACKS
+
+status_values:
+  - PASS
+  - PARTIAL
+  - FAIL
+  - NOT_APPLICABLE
+
+rules:
+  - no_percentages_without_component_evidence
+  - legacy_assets_may_satisfy_component_if_provenance_is_recorded
+  - distributed_assets_count_as_PARTIAL_until_wrapped_in_factory_standard
+  - test_pack_presence_does_not_equal_test_pack_pass
+  - agent_cannot_enter_qualification_with_any_hard_FAIL
+
+hard_fail_components:
+  - ROLE
+  - INPUT_CONTRACT
+  - OUTPUT_CONTRACT
+  - API_HANDOFF
+  - STATUS
+
+on_pass:
+  next: FACTORY_AGENT_RUNTIME_TEST

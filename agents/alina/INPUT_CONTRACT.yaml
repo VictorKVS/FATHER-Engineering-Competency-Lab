@@ -1,0 +1,13 @@
+input:
+  case_id: ""
+  objective: ""
+  research_questions: []
+  hypotheses: []
+  evidence_package:
+    observations: []
+    contradictions: []
+    unverified_items: []
+    achieved_sufficiency: MINIMUM|GOOD|DESIRABLE
+    limitations: []
+  constraints: []
+  prior_gaps: []

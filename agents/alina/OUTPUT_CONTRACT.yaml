@@ -1,0 +1,72 @@
+output:
+  case_id: ""
+  run_id: ""
+
+  work_step_runs:
+    - step_id: ""
+      title: ""
+      status: DONE|BLOCKED|NOT_APPLICABLE|REVIEW_REQUIRED
+      reason: ""
+      result_refs: []
+      evidence_refs: []
+
+  observations: []
+
+  hypotheses:
+    - hypothesis_id: ""
+      status: SUPPORTED|REJECTED|RETAINED|UNRESOLVED
+      evidence_refs: []
+      reason: ""
+
+  claims:
+    - claim_id: ""
+      statement: ""
+      evidence_refs: []
+      counter_evidence_refs: []
+      limitations: []
+      status: ACCEPTED|REJECTED|PROVISIONAL
+
+  contradictions: []
+
+  sufficiency:
+    requested: MINIMUM|GOOD|DESIRABLE
+    achieved: MINIMUM|GOOD|DESIRABLE
+    accepted: false
+    reason: ""
+
+  research_gaps: []
+
+  conclusions:
+    - conclusion_id: ""
+      statement: ""
+      supporting_claims: []
+      limitations: []
+      sufficiency: ""
+      decision_record_ref: ""
+
+  decisions:
+    - decision_id: ""
+      decision: ""
+      reason: ""
+      input_refs: []
+      output_refs: []
+      alternatives_considered: []
+      uncertainties: []
+      algorithm_version: ""
+      knowledge_version: ""
+      policy_version: ""
+
+  handoff:
+    target_agent: ""
+    reason: ""
+    artifact_refs: []
+
+  evidence_index: []
+
+  run_status: DONE|BLOCKED|REVIEW_REQUIRED
+
+rules:
+  - every_required_step_must_be_terminal
+  - terminal_state_except_DONE_requires_reason
+  - every_significant_decision_requires_DecisionRecord
+  - every_claim_and_conclusion_requires_traceable_evidence

@@ -1,0 +1,17 @@
+input_contract:
+  schema: father.story_continuation.input.v1
+  required:
+    - story_text
+  properties:
+    story_text:
+      type: string
+      min_length: 1
+    target_length:
+      type: integer
+      default: 700
+    constraints:
+      type: array
+      items: string
+    language:
+      type: string
+      default: auto

@@ -1,0 +1,106 @@
+version: 1
+schema: FATHER_RAG_PACKAGE_V1
+rag_id: RAG-STORY-001
+agent_id: AG-STORY-001
+title: Story Continuation RAG Baseline
+status: DRAFT
+gate: HOLD
+
+objective: >
+  Retrieve only canon-relevant evidence needed to continue a story while
+  preserving characters, chronology, world rules, unresolved threads and style
+  constraints.
+
+scientific_rules:
+  - extraction_does_not_equal_truth
+  - every_retrieved_fact_must_be_traceable
+  - prompt_model_and_tools_are_frozen_during_rag_comparison
+  - test_set_is_not_used_for_optimization
+  - no_promotion_without_regression_and_adversarial_evidence
+
+knowledge_scope:
+  entity_types:
+    - character
+    - location
+    - organization
+    - object
+    - world_rule
+    - event
+    - relationship
+    - unresolved_thread
+    - style_constraint
+  evidence_unit:
+    - source_document
+    - chapter_or_scene
+    - fragment_locator
+    - claim_or_fact
+    - temporal_position
+
+baseline_retrieval:
+  lexical: BM25
+  dense: REQUIRED_CANDIDATE
+  hybrid_fusion: REQUIRED_CANDIDATE
+  reranker: REQUIRED_CANDIDATE
+  graph_retrieval: EXPERIMENTAL_CANDIDATE
+  hierarchical_retrieval: EXPERIMENTAL_CANDIDATE
+
+retrieval_plan:
+  - query_type: entity_fact
+    candidates: [BM25, DENSE, HYBRID_RERANK]
+  - query_type: continuity_and_relationship
+    candidates: [HYBRID_RERANK, GRAPH]
+  - query_type: long_range_plot_dependency
+    candidates: [GRAPH, HIERARCHICAL]
+  - query_type: style_reference
+    candidates: [DENSE, HYBRID_RERANK]
+
+required_metadata:
+  - source_id
+  - source_version
+  - chapter_or_scene
+  - fragment_locator
+  - entity_ids
+  - timeline_position
+  - provenance
+  - checksum
+
+evaluation:
+  retrieval:
+    - recall_at_k
+    - precision_at_k
+    - MRR
+    - nDCG
+    - context_precision
+    - context_recall
+    - retrieval_failure_rate
+  answer:
+    - canon_consistency
+    - continuity_preservation
+    - faithfulness
+    - citation_correctness
+    - citation_completeness
+    - unsupported_invention_rate
+  adversarial:
+    - contradictory_context
+    - stale_canon
+    - duplicate_fragments
+    - poisoned_fragment
+    - missing_evidence
+
+promotion_requires:
+  - corpus_snapshot_bound
+  - source_registry_complete
+  - chunking_experiment_complete
+  - retrieval_baseline_measured
+  - held_out_test_pass
+  - adversarial_pass
+  - regression_pass
+  - evidence_complete
+
+current_gaps:
+  - no_bound_story_corpus
+  - no_real_index
+  - no_measured_retrieval_metrics
+  - no_reranker_selected
+  - no_graph_schema_bound
+  - no_held_out_results

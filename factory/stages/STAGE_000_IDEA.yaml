@@ -1,0 +1,65 @@
+stage:
+  id: "000"
+  name: IDEA
+  order: 0
+  owner: AG-000
+  purpose: >
+    Capture a raw product idea without prematurely turning it into requirements
+    or architecture.
+
+  input:
+    - raw_idea
+    - author_or_sponsor
+    - known_context
+    - known_constraints
+
+  processing:
+    - preserve_original_idea
+    - identify_initial_intent
+    - separate_fact_hypothesis_assumption_unknown
+    - identify_missing_context
+    - formulate_first_product_questions
+    - decide_if_discovery_can_start
+
+  output:
+    artifact: IDEA_PACKAGE
+    required:
+      - original_idea
+      - normalized_intent
+      - facts
+      - hypotheses
+      - assumptions
+      - unknowns
+      - first_questions
+      - evidence_refs
+      - decision
+
+  decision:
+    allowed:
+      - START_DISCOVERY
+      - NEED_MORE_CONTEXT
+      - HOLD
+      - REJECT_DUPLICATE_OR_INVALID
+
+  intelligence:
+    role: agents/product_manager/ROLE.md
+    prompt: agents/product_manager/PROMPT.md
+    algorithm: agents/product_manager/ALGORITHM.md
+    rag: agents/product_manager/RAG_MANIFEST.yaml
+    knowledge_base: agents/product_manager/KNOWLEDGE_BASE.md
+
+  verification:
+    reference_run: required
+    local_emulation: required
+    local_llm_run: required
+    ab_comparison: required
+
+  gate:
+    id: STAGE_000_PASS
+    pass_when:
+      - original_idea_preserved
+      - no_invented_facts
+      - facts_hypotheses_assumptions_unknowns_separated
+      - first_questions_are_actionable
+      - output_contract_valid
+      - local_llm_meets_acceptance_threshold

@@ -1,0 +1,96 @@
+factory:
+  id: FATHER_FACTORY
+  version: 0.1.0
+  product_under_build: FATHER-PLATFORM
+  operating_mode: SELF_FACTORY
+  current_wave: WAVE_0
+  current_stage: "000"
+  state: ASSEMBLING
+
+  formula:
+    product:
+      - PLATFORM_CORE
+      - CHASSIS
+      - STANDARD_BLOCKS
+      - DOMAIN_PACKS
+      - AGENTS
+      - MODELS
+      - TOOLS
+      - DATA_RAG
+      - UI_CHANNELS
+      - CONFIGURATION
+      - PROJECT_SPECIFIC_PART
+
+  control_plane:
+    - PRODUCT_STATE
+    - STAGE_REGISTRY
+    - AGENT_REGISTRY
+    - BLOCK_REGISTRY
+    - MODEL_REGISTRY
+    - GATE_ENGINE
+    - HANDOFF_ROUTER
+    - POLICY_ENGINE
+
+  execution_plane:
+    - STAGE_RUNNER
+    - CONTEXT_BUILDER
+    - AGENT_RUNTIME
+    - MODEL_ROUTER
+    - TOOL_RUNTIME
+    - WORKFLOW_ENGINE
+    - SCHEMA_VALIDATOR
+    - EVAL_ENGINE
+    - AB_ENGINE
+
+  evidence_plane:
+    - RUN_RECORD
+    - ARTIFACT_REGISTRY
+    - EVIDENCE_STORE
+    - EXPERIENCE_STORE
+    - PROVENANCE
+    - ATTESTATIONS
+    - METRICS
+    - AUDIT
+
+  trust_plane:
+    - IDENTITY
+    - RBAC
+    - LICENSE_GATE
+    - SUPPLY_CHAIN_GATE
+    - BUILD_PROVENANCE
+    - HEARTBEAT
+    - TAMPER_DETECTION
+    - RELEASE_TRUST_GATE
+    - SAFE_RECOVERY
+
+  verification_plane:
+    - UNIT
+    - CONTRACT
+    - INTEGRATION
+    - E2E
+    - SECURITY
+    - EVALS
+    - REGRESSION
+    - AB
+    - POLYGON
+
+  ui:
+    - PRODUCT_FIELD
+    - STAGE_RAIL_000_100
+    - PRODUCT_DOSSIER
+    - SPECIALIST_WORKSPACE
+    - BUSINESS_MODEL_EDITOR
+    - AUTOMATION_CANVAS
+    - REPLAY
+
+  mandatory_rules:
+    - father_is_first_product
+    - no_stage_pass_without_evidence
+    - no_component_ready_without_system_integration_proof
+    - reuse_wrap_adapt_before_build
+    - llm_is_replaceable_model_slot
+    - agents_use_versioned_packages
+    - all_handoffs_are_machine_readable
+    - security_and_trust_are_cross_cutting
+    - polygon_is_independent_from_factory
+    - failed_experiments_are_preserved

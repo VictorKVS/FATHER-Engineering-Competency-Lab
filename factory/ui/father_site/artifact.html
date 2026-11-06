@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NEXUS — Студия инженерии интеллекта</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./artifact.css">
+  <link rel="stylesheet" href="./i18n.css?v=20261030-1300">
+  <link rel="stylesheet" href="./trace-console.css?v=20261030-1515">
+</head>
+<body class="artifact-page">
+<div class="artifact-shell">
+  <aside class="artifact-nav">
+    <a href="./alina.html" class="back-link">← Инженер знаний и рассуждений</a>
+    <div class="artifact-brand">
+      <div class="artifact-mark">A</div>
+      <div><strong id="studioName">Инженерная студия</strong><small id="studioCode">АРТЕФАКТ ALINA</small></div>
+    </div>
+    <div class="section-label">РАБОЧИЙ ПРОЦЕСС</div>
+    <button class="artifact-step active" data-step="editor">01 · Редактор артефакта</button>
+    <button class="artifact-step" data-step="logic">02 · Инженерная логика</button>
+    <button class="artifact-step" data-step="metrics">03 · Метрики</button>
+    <button class="artifact-step" data-step="ab">04 · A/B-тестирование</button>
+    <button class="artifact-step" data-step="trace">05 · Трассируемость</button>
+    <button class="artifact-step" data-step="evidence">06 · Доказательства</button>
+    <div class="artifact-nav-foot">
+      <div class="health"><span></span>СТУДИЯ РАБОТАЕТ</div>
+      <small>Ответственный: ROLE-001 / ALINA</small>
+    </div>
+  </aside>
+  <main class="artifact-main">
+    <header class="artifact-top">
+      <div>
+        <div class="eyebrow" id="artifactEyebrow">ИНЖЕНЕРИЯ ИНТЕЛЛЕКТА</div>
+        <h1 id="artifactTitle">Студия артефакта</h1>
+        <p id="artifactPurpose">Специализированное инженерное рабочее место</p>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="assistantAction">Выполнить инженерное действие</button>
+        <button class="ghost" id="runAb">A/B-тест</button>
+        <button class="primary" id="saveProposal">Сохранить предложение</button>
+      </div>
+    </header>
+    <section class="artifact-status">
+      <div><span>Агент</span><b>AG-001</b></div>
+      <div><span>Артефакт</span><b id="artifactId">—</b></div>
+      <div><span>Модель</span><b id="artifactModel">ALINA_MODEL_SLOT</b></div>
+      <div><span>Версия</span><b id="artifactVersion">0.1.0</b></div>
+      <div><span>Шлюз</span><b class="hold" id="artifactGate">HOLD</b></div>
+    </section>
+    <section class="artifact-grid">
+      <aside class="artifact-left">
+        <div class="studio-card">
+          <div class="card-head">Модель Slot</div>
+          <select id="artifactModelSelect"></select>
+          <div id="artifactModelMeta" class="model-slot-meta"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Шаблон</div>
+          <code id="templatePath"></code>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Основное действие</div>
+          <button class="primary wide" id="primaryActionSide"></button>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Жёсткие правила</div>
+          <div class="rule-list">
+            <span>Автоповышение в канон <b>ВЫКЛ</b></span>
+            <span>Выдумывание источников <b>ОТКАЗ</b></span>
+            <span>Трассируемость <b>ОБЯЗАТЕЛЬНО</b></span>
+            <span>Доказательства <b>ОБЯЗАТЕЛЬНО</b></span>
+          </div>
+        </div>
+      </aside>
+      <section class="artifact-center">
+        <div class="artifact-tabs">
+          <button class="artifact-tab active" data-view="current">Текущая версия</button>
+          <button class="artifact-tab" data-view="proposal">Предложение</button>
+          <button class="artifact-tab" data-view="logic">Логика</button>
+          <button class="artifact-tab" data-view="metrics">Метрики</button>
+          <button class="artifact-tab" data-view="ab">План A/B</button>
+        </div>
+        <div id="artifactStage" class="artifact-stage"></div>
+      </section>
+      <aside class="artifact-right">
+        <div class="studio-card">
+          <div class="card-head">Панель качества</div>
+          <div id="metricPanel" class="metric-panel"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Зависимости</div>
+          <div id="dependencyPanel" class="dependency-panel"></div>
+        </div>
+        <div class="studio-card">
+          <div class="card-head">Доказательства Status</div>
+          <div class="evidence-status">
+            <span>Источники <b>HOLD</b></span>
+            <span>Оценка <b>HOLD</b></span>
+            <span>A/B <b>HOLD</b></span>
+            <span>Одобрение <b>HOLD</b></span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./artifact.js"></script>
+  <script src="./i18n.js?v=20261030-1300"></script>
+  <script src="./trace.js?v=20261030-1515"></script>
+  <script src="./trace-console.js?v=20261030-1515"></script>
+</body>
+</html>

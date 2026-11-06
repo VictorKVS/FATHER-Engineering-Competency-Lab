@@ -1,0 +1,79 @@
+configuration:
+  id: FATHER-SELF-CONFIG-001
+  product_id: FATHER-PLATFORM
+  chassis: FATHER_PLATFORM_CHASSIS
+  stage_range: "000-100"
+  status: ASSEMBLING
+
+  blocks:
+    required:
+      - B-CORE-RUNTIME
+      - B-CORE-STATE
+      - B-CORE-EVENTBUS
+      - B-CORE-API
+      - B-MODEL-ROUTER
+      - B-MODEL-SLOT
+      - B-AGENT-RUNTIME
+      - B-WORKFLOW
+      - B-RAG
+      - B-TOOLS
+      - B-EVAL
+      - B-AB
+      - B-OBS
+      - B-TRUST
+      - B-SECURITY
+      - B-EVIDENCE
+      - B-UI-PRODUCT
+
+  agents:
+    - AG-000
+    - AG-001
+    - AG-010
+    - AG-005
+    - AG-002
+    - AG-004
+    - AG-006
+    - AG-003
+    - AG-007
+    - AG-008
+    - AG-009
+
+  model_policy:
+    default_mode: replaceable
+    baseline: LOCAL
+    reference: REFERENCE_AGENT_ENSEMBLE
+    challenger_slots_allowed: true
+    all_models_must_use_model_slot_contract: true
+
+  trust:
+    required:
+      - FATHER_LICENSE_GATE
+      - FATHER_TRUST_GATE
+      - FATHER_SUPPLY_CHAIN_GATE
+      - REPRODUCIBLE_BUILD_GATE
+      - RELEASE_TRUST_GATE
+
+  verification:
+    proof_layers:
+      - REFERENCE
+      - EMULATION
+      - LOCAL_LLM
+      - AB_COMPARE
+    stage_pass_requires_all_required_proofs: true
+
+  evidence:
+    mandatory:
+      - run_record
+      - metrics
+      - tests
+      - security_results
+      - provenance
+      - license_status
+      - artifact_hashes
+      - attestations
+      - experience_update
+
+  release:
+    rc_minimum_build_assurance: L2
+    production_target_build_assurance: L3
+    polygon_required: true

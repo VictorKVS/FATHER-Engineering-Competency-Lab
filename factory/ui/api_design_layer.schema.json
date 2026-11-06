@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FATHER API Design Layer",
+  "type": "object",
+  "required": ["model_id", "nodes", "flows"],
+  "properties": {
+    "model_id": {"type": "string"},
+    "version": {"type": "string"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "kind": {"enum": ["customer", "workshop", "human", "agent", "system", "service", "channel", "store", "gate", "polygon"]},
+          "status": {"type": "string"}
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "producer", "consumer"],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "producer": {"type": "string"},
+          "consumer": {"type": "string"},
+          "trigger": {"type": ["string", "null"]},
+          "protocol": {"type": ["string", "null"]},
+          "endpoint_or_event": {"type": ["string", "null"]},
+          "payload_schema": {"type": ["string", "null"]},
+          "data_classification": {"type": ["string", "null"]},
+          "average_size": {"type": ["string", "null"]},
+          "max_size": {"type": ["string", "null"]},
+          "frequency": {"type": ["string", "null"]},
+          "peak_rate": {"type": ["string", "null"]},
+          "latency_sla": {"type": ["string", "null"]},
+          "validation": {"type": ["string", "null"]},
+          "retry": {"type": ["string", "null"]},
+          "timeout": {"type": ["string", "null"]},
+          "idempotency": {"type": ["string", "null"]},
+          "authn_authz": {"type": ["string", "null"]},
+          "observability": {"type": ["string", "null"]},
+          "error_contract": {"type": ["string", "null"]},
+          "test_status": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

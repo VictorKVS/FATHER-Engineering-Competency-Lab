@@ -1,0 +1,32 @@
+version: 1
+schema: FATHER_BOOK_TO_COMPONENT_PIPELINE_V1
+title: Research Source to Verified Factory Component
+
+flow:
+  - SOURCE_REGISTERED
+  - CLAIMS_EXTRACTED
+  - PATTERNS_IDENTIFIED
+  - ALGORITHM_FORMALIZED
+  - BASELINE_IMPLEMENTED
+  - CANDIDATES_IMPLEMENTED
+  - TEST_SET_FROZEN
+  - EXPERIMENT_RUN
+  - METRICS_COLLECTED
+  - ERROR_ANALYSIS
+  - DECISION
+  - COMPONENT_PASSPORT_UPDATED
+  - COMPONENT_PROMOTED_OR_REJECTED
+
+decision_states:
+  - VERIFIED
+  - REJECTED
+  - PARETO_SET
+  - INSUFFICIENT_EVIDENCE
+
+rules:
+  - never_copy_source_book_text_as_our_book
+  - preserve_source_traceability
+  - distinguish_source_claim_from_father_interpretation
+  - experiment_before_promotion
+  - rejected_results_are_negative_knowledge
+  - website_consumes_machine_readable_manifests

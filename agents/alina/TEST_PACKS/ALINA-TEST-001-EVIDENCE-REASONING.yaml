@@ -1,0 +1,66 @@
+test_pack:
+  id: ALINA-TEST-001
+  title: Evidence reasoning with sufficient evidence
+  type: synthetic
+  purpose: >
+    Verify that ALINA separates observations from claims, preserves provenance,
+    detects the actual failing stage, and produces a bounded conclusion without
+    inventing facts.
+
+  research_request:
+    case_id: ALINA-T001
+    objective: >
+      Determine why 30 of 100 synthetic Telegram observations disappeared from
+      the analytical material set in a DEV OSINT pipeline.
+    research_questions:
+      - Did the transport fail to deliver the observations?
+      - Did storage lose the observations?
+      - Did normalization/deduplication collapse independent observations?
+    hypotheses:
+      - H1: transport_loss
+      - H2: storage_loss
+      - H3: deduplication_semantics_error
+    required_sufficiency: GOOD
+    acceptance_criteria:
+      - every conclusion cites evidence
+      - no unsupported numeric confidence
+      - contradictory explanations are considered
+      - final conclusion is bounded
+
+  evidence_package:
+    package_id: EP-ALINA-T001
+    observations:
+      - id: E1
+        statement: Transport log records 100 received message observations.
+        provenance: synthetic_transport_log
+      - id: E2
+        statement: Raw store contains 100 observation records.
+        provenance: synthetic_raw_store_audit
+      - id: E3
+        statement: Material output contains 70 records.
+        provenance: synthetic_material_store_audit
+      - id: E4
+        statement: Deduplication log marks 30 observations as duplicates because their text payload hashes match existing payloads.
+        provenance: synthetic_dedup_log
+      - id: E5
+        statement: The 30 collapsed observations have distinct source channel IDs and distinct message IDs.
+        provenance: synthetic_source_metadata
+      - id: E6
+        statement: DEV invariant requires equal payloads from independent source observations to preserve their separate provenance.
+        provenance: OSINT_DEV_BASELINE_INVARIANT
+
+    contradictions: []
+    unverified_items: []
+    achieved_sufficiency: GOOD
+    limitations:
+      - synthetic_case
+      - no_live_transport_test_required
+
+  expected_properties:
+    - reject_H1_transport_loss
+    - reject_H2_storage_loss
+    - support_H3_deduplication_semantics_error
+    - explain_that_equal_content_is_not_equal_observation
+    - preserve_E1_to_E6_traceability
+    - no_architecture_fix_invented
+    - output_engineering_handoff_or_bounded_conclusion

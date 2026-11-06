@@ -1,0 +1,37 @@
+provenance:
+  id: FATHER_PROVENANCE
+  version: 0.1.0
+
+  source_provenance:
+    required:
+      - repository
+      - branch_or_tag
+      - commit_sha
+      - parent_sha
+      - author_or_generator
+      - reviewed_by
+      - requirement_refs
+      - algorithm_refs
+      - adr_refs
+      - external_source_refs
+      - license_refs
+
+  build_provenance:
+    required:
+      - builder
+      - builder_version
+      - workflow_ref
+      - runner_identity
+      - source_commit
+      - dependency_locks
+      - environment_manifest
+      - build_parameters
+      - artifact_digest
+      - sbom_digest
+      - build_log_ref
+
+  rules:
+    - source_and_build_provenance_are_separate
+    - build_must_reference_exact_source_commit
+    - production_artifact_must_have_build_provenance
+    - provenance_must_survive_artifact_copy_or_registry_move

@@ -1,0 +1,23 @@
+version:
+  profile_id: ALINA_LITERARY
+  current: 0.2.0
+  status: IN_MIGRATION
+  previous: 0.1.0
+  canonical_agent: AG-001
+  capability: STORY_CONTINUATION
+  architecture:
+    - ALINA_CORE
+    - LITERARY_PROFILE
+    - DOMAIN_MODEL
+    - PROMPT
+    - RAG
+    - KNOWLEDGE_BASE
+    - MODEL_SLOT
+    - CONTINUITY_EVAL
+    - EVIDENCE
+  rules:
+    - no_separate_story_agent_identity
+    - model_is_replaceable
+    - canon_and_proposals_are_separate
+    - no_hidden_context
+    - all_changes_follow_father_codex

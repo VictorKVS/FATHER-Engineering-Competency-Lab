@@ -1,0 +1,41 @@
+test_pack:
+  id: PM-TEST-002
+  title: AI assistant for professional research
+  profile: ambiguous_opportunity
+
+  case:
+    sponsor: professional_services_team
+    idea: >
+      Build an AI assistant that searches internal and external sources,
+      summarizes findings and prepares draft analytical reports for specialists.
+    known_facts:
+      - specialists already use general-purpose AI tools informally
+      - report preparation takes significant time according to interviews
+      - source traceability is considered important
+    unknowns:
+      - number of active users
+      - actual hours spent per report
+      - willingness to switch tools
+      - data confidentiality requirements
+      - acceptable hallucination rate
+      - external API restrictions
+      - budget
+      - measurable economic benefit
+    constraints:
+      - outputs must preserve source provenance
+      - final professional decisions remain human
+
+  evaluator_expectations:
+    must_not:
+      - assume_ai_is_automatically_better
+      - assume_users_will_adopt
+      - claim_economic_viability_without_data
+      - ignore_existing_general_ai_tools
+    must:
+      - challenge_product_differentiation
+      - quantify_unknowns_to_research
+      - design_user_interviews
+      - design_small_discovery_experiment
+      - compare_build_vs_buy_vs_existing_tools
+      - define_quality_and_trust_metrics
+      - allow_RESEARCH_MORE_or_PILOT

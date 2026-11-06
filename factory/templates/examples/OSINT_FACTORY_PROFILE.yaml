@@ -1,0 +1,76 @@
+factory_profile:
+  schema: father.factory_profile.v1
+
+  identity:
+    factory_id: FATHER-OSINT-FACTORY
+    name: FATHER OSINT Factory
+    class: OSINT_FACTORY
+    owner: FATHER_FACTORY
+    version: 0.1.0
+
+  purpose:
+    mission: Produce evidence-driven OSINT systems from reusable FATHER blocks.
+    target_products:
+      - OSINT_REFERENCE_001
+      - OSINT_TRICOLOR
+    target_users:
+      - analyst
+      - investigator
+      - security_team
+    jurisdictions: []
+
+  product_model:
+    chassis_ref: factory/chassis/FATHER_PLATFORM_CHASSIS.yaml
+    required_blocks:
+      - B-CORE-RUNTIME
+      - B-CORE-STATE
+      - B-CORE-EVENTBUS
+      - B-MODEL-ROUTER
+      - B-MODEL-SLOT
+      - B-AGENT-RUNTIME
+      - B-WORKFLOW
+      - B-RAG
+      - B-TOOLS
+      - B-EVAL
+      - B-OBS
+      - B-TRUST
+      - B-EVIDENCE
+    optional_blocks:
+      - graph_store
+      - vector_store
+      - telegram_adapter
+      - browser_collector
+    domain_packs:
+      - OSINT
+    project_specific_extension_allowed: true
+
+  intelligence:
+    agent_set_ref: factory/templates/examples/OSINT_AGENT_SET.yaml
+    model_policy_ref: factory/model_fabric/AGENT_MODEL_ASSIGNMENTS.yaml
+    rag_policy_ref: OSINT_KNOWLEDGE_POLICY
+    tool_policy_ref: OSINT_TOOL_POLICY
+
+  assurance:
+    security_profile_ref: FATHER_SECURITY_BASELINE
+    trust_profile_ref: factory/templates/FACTORY_TRUST_PROFILE.schema.yaml
+    test_profile_ref: OSINT_TEST_PROFILE
+    eval_profile_ref: OSINT_EVAL_PROFILE
+    polygon_profile_ref: OSINT_POLYGON_PROFILE
+
+  runtime:
+    deployment_profile_ref: LOCAL_FIRST
+    observability_profile_ref: FATHER_OBSERVABILITY
+    resource_profile_ref: RTX3060_12GB_BASELINE
+
+  ui:
+    ui_profile_ref: FATHER_PRODUCT_FIELD
+
+  lifecycle:
+    stage_map_ref: factory/bootstrap/FATHER_000_100_MAP.yaml
+    gate_profile_ref: FATHER_GATE_BASELINE
+    evidence_profile_ref: FATHER_EVIDENCE_BASELINE
+
+  governance:
+    approval_model: HUMAN_APPROVAL_FOR_HIGH_IMPACT_ACTIONS
+    change_control: VERSIONED_GIT_EVIDENCE
+    experience_feedback: true

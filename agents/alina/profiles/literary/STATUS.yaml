@@ -1,0 +1,32 @@
+status:
+  profile_id: ALINA_LITERARY
+  version: 0.2.0
+  state: IN_MIGRATION
+  maturity: M1_SPECIFIED
+
+  complete:
+    requirements: true
+    algorithm: true
+    domain_model: true
+    migration_matrix: true
+    versioning: true
+
+  partial:
+    prompt: true
+    rag: true
+    knowledge_base: true
+    runtime: true
+
+  pending:
+    - old_story_engine_recovery_review
+    - canonical_input_contract
+    - canonical_output_contract
+    - continuity_engine
+    - canon_state_runtime
+    - literary_model_slot_runtime
+    - local_model_smoke_test
+    - evidence_run
+    - regression_pack
+
+  gate: HOLD
+  gate_reason: first canonical ALINA Literary end-to-end run not yet proven

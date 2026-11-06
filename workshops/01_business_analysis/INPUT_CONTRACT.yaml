@@ -1,0 +1,14 @@
+contract:
+  id: BA-INPUT-v0.1
+  required:
+    - customer_intent
+  optional:
+    - initial_requirements
+    - constraints
+    - jurisdiction
+    - expected_users
+    - expected_channels
+    - business_documents
+  rules:
+    - unresolved_critical_terms_must_be_marked
+    - assumptions_must_be_explicit

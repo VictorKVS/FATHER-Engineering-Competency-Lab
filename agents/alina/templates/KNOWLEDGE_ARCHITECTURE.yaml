@@ -1,0 +1,106 @@
+knowledge_architecture:
+  version: 0.1.0
+
+  layers:
+    common_foundation:
+      description: Universal knowledge required across many specialists.
+      examples:
+        - professional_russian_language
+        - critical_thinking
+        - source_hygiene
+        - document_work
+        - basic_information_security
+        - corporate_ethics
+    corporate_common:
+      description: Knowledge shared across the organization.
+      examples:
+        - organization_structure
+        - internal_regulations
+        - product_catalog
+        - processes
+        - terminology
+        - security_policy
+        - data_classification
+    profession_core:
+      description: Reusable professional core for a class of specialists.
+      examples:
+        - lawyer_core
+        - information_security_core
+        - osint_core
+        - devops_core
+        - analyst_core
+    specialist_domain:
+      description: Knowledge unique to this concrete role/product/domain.
+      examples:
+        - jurisdiction_specific_rules
+        - customer_specific_processes
+        - product_specific_architecture
+        - specialist_cases
+    research_acquired:
+      description: Evidence ordered from OSINT for current gaps.
+      provenance_required: true
+      sufficiency_gate_required: true
+    operational_dynamic:
+      description: Frequently changing knowledge retrieved at runtime.
+      preferred_mechanism: RAG_OR_TOOL
+
+  node_schema:
+    required:
+      - knowledge_id
+      - layer
+      - title
+      - type
+      - source_refs
+      - authority
+      - confidence
+      - valid_from
+      - valid_to
+      - jurisdiction
+      - competencies
+      - skills
+      - test_refs
+      - update_policy
+
+  knowledge_types:
+    - CONCEPT
+    - FACT
+    - RULE
+    - PROCEDURE
+    - CASE
+    - EXCEPTION
+    - RISK
+    - TOOL
+    - DECISION_PATTERN
+    - LANGUAGE_PATTERN
+
+  skill_formation:
+    chain:
+      - KNOWLEDGE_NODE
+      - EXAMPLE
+      - PROCEDURE
+      - PRACTICE_CASE
+      - DECISION
+      - FEEDBACK
+      - EVAL
+      - REINFORCEMENT
+      - COMPETENCY_EVIDENCE
+
+  ingestion:
+    sources:
+      - early_role_artifacts
+      - corporate_documents
+      - professional_standards
+      - primary_regulation
+      - curated_training_material
+      - osint_evidence_package
+    pipeline:
+      - classify
+      - normalize
+      - deduplicate
+      - provenance
+      - contradiction_check
+      - layer_assignment
+      - graph_binding
+      - competency_binding
+      - test_binding
+      - approve_or_hold

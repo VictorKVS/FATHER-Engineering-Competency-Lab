@@ -1,0 +1,147 @@
+father_self_factory:
+  product_id: FATHER-PLATFORM
+  stages:
+
+    - range: "000-009"
+      name: INTENT_AND_FACTORY_FOUNDATION
+      examples:
+        - "000 IDEA / PLATFORM INTENT"
+        - "001 PRODUCT DISCOVERY"
+        - "002 REQUIREMENTS"
+        - "003 ANALYTICAL MODEL"
+        - "004 DOMAIN/ROLE MODEL"
+        - "005 AGENT REGISTRY"
+        - "006 STAGE REGISTRY"
+        - "007 CONTRACT STANDARD"
+        - "008 EVIDENCE STANDARD"
+        - "009 FACTORY BASELINE GATE"
+
+    - range: "010-019"
+      name: CORE_PLATFORM
+      examples:
+        - "010 BOOTSTRAP"
+        - "011 PLATFORM CORE"
+        - "012 CONFIGURATION"
+        - "013 STATE"
+        - "014 EVENT BUS"
+        - "015 API GATEWAY"
+        - "016 IDENTITY"
+        - "017 RBAC"
+        - "018 BLOCK CONTRACT"
+        - "019 BLOCK REGISTRY"
+
+    - range: "020-029"
+      name: MODEL_TOOL_MEMORY_FABRIC
+      examples:
+        - "020 MODEL ROUTER"
+        - "021 MODEL ZOO"
+        - "022 MODEL SLOT"
+        - "023 TOOL RUNTIME"
+        - "024 TOOL/MCP ZOO"
+        - "025 MEMORY"
+        - "026 RAG"
+        - "027 CONTEXT BUILDER"
+        - "028 LOCAL LLM ADAPTER"
+        - "029 MODEL/EVAL GATE"
+
+    - range: "030-039"
+      name: AGENT_AND_WORKFLOW_RUNTIME
+      examples:
+        - "030 AGENT RUNTIME"
+        - "031 AGENT ZOO"
+        - "032 SPECIALIST PACKAGE"
+        - "033 WORKFLOW ENGINE"
+        - "034 MULTI-AGENT"
+        - "035 HANDOFF ROUTER"
+        - "036 HUMAN APPROVAL"
+        - "037 CHECKPOINT/RESUME"
+        - "038 EXPERIENCE STORE"
+        - "039 AGENT RUNTIME GATE"
+
+    - range: "040-049"
+      name: DATA_KNOWLEDGE_EVIDENCE
+      examples:
+        - "040 ARTIFACT REGISTRY"
+        - "041 EVIDENCE STORE"
+        - "042 EVENT STORE"
+        - "043 VECTOR STORE"
+        - "044 GRAPH STORE"
+        - "045 OBJECT STORE"
+        - "046 PROVENANCE"
+        - "047 TRACEABILITY"
+        - "048 VERSIONING"
+        - "049 DATA/EVIDENCE GATE"
+
+    - range: "050-059"
+      name: SECURITY_AND_ASSURANCE
+      examples:
+        - "050 POLICY ENGINE"
+        - "051 SECURITY GATEWAY"
+        - "052 SECRETS"
+        - "053 SUPPLY CHAIN"
+        - "054 SBOM"
+        - "055 SAST/SCA/SECRETS"
+        - "056 AUDIT"
+        - "057 RISK ENGINE"
+        - "058 COMPLIANCE"
+        - "059 SECURITY GATE"
+
+    - range: "060-069"
+      name: TEST_EVAL_OBSERVABILITY
+      examples:
+        - "060 TEST ENGINE"
+        - "061 CONTRACT TESTS"
+        - "062 INTEGRATION TESTS"
+        - "063 E2E TESTS"
+        - "064 EVAL ENGINE"
+        - "065 A/B ENGINE"
+        - "066 REGRESSION"
+        - "067 OBSERVABILITY"
+        - "068 METRICS/TRACING"
+        - "069 ASSURANCE GATE"
+
+    - range: "070-079"
+      name: RUNTIME_AND_DEVSECOPS
+      examples:
+        - "070 CONTAINER RUNTIME"
+        - "071 LEAN CONTAINER"
+        - "072 DOCKER COMPOSE"
+        - "073 KUBERNETES"
+        - "074 CI/CD"
+        - "075 DEPLOYMENT"
+        - "076 SRE"
+        - "077 RESOURCE CONTROL"
+        - "078 ROLLBACK"
+        - "079 DEVSECOPS GATE"
+
+    - range: "080-089"
+      name: UI_AND_ENGINEERING_WORKSPACE
+      examples:
+        - "080 PRODUCT FIELD"
+        - "081 000-100 STAGE RAIL"
+        - "082 PRODUCT DOSSIER"
+        - "083 SPECIALIST WORKSPACE"
+        - "084 BUSINESS MODEL EDITOR"
+        - "085 AUTOMATION CANVAS"
+        - "086 PROFESSIONAL OVERLAYS"
+        - "087 PROGRAM BINDING"
+        - "088 REPLAY"
+        - "089 UI/TRACEABILITY GATE"
+
+    - range: "090-099"
+      name: RELEASE_AND_POLYGON
+      examples:
+        - "090 FACTORY E2E"
+        - "091 FAILURE/REWORK"
+        - "092 LOAD/PERFORMANCE"
+        - "093 SECURITY REGRESSION"
+        - "094 RC FREEZE"
+        - "095 POLYGON L0-L5"
+        - "096 ACCEPTANCE"
+        - "097 RELEASE PACKAGE"
+        - "098 PRODUCTION TELEMETRY"
+        - "099 SELF-FACTORY GATE"
+
+    - range: "100"
+      name: FATHER_PLATFORM_PRODUCTION_PROVEN
+      gate: FATHER_100_PASS

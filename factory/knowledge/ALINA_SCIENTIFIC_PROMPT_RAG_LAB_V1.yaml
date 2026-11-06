@@ -1,0 +1,182 @@
+version: 1
+schema: FATHER_ALINA_SCIENTIFIC_PROMPT_RAG_LAB_V1
+title: ALINA Scientific Prompt & RAG Engineering Lab
+
+mission: >
+  Design, optimize, evaluate, version and prove Prompt + RAG + Knowledge packages
+  for individual agents and agent zoos using reproducible experiments.
+
+scientific_method:
+  - DEFINE_TASK_AND_SUCCESS_METRIC
+  - BUILD_BASELINE
+  - FREEZE_DATA_SPLITS
+  - GENERATE_HYPOTHESES
+  - RUN_CONTROLLED_EXPERIMENTS
+  - COLLECT_METRICS
+  - TEST_GENERALIZATION
+  - SELECT_PARETO_OR_WINNER
+  - RECORD_EVIDENCE
+  - PROMOTE_TO_AGENT_PACKAGE
+
+prompt_lab:
+  adopt:
+    - DSPy
+    - GEPA
+    - MIPROv2
+  study_as_secondary:
+    - TextGrad
+    - OPRO
+    - PromptBreeder
+  develop:
+    - prompt_registry
+    - prompt_versioning
+    - task_specific_metrics
+    - prompt_tournament
+    - overfitting_detection
+    - adversarial_prompt_suite
+    - model_specific_prompt_profiles
+    - prompt_champion_challenger
+  outputs:
+    - prompt_program
+    - prompt_version
+    - optimizer_trace
+    - train_validation_test_scores
+    - robustness_report
+    - promotion_decision
+
+rag_lab:
+  retrieval_layers:
+    lexical:
+      technologies: [BM25]
+    dense:
+      technologies: [embeddings]
+    late_interaction:
+      technologies: [ColBERTv2]
+    contextual:
+      technologies: [Contextual_Retrieval]
+    hypothetical:
+      technologies: [HyDE]
+    graph:
+      technologies: [Microsoft_GraphRAG]
+    hierarchical:
+      technologies: [RAPTOR]
+    adaptive:
+      technologies: [Self_RAG]
+    corrective:
+      technologies: [CRAG]
+  develop:
+    - query_classifier
+    - retrieval_strategy_router
+    - hybrid_rank_fusion
+    - reranker_layer
+    - evidence_graph
+    - citation_traceability
+    - freshness_and_version_control
+    - source_trust_scoring
+    - jurisdiction_time_scope
+    - retrieval_failure_detector
+    - corrective_fallback
+    - rag_champion_challenger
+  outputs:
+    - rag_manifest
+    - retrieval_plan
+    - indexed_sources
+    - retrieval_trace
+    - evidence_refs
+    - citation_map
+    - rag_eval_report
+
+evaluation:
+  baseline_frameworks:
+    - Ragas
+  retrieval_metrics:
+    - context_precision
+    - context_recall
+    - context_entities_recall
+    - noise_sensitivity
+    - recall_at_k
+    - precision_at_k
+    - MRR
+    - nDCG
+  answer_metrics:
+    - faithfulness
+    - response_relevancy
+    - factual_correctness
+    - groundedness
+    - citation_correctness
+    - citation_completeness
+  system_metrics:
+    - latency_p50
+    - latency_p95
+    - tokens
+    - vram
+    - cost
+    - failure_rate
+  security_metrics:
+    - prompt_injection_resistance
+    - poisoned_document_resistance
+    - data_leakage
+    - tool_policy_compliance
+
+experiment_design:
+  datasets:
+    - TRAIN
+    - VALIDATION
+    - TEST
+    - ADVERSARIAL
+    - REGRESSION
+  rules:
+    - never_optimize_on_test
+    - same_corpus_snapshot_for_comparison
+    - same_model_and_sampling_when_comparing_retrieval
+    - same_retrieval_when_comparing_prompt
+    - every_result_has_seed_config_and_hash
+    - no_promotion_without_regression_pass
+
+routing:
+  examples:
+    factual_exact:
+      preferred: [BM25, dense, reranker]
+    semantic_question:
+      preferred: [dense, contextual, reranker]
+    entity_relationship:
+      preferred: [GraphRAG]
+    whole_corpus_summary:
+      preferred: [GraphRAG, RAPTOR]
+    zero_shot_sparse_domain:
+      preferred: [HyDE, dense]
+    uncertain_retrieval:
+      preferred: [CRAG]
+    retrieval_optional:
+      preferred: [Self_RAG]
+
+knowledge_package:
+  required:
+    - source_registry
+    - source_versions
+    - provenance
+    - chunking_policy
+    - metadata_schema
+    - ontology_or_entity_schema
+    - embeddings_version
+    - index_version
+    - graph_version
+    - retrieval_policy
+    - citations
+    - license
+    - security_classification
+
+promotion_gate:
+  states:
+    - BASELINE
+    - EXPERIMENT
+    - CANDIDATE
+    - VERIFIED
+    - PROMOTED
+    - REJECTED
+  requires:
+    - metric_improvement_or_pareto_gain
+    - held_out_test_pass
+    - regression_pass
+    - security_pass
+    - evidence_complete

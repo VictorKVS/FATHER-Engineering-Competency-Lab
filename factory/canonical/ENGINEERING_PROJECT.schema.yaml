@@ -1,0 +1,30 @@
+schema:
+  id: ENGINEERING_PROJECT_V1
+  version: 1.0.0
+
+  required:
+    - project_id
+    - name
+    - version
+    - state
+    - entities
+    - edges
+
+  fields:
+    project_id: string
+    name: string
+    version: string
+    state:
+      enum: [DRAFT, DESIGNED, TESTED, VERIFIED, RELEASE_CANDIDATE, ACCEPTED]
+    entities:
+      type: list
+      item:
+        required: [id, type, version, owner, status, payload]
+    edges:
+      type: list
+      item:
+        required: [edge_id, from, to, type, version, status]
+    evidence_index:
+      type: list
+    unresolved:
+      type: list

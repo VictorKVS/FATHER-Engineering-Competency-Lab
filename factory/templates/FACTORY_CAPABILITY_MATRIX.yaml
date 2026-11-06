@@ -1,0 +1,67 @@
+capability_matrix:
+  schema: father.factory_capabilities.v1
+
+  canonical:
+    control_plane:
+      - product_state
+      - stage_registry
+      - block_registry
+      - agent_registry
+      - model_registry
+      - tool_registry
+      - gate_engine
+      - policy_engine
+      - handoff_router
+
+    execution_plane:
+      - stage_runner
+      - context_builder
+      - agent_runtime
+      - workflow_engine
+      - model_router
+      - tool_runtime
+      - schema_validator
+      - eval_engine
+      - ab_engine
+
+    evidence_plane:
+      - run_record
+      - artifact_registry
+      - evidence_store
+      - provenance
+      - attestations
+      - experience_store
+      - audit
+
+    assurance_plane:
+      - security
+      - licensing
+      - sbom
+      - supply_chain
+      - heartbeat
+      - tamper_detection
+      - recovery
+      - regression
+      - polygon
+
+    operations_plane:
+      - observability
+      - metrics
+      - logs
+      - tracing
+      - resource_control
+      - rollback
+      - deployment
+
+    workspace_plane:
+      - product_field
+      - stage_rail
+      - dossier
+      - specialist_workspace
+      - model_view
+      - automation_canvas
+      - replay
+
+  rule:
+    - a_factory_profile_may_disable_optional_capabilities
+    - canonical_control_evidence_and_trust_capabilities_cannot_be_removed_without_formal_exception

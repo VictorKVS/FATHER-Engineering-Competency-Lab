@@ -1,0 +1,25 @@
+trust_profile:
+  schema: father.factory_trust_profile.v1
+
+  mandatory:
+    - code_provenance
+    - license_compliance
+    - sbom
+    - source_attestation
+    - build_attestation
+    - test_attestation
+    - security_attestation
+    - license_attestation
+    - release_attestation
+    - heartbeat
+    - tamper_detection
+    - rollback
+    - independent_recovery
+
+  release:
+    minimum_assurance: L2
+    target_assurance: L3
+
+  offboarding:
+    safe_offboarding_required: true
+    single_person_irreversible_control_forbidden: true

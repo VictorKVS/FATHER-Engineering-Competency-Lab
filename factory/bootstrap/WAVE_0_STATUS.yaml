@@ -1,0 +1,26 @@
+wave_status:
+  wave: WAVE_0
+  product: FATHER-PLATFORM
+  state: IN_PROGRESS
+
+  checks:
+    self_product_registered: PASS
+    canonical_formula_defined: PASS
+    chassis_defined: PASS
+    block_registry_defined: PASS
+    agent_registry_defined: PASS
+    stage_registry_defined: PASS
+    model_slot_defined: PASS
+    run_record_defined: PASS
+    trust_gates_defined: PASS
+    self_configuration_defined: PASS
+
+    stage_000_reference_pass: PENDING
+    stage_000_local_emulation_pass: PENDING
+    stage_000_local_llm_pass: PENDING
+    stage_000_ab_pass: PENDING
+
+  gate: HOLD
+
+  next_action:
+    - execute_STAGE_000_for_FATHER_PLATFORM

@@ -1,0 +1,26 @@
+gate:
+  id: REPRODUCIBLE_BUILD_GATE
+  version: 0.1.0
+
+  modes:
+    - REQUIRED
+    - BEST_EFFORT
+    - NOT_APPLICABLE_WITH_REASON
+
+  checks:
+    - exact_source_commit_known
+    - dependency_versions_locked
+    - build_definition_versioned
+    - environment_recorded
+    - artifact_digest_recorded
+    - second_build_compared_when_required
+
+  pass:
+    - digest_match
+    - or_documented_non_determinism_with_approved_reason
+
+  hard_fail:
+    - artifact_origin_unknown
+    - source_commit_unknown
+    - build_definition_missing
+    - unexplained_digest_mismatch_for_required_reproducible_build

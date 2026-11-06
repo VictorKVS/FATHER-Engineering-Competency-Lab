@@ -1,0 +1,42 @@
+version: 1
+schema: FATHER_MODEL_ZOO_FEDERATION_V1
+title: Federated Model Zoo
+purpose: discover local and external model candidates, acquire approved candidates, and qualify them for tournament use.
+
+zoo_classes:
+  LOCAL:
+    examples: [Ollama, llama.cpp/GGUF, LM_Studio, HuggingFace_cache]
+  REMOTE_CATALOG:
+    examples: [HuggingFace_Hub, Ollama_library, vendor_catalogs]
+  API:
+    examples: [OpenAI_compatible, remote_inference_endpoints]
+  VERIFIED_INTERNAL:
+    examples: [FATHER_MODEL_REGISTRY]
+
+candidate_flow:
+  - DISCOVER
+  - NORMALIZE_METADATA
+  - LICENSE_AND_POLICY_CHECK
+  - HARDWARE_COMPATIBILITY_ESTIMATE
+  - SHORTLIST
+  - ACQUIRE_IF_APPROVED
+  - HASH_AND_FINGERPRINT
+  - CONNECTIVITY_PROBE
+  - SMOKE_TEST
+  - QUALIFIED_FOR_TOURNAMENT
+
+acquisition:
+  automatic_download: false
+  requires:
+    - policy_allow
+    - storage_budget
+    - hardware_fit
+    - license_ok
+    - explicit_execution_authorization
+  evidence:
+    - source
+    - model_revision
+    - file_hashes
+    - size
+    - license
+    - acquisition_time

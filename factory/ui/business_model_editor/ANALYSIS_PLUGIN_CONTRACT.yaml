@@ -1,0 +1,26 @@
+analysis_plugin:
+  id: ""
+  version: ""
+  target_layer: 1
+
+  input:
+    model_schema: FATHER_BUSINESS_MODEL
+    supported_node_types: []
+    supported_flow_types: []
+
+  output:
+    annotations:
+      - target_id: ""
+        category: ""
+        severity: ""
+        confidence: null
+        finding: ""
+        recommendation: ""
+        evidence: []
+        metrics: {}
+
+  requirements:
+    - no_model_mutation_without_explicit_action
+    - provenance_required
+    - confidence_required_for_inferred_findings
+    - findings_must_bind_to_existing_model_elements

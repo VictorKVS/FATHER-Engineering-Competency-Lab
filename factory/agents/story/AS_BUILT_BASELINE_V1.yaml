@@ -1,0 +1,40 @@
+baseline_record:
+  id: AS-BUILT-AG-STORY-001-V1
+  type: AS_BUILT_BASELINE
+  agent_id: AG-STORY-001
+  status: HOLD
+  review_gate: GATE-SIR
+  purpose: Record the first integrated prototype configuration before model qualification.
+
+  assembled:
+    agent_definition: PASS
+    agent_construct: PASS
+    input_contract: PASS
+    output_contract: PASS
+    permissions_profile: PASS
+    runtime_policy: PASS
+    security_baseline: PASS
+    threat_model: PASS
+    executor: PASS
+    tournament_engine: PASS
+    evidence_writer: PASS
+
+  pending_evidence:
+    real_prompt_artifact_binding: HOLD
+    real_rag_binding: HOLD
+    real_knowledge_snapshot_binding: HOLD
+    real_model_adapter_run: HOLD
+    security_test_evidence: HOLD
+
+  entrance_criteria_for_pass:
+    - prompt_artifact_resolves_to_version
+    - rag_artifact_resolves_to_version
+    - knowledge_snapshot_resolves_to_version
+    - at_least_one_real_model_execution_pass
+    - contract_validation_pass
+    - security_baseline_tests_pass
+    - evidence_written
+
+  transition:
+    on_pass: TEST_BASELINE
+    on_hold: RETURN_TO_INTEGRATION

@@ -1,0 +1,18 @@
+demo:
+  id: FATHER_DEMO_ALINA_LITERARY_V1
+  embedded: true
+  canonical_agent: AG-001
+  profile: ALINA_LITERARY
+  suite_ref: agents/alina/profiles/literary/benchmark/GENRE_SUITE.yaml
+  model_matrix_ref: agents/alina/profiles/literary/benchmark/MODEL_MATRIX.yaml
+  rubric_ref: agents/alina/profiles/literary/benchmark/EVALUATION_RUBRIC.yaml
+  outputs:
+    - evidence_json
+    - summary_json
+    - review_bundle_md
+    - provenance_manifest
+  publication:
+    target: GitHub
+    path: benchmark_results/alina_literary/
+    commit_required: true
+    push_requires_explicit_cli_flag: true

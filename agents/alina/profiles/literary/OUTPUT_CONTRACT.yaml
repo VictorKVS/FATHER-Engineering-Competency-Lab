@@ -1,0 +1,24 @@
+output_contract:
+  schema: father.alina.literary.output.v1
+  required:
+    - continuation
+    - continuity
+    - canon_delta
+    - proposals
+    - model_id
+  properties:
+    continuation:
+      type: string
+    continuity:
+      type: object
+      required: [pov, tense, characters, open_threads_used]
+    canon_delta:
+      type: array
+      description: explicit source-supported state changes only
+    proposals:
+      type: array
+      description: newly generated non-canon details
+    model_id:
+      type: string
+    warnings:
+      type: array

@@ -1,0 +1,33 @@
+gate:
+  id: RELEASE_TRUST_GATE
+  version: 0.1.0
+
+  required_attestations:
+    - SOURCE_ATTESTATION
+    - BUILD_ATTESTATION
+    - TEST_ATTESTATION
+    - SECURITY_ATTESTATION
+    - LICENSE_ATTESTATION
+    - RELEASE_ATTESTATION
+
+  required_gates:
+    - FATHER_LICENSE_GATE
+    - FATHER_TRUST_GATE
+    - FATHER_SUPPLY_CHAIN_GATE
+    - REPRODUCIBLE_BUILD_GATE
+
+  minimum_build_assurance:
+    release_candidate: L2
+    production_target: L3
+
+  hard_fail:
+    - missing_required_attestation
+    - invalid_subject_digest
+    - source_build_mismatch
+    - unresolved_license_block
+    - unresolved_security_hard_fail
+    - unverifiable_release_identity
+
+  on_pass:
+    status: RELEASE_TRUST_VERIFIED
+    next: RC_FREEZE_OR_POLYGON

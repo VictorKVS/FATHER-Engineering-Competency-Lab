@@ -1,0 +1,43 @@
+agent_package:
+  id: FATHER_AGENT_PACKAGE_V1
+  version: 1.0.0
+  contents:
+    implementation:
+      - agent.yaml
+      - runtime
+      - adapters
+      - contracts
+    intelligence:
+      - role
+      - prompt
+      - rag
+      - knowledge_snapshot
+    security:
+      - security_baseline
+      - permissions
+      - threat_model
+      - data_classification
+    quality:
+      - unit_tests
+      - contract_tests
+      - security_tests
+      - eval_profile
+    operations:
+      - health_check
+      - structured_logging
+      - metrics
+      - timeout_retry_policy
+    supply_chain:
+      - dependency_lock
+      - sbom
+      - hashes
+      - provenance
+      - release_evidence
+  ready_definition:
+    - functional_pass
+    - contract_pass
+    - security_pass
+    - devsecops_pass
+    - eval_pass
+    - observability_ready
+    - evidence_complete

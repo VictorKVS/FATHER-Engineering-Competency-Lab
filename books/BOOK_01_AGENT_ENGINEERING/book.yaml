@@ -1,0 +1,68 @@
+version: 1
+schema: FATHER_BOOK_V1
+book_id: BOOK-01
+slug: agent-engineering
+title: FATHER Agent Engineering
+subtitle: From LLM Call to Production-Proven Agent
+status: IN_PROGRESS
+target_product: AGENT_V1
+
+source_policy:
+  reproduce_source_text: false
+  require_source_traceability: true
+  required_for_derived_patterns:
+    - source_title
+    - source_locator
+    - source_type
+    - interpretation
+    - father_modification
+
+chapters:
+  - id: CH00
+    title: Model is not Agent
+    status: ACTIVE
+    path: chapter_00_model_vs_agent
+  - id: CH01
+    title: Model API and Provider Adapter
+    status: PLANNED
+  - id: CH02
+    title: Agent Loop and Tools
+    status: PLANNED
+  - id: CH03
+    title: Context Engineering
+    status: PLANNED
+  - id: CH04
+    title: State and Memory
+    status: PLANNED
+  - id: CH05
+    title: Prompt, RAG and Knowledge Package
+    status: PLANNED
+  - id: CH06
+    title: Subagents and Agent Zoo
+    status: PLANNED
+  - id: CH07
+    title: Security and Human Gates
+    status: PLANNED
+  - id: CH08
+    title: Evals, Metrics and Observability
+    status: PLANNED
+  - id: CH09
+    title: Model Selection and Tournaments
+    status: PLANNED
+  - id: CH10
+    title: Release, Load, Red Team and Polygon
+    status: PLANNED
+
+reference_streams:
+  - Agent Harness Course
+  - AI Agents in Action 2nd Edition code repository
+  - Designing Large Language Model Applications
+  - scientific papers and vendor engineering references
+
+completion_rule:
+  chapter_pass_requires:
+    - original_explanation
+    - executable_artifact
+    - test_or_eval
+    - measured_evidence
+    - development_passport_update

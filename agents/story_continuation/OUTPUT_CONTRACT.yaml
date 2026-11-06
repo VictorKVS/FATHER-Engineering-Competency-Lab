@@ -1,0 +1,25 @@
+output_contract:
+  schema: father.story_continuation.output.v1
+  required:
+    - continuation
+    - continuity
+    - model_id
+  properties:
+    continuation:
+      type: string
+    continuity:
+      type: object
+      required:
+        - pov
+        - tense
+        - characters
+        - open_threads_used
+      properties:
+        pov: {type: string}
+        tense: {type: string}
+        characters: {type: array}
+        open_threads_used: {type: array}
+    model_id:
+      type: string
+    warnings:
+      type: array

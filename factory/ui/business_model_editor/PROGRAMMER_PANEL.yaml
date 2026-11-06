@@ -1,0 +1,54 @@
+specialist_panel:
+  id: programmer
+  owner: FATHER_PROGRAMMER
+  purpose: traceable_implementation_from_approved_design
+
+  adds:
+    - source_code
+    - module
+    - class
+    - function
+    - api_handler
+    - adapter
+    - worker
+    - migration
+    - configuration
+    - dependency
+    - implementation_note
+    - code_evidence
+
+  required_inputs:
+    - approved_business_model
+    - system_requirements
+    - architecture_contract
+    - data_contracts
+    - algorithms
+    - interface_contracts
+    - security_constraints
+    - coding_standards
+    - referenced_documents
+
+  implementation_rules:
+    - no_untraceable_logic
+    - no_invented_requirement
+    - every_nontrivial_function_links_to_requirement_or_algorithm
+    - every_external_interaction_links_to_contract
+    - every_security_sensitive_action_links_to_security_requirement
+    - every_dependency_is_declared_and_justified
+    - every_module_has_tests_or_test_contract
+    - deviations_require_adr_or_issue
+
+  calculations:
+    - requirement_to_code_traceability
+    - algorithm_coverage
+    - contract_coverage
+    - dependency_risk
+    - code_complexity
+    - technical_debt
+    - testability_score
+
+  outputs:
+    - implementation_artifact
+    - code_traceability_map
+    - dependency_manifest
+    - implementation_evidence

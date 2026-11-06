@@ -1,0 +1,56 @@
+test_scope:
+  supported:
+    - node
+    - edge
+    - chain
+    - subgraph
+    - whole_model
+
+node_test:
+  target_id: ""
+  specialist_panel: ""
+  tests:
+    - functional
+    - contract
+    - security
+    - performance
+    - quality
+    - ai_eval
+  result:
+    status: NOT_RUN
+    metrics: {}
+    evidence: []
+
+edge_test:
+  target_id: ""
+  tests:
+    - schema_validation
+    - producer_consumer_compatibility
+    - auth
+    - latency
+    - volume
+    - retry
+    - error_contract
+  result:
+    status: NOT_RUN
+    metrics: {}
+    evidence: []
+
+chain_test:
+  chain_id: ""
+  nodes: []
+  flows: []
+  tests:
+    - end_to_end
+    - data_integrity
+    - business_outcome
+    - latency_budget
+    - failure_propagation
+    - security_path
+    - observability
+  result:
+    status: NOT_RUN
+    bottleneck: null
+    failed_at: null
+    metrics: {}
+    evidence: []

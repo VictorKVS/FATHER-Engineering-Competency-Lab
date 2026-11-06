@@ -1,0 +1,80 @@
+model:
+  id: FATHER-FACTORY-BUSINESS-L1
+  version: 0.1.0
+  owner: ALINA_FACTORY
+  entrypoint: customer_intent
+  stages:
+    - id: W00
+      name: Intake and Formalization
+      output: customer_intent_package
+      gate: G0
+    - id: W01
+      name: Business Analysis
+      output: business_design_package
+      gate: G1
+    - id: W02
+      name: System Analysis
+      output: system_design_package
+    - id: W03
+      name: Architecture
+      output: architecture_package
+      gate: G2
+    - id: W04
+      name: Data and Knowledge
+      output: data_knowledge_package
+    - id: W05
+      name: AI and LLM Design
+      output: ai_configuration_package
+    - id: W06
+      name: Security Design
+      output: security_package
+    - id: W07
+      name: Development and Assembly
+      output: build_artifact
+      gate: G3
+    - id: W08
+      name: QA and Test
+      output: test_evidence
+      gate: G4
+    - id: W09
+      name: DevSecOps
+      output: deployable_candidate
+    - id: W10
+      name: Optimization and A-B
+      output: best_known_configuration
+    - id: W11
+      name: Release Candidate Freeze
+      output: release_candidate
+    - id: W12
+      name: Polygon
+      output: polygon_report
+      gate: G5
+    - id: W13
+      name: Acceptance
+      output: acceptance_decision
+    - id: W14
+      name: Release Sale Deployment
+      output: release_package
+      gate: G6
+    - id: W15
+      name: Production Experience
+      output: experience_events
+  feedback:
+    - from: W02
+      to: W01
+      reason: missing_or_conflicting_business_requirement
+    - from: W06
+      to: W03
+      reason: architecture_security_defect
+    - from: W08
+      to: W07
+      reason: test_failure
+    - from: W12
+      to: W06
+      reason: polygon_security_failure
+    - from: W12
+      to: W07
+      reason: polygon_implementation_failure
+    - from: W15
+      to: W00
+      reason: factory_learning

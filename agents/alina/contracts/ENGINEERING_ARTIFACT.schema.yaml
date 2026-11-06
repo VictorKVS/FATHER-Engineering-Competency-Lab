@@ -1,0 +1,69 @@
+schema:
+  id: ALINA_ENGINEERING_ARTIFACT_V1
+  version: 1.0.0
+
+  artifacts:
+    - key: analysis
+      stable_id: ALINA-ART-001
+      public_name: Situation Analysis
+      output: ANALYSIS_REPORT
+    - key: requirements
+      stable_id: ALINA-ART-002
+      public_name: Requirements Map
+      output: REQUIREMENTS_MAP
+    - key: research
+      stable_id: ALINA-ART-003
+      public_name: Research Questions
+      output: RESEARCH_GRAPH
+    - key: osint
+      stable_id: ALINA-ART-004
+      public_name: OSINT Orders
+      output: RESEARCH_REQUESTS
+    - key: competency
+      stable_id: ALINA-ART-005
+      public_name: Competency Model
+      output: COMPETENCY_MODEL
+    - key: graph
+      stable_id: ALINA-ART-006
+      public_name: Knowledge Graph
+      output: KNOWLEDGE_MODEL
+    - key: prompt
+      stable_id: ALINA-ART-007
+      public_name: Prompt Engineering
+      output: PROMPT_ARCHITECTURE
+    - key: rag
+      stable_id: ALINA-ART-008
+      public_name: RAG Engineering
+      output: RAG_ARCHITECTURE
+    - key: kb
+      stable_id: ALINA-ART-009
+      public_name: Knowledge Engineering
+      output: KNOWLEDGE_BASE_ARCHITECTURE
+    - key: training
+      stable_id: ALINA-ART-010
+      public_name: Training Program
+      output: TRAINING_PROGRAM
+    - key: ab
+      stable_id: ALINA-ART-011
+      public_name: A/B & Metrics
+      output: AB_EXPERIMENT_PLAN
+    - key: acceptance
+      stable_id: ALINA-ART-012
+      public_name: Acceptance
+      output: ACCEPTANCE_CRITERIA
+    - key: version
+      stable_id: ALINA-ART-013
+      public_name: Versioning
+      output: HANDOFF
+
+  editing_states:
+    - CURRENT
+    - MODIFIED
+    - ANALYZED
+    - PROPOSAL
+    - REVIEWED
+    - APPROVED
+
+  rule: >
+    Every artifact is independently versioned, editable, traceable, testable and linked
+    to source evidence and downstream acceptance.

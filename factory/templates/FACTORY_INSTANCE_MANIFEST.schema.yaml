@@ -1,0 +1,40 @@
+factory_instance:
+  schema: father.factory_instance.v1
+
+  instance_id: ""
+  blueprint_version: ""
+  profile_ref: ""
+
+  resolved:
+    chassis: ""
+    blocks: []
+    agents: []
+    models: []
+    tools: []
+    stores: []
+    policies: []
+    gates: []
+    ui_modules: []
+
+  replaceable_slots:
+    models: []
+    agents: []
+    tools: []
+    stores: []
+    ui: []
+
+  hard_constraints:
+    - no_stage_pass_without_evidence
+    - no_uncontrolled_tool_access
+    - no_untracked_production_code
+    - no_release_without_trust_verification
+
+  state:
+    current_stage: "000"
+    status: DRAFT
+
+  provenance:
+    created_from_blueprint: ""
+    source_commit: ""
+    created_by: ""
+    created_at: ""

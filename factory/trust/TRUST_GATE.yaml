@@ -1,0 +1,27 @@
+gate:
+  id: FATHER_TRUST_GATE
+  required:
+    - code_provenance_verified
+    - license_inventory_complete
+    - sbom_present
+    - artifact_hashes_verified
+    - heartbeat_configured
+    - tamper_detection_enabled
+    - privileged_access_reviewed
+    - recovery_path_verified
+    - offboarding_controls_defined
+    - no_hidden_destructive_logic
+
+  hard_fail:
+    - unknown_critical_code_origin
+    - incompatible_or_unknown_redistribution_license
+    - unverifiable_release_artifact
+    - single_person_irreversible_control
+    - hidden_backdoor
+    - destructive_offboarding_logic
+    - unsigned_or_unhashed_critical_release_without_exception
+
+  on_fail:
+    status: HOLD
+  on_pass:
+    status: TRUST_VERIFIED

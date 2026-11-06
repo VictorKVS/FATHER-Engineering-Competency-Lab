@@ -1,0 +1,59 @@
+license_compliance:
+  id: FATHER_LICENSE_GATE
+  version: 0.2.0
+
+  principle:
+    - license_presence_is_normal
+    - approved_license_is_PASS
+    - rights_and_obligations_are_checked_against_intended_use
+    - a_component_is_not_blocked_only_because_it_has_a_license
+
+  allowed_classes:
+    - approved_open_source
+    - approved_commercial
+    - approved_proprietary
+    - internal_private
+    - model_license
+    - dataset_license
+    - dual_license
+
+  decision_values:
+    - APPROVED
+    - APPROVED_WITH_OBLIGATIONS
+    - REVIEW_REQUIRED
+    - REJECTED
+
+  inventory:
+    required:
+      - component_name
+      - component_version
+      - source
+      - license
+      - usage_type
+      - modification_status
+      - redistribution_status
+      - obligations
+      - compatibility_decision
+      - owner
+
+  pass_when:
+    - license_known
+    - rights_cover_intended_use
+    - obligations_recorded
+    - required_notices_present
+    - compatibility_approved
+
+  hold_or_fail_when:
+    - rights_unknown_where_proof_is_required
+    - incompatible_terms
+    - required_obligation_not_met
+    - required_notice_missing
+    - model_or_dataset_terms_not_verified
+
+  evidence:
+    - sbom
+    - model_manifest
+    - dataset_manifest
+    - third_party_notices
+    - license_scan_report
+    - approval_record

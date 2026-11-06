@@ -1,0 +1,33 @@
+rag:
+  id: FATHER_PROGRAMMER_RAG
+  version: 0.1.0
+  collections:
+    - id: requirements
+      purpose: approved functional and nonfunctional requirements
+      sources:
+        - factory business/system artifacts
+    - id: algorithms
+      purpose: approved algorithms, state machines and decision logic
+      sources:
+        - analyst and architect packages
+    - id: architecture
+      purpose: ADR, component boundaries, deployment and integration decisions
+    - id: contracts
+      purpose: API, event, data and interface contracts
+    - id: security
+      purpose: secure coding constraints, threat-derived controls, secrets and auth rules
+    - id: coding_standards
+      purpose: language/framework/style standards and FATHER code conventions
+    - id: reusable_blocks
+      purpose: verified code and modules from FATHER 00-100
+    - id: vendor_docs
+      purpose: approved authoritative technical documentation
+    - id: factory_experience
+      purpose: accepted implementations, rejected approaches and lessons learned
+
+  retrieval:
+    mode: hybrid
+    rerank: true
+    provenance_required: true
+    version_filtering: true
+    authority_weighting: true

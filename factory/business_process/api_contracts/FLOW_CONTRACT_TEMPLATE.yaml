@@ -1,0 +1,33 @@
+flow_contract:
+  id: ""
+  name: ""
+  producer: ""
+  consumer: ""
+  trigger: ""
+  protocol: ""
+  endpoint_or_event: ""
+  payload_schema: ""
+  data_classification: ""
+  volume:
+    average_size: UNKNOWN
+    max_size: UNKNOWN
+    frequency: UNKNOWN
+    peak_rate: UNKNOWN
+  quality:
+    completeness: UNKNOWN
+    accuracy: UNKNOWN
+    freshness: UNKNOWN
+  sla:
+    latency: UNKNOWN
+    timeout: UNKNOWN
+  reliability:
+    retry: UNKNOWN
+    idempotency: UNKNOWN
+  security:
+    authn_authz: UNKNOWN
+    integrity: UNKNOWN
+    confidentiality: UNKNOWN
+  validation: UNKNOWN
+  observability: UNKNOWN
+  error_contract: UNKNOWN
+  test_status: NOT_DEFINED

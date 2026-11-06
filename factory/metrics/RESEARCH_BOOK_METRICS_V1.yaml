@@ -1,0 +1,47 @@
+version: 1
+schema: FATHER_RESEARCH_BOOK_METRICS_V1
+title: Research-to-Engineering Metrics Contract
+
+principle:
+  pass_requires_measured_evidence: true
+  unknown_values_are_not_zero: true
+  no_synthetic_pass: true
+
+metrics:
+  quality:
+    - {id: M-Q01, name: task_success_rate, unit: ratio, aggregation: mean}
+    - {id: M-Q02, name: contract_validity_rate, unit: ratio, aggregation: mean}
+    - {id: M-Q03, name: groundedness, unit: score, aggregation: mean}
+  agent:
+    - {id: M-A01, name: tool_use_correctness, unit: ratio, aggregation: mean}
+    - {id: M-A02, name: recovery_rate, unit: ratio, aggregation: mean}
+    - id: M-A03
+      name: steps_per_task
+      unit: count
+      aggregation: [mean, p95]
+  rag:
+    - {id: M-R01, name: recall_at_k, unit: score}
+    - id: M-R02
+      name: ranking_quality
+      measures: [mrr, ndcg]
+  operations:
+    - id: M-O01
+      name: latency
+      unit: milliseconds
+      aggregation: [p50, p95]
+    - id: M-O02
+      name: token_usage
+      measures: [input_tokens, output_tokens, total_tokens]
+    - id: M-O03
+      name: resource_peak
+      measures: [vram_mb, ram_mb, cpu_percent]
+  security:
+    - {id: M-S01, name: security_hard_fail_count, unit: count, hard_gate: true}
+  evidence:
+    - id: M-E01
+      name: evidence_completeness
+      required: [run_id, source_version, model_id, model_fingerprint, prompt_version, rag_version, knowledge_snapshot, config, trace, raw_metrics, verdict]
+
+experiment_comparison:
+  required: [baseline, candidate, controlled_variables, frozen_test_set, repeated_runs_if_stochastic, metric_table, error_analysis, decision]
+  decisions: [VERIFIED, REJECTED, PARETO_SET, INSUFFICIENT_EVIDENCE]

@@ -1,0 +1,91 @@
+version: 1
+schema: FATHER_INTELLIGENCE_CORE_POLICY_V1
+title: ALINA Scientific Prompt & RAG Lab as Central Intelligence Core
+
+status: MANDATORY_CORE
+
+principle: >
+  The model is a replaceable execution engine. The durable intelligence of an
+  agent is defined by role, prompt program, retrieval strategy, knowledge base,
+  evidence policy, evaluation contract and operational feedback.
+
+mandatory_for:
+  - production_agents
+  - specialist_agents
+  - agent_zoo_members
+  - model_tournament_baselines
+  - domain_agent_packages
+
+intelligence_package:
+  required:
+    - role_profile
+    - prompt_program
+    - prompt_version
+    - rag_manifest
+    - retrieval_strategy
+    - knowledge_base_manifest
+    - source_registry
+    - source_versions
+    - evidence_policy
+    - citation_policy
+    - evaluation_dataset
+    - evaluation_metrics
+    - adversarial_tests
+    - regression_tests
+    - promotion_evidence
+
+scientific_gate:
+  id: INTELLIGENCE_PACKAGE_VERIFIED
+  requires:
+    - baseline_exists
+    - held_out_test_exists
+    - prompt_eval_pass
+    - rag_eval_pass
+    - grounding_pass
+    - citation_pass
+    - adversarial_pass
+    - regression_pass
+    - evidence_complete
+  failure_action: HOLD
+
+factory_position:
+  upstream:
+    - BUSINESS_ANALYSIS
+    - SYSTEM_ANALYSIS
+    - ARCHITECTURE
+  core:
+    - ALINA_SCIENTIFIC_PROMPT_RAG_LAB
+  downstream:
+    - AGENT_ASSEMBLY
+    - MODEL_SELECTION
+    - AGENT_TOURNAMENT
+    - RELEASE_QUALIFICATION
+
+ownership:
+  primary: ALINA_KNOWLEDGE_REASONING_ENGINEER
+  collaborating_roles:
+    - DOMAIN_EXPERT
+    - SYSTEM_ANALYST
+    - SECURITY_SPECIALIST
+    - TEST_ENGINEER
+    - MODEL_ANALYST
+
+development_passport:
+  required: true
+  sections:
+    - current_prompt_baseline
+    - current_rag_baseline
+    - current_knowledge_snapshot
+    - experiment_history
+    - rejected_hypotheses
+    - modernization_candidates
+    - reuse_options
+    - model_compatibility_notes
+
+rules:
+  - no_agent_is_production_ready_without_verified_intelligence_package
+  - no_prompt_change_without_version_and_regression
+  - no_rag_change_without_retrieval_evidence
+  - no_knowledge_update_without_source_provenance
+  - no_model_tournament_may_change_prompt_or_rag_during_model_comparison
+  - every_promoted_change_updates_development_passport

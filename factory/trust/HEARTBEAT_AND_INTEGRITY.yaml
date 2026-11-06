@@ -1,0 +1,42 @@
+heartbeat:
+  id: FATHER_HEARTBEAT
+  version: 0.1.0
+
+  purpose:
+    - know_that_core_services_are_alive
+    - detect_tampering_or_stale_components
+    - detect_dependency_or_agent_failure
+    - support_safe_failover
+
+  signals:
+    - service_health
+    - agent_health
+    - model_runtime_health
+    - queue_health
+    - database_health
+    - event_bus_health
+    - evidence_store_health
+    - git_sync_status
+    - configuration_hash
+    - binary_or_container_digest
+
+  states:
+    - HEALTHY
+    - DEGRADED
+    - STALE
+    - UNTRUSTED
+    - UNAVAILABLE
+
+  rules:
+    - heartbeat_loss_does_not_trigger_destructive_action
+    - stale_or_untrusted_component_is_quarantined
+    - safety_critical_actions_require_fresh_health_state
+    - component_identity_is_verified_before_accepting_heartbeat
+    - heartbeat_events_are_audited
+
+  responses:
+    HEALTHY: continue
+    DEGRADED: limit_and_monitor
+    STALE: hold_sensitive_actions
+    UNTRUSTED: isolate_and_require_review
+    UNAVAILABLE: fail_safe_and_escalate

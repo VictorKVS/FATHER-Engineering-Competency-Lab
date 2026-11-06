@@ -1,0 +1,101 @@
+stage_000_analysis:
+  stage_id: STAGE-000
+  run_id: DEMO-STORY-000-001
+  state: READY_FOR_GATE
+
+  input_test:
+    status: PASS
+    checks:
+      raw_idea_not_empty: PASS
+      raw_idea_has_meaningful_length: PASS
+      input_is_not_only_attachment_reference: PASS
+      constraints_are_explicit_if_known: PASS
+
+  specialist:
+    role: ROLE-101
+    public_name: AI Product Engineer
+
+  analysis:
+    original_idea: >
+      Создать LLM-систему продолжения рассказов на одной агентной конструкции
+      со сменяемой LLM, единым входным и выходным контрактом, автоматическими
+      тестами результата, возможностью автоматически переключить модель при
+      отказе или непрохождении теста и сохранением evidence и результатов в GitHub.
+
+    normalized_intent: >
+      Создать первое демонстрационное изделие FATHER/NEXUS: агент продолжения
+      художественного текста, где алгоритм и контракты фиксированы, LLM является
+      заменяемым Model Slot, а переход на другую модель выполняется по измеримым
+      runtime/test gates с полным evidence trail.
+
+    problem_statement: >
+      Нужно доказать, что фабрика способна провести одну идею по стандартному
+      производственному конвейеру и получить работающее изделие, в котором
+      модель не зашита в бизнес-алгоритм.
+
+    expected_outcome:
+      - Один рабочий Story Continuation Agent.
+      - Единый Input Contract и Output Contract.
+      - Минимум две совместимые LLM-кандидата либо зафиксированное evidence, почему кандидат не прошёл.
+      - Model Router/Failover.
+      - Автоматические contract/hard-fail tests.
+      - Evidence package.
+      - Git history проекта.
+      - Возможность далее использовать тот же chassis для других алгоритмов.
+
+    facts:
+      - statement: В FATHER уже существует профиль ALINA_LITERARY с Prompt/RAG/KB/Output Contract.
+        source: existing_factory_artifacts
+      - statement: В Model Zoo зафиксированы несколько локальных text/text-code моделей-кандидатов.
+        source: LOCAL_MODEL_CATALOG.yaml
+      - statement: Фабрика использует единый диапазон этапов 000-100.
+        source: PROJECT_STAGE_MAP.yaml
+
+    assumptions:
+      - Для первого воплощения достаточно text-only story continuation без multimodal.
+      - Model Router может выбирать модель по hard-fail и измеримому score.
+      - Литературное качество должно иметь отдельный quality gate поверх структурного contract gate.
+
+    unknowns:
+      - Какое точное имя получит демонстрационный проект.
+      - Какой GitHub repository name будет утверждён.
+      - Какой локальный путь будет утверждён.
+      - Какая LLM первой реально пройдёт inference на целевой машине.
+      - Какие художественные метрики будут автоматизируемы без экспертной оценки.
+
+    initial_risks:
+      - UI может опережать исполняемый runtime.
+      - Разные модели могут требовать разные chat templates/runtime launch parameters.
+      - Формально корректный JSON не гарантирует художественное качество.
+      - Автоматический failover без evidence может скрывать деградацию; поэтому каждая попытка должна сохраняться.
+
+    first_questions:
+      - Кто принимает первое воплощение как PASS?
+      - Как называется проект и где он создаётся?
+      - Что является минимальным working implementation?
+      - Какие проверки являются hard-fail?
+      - Какая часть художественного качества требует human/expert review?
+
+    recommended_next_step: >
+      APPROVE STAGE 000 and move to STAGE 001 Project Initialization,
+      where project identity, GitHub binding and local path are proposed
+      and require a second explicit approval before creation.
+
+  artifact_test:
+    status: PASS
+    checks:
+      original_idea_preserved: PASS
+      facts_have_source_refs: PASS
+      assumptions_are_separate: PASS
+      unknowns_are_explicit: PASS
+      recommended_next_step_present: PASS
+      no_project_created_yet: PASS
+
+  human_gate:
+    decision: PENDING
+    allowed: [APPROVE, HOLD, REJECT]
+
+  project_creation:
+    status: NOT_CREATED
+    github_repository: NOT_CREATED
+    local_directory: NOT_CREATED

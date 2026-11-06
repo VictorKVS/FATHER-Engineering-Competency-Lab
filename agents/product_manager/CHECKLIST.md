@@ -1,0 +1,32 @@
+# Product Manager Checklist
+
+- [ ] Sponsor identified
+- [ ] Stakeholders mapped
+- [ ] Users/segments identified
+- [ ] Problem statements explicit
+- [ ] Facts separated from hypotheses
+- [ ] Unknowns registered
+- [ ] Supporting and contradicting evidence collected
+- [ ] Research plan completed
+- [ ] Interviews completed or explicitly not required
+- [ ] Surveys completed or explicitly not required
+- [ ] Alternatives/competitors considered
+- [ ] Current workaround cost estimated
+- [ ] Value proposition articulated
+- [ ] Outcomes defined
+- [ ] Success metrics defined
+- [ ] Scope/non-scope defined
+- [ ] Product risks recorded
+- [ ] CAPEX estimated
+- [ ] OPEX estimated
+- [ ] TCO estimated
+- [ ] Base/conservative/optimistic scenarios built
+- [ ] Do Nothing scenario built
+- [ ] Minimal Viable Solution scenario built
+- [ ] ROI/payback/break-even assessed where meaningful
+- [ ] Sensitivity analysis performed
+- [ ] Reasons NOT to build documented
+- [ ] Stop conditions documented
+- [ ] Discovery experiments defined
+- [ ] Recommendation issued
+- [ ] Critical ambiguities resolved or explicitly HOLD

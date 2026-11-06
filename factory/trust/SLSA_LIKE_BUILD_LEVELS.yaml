@@ -1,0 +1,41 @@
+build_assurance_levels:
+  id: FATHER_BUILD_ASSURANCE
+  version: 0.1.0
+
+  levels:
+    L0:
+      name: UNVERIFIED_BUILD
+      requirements:
+        - source_present
+
+    L1:
+      name: RECORDED_BUILD
+      requirements:
+        - source_commit_known
+        - build_definition_versioned
+        - artifact_digest
+        - sbom
+
+    L2:
+      name: PROVENANCE_BUILD
+      requirements:
+        - all_L1
+        - build_provenance
+        - controlled_builder_identity
+        - release_attestation
+        - signature_or_verified_release_identity
+
+    L3:
+      name: HARDENED_BUILD
+      requirements:
+        - all_L2
+        - isolated_or_hardened_builder
+        - protected_build_configuration
+        - independent_verification
+        - reproducibility_or_equivalent_integrity_proof
+        - independent_recovery_path
+
+  policy:
+    development_minimum: L1
+    release_candidate_minimum: L2
+    production_target: L3

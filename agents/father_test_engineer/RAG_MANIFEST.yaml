@@ -1,0 +1,28 @@
+rag:
+  id: FATHER_TEST_ENGINEER_RAG
+  version: 0.1.0
+  collections:
+    - id: requirements
+      purpose: requirements and acceptance criteria
+    - id: algorithms
+      purpose: algorithms, state machines and decision logic
+    - id: contracts
+      purpose: API/data/event/interface contracts
+    - id: architecture
+      purpose: topology, dependencies and integration boundaries
+    - id: risk_security
+      purpose: risks, threats, controls and attack paths
+    - id: quality
+      purpose: SLA, NFR, performance and reliability targets
+    - id: testing_methods
+      purpose: test design techniques and patterns
+    - id: defects_regressions
+      purpose: prior defects, root causes and regression history
+    - id: factory_experience
+      purpose: accepted and rejected tests plus lessons learned
+
+  retrieval:
+    mode: hybrid
+    rerank: true
+    provenance_required: true
+    bind_results_to_model_elements: true

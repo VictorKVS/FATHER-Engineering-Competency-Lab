@@ -1,0 +1,33 @@
+model_policy:
+  schema: father.factory_model_policy.v1
+
+  default_preference:
+    - LOCAL
+    - ONLINE_FALLBACK
+
+  routing_dimensions:
+    - capability
+    - quality
+    - latency
+    - vram
+    - ram
+    - cost
+    - privacy
+    - jurisdiction
+    - reliability
+
+  candidate_selection:
+    require_eval: true
+    require_contract_pass: true
+    require_security_pass: true
+    allow_ab_testing: true
+
+  promotion:
+    hard_gates:
+      - schema_valid
+      - evidence_preserved
+      - no_critical_invention
+      - security_policy_pass
+
+  provider_independence:
+    required: true

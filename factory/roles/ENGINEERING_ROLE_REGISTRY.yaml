@@ -1,0 +1,316 @@
+registry:
+  id: ENGINEERING_ROLE_REGISTRY
+  version: 1.0.0
+
+  pipeline:
+    - ROLE-101
+    - ROLE-102
+    - ROLE-103
+    - ROLE-104
+    - ROLE-105
+    - ROLE-106
+    - ROLE-001
+    - ROLE-107
+
+  roles:
+    - stable_id: ROLE-101
+      key: product
+      public_name: AI Product Engineer
+      code_name: PRODUCT
+      purpose: Convert idea into product intent, value, users, outcomes, constraints and success criteria.
+      inputs:
+        - IDEA
+        - CUSTOMER_CONTEXT
+        - MARKET_CONTEXT
+      outputs:
+        - PRODUCT_INTENT
+        - VALUE_MODEL
+        - USER_MODEL
+        - KPI_MODEL
+        - PRODUCT_CONSTRAINTS
+      editor:
+        template: PRODUCT_INTENT.yaml
+        primary_action: "Сформировать Product Intent"
+        sections:
+          - Problem
+          - Users
+          - Value
+          - Outcomes
+          - KPI
+          - Constraints
+          - Assumptions
+          - Risks
+      metrics:
+        - outcome_clarity
+        - kpi_coverage
+        - assumption_exposure
+        - requirement_readiness
+      ab_tests:
+        - value_hypothesis
+        - scope_variant
+        - kpi_variant
+
+    - stable_id: ROLE-102
+      key: business
+      public_name: Business Process Engineer
+      code_name: BA
+      purpose: Transform product intent into AS-IS/TO-BE processes, decisions, roles, handoffs and business rules.
+      inputs:
+        - PRODUCT_INTENT
+        - VALUE_MODEL
+        - USER_MODEL
+      outputs:
+        - BUSINESS_PROCESS_MODEL
+        - DECISION_MAP
+        - ROLE_MAP
+        - BUSINESS_RULES
+        - EXCEPTION_CATALOG
+      editor:
+        template: BUSINESS_PROCESS_MODEL.yaml
+        primary_action: "Спроектировать бизнес-процесс"
+        sections:
+          - AS_IS
+          - TO_BE
+          - Actors
+          - Steps
+          - Decisions
+          - InputsOutputs
+          - Exceptions
+          - Controls
+      metrics:
+        - process_coverage
+        - decision_coverage
+        - exception_coverage
+        - handoff_completeness
+      ab_tests:
+        - process_variant
+        - automation_boundary
+        - decision_placement
+
+    - stable_id: ROLE-103
+      key: system
+      public_name: System & Domain Engineer
+      code_name: SYSTEM
+      purpose: Convert processes into system/domain model, entities, states, interfaces, dependencies and technical constraints.
+      inputs:
+        - BUSINESS_PROCESS_MODEL
+        - DECISION_MAP
+        - PRODUCT_CONSTRAINTS
+      outputs:
+        - DOMAIN_MODEL
+        - SYSTEM_CONTEXT
+        - DATA_MODEL
+        - INTERFACE_MAP
+        - STATE_MODEL
+        - DEPENDENCY_MAP
+      editor:
+        template: SYSTEM_DOMAIN_MODEL.yaml
+        primary_action: "Сформировать системную модель"
+        sections:
+          - DomainEntities
+          - StateModel
+          - Systems
+          - APIs
+          - Data
+          - Events
+          - Dependencies
+          - TechnicalConstraints
+      metrics:
+        - entity_coverage
+        - interface_coverage
+        - state_coverage
+        - dependency_traceability
+      ab_tests:
+        - boundary_variant
+        - interface_variant
+        - data_flow_variant
+
+    - stable_id: ROLE-104
+      key: security
+      public_name: Security & Compliance Engineer
+      code_name: SECURITY
+      purpose: Define threats, risks, controls, policies, prohibited actions, compliance and acceptance constraints.
+      inputs:
+        - PRODUCT_INTENT
+        - BUSINESS_PROCESS_MODEL
+        - SYSTEM_CONTEXT
+        - DATA_MODEL
+      outputs:
+        - SECURITY_REQUIREMENTS
+        - THREAT_MODEL
+        - RISK_REGISTER
+        - CONTROL_MODEL
+        - COMPLIANCE_MAP
+        - SECURITY_HARD_FAILS
+      editor:
+        template: SECURITY_ASSURANCE.yaml
+        primary_action: "Сформировать Security Package"
+        sections:
+          - Assets
+          - DataClasses
+          - Threats
+          - Risks
+          - Controls
+          - Compliance
+          - ProhibitedActions
+          - HardFails
+      metrics:
+        - threat_coverage
+        - control_coverage
+        - compliance_traceability
+        - residual_risk_visibility
+      ab_tests:
+        - control_variant
+        - policy_variant
+        - risk_threshold_variant
+
+    - stable_id: ROLE-105
+      key: profession
+      public_name: Profession & Competency Engineer
+      code_name: COMPETENCY
+      purpose: Model the real profession as activities, decisions, competencies, skills, tools, errors and proficiency levels.
+      inputs:
+        - BUSINESS_PROCESS_MODEL
+        - DOMAIN_MODEL
+        - SECURITY_REQUIREMENTS
+      outputs:
+        - PROFESSION_MODEL
+        - COMPETENCY_MODEL
+        - SKILL_MODEL
+        - TOOL_MODEL
+        - FAILURE_TAXONOMY
+        - PROFICIENCY_LEVELS
+      editor:
+        template: PROFESSION_COMPETENCY_MODEL.yaml
+        primary_action: "Спроектировать модель профессии"
+        sections:
+          - Activities
+          - Decisions
+          - Competencies
+          - Knowledge
+          - Skills
+          - Tools
+          - FailureModes
+          - ProficiencyLevels
+      metrics:
+        - activity_coverage
+        - competency_coverage
+        - skill_testability
+        - critical_failure_coverage
+      ab_tests:
+        - competency_decomposition
+        - proficiency_thresholds
+        - training_scope
+
+    - stable_id: ROLE-106
+      key: corporate
+      public_name: Corporate Knowledge Engineer
+      code_name: CORP_KNOWLEDGE
+      purpose: Curate reusable organization-wide knowledge packs, provenance, freshness, ownership and access.
+      inputs:
+        - CORPORATE_DOCUMENTS
+        - POLICIES
+        - PROCESS_LIBRARY
+        - TERMINOLOGY
+        - PRODUCT_CATALOG
+      outputs:
+        - CORPORATE_KNOWLEDGE_PACK
+        - SOURCE_REGISTRY
+        - TERMINOLOGY_PACK
+        - POLICY_PACK
+        - UPDATE_POLICY
+      editor:
+        template: CORPORATE_KNOWLEDGE_PACK.yaml
+        primary_action: "Собрать Corporate Knowledge Pack"
+        sections:
+          - Organization
+          - Processes
+          - Products
+          - Terminology
+          - Policies
+          - DataClassification
+          - Ownership
+          - Freshness
+      metrics:
+        - source_coverage
+        - provenance_coverage
+        - freshness
+        - duplication_rate
+      ab_tests:
+        - knowledge_layering
+        - source_weighting
+        - update_policy
+
+    - stable_id: ROLE-001
+      key: alina
+      public_name: Knowledge & Reasoning Engineer
+      code_name: ALINA
+      purpose: Engineer the intelligence package of the target agent.
+      inputs:
+        - PRODUCT_INTENT
+        - BUSINESS_PROCESS_MODEL
+        - DOMAIN_MODEL
+        - SECURITY_REQUIREMENTS
+        - PROFESSION_MODEL
+        - COMPETENCY_MODEL
+        - CORPORATE_KNOWLEDGE_PACK
+      outputs:
+        - INTELLIGENCE_ENGINEERING_PACKAGE
+      editor:
+        template: INTELLIGENCE_ENGINEERING_PACKAGE.yaml
+        primary_action: "Спроектировать Intelligence Package"
+        sections:
+          - SituationAnalysis
+          - RequirementsMap
+          - ResearchQuestions
+          - Competency
+          - Prompt
+          - RAG
+          - Knowledge
+          - Training
+          - Evals
+          - Acceptance
+      metrics:
+        - traceability
+        - intelligence_coverage
+        - source_grounding
+        - skill_evidence_coverage
+      ab_tests:
+        - prompt_variant
+        - rag_variant
+        - knowledge_variant
+        - training_variant
+
+    - stable_id: ROLE-107
+      key: osint
+      public_name: Research & Evidence Engineer
+      code_name: OSINT
+      purpose: Execute structured external research requests and return evidence packages with provenance and counter-evidence.
+      inputs:
+        - RESEARCH_REQUEST
+      outputs:
+        - EVIDENCE_PACKAGE
+        - SOURCE_REGISTRY_DELTA
+        - COUNTER_EVIDENCE
+        - UNRESOLVED_GAPS
+      editor:
+        template: RESEARCH_EXECUTION_PLAN.yaml
+        primary_action: "Сформировать план исследования"
+        sections:
+          - Questions
+          - SearchPlan
+          - Sources
+          - Collection
+          - Provenance
+          - Corroboration
+          - CounterEvidence
+          - Sufficiency
+      metrics:
+        - primary_source_ratio
+        - corroboration_ratio
+        - provenance_completeness
+        - gap_closure_rate
+      ab_tests:
+        - search_strategy
+        - source_priority
+        - corroboration_threshold

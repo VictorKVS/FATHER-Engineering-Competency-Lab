@@ -1,0 +1,66 @@
+output:
+  product_discovery_package:
+    customer_intent: {}
+    stakeholders: []
+    user_segments: []
+    problem_statements: []
+    jobs_to_be_done: []
+
+    evidence:
+      facts: []
+      hypotheses: []
+      assumptions: []
+      unknowns: []
+      supporting_evidence: []
+      contradicting_evidence: []
+      confidence: {}
+
+    research:
+      interview_results: []
+      survey_results: []
+      desk_research: []
+      competitor_analysis: []
+      alternatives: []
+
+    product:
+      value_proposition: {}
+      product_outcomes: []
+      success_metrics: []
+      scope: []
+      non_scope: []
+      product_risks: []
+
+    economics:
+      capex: {}
+      opex: {}
+      total_cost_of_ownership: null
+      expected_benefit: null
+      net_benefit: null
+      roi: null
+      payback_period: null
+      break_even_point: null
+      cost_per_user: null
+      cost_per_transaction: null
+      cost_per_successful_task: null
+      scenarios:
+        base: {}
+        conservative: {}
+        optimistic: {}
+        do_nothing: {}
+        minimal_viable_solution: {}
+      sensitivity: []
+      assumptions: []
+      confidence: null
+
+    challenge:
+      major_doubts: []
+      red_team_questions: []
+      failure_conditions: []
+      stop_conditions: []
+      reasons_not_to_build: []
+
+    experiments: []
+    decisions: []
+    unresolved_questions: []
+    recommendation: BUILD|PILOT|REDUCE_SCOPE|RESEARCH_MORE|DEFER|REJECT
+    gate_status: HOLD|PASS

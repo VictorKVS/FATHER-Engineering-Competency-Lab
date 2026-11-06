@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "father-factory-runtime"
+version = "0.1.0"
+description = "Executable bootstrap runtime for FATHER Self-Factory"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6.0.1"]
+
+[project.scripts]
+father-factory = "father_runtime.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["father_runtime*", "agents*"]

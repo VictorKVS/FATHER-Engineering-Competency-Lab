@@ -1,0 +1,59 @@
+agents:
+  - agent_id: AG-STORY-001
+    identity:
+      name: NEXUS Story Continuation Agent
+      purpose: Continue a story while preserving canon and continuity.
+      domain: STORY_CONTINUATION
+      owner: FATHER_FACTORY
+    composition:
+      role: ROLE-STORY-001
+      prompt: PROMPT-STORY-001
+      rag: RAG-STORY-001
+      knowledge: KB-STORY-001
+      input_contract: STORY_INPUT_V1
+      output_contract: STORY_OUTPUT_V1
+    model_policy:
+      mode: SWAPPABLE
+      required_capabilities:
+        - text_generation
+        - structured_output
+      approved_models: []
+      primary: null
+      fallback: []
+      local_only: false
+      security_class: ENGINEERING
+    tools:
+      allowed: []
+      denied:
+        - arbitrary_shell
+        - unrestricted_filesystem_write
+        - unrestricted_network
+      permissions_profile: STORY_PERMISSIONS_V1
+    security:
+      baseline: FATHER_AGENT_SECURITY_BASELINE_V1
+      threat_model: AGENT_THREAT_MODEL_V1
+      data_classification: INTERNAL_DEMO
+      last_security_result: null
+    runtime:
+      executor: FATHER_AGENT_EXECUTOR_V1
+      workflow: DIRECT_EXECUTION_V1
+      health: UNKNOWN
+      last_run: null
+    eval:
+      profile: EVAL-STORY-001
+      last_score: null
+      hard_fails: []
+    lifecycle:
+      state: AS_BUILT_HOLD
+      maturity: PROTOTYPE
+      baseline: AS-BUILT-AG-STORY-001-V1
+      release: null
+    evidence:
+      last_run: null
+      last_verified_run: null
+      evidence_refs: []
+      git_commit: null
+
+metadata:
+  schema: FATHER_AGENT_REGISTRY_V1
+  updated_at: null

@@ -1,0 +1,24 @@
+local_run_targets:
+  version: 0.1.0
+  first_stage: '000'
+  targets:
+    - id: RUN-GIGACHAT3-10B-Q4KS
+      model_ref: MDL-GIGACHAT3-10B-A18-Q4KS
+      priority: 1
+      server: LLAMA_CPP
+      endpoint: http://127.0.0.1:8080/v1/chat/completions
+    - id: RUN-QWEN25-14B-Q4
+      model_ref: MDL-QWEN25-14B-1M-Q4
+      priority: 2
+      server: LLAMA_CPP
+      endpoint: http://127.0.0.1:8080/v1/chat/completions
+    - id: RUN-GIGACHAT20B-V15-Q4
+      model_ref: MDL-GIGACHAT-20B-A3B-V15-Q4
+      priority: 3
+      server: LLAMA_CPP
+      endpoint: http://127.0.0.1:8080/v1/chat/completions
+
+  rule:
+    - one_candidate_at_a_time_for_smoke
+    - same_stage_contract_for_all_candidates
+    - no_promotion_without_abn_eval

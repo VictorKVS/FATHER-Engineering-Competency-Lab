@@ -1,0 +1,97 @@
+handoffs:
+  - id: ALINA_TO_DOMAIN
+    from: alina
+    to:
+      - security_specialist
+      - pioneer
+      - father_codex
+      - father_test_engineer
+    payload:
+      - normalized_requirements
+      - model_refs
+      - process_refs
+      - knowledge_refs
+      - ambiguity_register
+      - evidence_refs
+
+  - id: SECURITY_TO_ENGINEERING
+    from: security_specialist
+    to:
+      - pioneer
+      - father_codex
+      - father_test_engineer
+      - tima
+    payload:
+      - security_requirements
+      - threats
+      - risks
+      - controls
+      - compliance_refs
+      - security_gate
+
+  - id: PIONEER_TO_TIMA
+    from: pioneer
+    to: tima
+    gate: GATE-1
+    canonical_contract: VictorKVS/CyberED/PIONEER-00
+    payload:
+      - project_id
+      - schema_version
+      - architecture_revision
+      - target_environment
+      - resources
+      - network_policy
+      - acceptance_tests
+      - approval_status
+      - evidence_refs
+      - architecture_sha256
+      - security_sha256
+      - catalog_sha256
+
+  - id: DESIGN_TO_CODEX
+    from:
+      - alina
+      - security_specialist
+      - pioneer
+    to: father_codex
+    payload:
+      - approved_requirements
+      - architecture
+      - algorithms
+      - interface_contracts
+      - data_contracts
+      - security_constraints
+      - acceptance_criteria
+
+  - id: CODEX_TO_TEST
+    from: father_codex
+    to: father_test_engineer
+    payload:
+      - implementation_artifact
+      - traceability_map
+      - dependency_manifest
+      - unit_test_evidence
+      - implementation_evidence
+
+  - id: TEST_TO_TIMA
+    from: father_test_engineer
+    to: tima
+    condition: deployment_candidate
+    payload:
+      - verified_build
+      - test_evidence
+      - environment_requirements
+      - known_limits
+      - residual_risks
+
+  - id: TIMA_TO_POLYGON
+    from: tima
+    to: polygon
+    payload:
+      - deployed_rc
+      - runtime_manifest
+      - sbom
+      - observability_refs
+      - deployment_evidence
+      - image_digests
+      - configuration_hashes

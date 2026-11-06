@@ -1,0 +1,72 @@
+factory_test_matrix:
+  version: 0.1.0
+
+  suites:
+    - id: FT-00
+      name: registry_and_contracts
+      tests:
+        - agent_registry_loads
+        - unique_agent_ids
+        - standard_package_fields_known
+        - handoff_contract_loads
+        - product_state_model_valid
+
+    - id: FT-01
+      name: runtime_contract
+      tests:
+        - agent_profile_resolution
+        - prompt_resolution
+        - rag_manifest_resolution
+        - input_validation
+        - output_validation
+        - eval_hook
+        - evidence_capture
+
+    - id: FT-02
+      name: handoff
+      tests:
+        - accept_valid_payload
+        - reject_invalid_schema
+        - reject_missing_required_ref
+        - hold_incomplete_package
+        - version_conflict
+        - resubmit_corrected_package
+
+    - id: FT-03
+      name: lifecycle
+      tests:
+        - product_created
+        - specialist_assigned
+        - gate_transition
+        - artifact_attached
+        - product_status_updated
+        - next_specialist_selected
+
+    - id: FT-04
+      name: rework
+      tests:
+        - research_gap_loop
+        - architecture_gap_loop
+        - failed_test_loop
+        - security_block
+        - polygon_fail_return
+        - rollback
+
+    - id: FT-05
+      name: ui_evidence
+      tests:
+        - status_color_mapping
+        - dossier_opens
+        - specialist_workspace_opens
+        - documents_visible
+        - tests_visible
+        - evidence_visible
+        - history_visible
+
+  required_for_factory_pass:
+    - FT-00
+    - FT-01
+    - FT-02
+    - FT-03
+    - FT-04
+    - FT-05
