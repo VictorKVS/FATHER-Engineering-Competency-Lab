@@ -2,16 +2,16 @@
   "component": "FATHER Chassis",
   "canonical_path": "services/father-chassis",
   "development_branch": "father-chassis-development",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "tests": {
-    "passed": 37,
+    "passed": 40,
     "failed": 0
   },
   "gates": {
     "G0_CODE_EXISTS": "PASS",
     "G1_COMPONENT_TESTED": "PASS",
     "G2_INTEGRATED": "PASS",
-    "G3_CHASSIS_QUALIFIED": "IN_PROGRESS",
+    "G3_CHASSIS_QUALIFIED": "PENDING_WINDOWS_QUALIFICATION",
     "G4_PRODUCT_QUALIFIED": "IN_PROGRESS",
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "NOT_STARTED"
