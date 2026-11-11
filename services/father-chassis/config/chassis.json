@@ -1,9 +1,16 @@
 {
   "name": "FATHER_CHASSIS",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "workflow": "default",
   "emergency_stop": false,
-  "retry": {"attempts": 2, "timeout_ms": 30000},
-  "policies": {"human_approval_for": []},
-  "metadata": {"profile": "workstation-production-like"}
+  "retry": {
+    "attempts": 2,
+    "timeout_ms": 30000
+  },
+  "policies": {
+    "human_approval_for": []
+  },
+  "metadata": {
+    "profile": "windows-docker-qualification"
+  }
 }
