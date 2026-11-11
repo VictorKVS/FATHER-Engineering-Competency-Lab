@@ -22,7 +22,41 @@ if($health.Trim() -ne "configured"){$fail += "healthcheck_missing"}
 
 Write-Host "[G6.3] Default credential check"
 $envText=Get-Content ".env" -Raw
-if($envText -match '(?m)^FATHER_POSTGRES_PASSWORD=(father|change-me-before-production)?\s*$'){
+if($envText -notmatch '(?m)^FATHER_POSTGRES_PASSWORD=.+
+
+$result=[ordered]@{
+ gate="G6.3_SECURITY"
+ runtime_uid=$user.Trim()
+ no_new_privileges=($nnp -match "no-new-privileges")
+ memory_limit_bytes=$mem
+ nano_cpus=$cpu
+ healthcheck=$health.Trim()
+ failures=$fail
+ passed=($fail.Count -eq 0)
+}
+$result|ConvertTo-Json -Depth 10|Set-Content ".\artifacts\g6_security.json"
+$result|ConvertTo-Json -Depth 10
+if(-not $result.passed){Write-Host "G6.3 SECURITY: FAIL";exit 1}
+Write-Host "G6.3 SECURITY: PASS"
+){
+    $fail += "postgres_password_missing"
+} elseif($envText -match '(?m)^FATHER_POSTGRES_PASSWORD=(father|change-me-before-production)?\s*
+
+$result=[ordered]@{
+ gate="G6.3_SECURITY"
+ runtime_uid=$user.Trim()
+ no_new_privileges=($nnp -match "no-new-privileges")
+ memory_limit_bytes=$mem
+ nano_cpus=$cpu
+ healthcheck=$health.Trim()
+ failures=$fail
+ passed=($fail.Count -eq 0)
+}
+$result|ConvertTo-Json -Depth 10|Set-Content ".\artifacts\g6_security.json"
+$result|ConvertTo-Json -Depth 10
+if(-not $result.passed){Write-Host "G6.3 SECURITY: FAIL";exit 1}
+Write-Host "G6.3 SECURITY: PASS"
+){
     $fail += "postgres_default_or_empty_password"
 }
 
