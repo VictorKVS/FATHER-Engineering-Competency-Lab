@@ -2,9 +2,9 @@
 
 > English version: [README.md](README.md)
 
-## Текущая версия: 0.6.0
+## Текущая версия: 0.7.0
 
-**Автоматическая регрессия: 37/37 тестов PASS.**
+**Автоматическая регрессия: 40/40 тестов PASS.**
 
 FATHER Chassis — универсальное шасси и производственная основа для сборки разных AI/agent-продуктов из общих стандартных блоков.
 
@@ -79,3 +79,15 @@ services/father-chassis/
 ## Следующий контрольный этап
 
 0.7 будет направлен не на добавление декоративных функций, а на квалификацию реальной инфраструктуры и первого полного product workflow.
+
+
+## Подготовка к квалификации на Windows (0.7)
+
+Добавлены автоматические сценарии:
+
+- `scripts/check_env.ps1` — проверка Git, Python, Docker Engine и Docker Compose;
+- `scripts/start_local.ps1` — сборка и запуск Compose с ожиданием readiness;
+- `scripts/smoke_test.ps1` — liveness/readiness, ingest, run, audit и Emergency Stop;
+- `scripts/recovery_test.ps1` — перезапуск контейнера и проверка сохранности knowledge.
+
+Подробная русская инструкция: [RUNBOOK_0_7_RU.md](docs/RUNBOOK_0_7_RU.md).
