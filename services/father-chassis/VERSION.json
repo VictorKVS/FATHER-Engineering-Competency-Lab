@@ -2,16 +2,23 @@
   "component": "FATHER Chassis",
   "canonical_path": "services/father-chassis",
   "development_branch": "father-chassis-development",
-  "version": "0.8.0",
-  "tests": {"passed": 44, "failed": 0},
+  "version": "0.9.0",
+  "tests": {
+    "passed": 48,
+    "failed": 0
+  },
   "gates": {
     "G0_CODE_EXISTS": "PASS",
     "G1_COMPONENT_TESTED": "PASS",
     "G2_INTEGRATED": "PASS",
     "G3_CHASSIS_QUALIFIED": "PENDING_WINDOWS_AND_REAL_LLM",
-    "G4_PRODUCT_QUALIFIED": "IN_PROGRESS",
+    "G4_PRODUCT_QUALIFIED": "PENDING_TARGET_WORKSTATION_REAL_LLM",
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "NOT_STARTED"
   },
-  "next_qualification": "Windows + Docker + PostgreSQL/pgvector + Redis + real OpenAI-compatible local LLM"
+  "first_product": {
+    "id": "FTH-PRODUCT-OSINT-KNOWLEDGE-001",
+    "reuse_ratio": 0.9375,
+    "workflow": "sources -> normalize -> ingest -> RAG -> evidence -> model -> claims -> report -> audit"
+  }
 }
