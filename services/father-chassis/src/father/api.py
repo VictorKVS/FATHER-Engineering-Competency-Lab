@@ -2,11 +2,14 @@ from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+import os
 
 from father.core.approval import ApprovalRequired
 from father.core.contracts import ExecutionRequest
 from father.core.health import health_report
 from father.production import build_runtime_from_env
+from father.local_llm import probe_openai_compatible
+from father.qualification import qualify_knowledge_flow
 
 
 class RunBody(BaseModel):
@@ -23,17 +26,17 @@ class IngestBody(BaseModel):
 
 def create_app(runtime=None) -> FastAPI:
     runtime = runtime or build_runtime_from_env()
-    app = FastAPI(title="FATHER Chassis", version="0.6.0")
+    app = FastAPI(title="FATHER Chassis", version="0.8.0")
     app.state.runtime = runtime
 
     @app.get("/")
     def root() -> dict:
-        return {"service": "FATHER Chassis", "version": "0.6.0", "status": "running"}
+        return {"service": "FATHER Chassis", "version": "0.8.0", "status": "running"}
 
     @app.get("/health/live")
     def live() -> dict:
         report = health_report(runtime.registry, runtime.emergency_stop)
-        return {"live": report.live, "version": "0.6.0"}
+        return {"live": report.live, "version": "0.8.0"}
 
     @app.get("/health/ready")
     def ready() -> dict:
@@ -50,6 +53,23 @@ def create_app(runtime=None) -> FastAPI:
             healthy = bool(checker()) if callable(checker) else True
             result.append({"name": name, "healthy": healthy, "default": name == runtime.models.default})
         return {"models": result}
+
+    @app.get("/models/local/probe")
+    def local_model_probe() -> dict:
+        base_url = os.getenv("FATHER_MODEL_BASE_URL", "").strip()
+        model = os.getenv("FATHER_MODEL_NAME", "").strip()
+        if not base_url:
+            return {"configured": False, "reachable": False, "selected_present": False, "models": []}
+        p = probe_openai_compatible(base_url, model)
+        return {
+            "configured": True,
+            "base_url": p.base_url,
+            "model": p.model,
+            "reachable": p.reachable,
+            "selected_present": p.selected_present,
+            "models": list(p.advertised_models),
+            "error": p.error,
+        }
 
     @app.post("/ingest")
     def ingest(body: IngestBody) -> dict:
@@ -81,6 +101,16 @@ def create_app(runtime=None) -> FastAPI:
             "evidence": result.evidence,
             "events": [{"type": e.type, "ts": e.ts, "payload": e.payload} for e in result.events],
         }
+
+    @app.post("/qualification/knowledge")
+    def qualification_knowledge() -> dict:
+        r = qualify_knowledge_flow(
+            runtime,
+            source="qualification-0.8",
+            text="FATHER Chassis is a reusable production platform for agent systems. It provides shared runtime, state, model routing, RAG, evidence, audit and safety controls.",
+            question="What is FATHER Chassis and which shared capabilities does it provide?",
+        )
+        return r.to_dict()
 
     @app.get("/audit/{trace_id}")
     def audit(trace_id: str) -> dict:
