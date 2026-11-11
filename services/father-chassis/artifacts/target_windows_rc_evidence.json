@@ -1,0 +1,30 @@
+{
+  "release": "FATHER FACTORY 1.0 RC1",
+  "target": "Windows workstation",
+  "observed_at": "2026-11-12",
+  "evidence": {
+    "docker_engine": "PASS",
+    "postgres_pgvector": "PASS",
+    "redis": "PASS",
+    "father_api": "PASS",
+    "health_live": "PASS",
+    "health_ready": "PASS",
+    "smoke_test": "PASS",
+    "emergency_stop": "PASS",
+    "persistent_audit": "PASS",
+    "restart_recovery": "PASS",
+    "osint_product": "PASS",
+    "source_traceability": "PASS",
+    "osint_report_status": "PASS",
+    "osint_evidence_count": 5,
+    "osint_source_ids": [
+      "src-001",
+      "src-002"
+    ]
+  },
+  "remaining": {
+    "real_local_llm": "PENDING",
+    "full_G3": "PENDING_REAL_LLM",
+    "full_G4": "PENDING_REAL_LLM"
+  }
+}
