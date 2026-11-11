@@ -1,0 +1,19 @@
+{
+  "release": "FATHER FACTORY 1.0 RC1",
+  "test_status": "PASS",
+  "tests": {
+    "passed": 53,
+    "failed": 0
+  },
+  "qualification_scope": "code_and_local_test_environment",
+  "target_machine_required": true,
+  "gates": {
+    "G0_CODE_EXISTS": "PASS",
+    "G1_COMPONENT_TESTED": "PASS",
+    "G2_INTEGRATED": "PASS",
+    "G3_CHASSIS_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
+    "G4_PRODUCT_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
+    "G5_REUSABLE": "PASS",
+    "G6_INDUSTRIAL": "NOT_STARTED"
+  }
+}
