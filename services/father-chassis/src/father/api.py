@@ -167,6 +167,64 @@ class Runtime:
         }
 
 
+
+def call_local_llm(prompt: str) -> dict:
+    base_url = os.getenv("FATHER_MODEL_BASE_URL", "").strip()
+    model = os.getenv("FATHER_MODEL_NAME", "").strip()
+    api_key = os.getenv("FATHER_MODEL_API_KEY", "").strip()
+
+    if not base_url or not model:
+        raise RuntimeError("Local LLM is not configured")
+
+    payload = json.dumps({
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "You are the FATHER qualification model. "
+                    "Answer only from the supplied evidence. "
+                    "If evidence is insufficient, say UNVERIFIED."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0,
+        "stream": False,
+    }).encode("utf-8")
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    req = urllib.request.Request(
+        base_url.rstrip("/") + "/chat/completions",
+        data=payload,
+        headers=headers,
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=120) as response:
+        body = json.loads(response.read().decode("utf-8"))
+
+    choices = body.get("choices", [])
+    if not choices:
+        raise RuntimeError("Local LLM returned no choices")
+
+    message = choices[0].get("message", {})
+    content = str(message.get("content", "")).strip()
+    if not content:
+        raise RuntimeError("Local LLM returned empty content")
+
+    return {
+        "model": model,
+        "content": content,
+        "raw_id": body.get("id"),
+    }
+
+
 runtime = Runtime()
 app = FastAPI(title="FATHER Chassis / Factory", version=VERSION)
 
@@ -272,19 +330,63 @@ def local_model_probe() -> dict:
 
 @app.post("/qualification/knowledge")
 def qualification_knowledge() -> dict:
-    chunks = runtime.ingest(
-        "qualification-rc1",
+    source_text = (
         "FATHER Chassis is a reusable production platform for agent systems. "
-        "It provides state, workflow, model routing, RAG, evidence, audit and safety controls.",
+        "It provides state, workflow, model routing, RAG, evidence, audit and safety controls."
     )
+    chunks = runtime.ingest("qualification-rc1", source_text)
     result = runtime.run("What is FATHER Chassis and which shared capabilities does it provide?")
+
+    evidence_text = "\n\n".join(
+        str(item.get("text", "")) for item in result["evidence"][:5]
+    )
+    prompt = (
+        "Question: What is FATHER Chassis and which shared capabilities does it provide?\n\n"
+        "Evidence:\n" + evidence_text
+    )
+
+    try:
+        llm = call_local_llm(prompt)
+        llm_ok = bool(llm["content"].strip())
+        runtime.audit(
+            result["trace_id"],
+            "model.inference.completed",
+            {
+                "model": llm["model"],
+                "output": llm["content"],
+                "raw_id": llm["raw_id"],
+            },
+        )
+        error = None
+    except Exception as exc:
+        llm = {"model": os.getenv("FATHER_MODEL_NAME", "").strip(), "content": ""}
+        llm_ok = False
+        error = f"{type(exc).__name__}: {exc}"
+        runtime.audit(
+            result["trace_id"],
+            "model.inference.failed",
+            {"error": error, "model": llm["model"]},
+        )
+
+    audit_events = runtime.audit_by_trace(result["trace_id"])
+    passed = (
+        chunks > 0
+        and len(result["evidence"]) > 0
+        and llm_ok
+        and any(e["type"] == "model.inference.completed" for e in audit_events)
+    )
+
     return {
         "ingest_chunks": chunks,
         "trace_id": result["trace_id"],
         "evidence_count": len(result["evidence"]),
-        "output_nonempty": bool(result["output"].strip()),
-        "audit_event_count": len(runtime.audit_by_trace(result["trace_id"])),
-        "passed": chunks > 0 and len(result["evidence"]) > 0,
+        "output_nonempty": llm_ok,
+        "model": llm["model"],
+        "model_output": llm["content"],
+        "real_inference": llm_ok,
+        "audit_event_count": len(audit_events),
+        "error": error,
+        "passed": passed,
     }
 
 
