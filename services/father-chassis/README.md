@@ -1,50 +1,34 @@
 # FATHER Chassis / Factory Development
 
-This directory is the canonical GitHub workspace for the reusable FATHER chassis and Factory qualification line.
+> Русская версия: [README_RU.md](README_RU.md)
 
-## Current baseline
+## Current version: 0.8.0
 
-- Working baseline: **0.5.0**
-- Local regression result: **33/33 tests PASS**
-- Qualification:
-  - G0 CODE EXISTS — PASS
-  - G1 COMPONENT TESTED — PASS
-  - G2 INTEGRATED — PASS
-  - G3 CHASSIS QUALIFIED — IN PROGRESS
-  - G4 PRODUCT QUALIFIED — IN PROGRESS
-  - G5 REUSABLE — PASS
-  - G6 INDUSTRIAL — NOT STARTED
+**Regression: 44/44 tests PASS.**
 
-## Product reuse proof
+FATHER Chassis is the reusable runtime and factory foundation for multiple AI/agent products.
 
-- OSINT / Knowledge product: 15 shared, 0 adapted, 1 new — reuse ratio 93.75%
-- ALINA / BOOKCRAFT product: 15 shared, 3 adapted, 2 new — reuse ratio 75%
+### 0.8 highlights
 
-## Repository policy
+- OpenAI-compatible local LLM profile;
+- `/models/local/probe` model discovery/health probe;
+- `/qualification/knowledge` end-to-end qualification endpoint;
+- Windows PowerShell real-LLM qualification script;
+- document → RAG → evidence → LLM → audit qualification path;
+- full RU/EN qualification runbooks.
 
-All further FATHER Chassis development is stored here first, with:
-1. source code;
-2. tests;
-3. configuration;
-4. qualification reports;
-5. BOM / reuse reports;
-6. version history.
+## Qualification status
 
-Runtime databases, secrets, caches and generated local state are not committed.
-
-## Target layout
-
-```
-services/father-chassis/
-├── src/
-├── tests/
-├── config/
-├── products/
-├── artifacts/
-├── docs/
-└── releases/
+```text
+G0 CODE EXISTS             PASS
+G1 COMPONENT TESTED        PASS
+G2 INTEGRATED              PASS
+G3 CHASSIS QUALIFIED       PENDING WINDOWS + REAL LLM
+G4 PRODUCT QUALIFIED       IN PROGRESS
+G5 REUSABLE                PASS
+G6 INDUSTRIAL              NOT STARTED
 ```
 
-Development branch: `father-chassis-development`.
+G3 is intentionally not marked PASS until the target Windows workstation validates Docker, PostgreSQL/pgvector, Redis and a real local LLM.
 
-The existing `services/father-controller` is intentionally left untouched until integration is qualified.
+See [RUNBOOK_0_8_EN.md](docs/RUNBOOK_0_8_EN.md).
