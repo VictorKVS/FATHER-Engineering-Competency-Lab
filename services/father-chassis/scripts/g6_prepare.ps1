@@ -40,6 +40,10 @@ if ([string]::IsNullOrWhiteSpace($current) -or $current -match '=(father|change-
     Write-Host "[PASS] PostgreSQL password already non-default"
 }
 
+Write-Host "[G6 PREPARE] Fix persistent volume ownership for non-root runtime"
+docker compose run --rm --user 0 --no-deps father-chassis sh -c "chown -R father:father /app/data"
+if ($LASTEXITCODE -ne 0) { throw "Could not fix father_data ownership" }
+
 Write-Host "[G6 PREPARE] Rebuild hardened runtime"
 docker compose up -d --build --force-recreate
 if ($LASTEXITCODE -ne 0) { throw "Hardened compose start failed" }
