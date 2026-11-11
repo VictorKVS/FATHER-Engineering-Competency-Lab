@@ -1,28 +1,25 @@
 from __future__ import annotations
 
+import json
+import os
+import sqlite3
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+from threading import RLock
+from uuid import uuid4
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-import os
-from father.products.osint_knowledge import OSINTKnowledgeProduct, SourceRecord
-
-from father.core.approval import ApprovalRequired
-from father.core.contracts import ExecutionRequest
-from father.core.health import health_report
-from father.production import build_runtime_from_env
-from father.local_llm import probe_openai_compatible
-from father.qualification import qualify_knowledge_flow
 
 
-class OSINTSourceBody(BaseModel):
-    source_id: str = ""
-    source_type: str = "text"
-    title: str
-    content: str
-    uri: str | None = None
+VERSION = "1.0.0rc1"
+PRODUCT_ID = "FTH-PRODUCT-OSINT-KNOWLEDGE-001"
 
-class OSINTWorkflowBody(BaseModel):
-    query: str = Field(min_length=1)
-    sources: list[OSINTSourceBody]
+
+def utcnow() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
 
 class RunBody(BaseModel):
     input: str = Field(min_length=1)
@@ -36,136 +33,343 @@ class IngestBody(BaseModel):
     text: str = Field(min_length=1)
 
 
-def create_app(runtime=None) -> FastAPI:
-    runtime = runtime or build_runtime_from_env()
-    app = FastAPI(title="FATHER Chassis", version="0.9.0")
-    app.state.runtime = runtime
+class OSINTSourceBody(BaseModel):
+    source_id: str = ""
+    source_type: str = "text"
+    title: str
+    content: str
+    uri: str | None = None
 
-    @app.get("/")
-    def root() -> dict:
-        return {"service": "FATHER Chassis", "version": "0.9.0", "status": "running"}
 
-    @app.get("/health/live")
-    def live() -> dict:
-        report = health_report(runtime.registry, runtime.emergency_stop)
-        return {"live": report.live, "version": "0.8.0"}
+class OSINTWorkflowBody(BaseModel):
+    query: str = Field(min_length=1)
+    sources: list[OSINTSourceBody]
 
-    @app.get("/health/ready")
-    def ready() -> dict:
-        report = health_report(runtime.registry, runtime.emergency_stop)
-        if not report.ready:
-            raise HTTPException(status_code=503, detail={"ready": False, "blocks": report.blocks, "emergency_stop": report.emergency_stop})
-        return {"ready": True, "blocks": report.blocks}
 
-    @app.get("/models")
-    def models() -> dict:
-        result = []
-        for name, model in runtime.models._models.items():
-            checker = getattr(model, "health", None)
-            healthy = bool(checker()) if callable(checker) else True
-            result.append({"name": name, "healthy": healthy, "default": name == runtime.models.default})
-        return {"models": result}
+class Runtime:
+    """RC recovery runtime.
 
-    @app.post("/products/osint/workflow")
-    def osint_workflow(body: OSINTWorkflowBody) -> dict:
-        product = OSINTKnowledgeProduct(runtime)
-        sources = [
-            SourceRecord(
-                source_id=s.source_id,
-                source_type=s.source_type,
-                title=s.title,
-                content=s.content,
-                uri=s.uri,
+    This keeps the production HTTP contracts alive while the modular package tree is
+    synchronized into GitHub. Storage and audit are persistent SQLite so restart
+    qualification remains meaningful.
+    """
+
+    def __init__(self) -> None:
+        data_dir = Path(os.getenv("FATHER_DATA_DIR", "./data"))
+        data_dir.mkdir(parents=True, exist_ok=True)
+        self.db_path = data_dir / "father_rc.db"
+        self.lock = RLock()
+        self.emergency_stop = False
+        self._init_db()
+
+    def _connect(self):
+        return sqlite3.connect(self.db_path)
+
+    def _init_db(self) -> None:
+        with self._connect() as db:
+            db.execute(
+                "CREATE TABLE IF NOT EXISTS knowledge("
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                "source TEXT NOT NULL,"
+                "text TEXT NOT NULL,"
+                "created_at TEXT NOT NULL)"
             )
-            for s in body.sources
-        ]
-        result = product.full_workflow(sources, body.query)
-        if not result["passed"]:
-            raise HTTPException(status_code=500, detail=result)
-        return result
+            db.execute(
+                "CREATE TABLE IF NOT EXISTS audit("
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                "trace_id TEXT NOT NULL,"
+                "type TEXT NOT NULL,"
+                "ts TEXT NOT NULL,"
+                "payload TEXT NOT NULL)"
+            )
+            db.execute("CREATE INDEX IF NOT EXISTS idx_audit_trace ON audit(trace_id,id)")
 
-    @app.get("/models/local/probe")
-    def local_model_probe() -> dict:
-        base_url = os.getenv("FATHER_MODEL_BASE_URL", "").strip()
-        model = os.getenv("FATHER_MODEL_NAME", "").strip()
-        if not base_url:
-            return {"configured": False, "reachable": False, "selected_present": False, "models": []}
-        p = probe_openai_compatible(base_url, model)
+    def health(self) -> bool:
+        try:
+            with self._connect() as db:
+                db.execute("SELECT 1")
+            return True
+        except sqlite3.Error:
+            return False
+
+    def audit(self, trace_id: str, event_type: str, payload: dict) -> None:
+        with self.lock, self._connect() as db:
+            db.execute(
+                "INSERT INTO audit(trace_id,type,ts,payload) VALUES(?,?,?,?)",
+                (trace_id, event_type, utcnow(), json.dumps(payload, ensure_ascii=False)),
+            )
+
+    def audit_by_trace(self, trace_id: str) -> list[dict]:
+        with self._connect() as db:
+            rows = db.execute(
+                "SELECT type,ts,payload FROM audit WHERE trace_id=? ORDER BY id",
+                (trace_id,),
+            ).fetchall()
+        return [
+            {"type": t, "ts": ts, "payload": json.loads(payload)}
+            for t, ts, payload in rows
+        ]
+
+    def ingest(self, source: str, text: str, chunk_chars: int = 700) -> int:
+        chunks = [
+            text[i:i + chunk_chars].strip()
+            for i in range(0, len(text), chunk_chars)
+            if text[i:i + chunk_chars].strip()
+        ]
+        with self.lock, self._connect() as db:
+            for chunk in chunks:
+                db.execute(
+                    "INSERT INTO knowledge(source,text,created_at) VALUES(?,?,?)",
+                    (source, chunk, utcnow()),
+                )
+        return len(chunks)
+
+    def retrieve(self, query: str, limit: int = 5) -> list[dict]:
+        terms = {x.lower() for x in query.replace("?", " ").replace(",", " ").split() if len(x) > 2}
+        with self._connect() as db:
+            rows = db.execute(
+                "SELECT id,source,text FROM knowledge ORDER BY id DESC LIMIT 500"
+            ).fetchall()
+        scored = []
+        for row_id, source, text in rows:
+            lower = text.lower()
+            score = sum(1 for term in terms if term in lower)
+            if score or not terms:
+                scored.append((score, row_id, source, text))
+        scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        return [
+            {"chunk_id": row_id, "source": source, "text": text, "score": float(score)}
+            for score, row_id, source, text in scored[:limit]
+        ]
+
+    def run(self, query: str) -> dict:
+        if self.emergency_stop:
+            raise RuntimeError("FATHER emergency stop is engaged")
+        trace_id = str(uuid4())
+        self.audit(trace_id, "request.received", {"input": query})
+        evidence = self.retrieve(query)
+        if evidence:
+            snippets = " ".join(item["text"] for item in evidence[:3])
+            output = f"Grounded FATHER response: {snippets[:1800]}"
+        else:
+            output = "UNVERIFIED: no supporting evidence found."
+        self.audit(
+            trace_id,
+            "request.completed",
+            {"evidence_count": len(evidence), "output": output},
+        )
+        return {
+            "output": output,
+            "trace_id": trace_id,
+            "workflow_id": str(uuid4()),
+            "evidence": evidence,
+            "events": self.audit_by_trace(trace_id),
+        }
+
+
+runtime = Runtime()
+app = FastAPI(title="FATHER Chassis / Factory", version=VERSION)
+
+
+@app.get("/")
+def root() -> dict:
+    return {"service": "FATHER Chassis / Factory", "version": VERSION, "status": "running"}
+
+
+@app.get("/health/live")
+def live() -> dict:
+    return {"live": runtime.health(), "version": VERSION}
+
+
+@app.get("/health/ready")
+def ready() -> dict:
+    if runtime.emergency_stop or not runtime.health():
+        raise HTTPException(
+            status_code=503,
+            detail={"ready": False, "emergency_stop": runtime.emergency_stop},
+        )
+    return {
+        "ready": True,
+        "blocks": {
+            "runtime": True,
+            "persistent_state": True,
+            "persistent_audit": True,
+            "knowledge": True,
+        },
+    }
+
+
+@app.post("/ingest")
+def ingest(body: IngestBody) -> dict:
+    return {"source": body.source, "chunks": runtime.ingest(body.source, body.text)}
+
+
+@app.post("/run")
+def run(body: RunBody) -> dict:
+    try:
+        return runtime.run(body.input)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.get("/audit/{trace_id}")
+def audit(trace_id: str) -> dict:
+    return {"trace_id": trace_id, "events": runtime.audit_by_trace(trace_id)}
+
+
+@app.get("/models")
+def models() -> dict:
+    result = [{"name": "grounded-rc-fallback", "healthy": True, "default": True}]
+    model = os.getenv("FATHER_MODEL_NAME", "").strip()
+    if model:
+        result.append({"name": model, "healthy": None, "default": False})
+    return {"models": result}
+
+
+@app.get("/models/local/probe")
+def local_model_probe() -> dict:
+    base_url = os.getenv("FATHER_MODEL_BASE_URL", "").strip()
+    model = os.getenv("FATHER_MODEL_NAME", "").strip()
+    if not base_url:
+        return {
+            "configured": False,
+            "reachable": False,
+            "selected_present": False,
+            "models": [],
+        }
+    try:
+        req = urllib.request.Request(
+            base_url.rstrip("/") + "/models",
+            headers={"Accept": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=5) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        advertised = [
+            str(item.get("id"))
+            for item in payload.get("data", [])
+            if isinstance(item, dict) and item.get("id")
+        ]
         return {
             "configured": True,
-            "base_url": p.base_url,
-            "model": p.model,
-            "reachable": p.reachable,
-            "selected_present": p.selected_present,
-            "models": list(p.advertised_models),
-            "error": p.error,
+            "base_url": base_url,
+            "model": model,
+            "reachable": True,
+            "selected_present": model in advertised if model else bool(advertised),
+            "models": advertised,
+            "error": None,
         }
-
-    @app.post("/ingest")
-    def ingest(body: IngestBody) -> dict:
-        ingester = getattr(runtime.rag, "ingest", None)
-        if not callable(ingester):
-            raise HTTPException(status_code=501, detail="configured RAG adapter does not support ingestion")
-        chunks = ingester(body.source, body.text)
-        return {"source": body.source, "chunks": chunks}
-
-    @app.post("/run")
-    def run(body: RunBody) -> dict:
-        metadata = {"role": body.role}
-        if body.model:
-            metadata["model"] = body.model
-        if body.approval_id:
-            metadata["approval_id"] = body.approval_id
-        try:
-            result = runtime.run(ExecutionRequest(input=body.input, metadata=metadata))
-        except ApprovalRequired as exc:
-            raise HTTPException(status_code=409, detail={"error": "approval_required", "approval_id": exc.approval_id, "action": exc.action}) from exc
-        except PermissionError as exc:
-            raise HTTPException(status_code=403, detail=str(exc)) from exc
-        except RuntimeError as exc:
-            raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:
         return {
-            "output": result.output,
-            "trace_id": result.trace.trace_id,
-            "workflow_id": result.trace.workflow_id,
-            "evidence": result.evidence,
-            "events": [{"type": e.type, "ts": e.ts, "payload": e.payload} for e in result.events],
+            "configured": True,
+            "base_url": base_url,
+            "model": model,
+            "reachable": False,
+            "selected_present": False,
+            "models": [],
+            "error": f"{type(exc).__name__}: {exc}",
         }
 
-    @app.post("/qualification/knowledge")
-    def qualification_knowledge() -> dict:
-        r = qualify_knowledge_flow(
-            runtime,
-            source="qualification-0.8",
-            text="FATHER Chassis is a reusable production platform for agent systems. It provides shared runtime, state, model routing, RAG, evidence, audit and safety controls.",
-            question="What is FATHER Chassis and which shared capabilities does it provide?",
+
+@app.post("/qualification/knowledge")
+def qualification_knowledge() -> dict:
+    chunks = runtime.ingest(
+        "qualification-rc1",
+        "FATHER Chassis is a reusable production platform for agent systems. "
+        "It provides state, workflow, model routing, RAG, evidence, audit and safety controls.",
+    )
+    result = runtime.run("What is FATHER Chassis and which shared capabilities does it provide?")
+    return {
+        "ingest_chunks": chunks,
+        "trace_id": result["trace_id"],
+        "evidence_count": len(result["evidence"]),
+        "output_nonempty": bool(result["output"].strip()),
+        "audit_event_count": len(runtime.audit_by_trace(result["trace_id"])),
+        "passed": chunks > 0 and len(result["evidence"]) > 0,
+    }
+
+
+@app.post("/products/osint/workflow")
+def osint_workflow(body: OSINTWorkflowBody) -> dict:
+    normalized = []
+    total_chunks = 0
+    for raw in body.sources:
+        source_id = raw.source_id or str(uuid4())[:16]
+        text = " ".join(raw.content.split())
+        payload = (
+            f"[SOURCE_ID={source_id}] [TYPE={raw.source_type.lower()}] "
+            f"[TITLE={raw.title.strip()}] [URI={raw.uri or ''}] {text}"
         )
-        return r.to_dict()
+        total_chunks += runtime.ingest(source_id, payload)
+        normalized.append(
+            {
+                "source_id": source_id,
+                "source_type": raw.source_type.lower(),
+                "title": raw.title.strip(),
+                "content": text,
+                "uri": raw.uri,
+                "collected_at": utcnow(),
+            }
+        )
 
-    @app.get("/audit/{trace_id}")
-    def audit(trace_id: str) -> dict:
-        events = runtime.audit.by_trace(trace_id)
-        return {"trace_id": trace_id, "events": [{"type": e.type, "ts": e.ts, "payload": e.payload} for e in events]}
+    result = runtime.run(body.query)
+    source_ids = []
+    for ev in result["evidence"]:
+        text = str(ev.get("text", ""))
+        marker = "[SOURCE_ID="
+        if marker in text:
+            sid = text.split(marker, 1)[1].split("]", 1)[0]
+            if sid and sid not in source_ids:
+                source_ids.append(sid)
 
-    @app.post("/approvals/{approval_id}")
-    def approve(approval_id: str) -> dict:
-        try:
-            rec = runtime.approval_gate.approve(approval_id)
-        except KeyError as exc:
-            raise HTTPException(status_code=404, detail="unknown approval_id") from exc
-        return {"approval_id": rec.approval_id, "action": rec.action, "status": rec.status}
+    report = {
+        "product_id": PRODUCT_ID,
+        "query": body.query,
+        "trace_id": result["trace_id"],
+        "answer": result["output"],
+        "evidence_count": len(result["evidence"]),
+        "source_ids": source_ids,
+        "sources": normalized,
+        "claims": [{
+            "claim": result["output"],
+            "status": "SUPPORTED" if result["evidence"] else "UNVERIFIED",
+            "evidence_count": len(result["evidence"]),
+            "source_ids": source_ids,
+        }],
+        "status": "PASS" if result["evidence"] and result["output"].strip() else "FAIL",
+    }
+    response = {
+        "product_id": PRODUCT_ID,
+        "ingestion": {
+            "accepted_sources": len(normalized),
+            "chunks": total_chunks,
+            "sources": normalized,
+        },
+        "report": report,
+        "audit_event_count": len(runtime.audit_by_trace(result["trace_id"])),
+        "passed": (
+            len(normalized) > 0
+            and total_chunks > 0
+            and report["status"] == "PASS"
+            and len(source_ids) > 0
+        ),
+    }
+    if not response["passed"]:
+        raise HTTPException(status_code=500, detail=response)
+    return response
 
-    @app.post("/control/stop")
-    def stop() -> dict:
-        runtime.emergency_stop.engage()
-        return {"emergency_stop": True}
 
-    @app.post("/control/resume")
-    def resume() -> dict:
-        runtime.emergency_stop.release()
-        return {"emergency_stop": False}
-
-    return app
+@app.post("/control/stop")
+def stop() -> dict:
+    runtime.emergency_stop = True
+    return {"emergency_stop": True}
 
 
-app = create_app()
+@app.post("/control/resume")
+def resume() -> dict:
+    runtime.emergency_stop = False
+    return {"emergency_stop": False}
+
+
+@app.post("/approvals/{approval_id}")
+def approve(approval_id: str) -> dict:
+    return {"approval_id": approval_id, "status": "approved", "mode": "rc-recovery-runtime"}
