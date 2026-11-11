@@ -5,6 +5,13 @@ if (-not (Test-Path ".env")) {
     Write-Host "[INFO] Created .env from .env.example"
 }
 
+Write-Host "[INFO] Pulling FATHER runtime dependencies..."
+& powershell -ExecutionPolicy Bypass -File ".\scripts\pull_dependencies.ps1"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[FAIL] Dependency pull failed"
+    exit $LASTEXITCODE
+}
+
 Write-Host "[INFO] Building and starting FATHER Chassis..."
 docker compose up -d --build
 if ($LASTEXITCODE -ne 0) {
