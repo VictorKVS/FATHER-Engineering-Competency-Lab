@@ -2,38 +2,31 @@
 
 > English version: [README.md](README.md)
 
-## Текущая версия: 0.7.0
+## Текущая версия: 0.8.0
 
-**Автоматическая регрессия: 40/40 тестов PASS.**
+**Регрессия: 44/44 теста PASS.**
 
-FATHER Chassis — универсальное шасси и производственная основа для сборки разных AI/agent-продуктов из общих стандартных блоков.
+FATHER Chassis — универсальное шасси и производственная основа для сборки различных AI/agent-продуктов из общих стандартных блоков.
 
-### Что уже есть
+## Что добавлено в 0.8
 
-- Configuration / State / Event Bus / Workflow;
-- Model Router и fallback;
-- RAG и Evidence;
-- Tool Registry и RBAC;
-- Guardrails;
-- Human Approval;
-- Emergency Stop;
-- Audit и Trace;
-- Factory / BOM / reuse-анализ;
-- OSINT/Knowledge и ALINA/BOOKCRAFT как два разных product pack;
-- FastAPI эксплуатационный API;
-- persistent audit на SQLite;
-- Dockerfile;
-- Docker Compose с PostgreSQL/pgvector и Redis;
-- OpenAI-compatible адаптер для локальной или облачной LLM.
+- профиль локальной OpenAI-compatible LLM;
+- probe `/models/local/probe`;
+- квалификационный endpoint `/qualification/knowledge`;
+- PowerShell-тест реальной локальной модели;
+- полный маршрут `document → RAG → evidence → LLM → audit`;
+- русская и английская инструкция квалификации.
 
-## HTTP API 0.6
+## API
 
 ```text
 GET  /health/live
 GET  /health/ready
 GET  /models
+GET  /models/local/probe
 POST /ingest
 POST /run
+POST /qualification/knowledge
 GET  /audit/{trace_id}
 POST /approvals/{approval_id}
 POST /control/stop
@@ -46,48 +39,30 @@ POST /control/resume
 G0 CODE EXISTS             PASS
 G1 COMPONENT TESTED        PASS
 G2 INTEGRATED              PASS
-G3 CHASSIS QUALIFIED       IN PROGRESS
+G3 CHASSIS QUALIFIED       PENDING WINDOWS + REAL LLM
 G4 PRODUCT QUALIFIED       IN PROGRESS
 G5 REUSABLE                PASS
 G6 INDUSTRIAL              NOT STARTED
 ```
 
-G3 пока намеренно не закрываем: требуется реальный прогон на целевом Windows-компьютере с Docker Desktop, PostgreSQL/pgvector, Redis и локальной LLM.
+G3 намеренно не закрывается до реального прогона на целевом Windows-компьютере.
 
-## Доказательство повторного использования
+## Локальная LLM
 
-- OSINT / Knowledge: reuse **93,75%**
-- ALINA / BOOKCRAFT: reuse **75%**
+В `.env` задаются:
 
-## Целевая структура
-
-```text
-services/father-chassis/
-├── src/          # исходный код
-├── tests/        # автоматические испытания
-├── config/       # конфигурации шасси
-├── products/     # продуктовые пакеты
-├── artifacts/    # qualification / BOM / reuse
-├── docs/         # документация RU + EN
-└── releases/     # релизные снимки
+```env
+FATHER_MODEL_BASE_URL=http://host.docker.internal:1234/v1
+FATHER_MODEL_NAME=<точный id модели>
+FATHER_MODEL_API_KEY=
 ```
 
-## Языковая политика
+После запуска FATHER:
 
-Ключевая документация ведётся полноценно **на русском и английском**. Русская версия обязательна и не должна быть сокращённым переводом.
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\llm_test.ps1
+```
 
-## Следующий контрольный этап
+PASS: `LOCAL LLM QUALIFICATION: PASS`.
 
-0.7 будет направлен не на добавление декоративных функций, а на квалификацию реальной инфраструктуры и первого полного product workflow.
-
-
-## Подготовка к квалификации на Windows (0.7)
-
-Добавлены автоматические сценарии:
-
-- `scripts/check_env.ps1` — проверка Git, Python, Docker Engine и Docker Compose;
-- `scripts/start_local.ps1` — сборка и запуск Compose с ожиданием readiness;
-- `scripts/smoke_test.ps1` — liveness/readiness, ingest, run, audit и Emergency Stop;
-- `scripts/recovery_test.ps1` — перезапуск контейнера и проверка сохранности knowledge.
-
-Подробная русская инструкция: [RUNBOOK_0_7_RU.md](docs/RUNBOOK_0_7_RU.md).
+Подробно: [RUNBOOK_0_8_RU.md](docs/RUNBOOK_0_8_RU.md).
