@@ -9,6 +9,7 @@ function Run-Gate($name,$script,$args=@()) {
 }
 
 New-Item -ItemType Directory -Force ".\artifacts" | Out-Null
+Run-Gate "G6 PREPARE" ".\scripts\g6_prepare.ps1"
 Run-Gate "G6.1 LOAD" ".\scripts\g6_load_test.ps1"
 Run-Gate "G6.2 CHAOS" ".\scripts\g6_chaos_test.ps1"
 Run-Gate "G6.3 SECURITY" ".\scripts\g6_security_test.ps1"
