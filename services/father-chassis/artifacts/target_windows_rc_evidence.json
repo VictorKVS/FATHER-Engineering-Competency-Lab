@@ -20,11 +20,23 @@
     "osint_source_ids": [
       "src-001",
       "src-002"
-    ]
+    ],
+    "real_local_llm": "PASS",
+    "local_llm_model": "qwen2.5:7b",
+    "local_llm_endpoint": "http://host.docker.internal:11434/v1",
+    "real_inference": true,
+    "llm_evidence_count": 5,
+    "llm_audit_event_count": 3,
+    "llm_trace_id": "7c2f9240-5114-4ced-9f5f-787019fcf6de"
   },
   "remaining": {
-    "real_local_llm": "PENDING",
-    "full_G3": "PENDING_REAL_LLM",
-    "full_G4": "PENDING_REAL_LLM"
+    "modular_core_tree_sync": "REQUIRED_BEFORE_G6",
+    "G6_industrial": "PENDING"
+  },
+  "gates": {
+    "G3_CHASSIS_QUALIFIED": "PASS",
+    "G4_PRODUCT_QUALIFIED": "PASS",
+    "G5_REUSABLE": "PASS",
+    "G6_INDUSTRIAL": "NOT_STARTED"
   }
 }
