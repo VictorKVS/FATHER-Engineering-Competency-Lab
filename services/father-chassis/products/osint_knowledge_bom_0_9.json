@@ -1,0 +1,28 @@
+{
+  "product_id": "FTH-PRODUCT-OSINT-KNOWLEDGE-001",
+  "version": "0.9.0",
+  "chassis": "FATHER_CHASSIS_0_9",
+  "shared_blocks": [
+    "configuration",
+    "state",
+    "event_bus",
+    "workflow",
+    "model_routing",
+    "rag",
+    "evidence",
+    "audit",
+    "observability",
+    "guardrails",
+    "tool_registry",
+    "human_approval",
+    "source_ingestion",
+    "entity_graph",
+    "report_generation"
+  ],
+  "product_specific_blocks": [
+    "osint_source_normalizer"
+  ],
+  "adapted_blocks": [],
+  "reuse_ratio": 0.9375,
+  "qualification_target": "G4_PRODUCT_QUALIFIED"
+}
