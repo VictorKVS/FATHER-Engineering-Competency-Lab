@@ -10,19 +10,30 @@ function Check-Command($name) {
     return $true
 }
 
+function Check-NativeCommand($label, [scriptblock]$command) {
+    & $command
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[FAIL] $label"
+        return $false
+    }
+    Write-Host "[PASS] $label"
+    return $true
+}
+
 $ok = $true
 $ok = (Check-Command "git") -and $ok
 $ok = (Check-Command "docker") -and $ok
 $ok = (Check-Command "python") -and $ok
 
 if (Get-Command docker -ErrorAction SilentlyContinue) {
-    try { docker version | Out-Null; Write-Host "[PASS] Docker Engine reachable" }
-    catch { Write-Host "[FAIL] Docker Engine unavailable"; $ok = $false }
-
-    try { docker compose version | Out-Null; Write-Host "[PASS] Docker Compose available" }
-    catch { Write-Host "[FAIL] Docker Compose unavailable"; $ok = $false }
+    $ok = (Check-NativeCommand "Docker Engine reachable" { docker version 2>$null | Out-Null }) -and $ok
+    $ok = (Check-NativeCommand "Docker Compose available" { docker compose version 2>$null | Out-Null }) -and $ok
 }
 
-if ($ok) { Write-Host "`nENVIRONMENT CHECK: PASS"; exit 0 }
+if ($ok) {
+    Write-Host "`nENVIRONMENT CHECK: PASS"
+    exit 0
+}
+
 Write-Host "`nENVIRONMENT CHECK: FAIL"
 exit 1
