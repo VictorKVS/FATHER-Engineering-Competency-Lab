@@ -1,24 +1,20 @@
 {
-  "component": "FATHER Chassis",
+  "component": "FATHER Chassis / Factory",
   "canonical_path": "services/father-chassis",
   "development_branch": "father-chassis-development",
-  "version": "0.9.0",
+  "version": "1.0.0rc1",
   "tests": {
-    "passed": 48,
+    "passed": 53,
     "failed": 0
   },
   "gates": {
     "G0_CODE_EXISTS": "PASS",
     "G1_COMPONENT_TESTED": "PASS",
     "G2_INTEGRATED": "PASS",
-    "G3_CHASSIS_QUALIFIED": "PENDING_WINDOWS_AND_REAL_LLM",
-    "G4_PRODUCT_QUALIFIED": "PENDING_TARGET_WORKSTATION_REAL_LLM",
+    "G3_CHASSIS_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
+    "G4_PRODUCT_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "NOT_STARTED"
   },
-  "first_product": {
-    "id": "FTH-PRODUCT-OSINT-KNOWLEDGE-001",
-    "reuse_ratio": 0.9375,
-    "workflow": "sources -> normalize -> ingest -> RAG -> evidence -> model -> claims -> report -> audit"
-  }
+  "next_gate": "target Windows RC with real local LLM"
 }
