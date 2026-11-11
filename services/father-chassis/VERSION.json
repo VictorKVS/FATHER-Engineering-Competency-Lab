@@ -11,10 +11,16 @@
     "G0_CODE_EXISTS": "PASS",
     "G1_COMPONENT_TESTED": "PASS",
     "G2_INTEGRATED": "PASS",
-    "G3_CHASSIS_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
-    "G4_PRODUCT_QUALIFIED": "PENDING_TARGET_WORKSTATION_RC",
+    "G3_CHASSIS_QUALIFIED": "PASS",
+    "G4_PRODUCT_QUALIFIED": "PASS",
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "NOT_STARTED"
   },
-  "next_gate": "target Windows RC with real local LLM"
+  "next_gate": "G6 industrial qualification: load, chaos, security, upgrade/rollback, endurance",
+  "target_qualification": {
+    "platform": "Windows 11 + Docker Desktop + WSL2",
+    "local_llm": "Ollama / qwen2.5:7b",
+    "real_inference": true,
+    "status": "PASS"
+  }
 }
