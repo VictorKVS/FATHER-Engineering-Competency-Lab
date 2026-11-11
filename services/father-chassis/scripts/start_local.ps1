@@ -7,6 +7,10 @@ if (-not (Test-Path ".env")) {
 
 Write-Host "[INFO] Building and starting FATHER Chassis..."
 docker compose up -d --build
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[FAIL] docker compose up failed with exit code $LASTEXITCODE"
+    exit $LASTEXITCODE
+}
 
 Write-Host "[INFO] Waiting for API readiness..."
 $deadline = (Get-Date).AddMinutes(3)
