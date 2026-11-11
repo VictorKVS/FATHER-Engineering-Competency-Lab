@@ -3,6 +3,7 @@ from __future__ import annotations
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import os
+from father.products.osint_knowledge import OSINTKnowledgeProduct, SourceRecord
 
 from father.core.approval import ApprovalRequired
 from father.core.contracts import ExecutionRequest
@@ -11,6 +12,17 @@ from father.production import build_runtime_from_env
 from father.local_llm import probe_openai_compatible
 from father.qualification import qualify_knowledge_flow
 
+
+class OSINTSourceBody(BaseModel):
+    source_id: str = ""
+    source_type: str = "text"
+    title: str
+    content: str
+    uri: str | None = None
+
+class OSINTWorkflowBody(BaseModel):
+    query: str = Field(min_length=1)
+    sources: list[OSINTSourceBody]
 
 class RunBody(BaseModel):
     input: str = Field(min_length=1)
@@ -26,12 +38,12 @@ class IngestBody(BaseModel):
 
 def create_app(runtime=None) -> FastAPI:
     runtime = runtime or build_runtime_from_env()
-    app = FastAPI(title="FATHER Chassis", version="0.8.0")
+    app = FastAPI(title="FATHER Chassis", version="0.9.0")
     app.state.runtime = runtime
 
     @app.get("/")
     def root() -> dict:
-        return {"service": "FATHER Chassis", "version": "0.8.0", "status": "running"}
+        return {"service": "FATHER Chassis", "version": "0.9.0", "status": "running"}
 
     @app.get("/health/live")
     def live() -> dict:
@@ -53,6 +65,24 @@ def create_app(runtime=None) -> FastAPI:
             healthy = bool(checker()) if callable(checker) else True
             result.append({"name": name, "healthy": healthy, "default": name == runtime.models.default})
         return {"models": result}
+
+    @app.post("/products/osint/workflow")
+    def osint_workflow(body: OSINTWorkflowBody) -> dict:
+        product = OSINTKnowledgeProduct(runtime)
+        sources = [
+            SourceRecord(
+                source_id=s.source_id,
+                source_type=s.source_type,
+                title=s.title,
+                content=s.content,
+                uri=s.uri,
+            )
+            for s in body.sources
+        ]
+        result = product.full_workflow(sources, body.query)
+        if not result["passed"]:
+            raise HTTPException(status_code=500, detail=result)
+        return result
 
     @app.get("/models/local/probe")
     def local_model_probe() -> dict:
