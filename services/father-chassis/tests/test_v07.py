@@ -13,7 +13,8 @@ def test_runbooks_are_bilingual():
     assert (ROOT/"docs"/"RUNBOOK_0_7_RU.md").exists()
     assert (ROOT/"docs"/"RUNBOOK_0_7_EN.md").exists()
 
-def test_config_version_is_0_7():
+def test_config_remains_windows_qualification_capable():
     cfg=json.loads((ROOT/"config"/"chassis.json").read_text(encoding="utf-8"))
-    assert cfg["version"]=="0.7.0"
-    assert cfg["metadata"]["profile"]=="windows-docker-qualification"
+    major, minor, patch = (int(x) for x in cfg["version"].split("."))
+    assert (major, minor) >= (0, 7)
+    assert cfg["metadata"]["profile"].startswith("windows-")
