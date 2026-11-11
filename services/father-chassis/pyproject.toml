@@ -1,7 +1,7 @@
 [project]
 name = "father-chassis"
-version = "0.8.0"
-description = "Executable FATHER Chassis 0.8 reference implementation"
+version = "1.0.0rc1"
+description = "Executable FATHER Factory 1.0 RC1 reference implementation"
 requires-python = ">=3.10"
 dependencies = [
   "fastapi>=0.110",
