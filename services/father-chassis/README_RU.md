@@ -1,60 +1,81 @@
 # FATHER Chassis / Factory — разработка
 
-Эта директория является основной рабочей зоной GitHub для универсального шасси FATHER и производственной линии Factory.
+> English version: [README.md](README.md)
 
-## Текущая базовая версия
+## Текущая версия: 0.6.0
 
-- Рабочий baseline: **0.5.0**
-- Результат локальной регрессии: **33/33 теста PASS**
-- Квалификация:
-  - G0 CODE EXISTS — PASS
-  - G1 COMPONENT TESTED — PASS
-  - G2 INTEGRATED — PASS
-  - G3 CHASSIS QUALIFIED — В РАБОТЕ
-  - G4 PRODUCT QUALIFIED — В РАБОТЕ
-  - G5 REUSABLE — PASS
-  - G6 INDUSTRIAL — ЕЩЁ НЕ НАЧАТ
+**Автоматическая регрессия: 37/37 тестов PASS.**
+
+FATHER Chassis — универсальное шасси и производственная основа для сборки разных AI/agent-продуктов из общих стандартных блоков.
+
+### Что уже есть
+
+- Configuration / State / Event Bus / Workflow;
+- Model Router и fallback;
+- RAG и Evidence;
+- Tool Registry и RBAC;
+- Guardrails;
+- Human Approval;
+- Emergency Stop;
+- Audit и Trace;
+- Factory / BOM / reuse-анализ;
+- OSINT/Knowledge и ALINA/BOOKCRAFT как два разных product pack;
+- FastAPI эксплуатационный API;
+- persistent audit на SQLite;
+- Dockerfile;
+- Docker Compose с PostgreSQL/pgvector и Redis;
+- OpenAI-compatible адаптер для локальной или облачной LLM.
+
+## HTTP API 0.6
+
+```text
+GET  /health/live
+GET  /health/ready
+GET  /models
+POST /ingest
+POST /run
+GET  /audit/{trace_id}
+POST /approvals/{approval_id}
+POST /control/stop
+POST /control/resume
+```
+
+## Квалификационный статус
+
+```text
+G0 CODE EXISTS             PASS
+G1 COMPONENT TESTED        PASS
+G2 INTEGRATED              PASS
+G3 CHASSIS QUALIFIED       IN PROGRESS
+G4 PRODUCT QUALIFIED       IN PROGRESS
+G5 REUSABLE                PASS
+G6 INDUSTRIAL              NOT STARTED
+```
+
+G3 пока намеренно не закрываем: требуется реальный прогон на целевом Windows-компьютере с Docker Desktop, PostgreSQL/pgvector, Redis и локальной LLM.
 
 ## Доказательство повторного использования
 
-- OSINT / Knowledge: 15 общих блоков, 0 адаптированных, 1 новый — коэффициент reuse 93,75%
-- ALINA / BOOKCRAFT: 15 общих блоков, 3 адаптированных, 2 новых — коэффициент reuse 75%
-
-## Правило репозитория
-
-Все дальнейшие версии FATHER Chassis хранятся здесь вместе с:
-
-1. исходным кодом;
-2. тестами;
-3. конфигурацией;
-4. квалификационными отчётами;
-5. BOM и отчётами reuse;
-6. историей версий.
-
-Runtime-базы данных, секреты, кэш и локальное состояние в GitHub не коммитятся.
+- OSINT / Knowledge: reuse **93,75%**
+- ALINA / BOOKCRAFT: reuse **75%**
 
 ## Целевая структура
 
-```
+```text
 services/father-chassis/
 ├── src/          # исходный код
-├── tests/        # тесты
-├── config/       # конфигурация
+├── tests/        # автоматические испытания
+├── config/       # конфигурации шасси
 ├── products/     # продуктовые пакеты
-├── artifacts/    # отчёты и доказательства
-├── docs/         # документация
-└── releases/     # материалы релизов
+├── artifacts/    # qualification / BOM / reuse
+├── docs/         # документация RU + EN
+└── releases/     # релизные снимки
 ```
-
-Рабочая ветка: `father-chassis-development`.
-
-Существующий `services/father-controller` намеренно не изменяется до завершения квалификации интеграции.
 
 ## Языковая политика
 
-Ключевая документация FATHER ведётся на двух языках:
+Ключевая документация ведётся полноценно **на русском и английском**. Русская версия обязательна и не должна быть сокращённым переводом.
 
-- **Русский** — обязательная полная версия;
-- **English** — параллельная техническая версия для совместной разработки и внешнего использования.
+## Следующий контрольный этап
 
-Русская документация не должна быть сокращённой копией английской.
+0.7 будет направлен не на добавление декоративных функций, а на квалификацию реальной инфраструктуры и первого полного product workflow.
