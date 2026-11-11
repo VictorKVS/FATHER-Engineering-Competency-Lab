@@ -3,6 +3,7 @@ $base = "http://localhost:8080"
 $healthSamples = New-Object System.Collections.Generic.List[double]
 $runSamples = New-Object System.Collections.Generic.List[double]
 $failures = 0
+$errors = New-Object System.Collections.Generic.List[string]
 
 function Percentile([double[]]$values, [double]$p) {
     if (-not $values -or $values.Count -eq 0) { return 0 }
@@ -20,6 +21,7 @@ for ($i=1; $i -le 200; $i++) {
         if (-not $r.live) { throw "live=false" }
     } catch {
         $failures++
+        if ($errors.Count -lt 10) { $errors.Add($_.Exception.Message) }
     } finally {
         $sw.Stop()
         $healthSamples.Add($sw.Elapsed.TotalMilliseconds)
@@ -35,6 +37,7 @@ for ($i=1; $i -le 50; $i++) {
         if ([string]::IsNullOrWhiteSpace($r.trace_id)) { throw "trace missing" }
     } catch {
         $failures++
+        if ($errors.Count -lt 10) { $errors.Add($_.Exception.Message) }
     } finally {
         $sw.Stop()
         $runSamples.Add($sw.Elapsed.TotalMilliseconds)
@@ -48,6 +51,7 @@ $result=[ordered]@{
     health_requests=200
     run_requests=50
     failures=$failures
+    sample_errors=$errors
     health_p95_ms=$healthP95
     run_p95_ms=$runP95
     thresholds=@{failures=0; health_p95_ms=500; run_p95_ms=2000}
