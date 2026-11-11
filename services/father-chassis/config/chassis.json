@@ -1,9 +1,16 @@
 {
   "name": "FATHER_CHASSIS",
-  "version": "0.8.0",
+  "version": "1.0.0rc1",
   "workflow": "default",
   "emergency_stop": false,
-  "retry": {"attempts": 2, "timeout_ms": 30000},
-  "policies": {"human_approval_for": []},
-  "metadata": {"profile": "windows-local-llm-qualification"}
+  "retry": {
+    "attempts": 2,
+    "timeout_ms": 30000
+  },
+  "policies": {
+    "human_approval_for": []
+  },
+  "metadata": {
+    "profile": "factory-1.0-rc-qualification"
+  }
 }
