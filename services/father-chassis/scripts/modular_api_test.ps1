@@ -1,8 +1,16 @@
 $ErrorActionPreference = "Stop"
 $base = "http://localhost:8081"
 
-Write-Host "[1/8] Start modular API"
-docker compose up -d --build father-chassis-modular
+Write-Host "[1/8] Prepare modular data volume and start API"
+
+docker compose build father-chassis-modular
+if ($LASTEXITCODE -ne 0) { throw "modular image build failed" }
+
+Write-Host "[1/8] Fix modular volume ownership for non-root runtime"
+docker compose run --rm --user 0 --no-deps father-chassis-modular sh -c "mkdir -p /app/data-modular && chown -R father:father /app/data-modular"
+if ($LASTEXITCODE -ne 0) { throw "could not prepare modular data volume ownership" }
+
+docker compose up -d --no-build father-chassis-modular
 if ($LASTEXITCODE -ne 0) { throw "modular container start failed" }
 
 Write-Host "[2/8] Wait for readiness"
