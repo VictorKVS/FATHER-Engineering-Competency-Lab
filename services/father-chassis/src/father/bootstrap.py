@@ -39,13 +39,19 @@ def build_runtime(*, denied_actions: set[str] | None = None, config: ChassisConf
     state_impl = state or SQLiteStateStore(root / "state.db")
     stop = EmergencyStop(cfg.emergency_stop)
 
+    model_router = ModelRouter(
+        {primary.name: primary, secondary.name: secondary},
+        default=primary.name,
+        fallbacks=(secondary.name,),
+    )
+
     registry = BlockRegistry()
-    registry.register(BlockDescriptor("FTH-RAG-SQLITE-001", "0.4.0", "rag", rag_impl, frozenset({"retrieve","ingest"}), "father-chassis>=0.4,<1.0"))
-    registry.register(BlockDescriptor("FTH-MODEL-001", "0.4.0", "model", primary, frozenset({"generate"}), "father-chassis>=0.4,<1.0"))
-    registry.register(BlockDescriptor("FTH-MODEL-002", "0.4.0", "model", secondary, frozenset({"generate"}), "father-chassis>=0.4,<1.0"))
+    registry.register(BlockDescriptor("FTH-RAG-001", "0.4.0", "rag", rag_impl, frozenset({"retrieve","ingest"}), "father-chassis>=0.4,<1.0"))
+    registry.register(BlockDescriptor("FTH-MODEL-ROUTER-001", "0.4.0", "model-router", model_router, frozenset({"generate","failover"}), "father-chassis>=0.4,<1.0"))
     registry.register(BlockDescriptor("FTH-TOOL-001", "0.4.0", "tool", tool_impl, frozenset({"create_report"}), "father-chassis>=0.4,<1.0"))
     registry.register(BlockDescriptor("FTH-GUARD-001", "0.4.0", "guardrail", guardrail, frozenset({"authorize"}), "father-chassis>=0.4,<1.0"))
-    registry.register(BlockDescriptor("FTH-STATE-SQLITE-001", "0.4.0", "state", state_impl, frozenset({"get","set","snapshot"}), "father-chassis>=0.4,<1.0"))
+    registry.register(BlockDescriptor("FTH-STATE-001", "0.4.0", "state", state_impl, frozenset({"get","set","snapshot"}), "father-chassis>=0.4,<1.0"))
+    registry.register(BlockDescriptor("FTH-EVENT-BUS-001", "0.4.0", "event-bus", event_bus or EventBus(), frozenset({"publish"}), "father-chassis>=0.4,<1.0"))
 
     tools = ToolRegistry()
     tools.register(ToolSpec(
@@ -56,12 +62,12 @@ def build_runtime(*, denied_actions: set[str] | None = None, config: ChassisConf
 
     return ChassisRuntime(
         config=cfg,
-        models=ModelRouter({primary.name:primary, secondary.name:secondary}, default=primary.name, fallbacks=(secondary.name,)),
+        models=model_router,
         rag=rag_impl,
         guardrail=guardrail,
         audit=audit or AuditStore(),
         metrics=Metrics(),
-        event_bus=event_bus or EventBus(),
+        event_bus=registry.get("FTH-EVENT-BUS-001").instance,
         state=state_impl,
         workflows=WorkflowEngine(),
         registry=registry,
