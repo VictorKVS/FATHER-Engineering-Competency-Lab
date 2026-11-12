@@ -1,0 +1,28 @@
+{
+  "qualification": "FATHER_WORKING_PROTOTYPE_VERTICAL_0_1",
+  "completed_at": "2026-11-12",
+  "passed": true,
+  "tests": {
+    "modular_core": 13,
+    "modular_api": true
+  },
+  "real_model": {
+    "provider": "OpenAI-compatible",
+    "model": "qwen2.5:7b"
+  },
+  "trace_id": "9501d111-0093-449f-a1a1-081dd3259c08",
+  "workflow_id": "7034c1fd-1121-456a-91cb-648721974b47",
+  "evidence_source": "qualification://modular-api",
+  "evidence_hash": "43066ea8c6a1142b440173495b32045c5ce362a15e22c237b634bc8bc9148993",
+  "checks": [
+    "RAG",
+    "model routing",
+    "real inference",
+    "evidence",
+    "audit",
+    "policy",
+    "tool execution",
+    "emergency stop/resume",
+    "OSINT product"
+  ]
+}
