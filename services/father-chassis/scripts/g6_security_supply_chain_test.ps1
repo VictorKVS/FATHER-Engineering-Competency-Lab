@@ -130,6 +130,30 @@ if ($criticalVulns.Count -gt 0) {
     throw "Trivy found $($criticalVulns.Count) CRITICAL vulnerabilities"
 }
 
+if ($highVulns.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Trivy HIGH vulnerability triage:"
+    $highTriage = @(
+        $highVulns | ForEach-Object {
+            [pscustomobject]@{
+                VulnerabilityID = [string]$_.VulnerabilityID
+                PkgName = [string]$_.PkgName
+                InstalledVersion = [string]$_.InstalledVersion
+                FixedVersion = [string]$_.FixedVersion
+                Title = [string]$_.Title
+                PrimaryURL = [string]$_.PrimaryURL
+            }
+        } | Sort-Object PkgName, VulnerabilityID
+    )
+    $highTriage | Format-Table -AutoSize | Out-Host
+
+    $fixableHigh = @($highTriage | Where-Object { -not [string]::IsNullOrWhiteSpace($_.FixedVersion) })
+    $unfixedHigh = @($highTriage | Where-Object { [string]::IsNullOrWhiteSpace($_.FixedVersion) })
+
+    Write-Host ""
+    Write-Host "Trivy HIGH summary: total=$($highVulns.Count), fixable=$($fixableHigh.Count), no_fixed_version=$($unfixedHigh.Count)"
+}
+
 Write-Host "[G6.3 5/8] Scan clean Git snapshot for secrets with Gitleaks"
 $repoPath = (Get-Location).Path
 $gitRoot = (& git rev-parse --show-toplevel).Trim()
@@ -244,6 +268,8 @@ $result = [ordered]@{
     trivy = [ordered]@{
         critical = $criticalVulns.Count
         high = $highVulns.Count
+        high_fixable = if ($highVulns.Count -gt 0) { $fixableHigh.Count } else { 0 }
+        high_without_fixed_version = if ($highVulns.Count -gt 0) { $unfixedHigh.Count } else { 0 }
         report = "artifacts/security/trivy-vulnerabilities.json"
     }
     gitleaks = [ordered]@{
