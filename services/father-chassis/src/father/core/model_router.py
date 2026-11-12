@@ -19,6 +19,10 @@ class ModelRouter:
         checker = getattr(model, "health", None)
         return bool(checker()) if callable(checker) else True
 
+    def health(self) -> bool:
+        """Composite readiness: at least one route can currently serve requests."""
+        return any(self._healthy(model) for model in self._models.values())
+
     def resolve(self, requested: str | None = None) -> ModelAdapter:
         name = requested or self.default
         if requested:
