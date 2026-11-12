@@ -85,6 +85,10 @@ Set-Content -Path $seedScriptPath -Value $legacyPython -Encoding UTF8
 docker run --rm --user 0 -v "$volume`:/app/data" -v "$artifactDir`:/qualification" $rollbackImage python /qualification/g6_4_seed_legacy.py
 if ($LASTEXITCODE -ne 0) { throw "Could not seed legacy datastore" }
 
+Write-Host "Transfer legacy datastore ownership to non-root runtime user"
+docker run --rm --user 0 -v "$volume`:/app/data" $rollbackImage sh -c "chown -R father:father /app/data && chmod -R u+rwX /app/data"
+if ($LASTEXITCODE -ne 0) { throw "Could not prepare legacy datastore ownership for non-root runtime" }
+
 Write-Host "[G6.4 4/9] Start candidate B against legacy datastore and trigger migration"
 docker run -d --name $candidateName -p "$port`:8080" -e FATHER_DATA_DIR=/app/data -v "$volume`:/app/data" -v "$artifactDir`:/qualification" $canonicalImage uvicorn father.api_modular:app --host 0.0.0.0 --port 8080 | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "Candidate B could not start" }
