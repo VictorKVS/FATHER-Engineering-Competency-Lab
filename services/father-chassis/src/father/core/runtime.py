@@ -75,10 +75,10 @@ class ChassisRuntime:
         )
 
     def run(self, req: ExecutionRequest) -> ExecutionResult:
-        trace = TraceContext()
+        trace = TraceContext(agent_id=str(req.metadata.get("agent_id", "father-core-agent")))
         started = self.metrics.start()
         success = False
-        self._emit(trace, "request.received", {"input": req.input})
+        self._emit(trace, "request.received", {"input": req.input, "agent_id": trace.agent_id})
         self.state.set("workflow", trace.workflow_id, {"status": "received", "trace_id": trace.trace_id})
         try:
             self.emergency_stop.ensure_running()
