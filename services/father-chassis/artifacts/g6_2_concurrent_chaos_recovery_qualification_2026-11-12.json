@@ -1,0 +1,22 @@
+{
+  "qualification": "G6.2_CONCURRENT_CHAOS_RECOVERY",
+  "date": "2026-11-12",
+  "status": "PASS",
+  "passed": true,
+  "canonical_endpoint": "http://localhost:8080",
+  "failure_injection": "docker compose stop father-chassis",
+  "total_background_probes": 117,
+  "successful_background_probes": 108,
+  "failed_background_probes": 9,
+  "observable_outage": true,
+  "recovery_to_ready_seconds": 1.01,
+  "post_recovery_successful_probes": 94,
+  "post_chaos_trace_id": null,
+  "post_chaos_trace_id_note": "Successful post-chaos inference, evidence and audit were verified during the original run, but the exact trace_id is not present in the retained summary available for this artifact reconstruction.",
+  "post_chaos_inference_verified": true,
+  "post_chaos_evidence_verified": true,
+  "post_chaos_audit_verified": true,
+  "runtime_ready_after_chaos": true,
+  "decision": "PASS",
+  "scope_note": "This test proves forced canonical runtime stop/recovery under background probes. Dependency-level failure injection is covered separately by G6.6."
+}
