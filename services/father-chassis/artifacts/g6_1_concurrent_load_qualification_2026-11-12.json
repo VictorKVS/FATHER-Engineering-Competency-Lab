@@ -1,0 +1,31 @@
+{
+  "qualification": "G6.1_CONCURRENT_LOAD",
+  "date": "2026-11-12",
+  "status": "PASS",
+  "passed": true,
+  "canonical_endpoint": "http://localhost:8080",
+  "control_plane": {
+    "workers": 16,
+    "requests_per_worker": 50,
+    "total_requests": 800,
+    "failed_requests": 0,
+    "p50_ms": 2.39,
+    "p95_ms": 6.58,
+    "p99_ms": 137.16,
+    "max_ms": 215.12
+  },
+  "real_inference": {
+    "workers": 4,
+    "requests_per_worker": 2,
+    "total_requests": 8,
+    "failed_requests": 0,
+    "unique_trace_ids": 8,
+    "p50_ms": 6133,
+    "p95_ms": 7936.72,
+    "max_ms": 7936.72
+  },
+  "audit_verified_traces": 8,
+  "runtime_ready_after_load": true,
+  "decision": "PASS",
+  "note": "Control-plane concurrency passed with zero failures. Real inference also passed with unique traces and audit continuity; local model latency is the dominant performance bottleneck and this qualification does not assert a 10k-RPS model-serving SLA."
+}
