@@ -1,0 +1,96 @@
+rules:
+  - id: father.python.eval
+    message: "Use of eval() can execute attacker-controlled Python code."
+    severity: ERROR
+    languages: [python]
+    pattern: eval(...)
+
+  - id: father.python.exec
+    message: "Use of exec() can execute arbitrary Python code."
+    severity: ERROR
+    languages: [python]
+    pattern: exec(...)
+
+  - id: father.python.subprocess-shell-true
+    message: "subprocess with shell=True can enable command injection."
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern-either:
+          - pattern: subprocess.run(..., shell=True, ...)
+          - pattern: subprocess.Popen(..., shell=True, ...)
+          - pattern: subprocess.call(..., shell=True, ...)
+          - pattern: subprocess.check_call(..., shell=True, ...)
+          - pattern: subprocess.check_output(..., shell=True, ...)
+
+  - id: father.python.os-system
+    message: "os.system() invokes a shell; prefer structured subprocess arguments."
+    severity: ERROR
+    languages: [python]
+    pattern: os.system(...)
+
+  - id: father.python.pickle-load
+    message: "pickle deserialization can execute arbitrary code when data is untrusted."
+    severity: ERROR
+    languages: [python]
+    pattern-either:
+      - pattern: pickle.load(...)
+      - pattern: pickle.loads(...)
+
+  - id: father.python.yaml-unsafe-load
+    message: "yaml.load() without SafeLoader can deserialize unsafe objects."
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern: yaml.load(...)
+      - pattern-not: yaml.load(..., Loader=yaml.SafeLoader, ...)
+
+  - id: father.python.tempfile-mktemp
+    message: "tempfile.mktemp() is race-prone; use NamedTemporaryFile or mkstemp."
+    severity: ERROR
+    languages: [python]
+    pattern: tempfile.mktemp(...)
+
+  - id: father.fastapi.cors-wildcard-credentials
+    message: "Wildcard CORS origins with credentials enabled is unsafe."
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern-inside: |
+          $APP.add_middleware(
+            CORSMiddleware,
+            ...,
+            allow_origins=["*"],
+            ...,
+            allow_credentials=True,
+            ...
+          )
+
+  - id: father.python.requests-verify-false
+    message: "TLS certificate verification is disabled."
+    severity: ERROR
+    languages: [python]
+    pattern-either:
+      - pattern: requests.get(..., verify=False, ...)
+      - pattern: requests.post(..., verify=False, ...)
+      - pattern: requests.request(..., verify=False, ...)
+
+  - id: father.python.ssl-unverified-context
+    message: "Creation of an unverified TLS context disables certificate verification."
+    severity: ERROR
+    languages: [python]
+    pattern: ssl._create_unverified_context(...)
+
+  - id: father.python.assert-security
+    message: "assert must not be used for security enforcement because it can be optimized away."
+    severity: WARNING
+    languages: [python]
+    pattern: assert ...
+
+  - id: father.python.debug-true
+    message: "Debug mode must not be enabled in production application startup."
+    severity: WARNING
+    languages: [python]
+    pattern-either:
+      - pattern: $APP.run(..., debug=True, ...)
+      - pattern: uvicorn.run(..., reload=True, ...)
