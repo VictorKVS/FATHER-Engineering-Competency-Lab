@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 Write-Host "[PROTOTYPE] 1. Modular core tests"
-python -m pytest -q .\tests\test_modular_core_restore.py .\tests\test_access_control.py .\tests\test_kii_decision_trace.py .\tests\test_security_compliance_vertical.py .\tests\test_modular_access_runtime.py .\tests\test_capability_provider_manifest.py .\tests\test_agent_factory.py .\tests\test_requirement_planner.py .\tests\test_solution_factory.py .\tests\test_factory_execution.py .\tests\test_osint_product_dedup.py
+python -m pytest -q .\tests\test_modular_core_restore.py .\tests\test_access_control.py .\tests\test_kii_decision_trace.py .\tests\test_security_compliance_vertical.py .\tests\test_modular_access_runtime.py .\tests\test_capability_provider_manifest.py .\tests\test_agent_factory.py .\tests\test_requirement_planner.py .\tests\test_solution_factory.py .\tests\test_factory_execution.py .\tests\test_osint_product_dedup.py .\tests\test_factory_qualification_record.py
 if ($LASTEXITCODE -ne 0) { throw "PROTOTYPE CORE: FAIL" }
 
 Write-Host "[PROTOTYPE] 2. Side-by-side modular API"
