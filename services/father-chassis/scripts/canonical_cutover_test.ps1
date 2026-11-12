@@ -30,13 +30,13 @@ if ($LASTEXITCODE -ne 0) { throw "canonical modular service start failed" }
 Wait-Ready "father-chassis"
 
 Write-Host "[CUTOVER 4/8] Canonical smoke qualification"
-& .scriptssmoke_test.ps1
+& (Join-Path $PSScriptRoot "smoke_test.ps1")
 
 Write-Host "[CUTOVER 5/8] Canonical local LLM qualification"
-& .scriptsllm_test.ps1
+& (Join-Path $PSScriptRoot "llm_test.ps1")
 
 Write-Host "[CUTOVER 6/8] Canonical OSINT qualification"
-& .scriptsosint_product_test.ps1
+& (Join-Path $PSScriptRoot "osint_product_test.ps1")
 
 Write-Host "[CUTOVER 7/8] Canonical Factory Execution qualification"
 $factoryBody = @{
