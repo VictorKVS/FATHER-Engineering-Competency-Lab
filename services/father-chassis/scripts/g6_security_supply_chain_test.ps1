@@ -67,10 +67,10 @@ function Resolve-ScannerImage([string[]]$candidates, [int]$attemptsPerCandidate 
 
 Write-Host "[G6.3 1/8] Validate Docker and canonical image"
 Require-Docker
-docker image inspect $image | Out-Null
+Write-Host "Build canonical image from current source before security qualification"
+docker compose build $service
 if ($LASTEXITCODE -ne 0) {
-    docker compose build $service
-    if ($LASTEXITCODE -ne 0) { throw "Could not build canonical image" }
+    throw "INFRASTRUCTURE_ERROR: could not build canonical image from current source"
 }
 
 Write-Host "[G6.3 2/8] Check running-container hardening"
@@ -152,6 +152,10 @@ if ($highVulns.Count -gt 0) {
 
     Write-Host ""
     Write-Host "Trivy HIGH summary: total=$($highVulns.Count), fixable=$($fixableHigh.Count), no_fixed_version=$($unfixedHigh.Count)"
+
+    if ($fixableHigh.Count -gt 0) {
+        throw "SECURITY_FAIL: Trivy found $($fixableHigh.Count) HIGH vulnerability finding(s) with an available FixedVersion. Rebuild/remediate before G6.3 can pass."
+    }
 }
 
 Write-Host "[G6.3 5/8] Scan clean Git snapshot for secrets with Gitleaks"
