@@ -5,6 +5,7 @@ import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
+from father.core.access_control import ClearanceLevel, ResourceContext, SubjectContext
 from father.core.approval import ApprovalRequired
 from father.core.contracts import ExecutionRequest
 from father.core.health import health_report
@@ -34,6 +35,16 @@ class RunBody(BaseModel):
     model: str | None = None
     role: str = "agent"
     approval_id: str | None = None
+    subject_id: str | None = None
+    roles: list[str] = []
+    clearance: str | None = None
+    projects: list[str] = []
+    compartments: list[str] = []
+    resource_id: str | None = None
+    resource_classification: str | None = None
+    resource_project: str | None = None
+    resource_compartments: list[str] = []
+    permission: str = "execute:analysis"
 
 
 class IngestBody(BaseModel):
@@ -105,6 +116,32 @@ def create_app(runtime=None) -> FastAPI:
             metadata["model"] = body.model
         if body.approval_id:
             metadata["approval_id"] = body.approval_id
+
+        if body.subject_id or body.resource_id:
+            if not body.subject_id or not body.resource_id or not body.clearance or not body.resource_classification:
+                raise HTTPException(
+                    status_code=400,
+                    detail="subject_id, resource_id, clearance and resource_classification are required together",
+                )
+            try:
+                subject = SubjectContext(
+                    subject_id=body.subject_id,
+                    roles=frozenset(body.roles),
+                    clearance=ClearanceLevel[body.clearance.upper()],
+                    projects=frozenset(body.projects),
+                    compartments=frozenset(body.compartments),
+                )
+                resource = ResourceContext(
+                    resource_id=body.resource_id,
+                    classification=ClearanceLevel[body.resource_classification.upper()],
+                    project_id=body.resource_project,
+                    compartments=frozenset(body.resource_compartments),
+                )
+            except KeyError as exc:
+                raise HTTPException(status_code=400, detail=f"unknown clearance level: {exc}") from exc
+            metadata["subject_context"] = subject
+            metadata["resource_context"] = resource
+            metadata["permission"] = body.permission
         try:
             result = runtime.run(ExecutionRequest(input=body.input, metadata=metadata))
         except ApprovalRequired as exc:
