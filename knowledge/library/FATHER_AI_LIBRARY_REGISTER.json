@@ -60,7 +60,10 @@
         "studied": false,
         "applied": false
       },
-      "note": "End-to-end GenAI security reference: foundations, governance, data/model/application security, LLMOps and DevSecOps."
+      "note": "End-to-end GenAI security reference: foundations, governance, data/model/application security, LLMOps and DevSecOps.",
+      "original_filename": "Generative AI Security -Theories and Practices (Ken Huang, Yang Wang, Ben Goertzel, Yale Li)_bibis.ir.pdf",
+      "canonical_filename": "AISEC_2024_Huang_et_al_Generative_AI_Security_Theories_and_Practices.pdf",
+      "category_path": "AI_Security/Books"
     },
     {
       "id": "LIB-AI-002",
@@ -102,7 +105,10 @@
         "studied": false,
         "applied": false
       },
-      "note": "Core systems-engineering reference: holistic ML lifecycle, deployment, monitoring, updating and shared platform foundations."
+      "note": "Core systems-engineering reference: holistic ML lifecycle, deployment, monitoring, updating and shared platform foundations.",
+      "original_filename": "_OceanofPDF.com_Designing_Machine_Learning_Systems_An_Iterative_Process_for_Production-Ready_Applications_-_Chip_Huyen.pdf",
+      "canonical_filename": "MLSYS_2022_Huyen_Designing_Machine_Learning_Systems.pdf",
+      "category_path": "AI_Engineering/ML_Systems"
     },
     {
       "id": "LIB-AI-003",
@@ -147,7 +153,10 @@
         "studied": false,
         "applied": false
       },
-      "note": "Technical LLM foundation with embeddings, semantic search, retrieval-augmented generation, prompting and fine-tuning."
+      "note": "Technical LLM foundation with embeddings, semantic search, retrieval-augmented generation, prompting and fine-tuning.",
+      "original_filename": "_OceanofPDF.com_Hands-On_Large_Language_Models_-_Jay_Alammar (2).pdf",
+      "canonical_filename": "LLM_2024_Alammar_Grootendorst_Hands-On_Large_Language_Models.pdf",
+      "category_path": "LLM_RAG/Books"
     },
     {
       "id": "LIB-AI-004",
@@ -193,7 +202,10 @@
         "applied": false
       },
       "completeness": "PARTIAL_21_PAGE_FILE",
-      "note": "Uploaded file is only 21 pages; treat as excerpt/preview, not a verified complete book."
+      "note": "Uploaded file is only 21 pages; treat as excerpt/preview, not a verified complete book.",
+      "original_filename": "AI-Engineering-by-Chip-Huyen.pdf",
+      "canonical_filename": "AIENG_2025_Huyen_AI_Engineering_PARTIAL.pdf",
+      "category_path": "AI_Engineering/Foundation_Models"
     },
     {
       "id": "LIB-AI-005",
@@ -235,7 +247,10 @@
         "studied": false,
         "applied": false
       },
-      "note": "Useful visual reference for the new AI stack, evaluation, context construction, RAG, agentic retrieval and inference trade-offs."
+      "note": "Useful visual reference for the new AI stack, evaluation, context construction, RAG, agentic retrieval and inference trade-offs.",
+      "original_filename": "chiphuyen_acmtechtalkslides.pdf",
+      "canonical_filename": "AIENG_2024_Huyen_From_ML_Engineering_to_AI_Engineering_Slides.pdf",
+      "category_path": "AI_Engineering/Slides"
     },
     {
       "id": "LIB-AI-006",
@@ -278,7 +293,10 @@
         "studied": false,
         "applied": false
       },
-      "note": "Operational governance/security checklist: adversarial risk, threat modeling, asset inventory, TEVV, model/risk cards, RAG and red teaming."
+      "note": "Operational governance/security checklist: adversarial risk, threat modeling, asset inventory, TEVV, model/risk cards, RAG and red teaming.",
+      "original_filename": "LLM-AI-Security_and_Governance-Checklist-.pdf",
+      "canonical_filename": "AISEC_2024_OWASP_LLM_AI_Cybersecurity_Governance_Checklist.pdf",
+      "category_path": "AI_Security/Standards_Checklists"
     },
     {
       "id": "LIB-AI-007",
@@ -324,7 +342,20 @@
         "studied": false,
         "applied": false
       },
-      "note": "Scientific review covering GenAI opportunities and risks in cybersecurity, including jailbreaks, prompt injection, offensive and defensive applications."
+      "note": "Scientific review covering GenAI opportunities and risks in cybersecurity, including jailbreaks, prompt injection, offensive and defensive applications.",
+      "original_filename": "2403.08701.pdf",
+      "canonical_filename": "AISEC_2024_Yigit_et_al_Review_of_Generative_AI_Methods_in_Cybersecurity_arXiv2403.08701.pdf",
+      "category_path": "AI_Security/Papers"
     }
+  ],
+  "naming_convention": "<DOMAIN>_<YEAR>_<AUTHOR>_<SHORT_TITLE>[_TYPE].pdf",
+  "category_roots": [
+    "AI_Engineering/ML_Systems",
+    "AI_Engineering/Foundation_Models",
+    "AI_Engineering/Slides",
+    "LLM_RAG/Books",
+    "AI_Security/Books",
+    "AI_Security/Standards_Checklists",
+    "AI_Security/Papers"
   ]
 }
