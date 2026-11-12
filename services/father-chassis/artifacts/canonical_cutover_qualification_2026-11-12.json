@@ -1,0 +1,35 @@
+{
+  "qualification": "FATHER_CANONICAL_MODULAR_CUTOVER_AND_ROLLBACK",
+  "date": "2026-11-12",
+  "passed": true,
+  "canonical_endpoint": "http://localhost:8080",
+  "canonical_runtime": "father.api_modular:app",
+  "results": {
+    "smoke": "PASS",
+    "local_llm": "PASS",
+    "osint_product": "PASS",
+    "factory_execution": "PASS",
+    "factory_qualification_record": "PASS",
+    "recovery_rollback": "PASS",
+    "modular_restore_after_rollback": "PASS"
+  },
+  "factory": {
+    "agent_id": "canonical-factory-agent",
+    "requirement_id": "REQ-CANONICAL-CUTOVER-001",
+    "trace_id": "69d719be-ea62-45a3-a88f-27be13e2bb85",
+    "workflow_id": "3d3f14ce-d259-4214-8c5e-50e883995652",
+    "qualification_id": "FQ-4250b734c6346a91",
+    "qualification_record_hash": "4250b734c6346a9181fb040ba3a748be3a6f568aec16a89c6c632d413a8b9c9",
+    "audit_event_count": 9
+  },
+  "local_llm": {
+    "trace_id": "07f70b36-ca12-47d7-bf3c-27118b08f4d7",
+    "evidence_count": 2,
+    "audit_event_count": 9
+  },
+  "rollback": {
+    "recovery_runtime_on_8080": true,
+    "canonical_modular_restored": true
+  },
+  "next_gate": "FINAL_G6_INDUSTRIAL_QUALIFICATION"
+}
