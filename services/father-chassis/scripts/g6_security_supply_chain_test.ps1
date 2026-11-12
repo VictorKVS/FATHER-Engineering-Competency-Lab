@@ -16,50 +16,53 @@ function Read-JsonFile([string]$path) {
     return Get-Content $path -Raw | ConvertFrom-Json
 }
 
-function Ensure-ScannerImage([string]$imageName, [int]$attempts = 4) {
-    # Windows PowerShell 5.1 can convert stderr from native commands into
-    # NativeCommandError when ErrorActionPreference=Stop. Image absence is an
-    # expected branch here, so inspect/pull must be handled by exit code.
-    $savedPreference = $ErrorActionPreference
-    try {
-        $ErrorActionPreference = "Continue"
-        & docker image inspect $imageName *> $null
-        $inspectExit = $LASTEXITCODE
-    }
-    finally {
-        $ErrorActionPreference = $savedPreference
-    }
-
-    if ($inspectExit -eq 0) {
-        Write-Host "Scanner image already available locally: $imageName"
-        return
-    }
-
-    for ($attempt = 1; $attempt -le $attempts; $attempt++) {
-        Write-Host "Pull scanner image $imageName (attempt $attempt/$attempts)"
-
+function Resolve-ScannerImage([string[]]$candidates, [int]$attemptsPerCandidate = 3) {
+    foreach ($imageName in $candidates) {
         $savedPreference = $ErrorActionPreference
         try {
             $ErrorActionPreference = "Continue"
-            & docker pull $imageName
-            $pullExit = $LASTEXITCODE
+            & docker image inspect $imageName *> $null
+            $inspectExit = $LASTEXITCODE
         }
         finally {
             $ErrorActionPreference = $savedPreference
         }
 
-        if ($pullExit -eq 0) {
-            Write-Host "Scanner image ready: $imageName"
-            return
-        }
-
-        Write-Warning "Pull attempt $attempt failed for $imageName (exit code $pullExit)"
-        if ($attempt -lt $attempts) {
-            Start-Sleep -Seconds ([Math]::Min(5 * $attempt, 15))
+        if ($inspectExit -eq 0) {
+            Write-Host "Scanner image already available locally: $imageName"
+            return $imageName
         }
     }
 
-    throw "INFRASTRUCTURE_ERROR: could not obtain scanner image '$imageName' from registry after $attempts attempts. Security qualification was NOT executed and must not be marked FAIL."
+    foreach ($imageName in $candidates) {
+        for ($attempt = 1; $attempt -le $attemptsPerCandidate; $attempt++) {
+            Write-Host "Pull scanner image $imageName (attempt $attempt/$attemptsPerCandidate)"
+
+            $savedPreference = $ErrorActionPreference
+            try {
+                $ErrorActionPreference = "Continue"
+                & docker pull $imageName
+                $pullExit = $LASTEXITCODE
+            }
+            finally {
+                $ErrorActionPreference = $savedPreference
+            }
+
+            if ($pullExit -eq 0) {
+                Write-Host "Scanner image ready: $imageName"
+                return $imageName
+            }
+
+            Write-Warning "Pull attempt $attempt failed for $imageName (exit code $pullExit)"
+            if ($attempt -lt $attemptsPerCandidate) {
+                Start-Sleep -Seconds ([Math]::Min(5 * $attempt, 15))
+            }
+        }
+
+        Write-Warning "Registry candidate unavailable: $imageName"
+    }
+
+    throw "INFRASTRUCTURE_ERROR: could not obtain any scanner image candidate: $($candidates -join ', '). Security qualification was NOT executed and must not be marked FAIL."
 }
 
 Write-Host "[G6.3 1/8] Validate Docker and canonical image"
@@ -95,19 +98,26 @@ if (-not $memoryLimited) { throw "container memory limit is missing" }
 if (-not $cpuLimited) { throw "container CPU limit is missing" }
 
 Write-Host "[G6.3 3/8] Prepare scanner images and generate CycloneDX SBOM with Trivy"
-Ensure-ScannerImage "aquasec/trivy:latest"
-Ensure-ScannerImage "zricethezav/gitleaks:latest"
-Ensure-ScannerImage "semgrep/semgrep:latest"
+$trivyImage = Resolve-ScannerImage @(
+    "ghcr.io/aquasecurity/trivy:latest",
+    "aquasec/trivy:latest"
+)
+$gitleaksImage = Resolve-ScannerImage @(
+    "zricethezav/gitleaks:latest"
+)
+$semgrepImage = Resolve-ScannerImage @(
+    "semgrep/semgrep:latest"
+)
 
 $sbomPath = Join-Path $artifactDir "father-chassis-sbom.cdx.json"
-docker run --rm --pull=never -v /var/run/docker.sock:/var/run/docker.sock -v "$($artifactDir):/out" aquasec/trivy:latest image --quiet --format cyclonedx --output /out/father-chassis-sbom.cdx.json $image
+docker run --rm --pull=never -v /var/run/docker.sock:/var/run/docker.sock -v "$($artifactDir):/out" $trivyImage image --quiet --format cyclonedx --output /out/father-chassis-sbom.cdx.json $image
 if ($LASTEXITCODE -ne 0) { throw "Trivy CycloneDX SBOM generation failed" }
 $sbom = Read-JsonFile $sbomPath
 if ([string]::IsNullOrWhiteSpace([string]$sbom.bomFormat)) { throw "invalid CycloneDX SBOM" }
 
 Write-Host "[G6.3 4/8] Scan canonical image vulnerabilities with Trivy"
 $trivyPath = Join-Path $artifactDir "trivy-vulnerabilities.json"
-docker run --rm --pull=never -v /var/run/docker.sock:/var/run/docker.sock -v "$($artifactDir):/out" aquasec/trivy:latest image --quiet --format json --output /out/trivy-vulnerabilities.json --severity HIGH,CRITICAL $image
+docker run --rm --pull=never -v /var/run/docker.sock:/var/run/docker.sock -v "$($artifactDir):/out" $trivyImage image --quiet --format json --output /out/trivy-vulnerabilities.json --severity HIGH,CRITICAL $image
 if ($LASTEXITCODE -ne 0) { throw "Trivy vulnerability scan execution failed" }
 $trivy = Read-JsonFile $trivyPath
 $vulns = @()
@@ -123,7 +133,7 @@ if ($criticalVulns.Count -gt 0) {
 Write-Host "[G6.3 5/8] Scan repository for secrets with Gitleaks"
 $repoPath = (Get-Location).Path
 $gitleaksPath = Join-Path $artifactDir "gitleaks.json"
-docker run --rm --pull=never -v "$($repoPath):/repo" zricethezav/gitleaks:latest detect --source=/repo --no-git --report-format=json --report-path=/repo/artifacts/security/gitleaks.json --exit-code=0
+docker run --rm --pull=never -v "$($repoPath):/repo" $gitleaksImage detect --source=/repo --no-git --report-format=json --report-path=/repo/artifacts/security/gitleaks.json --exit-code=0
 if ($LASTEXITCODE -ne 0) { throw "Gitleaks execution failed" }
 if (-not (Test-Path $gitleaksPath)) { "[]" | Set-Content -Encoding UTF8 $gitleaksPath }
 $gitleaks = @(Get-Content $gitleaksPath -Raw | ConvertFrom-Json)
@@ -143,7 +153,7 @@ if ($banditHigh.Count -gt 0) {
 
 Write-Host "[G6.3 7/8] Run Semgrep SAST"
 $semgrepPath = Join-Path $artifactDir "semgrep.json"
-docker run --rm --pull=never -v "$($repoPath):/src" semgrep/semgrep:latest semgrep scan --config auto --json --output /src/artifacts/security/semgrep.json /src/src/father
+docker run --rm --pull=never -v "$($repoPath):/src" $semgrepImage semgrep scan --config auto --json --output /src/artifacts/security/semgrep.json /src/src/father
 if ($LASTEXITCODE -ne 0) { throw "Semgrep execution failed" }
 $semgrep = Read-JsonFile $semgrepPath
 $semgrepBlocking = @(
