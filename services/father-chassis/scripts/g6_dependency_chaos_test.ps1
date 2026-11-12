@@ -82,9 +82,12 @@ function Wait-ComposeRunning([string]$Service,[int]$TimeoutSec) {
     return $false
 }
 
-Write-Host "[G6.6 1/10] Validate image and dependency services"
+Write-Host "[G6.6 1/10] Build current canonical image and validate dependency services"
+docker compose build father-chassis
+if ($LASTEXITCODE -ne 0) { throw "Could not build current canonical image" }
+
 docker image inspect $image | Out-Null
-if ($LASTEXITCODE -ne 0) { throw "Canonical image missing" }
+if ($LASTEXITCODE -ne 0) { throw "Canonical image missing after build" }
 
 docker compose up -d postgres redis | Out-Null
 if (-not (Wait-ComposeRunning "postgres" $RecoveryTimeoutSeconds)) { throw "PostgreSQL unavailable" }
