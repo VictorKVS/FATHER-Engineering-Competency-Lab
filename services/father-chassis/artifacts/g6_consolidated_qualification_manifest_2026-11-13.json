@@ -1,0 +1,52 @@
+{
+  "qualification": "G6_CONSOLIDATED_INDUSTRIAL",
+  "date": "2026-11-13",
+  "status": "PENDING_EVIDENCE_G6_1_G6_2",
+  "final_industrial_pass": false,
+  "gates": {
+    "G6.1": {
+      "status": "PASS_REPORTED_BUT_ARTIFACT_NOT_COMMITTED",
+      "artifact": null,
+      "blocking_for_final": true
+    },
+    "G6.2": {
+      "status": "PASS_REPORTED_BUT_ARTIFACT_NOT_COMMITTED",
+      "artifact": null,
+      "blocking_for_final": true
+    },
+    "G6.3": {
+      "status": "PASS",
+      "artifact": "g6_3_security_supply_chain_qualification_2026-11-12.json",
+      "blocking_for_final": false
+    },
+    "G6.4": {
+      "status": "PASS_WITH_SCOPE_CAVEAT",
+      "artifact": "g6_4_upgrade_migration_rollback_qualification_2026-11-12.json",
+      "blocking_for_final": false,
+      "caveat": "Current qualification proves legacy schema migration, failed deployment observation, rollback lifecycle and data preservation. It does not strictly prove downgrade from a newer application binary B to an older application binary A."
+    },
+    "G6.5": {
+      "status": "PASS_120_MINUTE_SOAK",
+      "artifact": "g6_5_endurance_soak_qualification_2026-11-13.json",
+      "blocking_for_final": false,
+      "caveat": "Two-hour soak demonstrates endurance stability but is not equivalent to a longer 8-hour soak for memory-leak confidence."
+    },
+    "G6.6": {
+      "status": "PASS",
+      "artifact": "g6_6_dependency_chaos_qualification_2026-11-13.json",
+      "blocking_for_final": false
+    }
+  },
+  "known_nonblocking_risks": [
+    "Local LLM inference latency remains high; prior endurance measurements show model path dominates response time.",
+    "G6.3 retains 47 HIGH vulnerabilities without vendor FixedVersion in the upstream risk backlog.",
+    "G6.4 binary downgrade semantics remain a qualification scope caveat.",
+    "G6.5 currently covers 120-minute soak, not extended 8-hour soak."
+  ],
+  "finalization_requirements": [
+    "Commit standalone G6.1 evidence artifact.",
+    "Commit standalone G6.2 evidence artifact.",
+    "Re-evaluate whether 8-hour soak is mandatory for final Industrial designation.",
+    "Optionally add G6.4b true versioned-binary upgrade/rollback fixture for stronger rollback evidence."
+  ]
+}
