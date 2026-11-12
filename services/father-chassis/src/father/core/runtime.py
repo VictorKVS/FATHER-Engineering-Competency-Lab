@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from .access_control import AccessControl, ResourceContext, SubjectContext
 from .approval import HumanApprovalGate
 from .audit import AuditStore
 from .config import ChassisConfig
@@ -35,6 +36,7 @@ class ChassisRuntime:
         tools: ToolRegistry,
         approval_gate: HumanApprovalGate,
         tracer: Tracer,
+        access_control: AccessControl | None = None,
         default_tool: str = "default",
     ) -> None:
         self.config = config
@@ -51,6 +53,7 @@ class ChassisRuntime:
         self.tools = tools
         self.approval_gate = approval_gate
         self.tracer = tracer
+        self.access_control = access_control or AccessControl()
         self.default_tool = default_tool
         self.tool = self.tools._tools[default_tool].instance
 
@@ -80,6 +83,34 @@ class ChassisRuntime:
         try:
             self.emergency_stop.ensure_running()
             self._emit(trace, "control.emergency_stop_checked", {"engaged": False})
+
+            subject = req.metadata.get("subject_context")
+            resource = req.metadata.get("resource_context")
+            permission = str(req.metadata.get("permission", "execute:analysis"))
+            if subject is not None or resource is not None:
+                if not isinstance(subject, SubjectContext) or not isinstance(resource, ResourceContext):
+                    raise PermissionError("subject_context and resource_context must both be provided")
+                access = self.access_control.authorize(
+                    subject=subject,
+                    resource=resource,
+                    permission=permission,
+                )
+                self._emit(
+                    trace,
+                    "access.decision",
+                    {
+                        "subject_id": subject.subject_id,
+                        "resource_id": resource.resource_id,
+                        "permission": permission,
+                        "allowed": access.allowed,
+                        "reason": access.reason,
+                        "matched_role": access.matched_role,
+                        "clearance": subject.clearance.name,
+                        "classification": resource.classification.name,
+                    },
+                )
+                if not access.allowed:
+                    raise PermissionError(access.reason)
 
             plan = self.workflows.plan(self.config.workflow, req, trace)
             self._emit(trace, "workflow.planned", {"workflow": plan.name, "action": plan.action})
