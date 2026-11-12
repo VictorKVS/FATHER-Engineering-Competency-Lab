@@ -36,7 +36,52 @@ function Get-ContainerStats {
 function Convert-MemoryToMiB([string]$MemUsage) {
     if ([string]::IsNullOrWhiteSpace($MemUsage)) { throw "Empty Docker memory usage" }
     $used = ($MemUsage -split "/")[0].Trim()
-    if ($used -notmatch '^([0-9]+(?:\.[0-9]+)?)\s*([KMGTP]i?B)
+
+    if ($used -notmatch '^([0-9]+(?:\.[0-9]+)?)\s*([KMGTP]i?B)$') {
+        throw "Unsupported Docker memory format: $MemUsage"
+    }
+
+    $value = [double]$Matches[1]
+    $unit = $Matches[2]
+
+    switch ($unit) {
+        "KiB" { return $value / 1024.0 }
+        "MiB" { return $value }
+        "GiB" { return $value * 1024.0 }
+        "TiB" { return $value * 1024.0 * 1024.0 }
+        "kB"  { return ($value * 1000.0) / 1048576.0 }
+        "MB"  { return ($value * 1000000.0) / 1048576.0 }
+        "GB"  { return ($value * 1000000000.0) / 1048576.0 }
+        default { throw "Unsupported Docker memory unit: $unit" }
+    }
+}
+
+function Get-LinearSlopePerHour([object[]]$Samples) {
+    if (-not $Samples -or $Samples.Count -lt 2) { return 0.0 }
+
+    $t0 = [datetime]$Samples[0].Time
+    $xs = New-Object System.Collections.Generic.List[double]
+    $ys = New-Object System.Collections.Generic.List[double]
+
+    foreach ($sample in $Samples) {
+        $xs.Add((([datetime]$sample.Time) - $t0).TotalHours)
+        $ys.Add([double]$sample.MiB)
+    }
+
+    $xMean = ($xs | Measure-Object -Average).Average
+    $yMean = ($ys | Measure-Object -Average).Average
+    $numerator = 0.0
+    $denominator = 0.0
+
+    for ($i = 0; $i -lt $xs.Count; $i++) {
+        $dx = $xs[$i] - $xMean
+        $numerator += $dx * ($ys[$i] - $yMean)
+        $denominator += $dx * $dx
+    }
+
+    if ($denominator -eq 0.0) { return 0.0 }
+    return $numerator / $denominator
+}
 
 Write-Host "[G6.5 1/7] Validate canonical runtime"
 $root = Invoke-RestMethod "$base/"
