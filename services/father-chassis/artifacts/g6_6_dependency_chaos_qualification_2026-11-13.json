@@ -1,0 +1,36 @@
+{
+  "qualification": "G6.6_DEPENDENCY_CHAOS",
+  "date": "2026-11-13",
+  "status": "PASS",
+  "passed": true,
+  "baseline_trace_id": "37516bc1-8194-4125-9a45-1414b827d055",
+  "postgres": {
+    "readiness_status_during_outage": 503,
+    "request_failed_during_outage": true,
+    "recovered": true,
+    "recovered_trace_id": "0a945188-8be9-480b-bae6-bc63c4be54d8"
+  },
+  "redis": {
+    "readiness_status_during_outage": 503,
+    "request_failed_during_outage": true,
+    "readiness_blind_spot": false,
+    "recovered": true,
+    "recovered_trace_id": "ae95ee13-43da-47ee-9df0-1e31b9739596"
+  },
+  "model_provider": {
+    "primary_endpoint_intentionally_unreachable": true,
+    "readiness_status": 200,
+    "fallback_run_succeeded": true,
+    "fallback_trace_id": "b0d10504-baa2-4235-a9de-b3760c1fc87b",
+    "readiness_vs_fallback_mismatch": false
+  },
+  "final_post_chaos_trace_id": "2553faf4-5b5c-41d5-8bf2-b223e1960df6",
+  "final_post_chaos_audit_event_count": 9,
+  "blocking_findings": [],
+  "decision": "PASS",
+  "architectural_findings_resolved": [
+    "Redis active synchronous event bus now participates in readiness health.",
+    "Model readiness now uses composite router semantics: at least one healthy serving route keeps runtime ready.",
+    "Primary provider runtime failure now falls back to secondary model route."
+  ]
+}
