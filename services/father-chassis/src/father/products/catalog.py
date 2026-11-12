@@ -1,0 +1,73 @@
+OSINT_KNOWLEDGE = {
+    "product_id": "FTH-PRODUCT-OSINT-KNOWLEDGE-001",
+    "chassis": "C2_KNOWLEDGE_RAG",
+    "required_capabilities": [
+        "configuration",
+        "state",
+        "event_bus",
+        "workflow",
+        "model_routing",
+        "rag",
+        "evidence",
+        "audit",
+        "observability",
+        "guardrails",
+        "tool_registry",
+        "human_approval",
+        "source_ingestion",
+        "osint_collectors",
+        "entity_graph",
+        "report_generation",
+    ],
+}
+
+ALINA_BOOKCRAFT = {
+    "product_id": "FTH-PRODUCT-ALINA-BOOKCRAFT-001",
+    "chassis": "C6_CREATIVE_KNOWLEDGE",
+    "required_capabilities": [
+        "configuration",
+        "state",
+        "event_bus",
+        "workflow",
+        "model_routing",
+        "rag",
+        "evidence",
+        "audit",
+        "observability",
+        "guardrails",
+        "tool_registry",
+        "human_approval",
+        "source_ingestion",
+        "entity_graph",
+        "report_generation",
+        "narrative_scene_model",
+        "character_state",
+        "forecast_engine",
+        "backtesting",
+        "visual_scene_state",
+    ],
+}
+
+SHARED_BLOCKS = {
+    "configuration": "FTH-CORE-CONFIG-001",
+    "state": "FTH-CORE-STATE-001",
+    "event_bus": "FTH-CORE-EVENTBUS-001",
+    "workflow": "FTH-CORE-WORKFLOW-001",
+    "model_routing": "FTH-CORE-MODELROUTER-001",
+    "rag": "FTH-DATA-RAG-001",
+    "evidence": "FTH-CORE-EVIDENCE-001",
+    "audit": "FTH-CORE-AUDIT-001",
+    "observability": "FTH-CORE-OBS-001",
+    "guardrails": "FTH-SEC-GUARDRAIL-001",
+    "tool_registry": "FTH-CORE-TOOLS-001",
+    "human_approval": "FTH-SEC-APPROVAL-001",
+    "source_ingestion": "FTH-DATA-INGEST-001",
+    "entity_graph": "FTH-DATA-GRAPH-001",
+    "report_generation": "FTH-CORE-REPORT-001",
+}
+
+ADAPTABLE = {
+    "narrative_scene_model": "FTH-DATA-GRAPH-001",
+    "character_state": "FTH-CORE-STATE-001",
+    "visual_scene_state": "FTH-CORE-STATE-001",
+}
