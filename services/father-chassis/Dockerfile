@@ -9,6 +9,13 @@ COPY pyproject.toml README.md ./
 COPY src ./src
 COPY config ./config
 
+# Apply currently available Debian security/package updates from the base image
+# before installing application dependencies. This removes vulnerabilities
+# for which the distribution already publishes a fixed package version.
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --no-cache-dir ".[production]" \
     && addgroup --system father \
     && adduser --system --ingroup father --home /app father \
