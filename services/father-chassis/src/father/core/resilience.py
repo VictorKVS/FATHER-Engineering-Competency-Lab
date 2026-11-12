@@ -29,5 +29,6 @@ def call_with_retry_timeout(
         except BaseException as exc:
             executor.shutdown(wait=True, cancel_futures=True)
             last_exc = exc
-    assert last_exc is not None
+    if last_exc is None:
+        raise RuntimeError("retry loop finished without a result or captured exception")
     raise last_exc
