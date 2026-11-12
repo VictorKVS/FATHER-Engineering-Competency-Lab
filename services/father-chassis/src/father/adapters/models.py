@@ -24,7 +24,8 @@ class OpenAICompatibleModel:
         payload = json.dumps({"model": self.model, "messages": [{"role":"user","content":prompt}], "temperature":0}).encode()
         headers = {"Content-Type":"application/json", "X-Father-Trace-Id":trace.trace_id}
         if self.api_key: headers["Authorization"] = f"Bearer {self.api_key}"
-        req = Request(self.base_url + "/v1/chat/completions", data=payload, headers=headers, method="POST")
+        endpoint = self.base_url + ("/chat/completions" if self.base_url.endswith("/v1") else "/v1/chat/completions")
+        req = Request(endpoint, data=payload, headers=headers, method="POST")
         with urlopen(req, timeout=30) as response:
             body = json.loads(response.read().decode("utf-8"))
         return body["choices"][0]["message"]["content"]
