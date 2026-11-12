@@ -1,7 +1,7 @@
 {
   "registry": "FATHER_AI_LIBRARY_REGISTER",
   "version": "1.0",
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "purpose": "Canonical metadata registry for AI/LLM/RAG/AI Security/DevSecOps knowledge sources. Original copyrighted files are not stored in Git; only metadata, provenance and hashes.",
   "status_model": [
     "ADDED",
@@ -346,16 +346,632 @@
       "original_filename": "2403.08701.pdf",
       "canonical_filename": "AISEC_2024_Yigit_et_al_Review_of_Generative_AI_Methods_in_Cybersecurity_arXiv2403.08701.pdf",
       "category_path": "AI_Security/Papers"
+    },
+    {
+      "id": "LIB-AI-008",
+      "type": "BOOK",
+      "title": "Design Patterns and Best Practices in Rust",
+      "authors": [
+        "Evan Williams"
+      ],
+      "year": 2026,
+      "publisher": "Packt Publishing",
+      "pages": 448,
+      "sha256": "f1d8c2cf21a39e2ac18dc860e4698f841cff0d29d14fe2ad90b067f9bb9a0318",
+      "domain": [
+        "Rust",
+        "Software Architecture",
+        "Design Patterns",
+        "Systems Programming"
+      ],
+      "priority": "P1_ENGINEERING",
+      "project_links": [
+        "FATHER_CODEX",
+        "FATHER_CHASSIS"
+      ],
+      "use": [
+        "idiomatic_design",
+        "safe_systems_programming",
+        "architecture_patterns"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Engineering reference for idiomatic Rust, ownership-aware design and replacing OO-centric patterns.",
+      "original_filename": "design-patterns-and-best-practices-in-rust-enhance-your-rust-skills-by-applying-idiomatic-approaches-to-real-world-software-design.pdf",
+      "canonical_filename": "SWE_2026_Williams_Design_Patterns_and_Best_Practices_in_Rust.pdf",
+      "category_path": "Software_Engineering/Rust"
+    },
+    {
+      "id": "LIB-AI-009",
+      "type": "BOOK",
+      "title": "The Ultimate Docker Container Book",
+      "authors": [
+        "Gabriel N. Schenker"
+      ],
+      "year": 2026,
+      "publisher": "Packt Publishing",
+      "pages": 767,
+      "sha256": "8133892278226c40c71438985857614322a3617c156391bd8ec98079967793db",
+      "domain": [
+        "Docker",
+        "Kubernetes",
+        "Containers",
+        "Cloud",
+        "DevOps",
+        "Supply Chain Security"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_CHASSIS",
+        "TIMA",
+        "OTUS_KUBERNETES",
+        "FQDP"
+      ],
+      "use": [
+        "container_architecture",
+        "kubernetes_curriculum",
+        "devops",
+        "supply_chain_security",
+        "production_operations"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Current container engineering reference covering Docker, Kubernetes, cloud deployment, persistence, debugging and supply-chain security.",
+      "original_filename": "the-ultimate-docker-container-book-build-ship-deploy-and-scale-containerized-applications-with-docker-kubernetes-and-the-cloud-4-ed.pdf",
+      "canonical_filename": "DEVOPS_2026_Schenker_The_Ultimate_Docker_Container_Book_4E.pdf",
+      "category_path": "DevOps_Cloud/Containers_Kubernetes"
+    },
+    {
+      "id": "LIB-AI-010",
+      "type": "BOOK",
+      "title": "Generative AI for Game Development: Crafting Narrative Worlds with Machines",
+      "authors": [
+        "Shesh Narayan Gupta"
+      ],
+      "year": 2026,
+      "publisher": "Apress",
+      "doi": "10.1007/979-8-8688-2439-5",
+      "pages": 513,
+      "sha256": "ba899aac906982ee48be0e5f842466d305fa5fa3036cab4429e8a584dfbb5961",
+      "domain": [
+        "Generative AI",
+        "Game Development",
+        "Narrative AI",
+        "NPCs",
+        "Procedural Generation",
+        "Multimodal AI"
+      ],
+      "priority": "P1_APPLIED",
+      "project_links": [
+        "ALINA",
+        "FATHER_MEDIA_LAB",
+        "BOOKCRAFT_SITE"
+      ],
+      "use": [
+        "narrative_generation",
+        "game_ai",
+        "procedural_content",
+        "npc_behavior",
+        "visual_narrative"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Applied GenAI/game-development source; especially relevant to ALINA narrative/visual layers and AI-driven storytelling.",
+      "original_filename": "generative-ai-for-game-development-crafting-narrative-worlds-with-machines.pdf",
+      "canonical_filename": "GENAI_2026_Gupta_Generative_AI_for_Game_Development.pdf",
+      "category_path": "Applied_AI/Game_Development"
+    },
+    {
+      "id": "LIB-AI-011",
+      "type": "BOOK",
+      "title": "Coding Roblox Games Made Easy",
+      "authors": [
+        "Zander Brumbaugh"
+      ],
+      "year": 2026,
+      "publisher": "Packt Publishing",
+      "pages": 330,
+      "sha256": "041fa6aad16cb2a870a1394758a5bcf852e25a4b9de8f64449870a90b9ad673a",
+      "domain": [
+        "Roblox",
+        "Luau",
+        "Game Development",
+        "AI",
+        "Analytics"
+      ],
+      "priority": "P2_SPECIALIZED",
+      "project_links": [
+        "FATHER_MEDIA_LAB",
+        "GAME_AI_LABS"
+      ],
+      "use": [
+        "game_prototyping",
+        "analytics",
+        "ai_assisted_game_development"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Specialized game-development branch; useful for AI/analytics game experiments, not part of core AI architect curriculum.",
+      "original_filename": "coding-roblox-games-made-easy-create-publish-and-monetize-your-games-on-roblox-with-ai-and-analytics-3-ed.pdf",
+      "canonical_filename": "GAMEDEV_2026_Brumbaugh_Coding_Roblox_Games_Made_Easy_3E.pdf",
+      "category_path": "Applied_AI/Game_Development/Roblox"
+    },
+    {
+      "id": "LIB-AI-012",
+      "type": "BOOK",
+      "title": "The MCP Standard: A Developer’s Guide to Building Universal AI Tools with the Model Context Protocol",
+      "authors": [
+        "Srinivasan Sekar"
+      ],
+      "year": 2026,
+      "publisher": "Apress",
+      "doi": "10.1007/979-8-8688-2364-0",
+      "pages": 246,
+      "sha256": "17d8d7681de0bef81e6a33ad82cd11e0e2a6699ca4a370c8472ee02439fe034a",
+      "domain": [
+        "MCP",
+        "Agentic AI",
+        "Tools",
+        "Resources",
+        "Prompts",
+        "AI Integration",
+        "Security"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_CHASSIS",
+        "UAG",
+        "AGENT_ORCHESTRATOR",
+        "TOOL_RUNTIME",
+        "FATHER_SECURITY_LAYER"
+      ],
+      "use": [
+        "mcp_architecture",
+        "tool_integration",
+        "agent_protocols",
+        "mcp_security",
+        "enterprise_ai_integration"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "High-priority architecture source for MCP, control segregation, production security, agentic RAG and A2A interoperability.",
+      "original_filename": "the-mcp-standard-a-developer-s-guide-to-building-universal-al-tools-with-the-model-context-protocol.pdf",
+      "canonical_filename": "MCP_2026_Sekar_The_MCP_Standard.pdf",
+      "category_path": "AI_Agents/MCP"
+    },
+    {
+      "id": "LIB-AI-013",
+      "type": "BOOK",
+      "title": "Introduction to Generative AI: Reliable, Responsible, and Real-World Applications",
+      "authors": [
+        "Numa Dhamani",
+        "Maggie Engler"
+      ],
+      "year": 2026,
+      "publisher": "Manning Publications",
+      "pages": 511,
+      "sha256": "d12f0bf75ad8ad3f640e5a96337d6093db83bd51a02de4ed042d738b9246e8e4",
+      "domain": [
+        "Generative AI",
+        "LLM",
+        "Responsible AI",
+        "Safety",
+        "Agents",
+        "Evaluation",
+        "MCP"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "P02_KNOWLEDGE_CORE",
+        "FATHER_SECURITY_LAYER",
+        "POLYGON",
+        "EVALUATOR"
+      ],
+      "use": [
+        "responsible_ai",
+        "agent_risks",
+        "evaluation",
+        "privacy",
+        "red_teaming",
+        "curriculum"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Broad responsible-GenAI reference covering privacy, misuse, hallucinations, red teaming, agents, MCP, monitoring and oversight.",
+      "original_filename": "introduction-to-generative-ai-reliable-responsible-and-real-world-applications-2-ed.pdf",
+      "canonical_filename": "GENAI_2026_Dhamani_Engler_Introduction_to_Generative_AI_2E.pdf",
+      "category_path": "AI_Engineering/Responsible_GenAI"
+    },
+    {
+      "id": "LIB-AI-014",
+      "type": "BOOK",
+      "title": "Анализ данных с помощью GenAI и Python",
+      "authors": [
+        "Артур Гуджа",
+        "Марлена Сивяк",
+        "Мариан Сивяк"
+      ],
+      "year": 2026,
+      "publisher": "Питер",
+      "pages": 400,
+      "sha256": "8bbdf10749c4205c89739414b585a9bb388e3fb3d05514d2f1f2fbb85a75009a",
+      "domain": [
+        "Data Analytics",
+        "Generative AI",
+        "Python",
+        "Data Quality",
+        "Text Analysis",
+        "Forecasting"
+      ],
+      "priority": "P1_APPLIED",
+      "project_links": [
+        "ALINA",
+        "AURORA",
+        "P03_FATHER_KNOWLEDGE_FACTORY"
+      ],
+      "use": [
+        "data_quality",
+        "analytics_pipeline",
+        "text_analysis",
+        "forecasting",
+        "python_curriculum"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Russian authorized edition of a Manning data-analytics title; useful for GenAI-assisted analytics, data quality and text-analysis workflows.",
+      "original_filename": "analiz-dannyh-s-pomoschyu-genai-i-python.pdf",
+      "canonical_filename": "DATAAI_2026_Guja_Siwiak_Siwiak_Analiz_Dannyh_s_GenAI_i_Python_RU.pdf",
+      "category_path": "Data_Analytics/GenAI_Python"
+    },
+    {
+      "id": "LIB-AI-015",
+      "type": "BOOK",
+      "title": "C Programming for System, Network, and Cloud Engineers",
+      "authors": [
+        "Anil Kumar Rangisetti"
+      ],
+      "year": 2026,
+      "publisher": "Apress",
+      "doi": "10.1007/979-8-8688-1805-9",
+      "pages": 713,
+      "sha256": "1e036e30de9b8572ce384e2d88dfc35d592b6c2e3fb261c31a1ee65305024194",
+      "domain": [
+        "C",
+        "Systems Programming",
+        "Networking",
+        "Linux",
+        "Namespaces",
+        "Cloud"
+      ],
+      "priority": "P1_ENGINEERING",
+      "project_links": [
+        "TIMA",
+        "FATHER_CHASSIS",
+        "SECGRAPH"
+      ],
+      "use": [
+        "low_level_systems",
+        "linux_namespaces",
+        "network_programming",
+        "memory_safety_training"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Systems foundation for processes, memory, network applications, Linux namespaces, debugging and secure low-level programming.",
+      "original_filename": "c-programming-for-system-network-and-cloud-engineers-techniques-for-processes-memory-network-applications-and-linux-namespaces.pdf",
+      "canonical_filename": "SYSENG_2026_Rangisetti_C_Programming_for_System_Network_and_Cloud_Engineers.pdf",
+      "category_path": "Software_Engineering/Systems_C"
+    },
+    {
+      "id": "LIB-AI-016",
+      "type": "BOOK",
+      "title": "Хакерская самооборона: Приемы обнаружения и предотвращения хакерских атак",
+      "authors": [
+        "Андрей Жуков"
+      ],
+      "year": 2025,
+      "publisher": "БХВ-Петербург",
+      "pages": 209,
+      "sha256": "16ca9a19651bef8e8c545edb61ff2721142d64d192ecf4fe1c471feeda211dd7",
+      "domain": [
+        "Cybersecurity",
+        "Active Defense",
+        "Network Security",
+        "Wireless Security",
+        "Active Directory",
+        "Detection"
+      ],
+      "priority": "P1_SECURITY",
+      "project_links": [
+        "SECGRAPH",
+        "POLYGON",
+        "OSINT_TRICOLOR",
+        "CYBERED"
+      ],
+      "use": [
+        "attack_detection",
+        "active_defense",
+        "honeypots",
+        "wireless_security",
+        "AD_detection"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Practical defensive-security source focused on detecting attacker behavior across Internet, wireless, LAN and Active Directory stages.",
+      "original_filename": "hakerskaya-samooborona-priemy-obnaruzheniya-i-predotvrascheniya-hakerskih-atak.pdf",
+      "canonical_filename": "CYBER_2025_Zhukov_Hakerskaya_Samooborona.pdf",
+      "category_path": "Cybersecurity/Active_Defense"
+    },
+    {
+      "id": "LIB-AI-017",
+      "type": "BOOK",
+      "title": "Security-Driven Software Development",
+      "authors": [
+        "Aspen Olmsted"
+      ],
+      "year": 2024,
+      "publisher": "Packt Publishing",
+      "pages": 262,
+      "sha256": "12a8de317f169260fc7e241bb78c5f820af2554be8c546fd8d637418f52de1fb",
+      "domain": [
+        "Secure SDLC",
+        "Threat Modeling",
+        "Application Security",
+        "Testing",
+        "DevSecOps"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_SECURITY_LAYER",
+        "FATHER_CODEX",
+        "FQDP",
+        "POLYGON"
+      ],
+      "use": [
+        "secure_sdlc",
+        "threat_modeling",
+        "security_requirements",
+        "regression_testing",
+        "penetration_testing"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Strong Secure SDLC reference spanning requirements, misuse cases, STRIDE/DREAD, implementation controls and validation/testing.",
+      "original_filename": "security-driven-software-development-learn-to-analyze-and-mitigate-risks-in-your-software-projects.pdf",
+      "canonical_filename": "DEVSECOPS_2024_Olmsted_Security-Driven_Software_Development.pdf",
+      "category_path": "DevSecOps/Secure_SDLC"
+    },
+    {
+      "id": "LIB-AI-018",
+      "type": "BOOK",
+      "title": "Defensive Security: лучшие практики обеспечения безопасности инфраструктур",
+      "authors": [
+        "Аманда Берлин",
+        "Ли Бразерстон",
+        "Уильям Ф. Рейор III"
+      ],
+      "year": 2026,
+      "publisher": "Спринт Бук",
+      "pages": 352,
+      "sha256": "31f925d3ad7706515ab08382ab216203422c98cd537b45c36d054c794ea276eb",
+      "domain": [
+        "Defensive Security",
+        "Infrastructure Security",
+        "Incident Response",
+        "Cloud Security",
+        "OSINT",
+        "Vulnerability Management"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "SECGRAPH",
+        "TIMA",
+        "OSINT_TRICOLOR",
+        "CYBERED"
+      ],
+      "use": [
+        "security_program",
+        "asset_management",
+        "incident_response",
+        "hardening",
+        "cloud_security",
+        "osint",
+        "vulnerability_management"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Broad defensive-security handbook; Russian edition based on O'Reilly 2E, covering security program, DR, hardening, cloud, segmentation, OSINT and vulnerability management.",
+      "original_filename": "defensive-security-luchshie-praktiki-obespecheniya-bezopasnosti-infrastruktur-2-izd.pdf",
+      "canonical_filename": "CYBER_2026_Berlin_Brotherston_Reyor_Defensive_Security_2E_RU.pdf",
+      "category_path": "Cybersecurity/Defensive_Security"
+    },
+    {
+      "id": "LIB-AI-019",
+      "type": "BOOK",
+      "title": "Haskell Brain Teasers: Exercise Your Mind",
+      "authors": [
+        "Rebecca Skinner"
+      ],
+      "year": 2026,
+      "publisher": "The Pragmatic Programmers",
+      "pages": 162,
+      "sha256": "0102da92e5027826dcb41083df31eb5db745ee4aa61a80c55a1d52d1f251fbef",
+      "domain": [
+        "Haskell",
+        "Functional Programming",
+        "Type Systems",
+        "Lazy Evaluation"
+      ],
+      "priority": "P2_SPECIALIZED",
+      "project_links": [
+        "FATHER_CODEX"
+      ],
+      "use": [
+        "functional_programming",
+        "type_systems",
+        "reasoning_exercises"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Specialized functional-programming exercise book; useful for type-system and reasoning practice, not core to current AI architecture path.",
+      "original_filename": "haskell-brain-teasers-exercise-your-mind.pdf",
+      "canonical_filename": "FP_2026_Skinner_Haskell_Brain_Teasers.pdf",
+      "category_path": "Software_Engineering/Functional_Programming"
+    },
+    {
+      "id": "LIB-AI-020",
+      "type": "BOOK",
+      "title": "Машинное обучение. Проектирование систем от идеи до реализации",
+      "authors": [
+        "Валерий Бабушкин",
+        "Арсений Кравченко"
+      ],
+      "year": 2026,
+      "publisher": "Питер",
+      "pages": 416,
+      "sha256": "2de33be1fc21428b64fdc242254c45c77eb119a2f854ae2e9767e8803f40973e",
+      "domain": [
+        "ML System Design",
+        "MLOps",
+        "Metrics",
+        "Data Pipelines",
+        "Monitoring",
+        "Inference"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_CHASSIS",
+        "P03_FATHER_KNOWLEDGE_FACTORY",
+        "FQDP",
+        "EVALUATOR"
+      ],
+      "use": [
+        "ml_system_design",
+        "design_docs",
+        "metrics",
+        "data_pipeline",
+        "monitoring",
+        "inference_optimization"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "End-to-end ML system design reference covering problem framing, design docs, metrics, datasets, validation, pipelines, monitoring, reliability, serving and ownership.",
+      "original_filename": "mashinnoe-obuchenie-proektirovanie-sistem-ot-idei-do-realizatsii.pdf",
+      "canonical_filename": "MLSYS_2026_Babushkin_Kravchenko_ML_System_Design_RU.pdf",
+      "category_path": "AI_Engineering/ML_Systems"
     }
   ],
   "naming_convention": "<DOMAIN>_<YEAR>_<AUTHOR>_<SHORT_TITLE>[_TYPE].pdf",
   "category_roots": [
-    "AI_Engineering/ML_Systems",
+    "AI_Agents/MCP",
     "AI_Engineering/Foundation_Models",
+    "AI_Engineering/ML_Systems",
+    "AI_Engineering/Responsible_GenAI",
     "AI_Engineering/Slides",
-    "LLM_RAG/Books",
     "AI_Security/Books",
+    "AI_Security/Papers",
     "AI_Security/Standards_Checklists",
-    "AI_Security/Papers"
+    "Applied_AI/Game_Development",
+    "Applied_AI/Game_Development/Roblox",
+    "Cybersecurity/Active_Defense",
+    "Cybersecurity/Defensive_Security",
+    "Data_Analytics/GenAI_Python",
+    "DevOps_Cloud/Containers_Kubernetes",
+    "DevSecOps/Secure_SDLC",
+    "LLM_RAG/Books",
+    "Software_Engineering/Functional_Programming",
+    "Software_Engineering/Rust",
+    "Software_Engineering/Systems_C"
   ]
 }
