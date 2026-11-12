@@ -6,8 +6,20 @@ $volume = "father_g6_4_upgrade_data"
 $candidateName = "father-g6-4-candidate"
 $rollbackName = "father-g6-4-rollback"
 $badName = "father-g6-4-bad-upgrade"
-$port = 18084
-$base = "http://localhost:$port"
+function Get-FreeTcpPort {
+    $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 0)
+    try {
+        $listener.Start()
+        return ([System.Net.IPEndPoint]$listener.LocalEndpoint).Port
+    }
+    finally {
+        $listener.Stop()
+    }
+}
+
+$port = Get-FreeTcpPort
+$base = "http://127.0.0.1:$port"
+Write-Host "G6.4 qualification port selected: $port"
 $artifactDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\artifacts"))
 $summaryPath = Join-Path $artifactDir "g6_4_upgrade_migration_rollback_summary.json"
 $seedScriptPath = Join-Path $artifactDir "g6_4_seed_legacy.py"
