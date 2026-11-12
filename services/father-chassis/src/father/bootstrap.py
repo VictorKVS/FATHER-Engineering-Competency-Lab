@@ -4,6 +4,7 @@ from pathlib import Path
 from father.adapters.mock import DefaultGuardrail, MockTool
 from father.adapters.knowledge import SQLiteKnowledgeRag
 from father.adapters.models import GroundedTemplateModel
+from father.core.access_control import AccessControl
 from father.core.approval import HumanApprovalGate
 from father.core.audit import AuditStore
 from father.core.config import ChassisConfig, load_config
@@ -68,4 +69,5 @@ def build_runtime(*, denied_actions: set[str] | None = None, config: ChassisConf
         tools=tools,
         approval_gate=HumanApprovalGate(required),
         tracer=Tracer(),
+        access_control=AccessControl(),
     )
