@@ -2,11 +2,23 @@ from __future__ import annotations
 
 import json
 from urllib.request import Request, urlopen
+from urllib.error import URLError
 from father.core.contracts import TraceContext
 
 class GroundedTemplateModel:
     name = "grounded-template-v1"
-    def health(self) -> bool: return True
+    def health(self) -> bool:
+        endpoint = self.base_url + ("/models" if self.base_url.endswith("/v1") else "/v1/models")
+        headers = {}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        try:
+            req = Request(endpoint, headers=headers, method="GET")
+            with urlopen(req, timeout=2) as response:
+                return 200 <= int(getattr(response, "status", 200)) < 500
+        except (URLError, OSError, TimeoutError):
+            return False
+
     def generate(self, prompt: str, trace: TraceContext) -> str:
         del trace
         evidence = prompt.split("EVIDENCE:\n",1)[-1].strip()
