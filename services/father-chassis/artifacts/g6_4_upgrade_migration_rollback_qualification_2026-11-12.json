@@ -1,0 +1,17 @@
+{
+  "qualification": "G6.4_UPGRADE_MIGRATION_ROLLBACK",
+  "date": "2026-11-12",
+  "status": "PASS",
+  "rollback_image": "father-chassis:g6.4-rollback-a",
+  "candidate_image": "father-chassis-father-chassis:latest",
+  "qualification_volume": "father_g6_4_upgrade_data",
+  "legacy_schema_migrated": true,
+  "legacy_data_preserved_after_upgrade": true,
+  "intentional_upgrade_failure_observed": true,
+  "rollback_ready": true,
+  "legacy_data_preserved_after_rollback": true,
+  "post_migration_trace_id": "40558ffd-0068-4f1c-a0fa-6a501227e2b9",
+  "post_rollback_trace_id": "3df58cc6-d7c4-4443-a9c4-f3aba4c3b588",
+  "post_rollback_evidence_count": 1,
+  "post_rollback_audit_event_count": 9
+}
