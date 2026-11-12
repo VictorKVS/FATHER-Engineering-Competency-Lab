@@ -97,6 +97,9 @@ if ($factoryResult.agent_id -ne "factory-api-agent") { throw "factory agent iden
 if ([string]::IsNullOrWhiteSpace($factoryResult.trace_id)) { throw "factory trace_id missing" }
 if ([string]::IsNullOrWhiteSpace($factoryResult.output)) { throw "factory output missing" }
 if ($factoryResult.evidence.Count -lt 1) { throw "factory evidence missing" }
+if (-not $factoryResult.qualification) { throw "factory qualification missing" }
+if (-not $factoryResult.qualification.qualified) { throw "factory qualification is not PASS" }
+if ([string]::IsNullOrWhiteSpace($factoryResult.qualification.record_hash)) { throw "factory qualification record_hash missing" }
 $factoryAudit = Invoke-RestMethod "$base/audit/$($factoryResult.trace_id)"
 $factoryReceived = @($factoryAudit.events | Where-Object { $_.type -eq "request.received" })
 if ($factoryReceived.Count -lt 1) { throw "factory request.received audit event missing" }
