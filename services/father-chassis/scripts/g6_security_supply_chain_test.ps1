@@ -17,18 +17,43 @@ function Read-JsonFile([string]$path) {
 }
 
 function Ensure-ScannerImage([string]$imageName, [int]$attempts = 4) {
-    docker image inspect $imageName *> $null
-    if ($LASTEXITCODE -eq 0) {
+    # Windows PowerShell 5.1 can convert stderr from native commands into
+    # NativeCommandError when ErrorActionPreference=Stop. Image absence is an
+    # expected branch here, so inspect/pull must be handled by exit code.
+    $savedPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        & docker image inspect $imageName *> $null
+        $inspectExit = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $savedPreference
+    }
+
+    if ($inspectExit -eq 0) {
         Write-Host "Scanner image already available locally: $imageName"
         return
     }
 
     for ($attempt = 1; $attempt -le $attempts; $attempt++) {
         Write-Host "Pull scanner image $imageName (attempt $attempt/$attempts)"
-        docker pull $imageName
-        if ($LASTEXITCODE -eq 0) {
+
+        $savedPreference = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = "Continue"
+            & docker pull $imageName
+            $pullExit = $LASTEXITCODE
+        }
+        finally {
+            $ErrorActionPreference = $savedPreference
+        }
+
+        if ($pullExit -eq 0) {
+            Write-Host "Scanner image ready: $imageName"
             return
         }
+
+        Write-Warning "Pull attempt $attempt failed for $imageName (exit code $pullExit)"
         if ($attempt -lt $attempts) {
             Start-Sleep -Seconds ([Math]::Min(5 * $attempt, 15))
         }
