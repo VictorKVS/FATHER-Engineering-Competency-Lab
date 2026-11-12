@@ -11,6 +11,8 @@ from father.core.contracts import ExecutionRequest
 from father.core.health import health_report
 from father.local_llm import probe_openai_compatible
 from father.products.osint_knowledge import OSINTKnowledgeProduct, SourceRecord
+from father.domain.kii_engine import KIIDecisionEngine
+from father.core.decision_trace import NormReference
 from father.production import build_runtime_from_env
 from father.qualification import qualify_knowledge_flow
 
@@ -50,6 +52,23 @@ class RunBody(BaseModel):
 class IngestBody(BaseModel):
     source: str = Field(min_length=1)
     text: str = Field(min_length=1)
+
+
+class KIIDecisionBody(BaseModel):
+    subject_id: str
+    roles: list[str]
+    clearance: str
+    compartments: list[str] = []
+    object_id: str
+    resource_classification: str
+    resource_compartments: list[str] = []
+    object_facts: str
+    norm_source_id: str
+    norm_title: str
+    norm_requirement_id: str
+    norm_locator: str
+    norm_version: str
+    proposed_decision: str
 
 
 def create_app(runtime=None) -> FastAPI:
@@ -183,6 +202,42 @@ def create_app(runtime=None) -> FastAPI:
         if not result["passed"]:
             raise HTTPException(status_code=500, detail=result)
         return result
+
+    @app.post("/compliance/kii/decision")
+    def kii_decision(body: KIIDecisionBody) -> dict:
+        try:
+            subject = SubjectContext(
+                subject_id=body.subject_id,
+                roles=frozenset(body.roles),
+                clearance=ClearanceLevel[body.clearance.upper()],
+                compartments=frozenset(body.compartments),
+            )
+            resource = ResourceContext(
+                resource_id=body.object_id,
+                classification=ClearanceLevel[body.resource_classification.upper()],
+                compartments=frozenset(body.resource_compartments),
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=400, detail=f"unknown clearance level: {exc}") from exc
+
+        norm = NormReference(
+            source_id=body.norm_source_id,
+            title=body.norm_title,
+            requirement_id=body.norm_requirement_id,
+            locator=body.norm_locator,
+            version=body.norm_version,
+        )
+        try:
+            return KIIDecisionEngine(runtime.access_control).assess(
+                subject=subject,
+                resource=resource,
+                object_id=body.object_id,
+                object_facts=body.object_facts,
+                norm=norm,
+                proposed_decision=body.proposed_decision,
+            )
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
 
     @app.post("/qualification/knowledge")
     def qualification_knowledge() -> dict:
