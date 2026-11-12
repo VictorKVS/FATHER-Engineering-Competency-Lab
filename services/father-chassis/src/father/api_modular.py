@@ -15,6 +15,9 @@ from father.domain.kii_engine import KIIDecisionEngine
 from father.core.decision_trace import NormReference
 from father.production import build_runtime_from_env
 from father.qualification import qualify_knowledge_flow
+from father.core.agent_manifest import AgentManifest
+from father.factory.agent_factory import AgentFactory
+from father.factory.reference_catalog import build_reference_capabilities, build_reference_providers
 
 VERSION = "1.0.0rc1-modular"
 
@@ -52,6 +55,18 @@ class RunBody(BaseModel):
 class IngestBody(BaseModel):
     source: str = Field(min_length=1)
     text: str = Field(min_length=1)
+
+
+class AgentManifestBody(BaseModel):
+    agent_id: str
+    version: str = "0.1.0"
+    capabilities: list[str]
+    required_permissions: list[str] = []
+    required_providers: list[str] = []
+    approval_required_for: list[str] = []
+    max_steps: int = 12
+    timeout_seconds: int = 120
+    max_cost_usd: float | None = None
 
 
 class KIIDecisionBody(BaseModel):
@@ -202,6 +217,48 @@ def create_app(runtime=None) -> FastAPI:
         if not result["passed"]:
             raise HTTPException(status_code=500, detail=result)
         return result
+
+    @app.post("/factory/agents/plan")
+    def plan_agent(body: AgentManifestBody) -> dict:
+        manifest = AgentManifest(
+            agent_id=body.agent_id,
+            version=body.version,
+            capabilities=frozenset(body.capabilities),
+            required_permissions=frozenset(body.required_permissions),
+            required_providers=frozenset(body.required_providers),
+            approval_required_for=frozenset(body.approval_required_for),
+            max_steps=body.max_steps,
+            timeout_seconds=body.timeout_seconds,
+            max_cost_usd=body.max_cost_usd,
+        )
+        factory = AgentFactory(
+            build_reference_capabilities(),
+            build_reference_providers(runtime),
+        )
+        return factory.plan(manifest).to_dict()
+
+    @app.post("/factory/agents/build")
+    def build_agent(body: AgentManifestBody) -> dict:
+        manifest = AgentManifest(
+            agent_id=body.agent_id,
+            version=body.version,
+            capabilities=frozenset(body.capabilities),
+            required_permissions=frozenset(body.required_permissions),
+            required_providers=frozenset(body.required_providers),
+            approval_required_for=frozenset(body.approval_required_for),
+            max_steps=body.max_steps,
+            timeout_seconds=body.timeout_seconds,
+            max_cost_usd=body.max_cost_usd,
+        )
+        factory = AgentFactory(
+            build_reference_capabilities(),
+            build_reference_providers(runtime),
+        )
+        try:
+            profile = factory.build(manifest)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return {"agent_id": profile.agent_id, "build_plan": profile.build_plan.to_dict()}
 
     @app.post("/compliance/kii/decision")
     def kii_decision(body: KIIDecisionBody) -> dict:
