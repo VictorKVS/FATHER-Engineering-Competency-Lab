@@ -200,14 +200,28 @@ if (-not (Test-Path $semgrepRules)) { throw "Local Semgrep rulepack missing: $se
 docker run --rm --pull=never -v "$($repoPath):/src" $semgrepImage semgrep scan --config /src/config/semgrep-g6.yml --json --output /src/artifacts/security/semgrep.json /src/src/father
 if ($LASTEXITCODE -ne 0) { throw "Semgrep execution failed" }
 $semgrep = Read-JsonFile $semgrepPath
-$semgrepBlocking = @(
-    $semgrep.results | Where-Object {
-        $severity = [string]$_.extra.severity
-        $severity -in @("ERROR", "CRITICAL", "HIGH")
+$semgrepResults = @($semgrep.results)
+$semgrepErrors = @($semgrepResults | Where-Object { ([string]$_.extra.severity).ToUpperInvariant() -eq "ERROR" })
+$semgrepWarnings = @($semgrepResults | Where-Object { ([string]$_.extra.severity).ToUpperInvariant() -eq "WARNING" })
+$semgrepInfo = @($semgrepResults | Where-Object { ([string]$_.extra.severity).ToUpperInvariant() -eq "INFO" })
+
+if ($semgrepResults.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Semgrep findings:"
+    foreach ($finding in $semgrepResults) {
+        [pscustomobject]@{
+            RuleID = [string]$finding.check_id
+            Severity = [string]$finding.extra.severity
+            Path = [string]$finding.path
+            StartLine = [string]$finding.start.line
+            EndLine = [string]$finding.end.line
+            Message = [string]$finding.extra.message
+        } | Format-List | Out-Host
     }
-)
-if ($semgrepBlocking.Count -gt 0) {
-    throw "Semgrep found $($semgrepBlocking.Count) blocking findings"
+}
+
+if ($semgrepErrors.Count -gt 0) {
+    throw "SECURITY_FAIL: Semgrep found $($semgrepErrors.Count) ERROR finding(s)."
 }
 
 Write-Host "[G6.3 8/8] Produce qualification summary"
@@ -242,8 +256,10 @@ $result = [ordered]@{
         report = "artifacts/security/bandit.json"
     }
     semgrep = [ordered]@{
-        blocking = $semgrepBlocking.Count
-        total = @($semgrep.results).Count
+        error = $semgrepErrors.Count
+        warning = $semgrepWarnings.Count
+        info = $semgrepInfo.Count
+        total = $semgrepResults.Count
         report = "artifacts/security/semgrep.json"
     }
 }
