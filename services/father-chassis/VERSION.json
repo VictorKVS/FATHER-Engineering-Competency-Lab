@@ -16,7 +16,7 @@
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "PASS"
   },
-  "next_gate": "Final G6 industrial qualification on canonical modular runtime",
+  "next_gate": "G6.2 concurrent chaos / failure recovery on canonical modular runtime",
   "target_qualification": {
     "platform": "Windows 11 + Docker Desktop + WSL2",
     "local_llm": "Ollama / qwen2.5:7b",
@@ -80,5 +80,14 @@
     "local_llm": "PASS",
     "osint_product": "PASS",
     "smoke": "PASS"
+  },
+  "g6": {
+    "g6_1_concurrent_load": "PASS",
+    "g6_1_control_plane_requests": 800,
+    "g6_1_control_plane_failures": 0,
+    "g6_1_real_inference_requests": 8,
+    "g6_1_real_inference_failures": 0,
+    "g6_1_real_inference_p95_ms": 7936.72,
+    "final_g6": "BLOCKED_PENDING_G6_2_PLUS"
   }
 }
