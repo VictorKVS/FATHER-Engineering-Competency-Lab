@@ -5,7 +5,7 @@ python -m pytest -q .\tests\test_modular_core_restore.py .\tests\test_access_con
 if ($LASTEXITCODE -ne 0) { throw "PROTOTYPE CORE: FAIL" }
 
 Write-Host "[PROTOTYPE] 2. Side-by-side modular API"
-powershell -ExecutionPolicy Bypass -File .\scripts\modular_api_test.ps1
+& .\scripts\modular_api_test.ps1
 if ($LASTEXITCODE -ne 0) { throw "PROTOTYPE API: FAIL" }
 
 Write-Host ""
