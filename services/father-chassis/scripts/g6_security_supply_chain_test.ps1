@@ -136,9 +136,33 @@ $gitleaksPath = Join-Path $artifactDir "gitleaks.json"
 docker run --rm --pull=never -v "$($repoPath):/repo" $gitleaksImage detect --source=/repo --no-git --report-format=json --report-path=/repo/artifacts/security/gitleaks.json --exit-code=0
 if ($LASTEXITCODE -ne 0) { throw "Gitleaks execution failed" }
 if (-not (Test-Path $gitleaksPath)) { "[]" | Set-Content -Encoding UTF8 $gitleaksPath }
-$gitleaks = @(Get-Content $gitleaksPath -Raw | ConvertFrom-Json)
+$gitleaksRaw = Get-Content $gitleaksPath -Raw
+$gitleaksParsed = $gitleaksRaw | ConvertFrom-Json
+$gitleaks = @()
+if ($null -ne $gitleaksParsed) {
+    if ($gitleaksParsed -is [System.Array]) {
+        $gitleaks = @($gitleaksParsed)
+    }
+    else {
+        $gitleaks = @($gitleaksParsed)
+    }
+}
+
 if ($gitleaks.Count -gt 0) {
-    throw "Gitleaks found $($gitleaks.Count) potential secrets"
+    Write-Host ""
+    Write-Host "Gitleaks findings (secret values are intentionally NOT printed):"
+    foreach ($finding in $gitleaks) {
+        [pscustomobject]@{
+            RuleID = [string]$finding.RuleID
+            Description = [string]$finding.Description
+            File = [string]$finding.File
+            StartLine = [string]$finding.StartLine
+            EndLine = [string]$finding.EndLine
+            Fingerprint = [string]$finding.Fingerprint
+        } | Format-List | Out-Host
+    }
+
+    throw "SECURITY_FAIL: Gitleaks found $($gitleaks.Count) potential secret finding(s). Review the reported file/line locations; secret values were not printed."
 }
 
 Write-Host "[G6.3 6/8] Run Bandit Python SAST"
