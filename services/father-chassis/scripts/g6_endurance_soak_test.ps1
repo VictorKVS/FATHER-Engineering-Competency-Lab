@@ -1,3 +1,9 @@
+param(
+    [int]$DurationMinutes = 120,
+    [int]$ProbeIntervalSeconds = 10,
+    [int]$RealRunIntervalSeconds = 300
+)
+
 $ErrorActionPreference = "Stop"
 
 $base = "http://localhost:8080"
@@ -5,12 +11,6 @@ $service = "father-chassis"
 $artifactDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\artifacts"))
 $summaryPath = Join-Path $artifactDir "g6_5_endurance_soak_summary.json"
 New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
-
-param(
-    [int]$DurationMinutes = 120,
-    [int]$ProbeIntervalSeconds = 10,
-    [int]$RealRunIntervalSeconds = 300
-)
 
 function Percentile([double[]]$values, [double]$p) {
     if (-not $values -or $values.Count -eq 0) { return 0.0 }
@@ -22,8 +22,12 @@ function Percentile([double[]]$values, [double]$p) {
 }
 
 function Get-ContainerStats {
-    $raw = docker stats $service --no-stream --format "{{json .}}"
-    if ($LASTEXITCODE -ne 0) { throw "Could not read Docker stats for $service" }
+    $containerId = (docker compose ps -q $service).Trim()
+    if ([string]::IsNullOrWhiteSpace($containerId)) {
+        throw "Could not resolve running container ID for $service"
+    }
+    $raw = docker stats $containerId --no-stream --format "{{json .}}"
+    if ($LASTEXITCODE -ne 0) { throw "Could not read Docker stats for $service ($containerId)" }
     return $raw | ConvertFrom-Json
 }
 
