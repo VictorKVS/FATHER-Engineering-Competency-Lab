@@ -193,9 +193,11 @@ if ($banditHigh.Count -gt 0) {
     throw "Bandit found $($banditHigh.Count) HIGH severity findings"
 }
 
-Write-Host "[G6.3 7/8] Run Semgrep SAST"
+Write-Host "[G6.3 7/8] Run Semgrep SAST with local versioned rulepack"
 $semgrepPath = Join-Path $artifactDir "semgrep.json"
-docker run --rm --pull=never -v "$($repoPath):/src" $semgrepImage semgrep scan --config auto --json --output /src/artifacts/security/semgrep.json /src/src/father
+$semgrepRules = Join-Path $repoPath "config\semgrep-g6.yml"
+if (-not (Test-Path $semgrepRules)) { throw "Local Semgrep rulepack missing: $semgrepRules" }
+docker run --rm --pull=never -v "$($repoPath):/src" $semgrepImage semgrep scan --config /src/config/semgrep-g6.yml --json --output /src/artifacts/security/semgrep.json /src/src/father
 if ($LASTEXITCODE -ne 0) { throw "Semgrep execution failed" }
 $semgrep = Read-JsonFile $semgrepPath
 $semgrepBlocking = @(
