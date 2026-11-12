@@ -16,7 +16,7 @@
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "PASS"
   },
-  "next_gate": "Production baseline: modular core restoration, release packaging, long-run endurance, CI/CD and release governance",
+  "next_gate": "Capability Registry + AgentManifest + Provider Interfaces",
   "target_qualification": {
     "platform": "Windows 11 + Docker Desktop + WSL2",
     "local_llm": "Ollama / qwen2.5:7b",
@@ -48,6 +48,19 @@
       "memory_limit_bytes": 1073741824,
       "nano_cpus": 2000000000,
       "no_new_privileges": true
+    }
+  },
+  "prototype": {
+    "working_vertical_0_1": "PASS",
+    "qualified_at": "2026-11-12",
+    "evidence": {
+      "modular_core_tests": "13 passed",
+      "modular_api": "PASS",
+      "real_local_model": "qwen2.5:7b",
+      "evidence_chain": "PASS",
+      "audit_chain": "PASS",
+      "emergency_stop": "PASS",
+      "osint_product": "PASS"
     }
   }
 }
