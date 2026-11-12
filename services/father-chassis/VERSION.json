@@ -16,7 +16,7 @@
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "PASS"
   },
-  "next_gate": "Capability Registry + AgentManifest + Provider Interfaces",
+  "next_gate": "Controlled cutover: modular API to canonical 8080 with rollback qualification",
   "target_qualification": {
     "platform": "Windows 11 + Docker Desktop + WSL2",
     "local_llm": "Ollama / qwen2.5:7b",
@@ -61,6 +61,11 @@
       "audit_chain": "PASS",
       "emergency_stop": "PASS",
       "osint_product": "PASS"
-    }
+    },
+    "factory_execution_0_1": "PASS",
+    "factory_qualification_record": "PASS",
+    "working_vertical_tests": 29,
+    "modular_api_steps": "9/9 PASS",
+    "cutover_status": "READY_FOR_CONTROLLED_CUTOVER"
   }
 }
