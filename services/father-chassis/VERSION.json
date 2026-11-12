@@ -16,7 +16,7 @@
     "G5_REUSABLE": "PASS",
     "G6_INDUSTRIAL": "PASS"
   },
-  "next_gate": "G6.2 concurrent chaos / failure recovery on canonical modular runtime",
+  "next_gate": "G6.3 security + supply-chain qualification",
   "target_qualification": {
     "platform": "Windows 11 + Docker Desktop + WSL2",
     "local_llm": "Ollama / qwen2.5:7b",
@@ -88,6 +88,10 @@
     "g6_1_real_inference_requests": 8,
     "g6_1_real_inference_failures": 0,
     "g6_1_real_inference_p95_ms": 7936.72,
-    "final_g6": "BLOCKED_PENDING_G6_2_PLUS"
+    "final_g6": "BLOCKED_PENDING_G6_3_PLUS",
+    "g6_2_concurrent_chaos_recovery": "PASS",
+    "g6_2_total_probes": 117,
+    "g6_2_failed_probes": 9,
+    "g6_2_recovery_to_ready_seconds": 1.01
   }
 }
