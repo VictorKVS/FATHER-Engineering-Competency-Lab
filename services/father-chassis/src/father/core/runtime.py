@@ -126,9 +126,17 @@ class ChassisRuntime:
             context = "\n".join(item.text for item in evidence_items)
             prompt = f"USER: {req.input}\nEVIDENCE:\n{context}"
             requested_model = req.metadata.get("model")
-            model = self.models.resolve(str(requested_model) if requested_model else None)
+            model, draft = self._resilient(
+                trace,
+                "model.generate",
+                lambda: self.models.generate(
+                    prompt,
+                    trace,
+                    requested=str(requested_model) if requested_model else None,
+                ),
+                requested_model=str(requested_model) if requested_model else "",
+            )
             self._emit(trace, "model.routed", {"adapter": model.name})
-            draft = self._resilient(trace, "model.generate", lambda: model.generate(prompt, trace), adapter=model.name)
             self._emit(trace, "model.completed", {"adapter": model.name})
 
             allowed, reason = self.guardrail.allow(plan.action, {"draft": draft}, trace)
