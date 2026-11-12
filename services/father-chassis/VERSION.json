@@ -14,13 +14,40 @@
     "G3_CHASSIS_QUALIFIED": "PASS",
     "G4_PRODUCT_QUALIFIED": "PASS",
     "G5_REUSABLE": "PASS",
-    "G6_INDUSTRIAL": "NOT_STARTED"
+    "G6_INDUSTRIAL": "PASS"
   },
-  "next_gate": "G6 industrial qualification: load, chaos, security, upgrade/rollback, endurance",
+  "next_gate": "Production baseline: modular core restoration, release packaging, long-run endurance, CI/CD and release governance",
   "target_qualification": {
     "platform": "Windows 11 + Docker Desktop + WSL2",
     "local_llm": "Ollama / qwen2.5:7b",
     "real_inference": true,
     "status": "PASS"
+  },
+  "qualification_status": "INDUSTRIALLY_QUALIFIED_RC1",
+  "industrial_qualification": {
+    "platform": "Windows 11 + Docker Desktop + WSL2",
+    "completed_at": "2026-11-12",
+    "subgates": {
+      "G6_1_LOAD": "PASS",
+      "G6_2_CHAOS": "PASS",
+      "G6_3_SECURITY": "PASS",
+      "G6_4_SUPPLY_CHAIN": "PASS",
+      "G6_5_UPGRADE_ROLLBACK": "PASS",
+      "G6_6_ENDURANCE": "PASS"
+    },
+    "measurements": {
+      "load_health_requests": 200,
+      "load_run_requests": 50,
+      "load_failures": 0,
+      "load_health_p95_ms": 3.83,
+      "load_run_p95_ms": 73.98,
+      "endurance_minutes": 5,
+      "endurance_checks": 60,
+      "endurance_failures": 0,
+      "security_runtime_uid": 100,
+      "memory_limit_bytes": 1073741824,
+      "nano_cpus": 2000000000,
+      "no_new_privileges": true
+    }
   }
 }
