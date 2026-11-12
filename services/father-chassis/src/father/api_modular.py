@@ -18,6 +18,8 @@ from father.qualification import qualify_knowledge_flow
 from father.core.agent_manifest import AgentManifest
 from father.factory.agent_factory import AgentFactory
 from father.factory.reference_catalog import build_reference_capabilities, build_reference_providers
+from father.factory.requirement_planner import CustomerRequirement, RequirementPlanner
+from father.factory.solution_factory import CustomerSolutionFactory
 
 VERSION = "1.0.0rc1-modular"
 
@@ -55,6 +57,16 @@ class RunBody(BaseModel):
 class IngestBody(BaseModel):
     source: str = Field(min_length=1)
     text: str = Field(min_length=1)
+
+
+class CustomerRequirementBody(BaseModel):
+    requirement_id: str
+    title: str
+    needs: list[str]
+    constraints: list[str] = []
+    required_permissions: list[str] = []
+    approval_required_for: list[str] = []
+    metadata: dict[str, str] = {}
 
 
 class AgentManifestBody(BaseModel):
@@ -217,6 +229,26 @@ def create_app(runtime=None) -> FastAPI:
         if not result["passed"]:
             raise HTTPException(status_code=500, detail=result)
         return result
+
+    @app.post("/factory/solutions/plan")
+    def plan_solution(body: CustomerRequirementBody) -> dict:
+        requirement = CustomerRequirement(
+            requirement_id=body.requirement_id,
+            title=body.title,
+            needs=frozenset(body.needs),
+            constraints=frozenset(body.constraints),
+            required_permissions=frozenset(body.required_permissions),
+            approval_required_for=frozenset(body.approval_required_for),
+            metadata=dict(body.metadata),
+        )
+        solution_factory = CustomerSolutionFactory(
+            RequirementPlanner(),
+            AgentFactory(
+                build_reference_capabilities(),
+                build_reference_providers(runtime),
+            ),
+        )
+        return solution_factory.plan(requirement)
 
     @app.post("/factory/agents/plan")
     def plan_agent(body: AgentManifestBody) -> dict:
