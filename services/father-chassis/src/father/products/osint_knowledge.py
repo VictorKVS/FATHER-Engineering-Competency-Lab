@@ -58,6 +58,7 @@ class OSINTKnowledgeProduct:
             raise RuntimeError("configured RAG adapter does not support ingestion")
         accepted = 0
         chunks = 0
+        reused_sources = 0
         normalized_sources = []
         for raw in sources:
             src = raw.normalized()
@@ -70,12 +71,21 @@ class OSINTKnowledgeProduct:
                 f"[URI={src.uri or ''}] "
                 f"{src.content}"
             )
-            chunks += int(ingest(src.source_id, payload))
+            inserted = int(ingest(src.source_id, payload))
+            chunks += inserted
+            if inserted == 0:
+                reused_sources += 1
             accepted += 1
             normalized_sources.append(src)
         return {
             "accepted_sources": accepted,
             "chunks": chunks,
+            "reused_sources": reused_sources,
+            "ingest_status": (
+                "EMPTY"
+                if accepted == 0
+                else ("REUSED" if chunks == 0 else ("MIXED" if reused_sources else "INSERTED"))
+            ),
             "sources": [asdict(s) for s in normalized_sources],
         }
 
@@ -121,8 +131,8 @@ class OSINTKnowledgeProduct:
             "audit_event_count": len(audit),
             "passed": (
                 ingest_result["accepted_sources"] > 0
-                and ingest_result["chunks"] > 0
                 and report.status == "PASS"
+                and report.evidence_count > 0
                 and len(audit) >= 2
             ),
         }
