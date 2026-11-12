@@ -130,22 +130,41 @@ if ($criticalVulns.Count -gt 0) {
     throw "Trivy found $($criticalVulns.Count) CRITICAL vulnerabilities"
 }
 
-Write-Host "[G6.3 5/8] Scan repository for secrets with Gitleaks"
+Write-Host "[G6.3 5/8] Scan clean Git snapshot for secrets with Gitleaks"
 $repoPath = (Get-Location).Path
-$gitleaksPath = Join-Path $artifactDir "gitleaks.json"
-docker run --rm --pull=never -v "$($repoPath):/repo" $gitleaksImage detect --source=/repo --no-git --report-format=json --report-path=/repo/artifacts/security/gitleaks.json --exit-code=0
-if ($LASTEXITCODE -ne 0) { throw "Gitleaks execution failed" }
+$gitRoot = (& git rev-parse --show-toplevel).Trim()
+if ([string]::IsNullOrWhiteSpace($gitRoot)) { throw "Could not resolve Git repository root" }
+
+$scanTemp = Join-Path $env:TEMP ("father-g6-gitleaks-" + [guid]::NewGuid().ToString("N"))
+$scanZip = "$scanTemp.zip"
+$scanExtract = Join-Path $scanTemp "extract"
+New-Item -ItemType Directory -Force -Path $scanExtract | Out-Null
+
+try {
+    Write-Host "Create clean tracked-source snapshot from HEAD"
+    & git -C $gitRoot archive --format=zip --output=$scanZip HEAD services/father-chassis
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $scanZip)) { throw "Could not create clean Git snapshot for secret scan" }
+
+    Expand-Archive -Path $scanZip -DestinationPath $scanExtract -Force
+    $scanTarget = Join-Path $scanExtract "services\father-chassis"
+    if (-not (Test-Path $scanTarget)) { throw "Extracted Git snapshot does not contain services/father-chassis" }
+
+    $gitleaksPath = Join-Path $artifactDir "gitleaks.json"
+    docker run --rm --pull=never -v "$($scanTarget):/scan" -v "$($artifactDir):/out" $gitleaksImage dir /scan --report-format=json --report-path=/out/gitleaks.json --redact=100 --exit-code=0
+    if ($LASTEXITCODE -ne 0) { throw "Gitleaks execution failed" }
+}
+finally {
+    if (Test-Path $scanZip) { Remove-Item $scanZip -Force -ErrorAction SilentlyContinue }
+    if (Test-Path $scanTemp) { Remove-Item $scanTemp -Recurse -Force -ErrorAction SilentlyContinue }
+}
+
 if (-not (Test-Path $gitleaksPath)) { "[]" | Set-Content -Encoding UTF8 $gitleaksPath }
 $gitleaksRaw = Get-Content $gitleaksPath -Raw
 $gitleaksParsed = $gitleaksRaw | ConvertFrom-Json
 $gitleaks = @()
 if ($null -ne $gitleaksParsed) {
-    if ($gitleaksParsed -is [System.Array]) {
-        $gitleaks = @($gitleaksParsed)
-    }
-    else {
-        $gitleaks = @($gitleaksParsed)
-    }
+    if ($gitleaksParsed -is [System.Array]) { $gitleaks = @($gitleaksParsed) }
+    else { $gitleaks = @($gitleaksParsed) }
 }
 
 if ($gitleaks.Count -gt 0) {
@@ -161,8 +180,7 @@ if ($gitleaks.Count -gt 0) {
             Fingerprint = [string]$finding.Fingerprint
         } | Format-List | Out-Host
     }
-
-    throw "SECURITY_FAIL: Gitleaks found $($gitleaks.Count) potential secret finding(s). Review the reported file/line locations; secret values were not printed."
+    throw "SECURITY_FAIL: Gitleaks found $($gitleaks.Count) potential secret finding(s) in tracked source snapshot."
 }
 
 Write-Host "[G6.3 6/8] Run Bandit Python SAST"
