@@ -1,0 +1,61 @@
+{
+  "qualification": "FATHER_G6_INDUSTRIAL",
+  "release": "FATHER FACTORY 1.0 RC1",
+  "platform": "Windows 11 + Docker Desktop + WSL2",
+  "completed_at": "2026-11-12",
+  "passed": true,
+  "gates": [
+    {
+      "gate": "G6.1_LOAD",
+      "passed": true,
+      "health_requests": 200,
+      "run_requests": 50,
+      "failures": 0,
+      "health_p95_ms": 3.83,
+      "run_p95_ms": 73.98
+    },
+    {
+      "gate": "G6.2_CHAOS",
+      "passed": true,
+      "forced_kill": true,
+      "recovered": true,
+      "persistence_after_kill": true
+    },
+    {
+      "gate": "G6.3_SECURITY",
+      "passed": true,
+      "runtime_uid": "100",
+      "no_new_privileges": true,
+      "memory_limit_bytes": 1073741824,
+      "nano_cpus": 2000000000,
+      "healthcheck": "configured"
+    },
+    {
+      "gate": "G6.4_SUPPLY_CHAIN",
+      "passed": true,
+      "git_branch": "father-chassis-development",
+      "git_head": "be4e5f2dfbcc285dd08161396cd2e43f74c24b19",
+      "canonical_source_clean": true,
+      "unexpected_entries": []
+    },
+    {
+      "gate": "G6.5_UPGRADE_ROLLBACK",
+      "passed": true,
+      "rollback_executed": true,
+      "rollback_restored_previous_image": true,
+      "rollback_ready": true
+    },
+    {
+      "gate": "G6.6_ENDURANCE",
+      "passed": true,
+      "duration_minutes": 5,
+      "checks": 60,
+      "failures": 0,
+      "max_ready_latency_ms": 65.34
+    }
+  ],
+  "technical_debt": {
+    "modular_core_tree_sync": "REQUIRED_BEFORE_PRODUCTION_BASELINE",
+    "note": "RC recovery runtime is qualified, but the intended modular father.core tree must be restored and requalified before final production release."
+  }
+}
