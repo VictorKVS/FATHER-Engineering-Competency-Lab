@@ -1,18 +1,18 @@
 {
   "qualification": "G6_CONSOLIDATED_INDUSTRIAL",
   "date": "2026-11-13",
-  "status": "PENDING_EVIDENCE_G6_1_G6_2",
+  "status": "PENDING_FINAL_8H_SOAK",
   "final_industrial_pass": false,
   "gates": {
     "G6.1": {
-      "status": "PASS_REPORTED_BUT_ARTIFACT_NOT_COMMITTED",
-      "artifact": null,
-      "blocking_for_final": true
+      "status": "PASS",
+      "artifact": "g6_1_concurrent_load_qualification_2026-11-12.json",
+      "blocking_for_final": false
     },
     "G6.2": {
-      "status": "PASS_REPORTED_BUT_ARTIFACT_NOT_COMMITTED",
-      "artifact": null,
-      "blocking_for_final": true
+      "status": "PASS",
+      "artifact": "g6_2_concurrent_chaos_recovery_qualification_2026-11-12.json",
+      "blocking_for_final": false
     },
     "G6.3": {
       "status": "PASS",
@@ -26,10 +26,10 @@
       "caveat": "Current qualification proves legacy schema migration, failed deployment observation, rollback lifecycle and data preservation. It does not strictly prove downgrade from a newer application binary B to an older application binary A."
     },
     "G6.5": {
-      "status": "PASS_120_MINUTE_SOAK",
+      "status": "PASS_120_MINUTE_SOAK_PREQUALIFICATION",
       "artifact": "g6_5_endurance_soak_qualification_2026-11-13.json",
-      "blocking_for_final": false,
-      "caveat": "Two-hour soak demonstrates endurance stability but is not equivalent to a longer 8-hour soak for memory-leak confidence."
+      "blocking_for_final": true,
+      "caveat": "120-minute soak passed and showed stable readiness, zero real-run failures and small memory growth. Final Industrial designation still requires an extended 8-hour soak with numeric memory-drift evidence."
     },
     "G6.6": {
       "status": "PASS",
@@ -44,9 +44,8 @@
     "G6.5 currently covers 120-minute soak, not extended 8-hour soak."
   ],
   "finalization_requirements": [
-    "Commit standalone G6.1 evidence artifact.",
-    "Commit standalone G6.2 evidence artifact.",
-    "Re-evaluate whether 8-hour soak is mandatory for final Industrial designation.",
-    "Optionally add G6.4b true versioned-binary upgrade/rollback fixture for stronger rollback evidence."
+    "Run final G6.5 extended soak for 480 minutes with numeric memory drift/slope evidence.",
+    "If the 8-hour soak passes, update the consolidated manifest and issue the final G6 Industrial qualification package.",
+    "G6.4b true versioned-binary downgrade fixture remains a recommended strengthening item, not a current blocker."
   ]
 }
