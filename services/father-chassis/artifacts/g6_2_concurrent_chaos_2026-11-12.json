@@ -1,0 +1,23 @@
+{
+  "qualification": "G6.2_CONCURRENT_CHAOS_RECOVERY",
+  "date": "2026-11-12",
+  "passed": true,
+  "canonical_endpoint": "http://localhost:8080",
+  "failure_injection": "docker compose stop father-chassis",
+  "total_background_probes": 117,
+  "successful_background_probes": 108,
+  "failed_background_probes": 9,
+  "observable_outage": true,
+  "recovery_to_ready_seconds": 1.01,
+  "post_recovery_successful_probes": 94,
+  "post_chaos_trace_id": "12f1ffea-9b5d-4186-b221-9fd230d67e72",
+  "post_chaos_evidence_count": 5,
+  "post_chaos_audit_event_count": 9,
+  "runtime_ready_after_chaos": true,
+  "interpretation": {
+    "recovery": "PASS: canonical modular runtime recovered from forced container stop and resumed service",
+    "outage": "PASS: failure was observable; test did not mask interruption",
+    "post_recovery_pipeline": "PASS: evidence-backed inference and audit continuity restored",
+    "final_g6": "NOT YET PASS; security/supply-chain/endurance remain"
+  }
+}
