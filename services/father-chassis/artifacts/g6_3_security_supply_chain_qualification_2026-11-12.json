@@ -1,0 +1,47 @@
+{
+  "qualification": "G6.3_SECURITY_SUPPLY_CHAIN",
+  "date": "2026-11-12",
+  "status": "PASS",
+  "canonical_image": "father-chassis-father-chassis:latest",
+  "build_manifest_sha256": "2e1c019ce90478124237a598f5783b826c8c0429a8eb9e08def32962",
+  "hardening": {
+    "container_user": "father",
+    "non_root": true,
+    "no_new_privileges": true,
+    "memory_limit_bytes": 1073741824,
+    "nano_cpus": 2000000000
+  },
+  "sbom": {
+    "format": "CycloneDX",
+    "spec_version": "1.7",
+    "path": "artifacts/security/father-chassis-sbom.cdx.json"
+  },
+  "trivy": {
+    "critical": 0,
+    "high": 47,
+    "high_fixable": 0,
+    "high_without_fixed_version": 47,
+    "decision": "PASS_WITH_UPSTREAM_RISK_BACKLOG"
+  },
+  "gitleaks": {
+    "findings": 0
+  },
+  "bandit": {
+    "high": 0,
+    "total": 9
+  },
+  "semgrep": {
+    "error": 0,
+    "warning": 0,
+    "info": 0,
+    "total": 0
+  },
+  "acceptance_policy": {
+    "critical_must_be_zero": true,
+    "fixable_high_must_be_zero": true,
+    "secrets_must_be_zero": true,
+    "bandit_high_must_be_zero": true,
+    "semgrep_error_must_be_zero": true
+  },
+  "note": "47 HIGH findings have no vendor FixedVersion at qualification time and remain in the vulnerability risk backlog for monitoring/re-scan."
+}
