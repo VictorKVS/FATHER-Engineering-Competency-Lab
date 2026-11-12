@@ -20,6 +20,7 @@ from father.factory.agent_factory import AgentFactory
 from father.factory.reference_catalog import build_reference_capabilities, build_reference_providers
 from father.factory.requirement_planner import CustomerRequirement, RequirementPlanner
 from father.factory.solution_factory import CustomerSolutionFactory
+from father.factory.executor import FactoryExecutor
 
 VERSION = "1.0.0rc1-modular"
 
@@ -67,6 +68,21 @@ class CustomerRequirementBody(BaseModel):
     required_permissions: list[str] = []
     approval_required_for: list[str] = []
     metadata: dict[str, str] = {}
+
+
+class FactoryExecuteBody(BaseModel):
+    requirement: CustomerRequirementBody
+    input: str = Field(min_length=1)
+    subject_id: str | None = None
+    roles: list[str] = []
+    clearance: str | None = None
+    projects: list[str] = []
+    compartments: list[str] = []
+    resource_id: str | None = None
+    resource_classification: str | None = None
+    resource_project: str | None = None
+    resource_compartments: list[str] = []
+    permission: str = "execute:analysis"
 
 
 class AgentManifestBody(BaseModel):
@@ -229,6 +245,66 @@ def create_app(runtime=None) -> FastAPI:
         if not result["passed"]:
             raise HTTPException(status_code=500, detail=result)
         return result
+
+    @app.post("/factory/solutions/execute")
+    def execute_solution(body: FactoryExecuteBody) -> dict:
+        req_body = body.requirement
+        requirement = CustomerRequirement(
+            requirement_id=req_body.requirement_id,
+            title=req_body.title,
+            needs=frozenset(req_body.needs),
+            constraints=frozenset(req_body.constraints),
+            required_permissions=frozenset(req_body.required_permissions),
+            approval_required_for=frozenset(req_body.approval_required_for),
+            metadata=dict(req_body.metadata),
+        )
+
+        subject = None
+        resource = None
+        if body.subject_id or body.resource_id:
+            if not body.subject_id or not body.resource_id or not body.clearance or not body.resource_classification:
+                raise HTTPException(
+                    status_code=400,
+                    detail="subject_id, resource_id, clearance and resource_classification are required together",
+                )
+            try:
+                subject = SubjectContext(
+                    subject_id=body.subject_id,
+                    roles=frozenset(body.roles),
+                    clearance=ClearanceLevel[body.clearance.upper()],
+                    projects=frozenset(body.projects),
+                    compartments=frozenset(body.compartments),
+                )
+                resource = ResourceContext(
+                    resource_id=body.resource_id,
+                    classification=ClearanceLevel[body.resource_classification.upper()],
+                    project_id=body.resource_project,
+                    compartments=frozenset(body.resource_compartments),
+                )
+            except KeyError as exc:
+                raise HTTPException(status_code=400, detail=f"unknown clearance level: {exc}") from exc
+
+        executor = FactoryExecutor(
+            runtime=runtime,
+            planner=RequirementPlanner(),
+            agent_factory=AgentFactory(
+                build_reference_capabilities(),
+                build_reference_providers(runtime),
+            ),
+        )
+        try:
+            result = executor.execute(
+                requirement=requirement,
+                user_input=body.input,
+                subject=subject,
+                resource=resource,
+                permission=body.permission,
+            )
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        return result.to_dict()
 
     @app.post("/factory/solutions/plan")
     def plan_solution(body: CustomerRequirementBody) -> dict:
