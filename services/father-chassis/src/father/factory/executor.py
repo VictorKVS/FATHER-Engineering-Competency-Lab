@@ -8,6 +8,7 @@ from father.core.contracts import ExecutionRequest
 from father.factory.agent_factory import AgentFactory
 from father.factory.requirement_planner import CustomerRequirement, RequirementPlanner
 from father.factory.solution_factory import CustomerSolutionFactory
+from father.factory.qualification_record import FactoryQualificationRecord
 
 
 @dataclass(frozen=True, slots=True)
@@ -19,6 +20,7 @@ class FactoryExecutionResult:
     trace_id: str
     workflow_id: str
     evidence: list[dict[str, Any]]
+    qualification: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -29,6 +31,7 @@ class FactoryExecutionResult:
             "trace_id": self.trace_id,
             "workflow_id": self.workflow_id,
             "evidence": self.evidence,
+            "qualification": self.qualification,
         }
 
 
@@ -82,7 +85,7 @@ class FactoryExecutor:
             )
         )
 
-        return FactoryExecutionResult(
+        provisional = FactoryExecutionResult(
             status="EXECUTED",
             agent_id=profile.agent_id,
             build_plan=profile.build_plan.to_dict(),
@@ -90,4 +93,21 @@ class FactoryExecutor:
             trace_id=result.trace.trace_id,
             workflow_id=result.trace.workflow_id,
             evidence=result.evidence,
+            qualification={},
+        )
+        audit_events = self.runtime.audit.by_trace(result.trace.trace_id)
+        qualification = FactoryQualificationRecord.from_execution(
+            requirement_id=requirement.requirement_id,
+            execution_result=provisional,
+            audit_events=audit_events,
+        ).to_dict()
+        return FactoryExecutionResult(
+            status=provisional.status,
+            agent_id=provisional.agent_id,
+            build_plan=provisional.build_plan,
+            output=provisional.output,
+            trace_id=provisional.trace_id,
+            workflow_id=provisional.workflow_id,
+            evidence=provisional.evidence,
+            qualification=qualification,
         )
