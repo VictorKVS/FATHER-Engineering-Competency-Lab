@@ -40,7 +40,7 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($head)) {
 
 # Scope cleanliness to the canonical chassis only.
 # G6 evidence JSON files are expected runtime outputs and are explicitly allowed.
-$rawStatus = @(git status --porcelain --untracked-files=all -- services/father-chassis)
+$rawStatus = @(git status --porcelain --untracked-files=all -- ':(top)services/father-chassis')
 $unexpected = @()
 
 foreach ($entry in $rawStatus) {
