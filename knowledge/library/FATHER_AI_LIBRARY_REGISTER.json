@@ -1,0 +1,330 @@
+{
+  "registry": "FATHER_AI_LIBRARY_REGISTER",
+  "version": "1.0",
+  "updated": "2026-11-12",
+  "purpose": "Canonical metadata registry for AI/LLM/RAG/AI Security/DevSecOps knowledge sources. Original copyrighted files are not stored in Git; only metadata, provenance and hashes.",
+  "status_model": [
+    "ADDED",
+    "METADATA_VERIFIED",
+    "FILE_RECEIVED",
+    "SOURCE_LEGALITY_VERIFIED",
+    "STUDYING",
+    "STUDIED",
+    "APPLIED_IN_PRACTICE"
+  ],
+  "deduplication_key": "sha256",
+  "knowledge_pipeline": "intake -> hash -> classify -> metadata verify -> knowledge extraction -> chunks -> graph -> evidence -> study -> applied",
+  "records": [
+    {
+      "id": "LIB-AI-001",
+      "type": "BOOK",
+      "title": "Generative AI Security: Theories and Practices",
+      "authors": [
+        "Ken Huang",
+        "Yang Wang",
+        "Ben Goertzel",
+        "Yale Li",
+        "Sean Wright",
+        "Jyoti Ponnapalli"
+      ],
+      "year": 2024,
+      "publisher": "Springer Nature Switzerland AG",
+      "doi": "10.1007/978-3-031-54252-7",
+      "pages": 367,
+      "sha256": "1ed0918b3fff557dd0c05a0c675885d2de0a0d418a7656b450514ecccc3bb40e",
+      "domain": [
+        "AI Security",
+        "LLM Security",
+        "Governance",
+        "DevSecOps",
+        "LLMOps"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "P02_KNOWLEDGE_CORE",
+        "P03_FATHER_KNOWLEDGE_FACTORY",
+        "FATHER_SECURITY_LAYER"
+      ],
+      "use": [
+        "article_evidence",
+        "AI_security_curriculum",
+        "threat_modeling",
+        "governance"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "End-to-end GenAI security reference: foundations, governance, data/model/application security, LLMOps and DevSecOps."
+    },
+    {
+      "id": "LIB-AI-002",
+      "type": "BOOK",
+      "title": "Designing Machine Learning Systems: An Iterative Process for Production-Ready Applications",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "year": 2022,
+      "publisher": "O'Reilly Media",
+      "pages": 461,
+      "sha256": "e3b542b0350a4c24f155fee8eb09df08e742a7fe7508873af48da11b3424fc70",
+      "domain": [
+        "ML Systems",
+        "MLOps",
+        "Production Architecture",
+        "Monitoring",
+        "Data Systems"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "P03_FATHER_KNOWLEDGE_FACTORY",
+        "FATHER_CHASSIS",
+        "FQDP"
+      ],
+      "use": [
+        "system_architecture",
+        "production_design",
+        "monitoring",
+        "lifecycle",
+        "article_evidence"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Core systems-engineering reference: holistic ML lifecycle, deployment, monitoring, updating and shared platform foundations."
+    },
+    {
+      "id": "LIB-AI-003",
+      "type": "BOOK",
+      "title": "Hands-On Large Language Models: Language Understanding and Generation",
+      "authors": [
+        "Jay Alammar",
+        "Maarten Grootendorst"
+      ],
+      "year": 2024,
+      "publisher": "O'Reilly Media",
+      "pages": 598,
+      "sha256": "781e82ac0fdd2e9876288a7ecc374bf10240387423eb196ca0b71ae6abf009f9",
+      "domain": [
+        "LLM",
+        "Embeddings",
+        "Semantic Search",
+        "RAG",
+        "Prompt Engineering",
+        "Fine-tuning"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "P02_KNOWLEDGE_CORE",
+        "P03_FATHER_KNOWLEDGE_FACTORY",
+        "FATHER_RAG",
+        "MODEL_ROUTER"
+      ],
+      "use": [
+        "LLM_foundations",
+        "RAG_curriculum",
+        "embedding_models",
+        "semantic_search",
+        "article_evidence"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Technical LLM foundation with embeddings, semantic search, retrieval-augmented generation, prompting and fine-tuning."
+    },
+    {
+      "id": "LIB-AI-004",
+      "type": "BOOK_EXCERPT",
+      "title": "AI Engineering: Building Applications with Foundation Models",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "year": 2025,
+      "publisher": "O'Reilly Media",
+      "pages": 21,
+      "sha256": "6ad54f2365a05a58e98f9e36bdc5cf8cab0c6ae77744fee5ffe63f86d9d0bf1e",
+      "domain": [
+        "AI Engineering",
+        "Foundation Models",
+        "Evaluation",
+        "RAG",
+        "Agents",
+        "Feedback Loops"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_CHASSIS",
+        "P03_FATHER_KNOWLEDGE_FACTORY",
+        "FQDP",
+        "EVALUATOR"
+      ],
+      "use": [
+        "AI_engineering_curriculum",
+        "evaluation",
+        "RAG_design",
+        "agent_design",
+        "feedback_loops",
+        "article_evidence"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "completeness": "PARTIAL_21_PAGE_FILE",
+      "note": "Uploaded file is only 21 pages; treat as excerpt/preview, not a verified complete book."
+    },
+    {
+      "id": "LIB-AI-005",
+      "type": "SLIDES",
+      "title": "From ML Engineering to AI Engineering",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "year": 2024,
+      "pages": 23,
+      "sha256": "7c92f5f5e13b330d8673cc7eed4d1967efc0b8ceb8e4b92056aafa3b32e5525e",
+      "domain": [
+        "AI Engineering",
+        "RAG",
+        "Context Construction",
+        "Evaluation",
+        "Agents",
+        "Inference Optimization"
+      ],
+      "priority": "P1_SUPPORT",
+      "project_links": [
+        "FATHER_CHASSIS",
+        "FATHER_RAG",
+        "EVALUATOR",
+        "MODEL_ROUTER"
+      ],
+      "use": [
+        "article_diagrams",
+        "AI_stack_mapping",
+        "context_construction",
+        "evaluation"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Useful visual reference for the new AI stack, evaluation, context construction, RAG, agentic retrieval and inference trade-offs."
+    },
+    {
+      "id": "LIB-AI-006",
+      "type": "CHECKLIST",
+      "title": "LLM AI Cybersecurity & Governance Checklist",
+      "authors": [
+        "OWASP Top 10 for LLM Applications Team"
+      ],
+      "year": 2024,
+      "pages": 32,
+      "sha256": "41687e9f65839682b292c968ffde323fb2c970fefbe81e2992b01f5952a04998",
+      "domain": [
+        "LLM Security",
+        "Governance",
+        "Threat Modeling",
+        "TEVV",
+        "RAG Security",
+        "AI Red Teaming"
+      ],
+      "priority": "P0_CORE",
+      "project_links": [
+        "FATHER_SECURITY_LAYER",
+        "FQDP",
+        "SECGRAPH",
+        "POLYGON"
+      ],
+      "use": [
+        "security_checklist",
+        "governance_controls",
+        "TEVV",
+        "AI_red_team",
+        "article_evidence"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Operational governance/security checklist: adversarial risk, threat modeling, asset inventory, TEVV, model/risk cards, RAG and red teaming."
+    },
+    {
+      "id": "LIB-AI-007",
+      "type": "PAPER",
+      "title": "Review of Generative AI Methods in Cybersecurity",
+      "authors": [
+        "Yagmur Yigit",
+        "William J. Buchanan",
+        "Madjid G. Tehrani",
+        "Leandros Maglaras"
+      ],
+      "year": 2024,
+      "source": "arXiv:2403.08701 [cs.CR]",
+      "pages": 39,
+      "sha256": "a7a5203c9a1f5dd890a43672968daff55978195bf770f591e2015ad6deb8b62f",
+      "domain": [
+        "Generative AI",
+        "Cybersecurity",
+        "LLM Security",
+        "Cyber Defense",
+        "Cyber Offense",
+        "Evaluation"
+      ],
+      "priority": "P0_SCIENTIFIC",
+      "project_links": [
+        "FATHER_SECURITY_LAYER",
+        "OSINT_TRICOLOR",
+        "SECGRAPH",
+        "POLYGON"
+      ],
+      "use": [
+        "scientific_evidence",
+        "literature_review",
+        "cybersecurity_article",
+        "benchmark_sources"
+      ],
+      "status": {
+        "added": true,
+        "verified_metadata": true,
+        "file_received": true,
+        "source_legality_verified": false,
+        "studying": false,
+        "studied": false,
+        "applied": false
+      },
+      "note": "Scientific review covering GenAI opportunities and risks in cybersecurity, including jailbreaks, prompt injection, offensive and defensive applications."
+    }
+  ]
+}
