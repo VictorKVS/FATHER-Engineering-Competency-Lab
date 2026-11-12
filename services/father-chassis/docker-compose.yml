@@ -27,6 +27,37 @@ services:
       retries: 6
       start_period: 10s
 
+  father-chassis-modular:
+    build: .
+    command: ["uvicorn", "father.api_modular:app", "--host", "0.0.0.0", "--port", "8081"]
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+      FATHER_DATA_DIR: /app/data-modular
+    volumes:
+      - father_modular_data:/app/data-modular
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    security_opt:
+      - "no-new-privileges:true"
+    mem_limit: 1g
+    cpus: 2.0
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python -c "import urllib.request; urllib.request.urlopen('http://localhost:8081/health/live', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
   postgres:
     image: pgvector/pgvector:pg16
     environment:
@@ -60,5 +91,6 @@ services:
 
 volumes:
   father_data:
+  father_modular_data:
   father_postgres:
   father_redis:
