@@ -114,10 +114,13 @@ class AccessControl:
                 role,
             )
 
-        if resource.owner_org and subject.organizations and resource.owner_org not in subject.organizations:
+        if role == "admin":
+            return AccessDecision(True, "allowed", role)
+
+        if resource.owner_org and resource.owner_org not in subject.organizations:
             return AccessDecision(False, "organization scope mismatch", role)
 
-        if resource.project_id and subject.projects and resource.project_id not in subject.projects:
+        if resource.project_id and resource.project_id not in subject.projects:
             return AccessDecision(False, "project scope mismatch", role)
 
         if resource.compartments and not resource.compartments.issubset(subject.compartments):
