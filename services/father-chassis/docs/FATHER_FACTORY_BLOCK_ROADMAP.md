@@ -110,4 +110,4 @@ Both reference blocks are now B9 QUALIFIED by the G7 M2 persistent lifecycle gat
 
 | Knowledge Chunk Normalization | B9 QUALIFIED by K4 | tokenizer-aware policies + signed policy releases (future) | Knowledge/System Architect | KB-SYSTEM-ANALYSIS | deterministic chunks + lineage |
 
-| Knowledge Entity Relation Extraction | B6 document pack + implementation; K5 pending | G7 K5 evidence | Knowledge/Algorithm Architect | KB-ALGORITHMS, KB-SYSTEM-ANALYSIS | typed entities/relations + evidence lineage |
+| Knowledge Entity Relation Extraction | B9 QUALIFIED by K5 | production NER/LLM extractors + calibration (future) | Knowledge/Algorithm Architect | KB-ALGORITHMS, KB-SYSTEM-ANALYSIS | typed entities/relations + evidence lineage |

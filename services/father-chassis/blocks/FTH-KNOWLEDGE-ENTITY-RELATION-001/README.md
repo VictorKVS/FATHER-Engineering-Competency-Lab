@@ -19,4 +19,4 @@ Non-goals:
 - free-form LLM extraction as authoritative default;
 - knowledge inference beyond observed chunk evidence.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 K5 Entity/Relation Extraction evidence.
