@@ -70,6 +70,7 @@ class FactoryExecutor:
             "agent_id": profile.agent_id,
             "role": "agent",
             "factory_requirement_id": requirement.requirement_id,
+            "approval_required_for": tuple(sorted(profile.manifest.approval_required_for)),
         }
         if subject is not None or resource is not None:
             if subject is None or resource is None:

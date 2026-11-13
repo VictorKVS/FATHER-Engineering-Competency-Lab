@@ -98,3 +98,26 @@ def test_rag_ingest_is_idempotent(tmp_path):
     second = runtime.rag.ingest("kb://dedup", "same evidence")
     assert first == 1
     assert second == 0
+
+
+def test_factory_enforces_manifest_human_approval_contract(tmp_path):
+    from father.core.approval import ApprovalRequired
+
+    runtime, executor = _executor(tmp_path)
+    requirement = CustomerRequirement(
+        requirement_id="REQ-APPROVAL-001",
+        title="Controlled reporting agent",
+        needs=frozenset({"analyze_documents", "create_report", "run_workflow"}),
+        approval_required_for=frozenset({"create_report"}),
+        metadata={"agent_id": "controlled-report-agent"},
+    )
+
+    with pytest.raises(ApprovalRequired) as exc:
+        executor.execute(
+            requirement=requirement,
+            user_input="What does FATHER Factory Execution do?",
+        )
+
+    record = runtime.approval_gate.get(exc.value.approval_id)
+    assert record.action == "create_report"
+    assert record.status == "pending"

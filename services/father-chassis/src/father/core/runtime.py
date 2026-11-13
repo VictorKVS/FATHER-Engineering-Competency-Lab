@@ -145,9 +145,43 @@ class ChassisRuntime:
                 raise PermissionError(reason)
 
             approval_id = req.metadata.get("approval_id")
-            self.approval_gate.check(trace_id=trace.trace_id, action=plan.action, approval_id=str(approval_id) if approval_id else None)
-            if plan.action in self.approval_gate.required_actions:
-                self._emit(trace, "approval.accepted", {"action": plan.action, "approval_id": approval_id})
+            request_approval_actions = {
+                str(action)
+                for action in req.metadata.get("approval_required_for", ())
+            }
+            approval_required = (
+                plan.action in self.approval_gate.required_actions
+                or plan.action in request_approval_actions
+            )
+            if plan.action in request_approval_actions and plan.action not in self.approval_gate.required_actions:
+                # Request-scoped enforcement keeps product contracts isolated and
+                # avoids mutating the shared global approval policy.
+                if approval_id:
+                    rec = self.approval_gate.get(str(approval_id))
+                    if rec.action != plan.action or rec.status != "approved":
+                        raise PermissionError(
+                            f"invalid or unapproved approval_id for action {plan.action}"
+                        )
+                else:
+                    from .approval import ApprovalRequired, ApprovalRecord
+                    from uuid import uuid4
+                    new_id = str(uuid4())
+                    self.approval_gate._records[new_id] = ApprovalRecord(
+                        new_id, trace.trace_id, plan.action, "pending"
+                    )
+                    raise ApprovalRequired(new_id, plan.action)
+            else:
+                self.approval_gate.check(
+                    trace_id=trace.trace_id,
+                    action=plan.action,
+                    approval_id=str(approval_id) if approval_id else None,
+                )
+            if approval_required:
+                self._emit(
+                    trace,
+                    "approval.accepted",
+                    {"action": plan.action, "approval_id": approval_id},
+                )
 
             self.emergency_stop.ensure_running()
             payload = {"draft": draft}
