@@ -11,10 +11,18 @@ $compose = Join-Path $serviceDir "benchmarks\brain-storage\compose.yaml"
 $artifactDir = Join-Path $serviceDir "artifacts\local\brain-storage-bench"
 New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 $date = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$out = Join-Path $artifactDir ("P0_smoke_" + $Candidate + "_" + $date + ".json")
+$out = Join-Path $artifactDir ("P0B_runtime_smoke_" + $Candidate + "_" + $date + ".json")
+
+$images=[ordered]@{
+  postgres="postgres:18-alpine"
+  pgvector="pgvector/pgvector:0.8.7-pg18-trixie"
+  qdrant="qdrant/qdrant:latest"
+  neo4j="neo4j:2026.10.2"
+  opensearch="opensearchproject/opensearch:3.9.0"
+}
 
 $container = "father-bench-$Candidate"
-$start = Get-Date
+$image = $images[$Candidate]
 $dockerReady=$false
 $started=$false
 
@@ -26,11 +34,10 @@ try {
 
   if(-not $dockerReady){
     $blocked=[ordered]@{
-      qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
+      qualification="BRAIN_STORAGE_BENCH_P0B_RUNTIME_SMOKE"
       candidate=$Candidate
       status="ENVIRONMENT_BLOCKED"
       reason="Docker Engine is not available"
-      started_at_utc=$start.ToUniversalTime().ToString("o")
       passed=$false
     }
     $blocked | ConvertTo-Json -Depth 8 | Set-Content -Path $out -Encoding UTF8
@@ -39,14 +46,31 @@ try {
     exit 2
   }
 
-  docker compose -f $compose --profile $Candidate up -d $Candidate
+  docker image inspect $image *> $null
+  if($LASTEXITCODE -ne 0){
+    $blocked=[ordered]@{
+      qualification="BRAIN_STORAGE_BENCH_P0B_RUNTIME_SMOKE"
+      candidate=$Candidate
+      image=$image
+      status="IMAGE_NOT_PREPARED"
+      reason="Run brain_storage_bench_prepare_images.ps1 first; runtime benchmark never includes image pull time"
+      passed=$false
+    }
+    $blocked | ConvertTo-Json -Depth 8 | Set-Content -Path $out -Encoding UTF8
+    $blocked | ConvertTo-Json -Depth 8
+    Write-Host "Evidence: $out"
+    exit 2
+  }
+
+  $start = Get-Date
+  docker compose -f $compose --profile $Candidate up -d --pull never $Candidate
   if($LASTEXITCODE -ne 0){ throw "docker compose up failed" }
   $started=$true
 
   $deadline=(Get-Date).AddSeconds(90)
   $ready=$false
   while((Get-Date) -lt $deadline -and -not $ready){
-    Start-Sleep -Seconds 2
+    Start-Sleep -Milliseconds 500
     switch($Candidate){
       "postgres" {
         docker exec $container pg_isready -U father -d father_bench *> $null
@@ -57,17 +81,18 @@ try {
         $ready=($LASTEXITCODE -eq 0)
       }
       "qdrant" {
-        try { Invoke-RestMethod -Uri "http://127.0.0.1:56333/" -TimeoutSec 3 | Out-Null; $ready=$true } catch {}
+        try { Invoke-RestMethod -Uri "http://127.0.0.1:56333/" -TimeoutSec 2 | Out-Null; $ready=$true } catch {}
       }
       "neo4j" {
         docker exec $container cypher-shell -u neo4j -p father_bench_2026 "RETURN 1;" *> $null
         $ready=($LASTEXITCODE -eq 0)
       }
       "opensearch" {
-        try { Invoke-RestMethod -Uri "http://127.0.0.1:59200/" -TimeoutSec 3 | Out-Null; $ready=$true } catch {}
+        try { Invoke-RestMethod -Uri "http://127.0.0.1:59200/" -TimeoutSec 2 | Out-Null; $ready=$true } catch {}
       }
     }
   }
+  $readyAt=Get-Date
   if(-not $ready){ throw "candidate did not become ready in 90 seconds" }
 
   $functional=$false
@@ -100,19 +125,21 @@ try {
     }
   }
 
+  Start-Sleep -Seconds 1
   $inspect = docker inspect $container | ConvertFrom-Json
   $statsRaw = docker stats $container --no-stream --format '{{json .}}'
   $stats = $statsRaw | ConvertFrom-Json
 
   $result=[ordered]@{
-    qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
+    qualification="BRAIN_STORAGE_BENCH_P0B_RUNTIME_SMOKE"
     candidate=$Candidate
     status=if($ready -and $functional){"PASS"}else{"FAIL"}
     image=$inspect[0].Config.Image
     image_id=$inspect[0].Image
     started_at_utc=$start.ToUniversalTime().ToString("o")
-    ready_at_utc=(Get-Date).ToUniversalTime().ToString("o")
-    startup_seconds=[math]::Round(((Get-Date)-$start).TotalSeconds,3)
+    ready_at_utc=$readyAt.ToUniversalTime().ToString("o")
+    runtime_startup_seconds=[math]::Round(($readyAt-$start).TotalSeconds,3)
+    image_pull_excluded=true
     functional_smoke=$functional
     cpu_percent=$stats.CPUPerc
     memory_usage=$stats.MemUsage
@@ -128,11 +155,10 @@ try {
 }
 catch {
   $failed=[ordered]@{
-    qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
+    qualification="BRAIN_STORAGE_BENCH_P0B_RUNTIME_SMOKE"
     candidate=$Candidate
     status="FAIL"
     reason=$_.Exception.Message
-    started_at_utc=$start.ToUniversalTime().ToString("o")
     completed_at_utc=(Get-Date).ToUniversalTime().ToString("o")
     passed=$false
   }
@@ -143,8 +169,6 @@ catch {
 }
 finally {
   if($started -and $dockerReady){
-    try {
-      docker compose -f $compose --profile $Candidate down -v --remove-orphans *> $null
-    } catch {}
+    try { docker compose -f $compose --profile $Candidate down -v --remove-orphans *> $null } catch {}
   }
 }
