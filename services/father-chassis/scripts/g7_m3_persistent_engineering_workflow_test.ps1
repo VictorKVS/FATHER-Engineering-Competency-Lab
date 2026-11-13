@@ -23,6 +23,7 @@ New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 $result = [ordered]@{
     qualification = "G7_M3_PERSISTENT_ENGINEERING_WORKFLOW"
     started_at_utc = (Get-Date).ToUniversalTime().ToString("o")
+    toolchain_ready = $false
     regression = $false
     restart_restore = $false
     stage_authority_preserved = $false
@@ -35,6 +36,17 @@ $result = [ordered]@{
 try {
     Push-Location $serviceDir
     try {
+        Write-Host "[G7 M3] Verify qualification toolchain"
+        & $Python -m ruff --version *> $null
+        if ($LASTEXITCODE -ne 0) {
+            throw "QUALIFICATION_ENVIRONMENT_BLOCKED: ruff is not installed. Run: $Python -m pip install -e '.[dev]'"
+        }
+        & $Python -m pytest --version *> $null
+        if ($LASTEXITCODE -ne 0) {
+            throw "QUALIFICATION_ENVIRONMENT_BLOCKED: pytest is not installed. Run: $Python -m pip install -e '.[dev]'"
+        }
+        $result.toolchain_ready = $true
+
         Invoke-Step "Compile father-chassis sources/tests" {
             & $Python -m compileall -q src tests
         }
@@ -198,7 +210,12 @@ finally {
 
 if (-not $result.passed) {
     Write-Host ""
-    Write-Host "G7 M3 PERSISTENT ENGINEERING WORKFLOW: FAIL"
+    if (($result.error -as [string]) -like "QUALIFICATION_ENVIRONMENT_BLOCKED:*") {
+        Write-Host "G7 M3 PERSISTENT ENGINEERING WORKFLOW: ENVIRONMENT BLOCKED"
+    }
+    else {
+        Write-Host "G7 M3 PERSISTENT ENGINEERING WORKFLOW: FAIL"
+    }
     $result | ConvertTo-Json -Depth 10
     exit 1
 }
