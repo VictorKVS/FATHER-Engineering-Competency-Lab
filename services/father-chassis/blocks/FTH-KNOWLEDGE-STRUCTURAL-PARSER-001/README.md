@@ -18,4 +18,4 @@ Non-goals:
 - OCR as default path;
 - KB qualification.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 K3 Structural Parser evidence.

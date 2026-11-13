@@ -1,7 +1,33 @@
 {
-  "block_id":"FTH-KNOWLEDGE-STRUCTURAL-PARSER-001",
-  "qualification":"G7_K3_STRUCTURAL_PARSER",
-  "status":"PENDING",
-  "canonical_evidence":false,
-  "target_gate":"B9"
+  "block_id": "FTH-KNOWLEDGE-STRUCTURAL-PARSER-001",
+  "qualification": "G7_K3_STRUCTURAL_PARSER",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 142
+  },
+  "approved_source_parsed": true,
+  "deterministic_document_hash": true,
+  "structure_order_preserved": true,
+  "locators_preserved": true,
+  "hold_rejected": true,
+  "forged_provenance_rejected": true,
+  "content_hash_mismatch_rejected": true,
+  "invalid_utf8_rejected": true,
+  "unsupported_media_rejected": true,
+  "source_binding_preserved": true,
+  "no_raw_source_git_evidence": true,
+  "source_id": "SRC-K3",
+  "source_hash": "f2f56935ef8067ca514d06823a924a207f906b4020f9a109ad33cabd316b1925",
+  "document_id": "DOC-8d2d410fbfcdf412",
+  "document_hash": "8d2d410fbfcdf4123f0a5a4bd82566a67547d1ba3f025ca3007b3736f7039e2e",
+  "unit_count": 4,
+  "parser_id": "FTH-TEXT-STRUCTURAL-PARSER",
+  "parser_version": "1.0.0",
+  "started_at_utc": "2026-11-13T20:12:10.3377675Z",
+  "completed_at_utc": "2026-11-13T20:12:19.5712977Z",
+  "source": "operator-provided local Windows qualification output"
 }
