@@ -1,0 +1,69 @@
+{
+  "qualification": "G7_M1_DUAL_PRODUCT_FACTORY",
+  "status": "PASS",
+  "started_at_utc": "2026-11-13T10:04:33.6470922Z",
+  "completed_at_utc": "2026-11-13T10:04:43.6654611Z",
+  "environment": {
+    "platform": "Windows PowerShell",
+    "repository_branch": "father-chassis-development"
+  },
+  "regression": {
+    "father_chassis": {
+      "passed": true,
+      "tests_passed": 72
+    },
+    "trust_competency": {
+      "passed": true,
+      "tests_passed": 4
+    }
+  },
+  "same_chassis": true,
+  "distinct_products": true,
+  "human_approval_contract_verified": true,
+  "trust_ledger_verified": true,
+  "products": {
+    "osint": {
+      "product_id": "FTH-PRODUCT-OSINT-KNOWLEDGE-001",
+      "version": "0.1.0",
+      "recipe_hash": "69feba62e240feba24e1d65a1612a04150f43db649d95fcf48a2ffa0c0da40a7",
+      "assembly_hash": "0aa0dc9ffed344dad9ab402ef259c71a268f08c8d3e43de2220f0c298b3f2230",
+      "trace_id": "84b63350-a69a-450e-a983-f063ba0f3380",
+      "qualification_id": "FQ-b1a08fd4161fcae9",
+      "qualification_hash": "b1a08fd4161fcae99d5506c6d76876af2aae44ed8fe3c73e8a111dafadfb66cd",
+      "evidence_hash": "74c01b14b8d404f6536a3dcd633d53136fce0492994640204ff458d6893ea7fe",
+      "qualified": true
+    },
+    "security_kii": {
+      "product_id": "FTH-PRODUCT-SECURITY-KII-001",
+      "version": "0.1.0",
+      "recipe_hash": "528e8cd2bc829468185234a5e09f9e72e56f02316e8999b5a1a159fa40053ade",
+      "assembly_hash": "f11b76d0f30c975a1f6813237b426506bfff5381e80e9a0970e17af61d14b5fb",
+      "trace_id": "b102bf78-3a70-4324-9ccc-8f3644a5cf68",
+      "qualification_id": "FQ-ac9f845e22149081",
+      "qualification_hash": "ac9f845e22149081740266b849f779eb1ee98a33e86344daa0d4d82ed04835d9",
+      "evidence_hash": "26fbf472591e6863869125de7c4200f858b5b0928ed54d41a01d8ddb98d6057f",
+      "qualified": true,
+      "approval_id": "f160b66b-806c-418e-acc6-16013ca14a1c"
+    }
+  },
+  "trust_ledger_records": [
+    {
+      "evidence_id": "EVD-G7-M1-OSINT",
+      "record_hash": "d403ea3804a6dd9d599366ce878b65e790de2cf880f7adecc1a06b5cd99a80a0",
+      "parent_evidence_hash": null
+    },
+    {
+      "evidence_id": "EVD-G7-M1-KII",
+      "record_hash": "28966a49a8bef18265d6b7b2109269a090b8ccf8932c227a3818fc8f614eaeb5",
+      "parent_evidence_hash": "d403ea3804a6dd9d599366ce878b65e790de2cf880f7adecc1a06b5cd99a80a0"
+    }
+  ],
+  "source": "operator-provided local qualification output",
+  "notes": [
+    "One FATHER chassis and one factory implementation produced two distinct products with distinct recipes and assembly hashes.",
+    "Security/KII execution verified fail-closed human approval before controlled continuation.",
+    "Trust evidence records formed and verified a hash-linked chain.",
+    "M1 does not yet qualify persistent product/approval stores, Dockerized per-product lifecycle, external signatures, SLSA/in-toto provenance, or dependency chaos for assembled products."
+  ],
+  "passed": true
+}
