@@ -1,0 +1,9 @@
+{
+  "block_id": "FTH-FACTORY-PRODUCT-REGISTRY-001",
+  "qualification": "G7_M2_PERSISTENT_FACTORY_LIFECYCLE",
+  "status": "PENDING",
+  "canonical_evidence": false,
+  "reason": "M2 rerun required after ProductRegistry defect fix",
+  "blocking_finding": "Previous M2 run failed before qualification; fixed code has not yet been requalified.",
+  "target_gate": "B9"
+}
