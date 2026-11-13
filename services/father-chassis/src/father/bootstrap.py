@@ -53,6 +53,21 @@ def build_runtime(*, denied_actions: set[str] | None = None, config: ChassisConf
     registry.register(BlockDescriptor("FTH-STATE-001", "0.4.0", "state", state_impl, frozenset({"get","set","snapshot"}), "father-chassis>=0.4,<1.0"))
     registry.register(BlockDescriptor("FTH-EVENT-BUS-001", "0.4.0", "event-bus", event_bus or EventBus(), frozenset({"publish"}), "father-chassis>=0.4,<1.0"))
 
+    # Backward-compatible registry aliases retained for older qualification
+    # consumers. Canonical IDs above remain the preferred identifiers.
+    registry.register(BlockDescriptor(
+        "FTH-RAG-SQLITE-001", "0.4.0", "rag", rag_impl,
+        frozenset({"retrieve","ingest"}), "father-chassis>=0.4,<1.0"
+    ))
+    registry.register(BlockDescriptor(
+        "FTH-MODEL-001", "0.4.0", "model-router", model_router,
+        frozenset({"generate","failover"}), "father-chassis>=0.4,<1.0"
+    ))
+    registry.register(BlockDescriptor(
+        "FTH-STATE-SQLITE-001", "0.4.0", "state", state_impl,
+        frozenset({"get","set","snapshot"}), "father-chassis>=0.4,<1.0"
+    ))
+
     tools = ToolRegistry()
     tools.register(ToolSpec(
         "default", tool_impl, frozenset({"create_report"}), frozenset({"agent","operator"}),

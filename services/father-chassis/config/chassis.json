@@ -1,6 +1,6 @@
 {
   "name": "FATHER_CHASSIS",
-  "version": "1.0.0rc1",
+  "version": "1.0.0",
   "workflow": "default",
   "emergency_stop": false,
   "retry": {
@@ -11,6 +11,7 @@
     "human_approval_for": []
   },
   "metadata": {
-    "profile": "factory-1.0-rc-qualification"
+    "profile": "windows-factory-1.0-rc-qualification",
+    "release_channel": "rc1"
   }
 }
