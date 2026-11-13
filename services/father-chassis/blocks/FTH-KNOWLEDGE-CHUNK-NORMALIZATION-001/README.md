@@ -18,4 +18,4 @@ Non-goals:
 - semantic LLM summarization;
 - retrieval qualification.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 K4 Chunk Normalization evidence.
