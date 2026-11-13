@@ -178,7 +178,7 @@ class DevelopmentPacketBuilder:
         if errors:
             raise ValueError("development packet rejected: " + "; ".join(errors))
 
-        payload = {
+        hash_payload = {
             "packet_id": packet_id,
             "business_process": asdict(business_process),
             "algorithm": asdict(algorithm),
@@ -186,5 +186,14 @@ class DevelopmentPacketBuilder:
             "test_contract": asdict(test_contract),
             "system_analysis_approved": system_analysis_approved,
         }
-        digest = sha256(_canonical(payload).encode("utf-8")).hexdigest()
-        return DevelopmentPacket(**payload, packet_hash=digest)
+        digest = sha256(_canonical(hash_payload).encode("utf-8")).hexdigest()
+
+        return DevelopmentPacket(
+            packet_id=packet_id,
+            business_process=business_process,
+            algorithm=algorithm,
+            architecture=architecture,
+            test_contract=test_contract,
+            system_analysis_approved=system_analysis_approved,
+            packet_hash=digest,
+        )

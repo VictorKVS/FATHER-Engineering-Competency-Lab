@@ -7,7 +7,7 @@ from father.engineering.delivery_contract import (
     BusinessProcessSpec,
     DevelopmentPacketBuilder,
     InterfaceContract,
-    TestContract,
+    TestContract as EngineeringTestContract,
     VariableContract,
 )
 
@@ -67,7 +67,7 @@ def _valid_packet():
         constants={"namespace": "product_registry"},
         approved=True,
     )
-    tests = TestContract(
+    tests = EngineeringTestContract(
         test_contract_id="TEST-PRODUCT-REGISTER",
         architecture_id=architecture.architecture_id,
         criteria=(
@@ -104,6 +104,15 @@ def test_approved_packet_is_hash_bound_and_buildable():
         system_analysis_approved=True,
     )
     assert packet.packet_hash
+    assert isinstance(packet.business_process, BusinessProcessSpec)
+    assert isinstance(packet.algorithm, AlgorithmSpec)
+    assert isinstance(packet.architecture, ArchitectureSpec)
+    assert isinstance(packet.test_contract, EngineeringTestContract)
+    assert isinstance(packet.architecture.interfaces[0], InterfaceContract)
+    assert isinstance(
+        packet.architecture.interfaces[0].request_schema[0],
+        VariableContract,
+    )
     assert packet.architecture.interfaces[0].request_schema[0].name == "recipe_hash"
 
 
