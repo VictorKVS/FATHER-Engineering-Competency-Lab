@@ -1,6 +1,112 @@
 import pytest
 
+from father.engineering.delivery_contract import (
+    AcceptanceCriterion,
+    AlgorithmSpec,
+    ArchitectureSpec,
+    BusinessProcessSpec,
+    DevelopmentPacketBuilder,
+    InterfaceContract,
+    TestContract as EngineeringTestContract,
+    VariableContract,
+)
 from father.engineering.factory_orchestrator import FactoryEngineeringWorkflow, StageArtifact
+from father.engineering.stage_artifacts import (
+    CustomerRequestPayload,
+    DeliveryQualification,
+    ImplementationChange,
+    QualificationDecision,
+    SystemAnalysisPackage,
+)
+
+
+def _payload(artifact_type):
+    if artifact_type == "customer_request":
+        return CustomerRequestPayload("REQ-TEST", "Test request", "Exercise workflow")
+    if artifact_type == "BusinessProcessSpec":
+        return BusinessProcessSpec(
+            process_id="BP-TEST",
+            goal="exercise workflow",
+            inputs=("request",),
+            outputs=("analysis",),
+            actors=("factory",),
+            approved=True,
+        )
+    if artifact_type == "SystemAnalysisPackage":
+        return SystemAnalysisPackage(
+            analysis_id="SYS-TEST",
+            functional_requirements=("FR-1",),
+            nonfunctional_requirements=("NFR-1",),
+            states=("READY",),
+            events=("START",),
+            data_entities=("Artifact",),
+            interfaces=("IF-1",),
+            failure_modes=("invalid",),
+            approved=True,
+        )
+    if artifact_type == "AlgorithmSpec":
+        return AlgorithmSpec(
+            algorithm_id="ALG-TEST",
+            process_id="BP-TEST",
+            preconditions=("ready",),
+            steps=("execute",),
+            postconditions=("done",),
+            approved=True,
+        )
+    if artifact_type == "ArchitectureSpec":
+        return ArchitectureSpec(
+            architecture_id="ARCH-TEST",
+            algorithm_id="ALG-TEST",
+            blocks=("A", "B"),
+            interfaces=(
+                InterfaceContract(
+                    "IF-TEST",
+                    "A",
+                    "B",
+                    (VariableContract("x", "str", "A", "input"),),
+                    (),
+                ),
+            ),
+            states=("READY",),
+            approved=True,
+        )
+    if artifact_type == "TestContract":
+        return EngineeringTestContract(
+            test_contract_id="TEST-TEST",
+            architecture_id="ARCH-TEST",
+            criteria=(
+                AcceptanceCriterion("AC-1", "works", "success", "==", 1, "unit"),
+            ),
+            approved=True,
+        )
+    if artifact_type == "DevelopmentPacket":
+        return DevelopmentPacketBuilder.build(
+            packet_id="DEV-TEST",
+            business_process=_payload("BusinessProcessSpec"),
+            algorithm=_payload("AlgorithmSpec"),
+            architecture=_payload("ArchitectureSpec"),
+            test_contract=_payload("TestContract"),
+            system_analysis_approved=True,
+        )
+    if artifact_type == "ImplementationChange":
+        return ImplementationChange("CHG-1", ("file.py",), ("DEV-TEST",), ("pytest",))
+    if artifact_type == "DeliveryQualification":
+        return DeliveryQualification(
+            "DELIV-1",
+            "build://1",
+            "deploy://1",
+            ("sec://1",),
+            ("obs://1",),
+            ("rollback://1",),
+        )
+    if artifact_type == "QualificationDecision":
+        return QualificationDecision(
+            "QUAL-1",
+            "PASS",
+            ("AC-1=PASS",),
+            ("evidence://1",),
+        )
+    raise AssertionError(f"unsupported test artifact_type {artifact_type}")
 
 
 def _artifact(artifact_id, artifact_type, producer, approved=True):
@@ -8,7 +114,7 @@ def _artifact(artifact_id, artifact_type, producer, approved=True):
         artifact_id=artifact_id,
         artifact_type=artifact_type,
         producer_agent_id=producer,
-        payload={"artifact_type": artifact_type},
+        payload=_payload(artifact_type),
         approved=approved,
         evidence_refs=(f"evidence://{artifact_id}",),
     )
@@ -150,7 +256,7 @@ def test_workflow_restore_rejects_tampered_artifact_hash(tmp_path):
     )
 
     snapshot = store.get(FactoryEngineeringWorkflow.NAMESPACE, "WF-TAMPER")
-    snapshot["artifacts"]["customer_request"]["payload"]["artifact_type"] = "tampered"
+    snapshot["artifacts"]["customer_request"]["payload_data"]["objective"] = "tampered"
     store.set(FactoryEngineeringWorkflow.NAMESPACE, "WF-TAMPER", snapshot)
 
     with pytest.raises(ValueError, match="stage artifact hash mismatch"):

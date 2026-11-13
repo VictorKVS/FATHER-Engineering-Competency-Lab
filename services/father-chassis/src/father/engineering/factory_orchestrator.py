@@ -6,6 +6,11 @@ import json
 from typing import Any
 
 from father.engineering.factory_agents import FactoryAgentCatalog, build_factory_agent_catalog
+from father.engineering.stage_artifacts import (
+    StagePayload,
+    deserialize_stage_payload,
+    serialize_stage_payload,
+)
 
 
 def _canonical(value: dict[str, Any]) -> str:
@@ -17,8 +22,9 @@ class StageArtifact:
     artifact_id: str
     artifact_type: str
     producer_agent_id: str
-    payload: dict[str, Any]
+    payload: StagePayload
     approved: bool
+    payload_schema_version: int = 1
     evidence_refs: tuple[str, ...] = ()
     artifact_hash: str = ""
 
@@ -29,12 +35,18 @@ class StageArtifact:
             raise ValueError("artifact_type is required")
         if not self.producer_agent_id.strip():
             raise ValueError("producer_agent_id is required")
+        payload_data = serialize_stage_payload(
+            self.artifact_type,
+            self.payload_schema_version,
+            self.payload,
+        )
         if not self.artifact_hash:
             payload = {
                 "artifact_id": self.artifact_id,
                 "artifact_type": self.artifact_type,
+                "payload_schema_version": self.payload_schema_version,
                 "producer_agent_id": self.producer_agent_id,
-                "payload": self.payload,
+                "payload_data": payload_data,
                 "approved": self.approved,
                 "evidence_refs": self.evidence_refs,
             }
@@ -147,7 +159,12 @@ class FactoryEngineeringWorkflow:
             "artifact_id": artifact.artifact_id,
             "artifact_type": artifact.artifact_type,
             "producer_agent_id": artifact.producer_agent_id,
-            "payload": artifact.payload,
+            "payload_schema_version": artifact.payload_schema_version,
+            "payload_data": serialize_stage_payload(
+                artifact.artifact_type,
+                artifact.payload_schema_version,
+                artifact.payload,
+            ),
             "approved": artifact.approved,
             "evidence_refs": list(artifact.evidence_refs),
             "artifact_hash": artifact.artifact_hash,
@@ -156,12 +173,22 @@ class FactoryEngineeringWorkflow:
     @staticmethod
     def _artifact_from_dict(raw: dict[str, Any]) -> StageArtifact:
         stored_hash = str(raw["artifact_hash"])
+        artifact_type = str(raw["artifact_type"])
+        schema_version = int(raw["payload_schema_version"])
+        payload_data = raw["payload_data"]
+        if not isinstance(payload_data, dict):
+            raise ValueError("malformed stage artifact payload_data")
         candidate = StageArtifact(
             artifact_id=str(raw["artifact_id"]),
-            artifact_type=str(raw["artifact_type"]),
+            artifact_type=artifact_type,
             producer_agent_id=str(raw["producer_agent_id"]),
-            payload=dict(raw["payload"]),
+            payload=deserialize_stage_payload(
+                artifact_type,
+                schema_version,
+                dict(payload_data),
+            ),
             approved=bool(raw["approved"]),
+            payload_schema_version=schema_version,
             evidence_refs=tuple(str(x) for x in raw.get("evidence_refs", ())),
         )
         if candidate.artifact_hash != stored_hash:
