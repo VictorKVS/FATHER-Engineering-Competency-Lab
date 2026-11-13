@@ -37,8 +37,8 @@ foreach($name in $selected){
       status="READY_LOCAL"
       attempts=0
       image_id=$inspect[0].Id
-      pulled=false
-      passed=true
+      pulled=$false
+      passed=$true
     }
     continue
   }
@@ -69,8 +69,8 @@ foreach($name in $selected){
       attempts=$attempt
       acquisition_seconds=[math]::Round(((Get-Date)-$started).TotalSeconds,3)
       image_id=$inspect[0].Id
-      pulled=true
-      passed=true
+      pulled=$true
+      passed=$true
     }
   } else {
     $networkBlocked = (
@@ -86,8 +86,8 @@ foreach($name in $selected){
       attempts=$attempt
       acquisition_seconds=[math]::Round(((Get-Date)-$started).TotalSeconds,3)
       reason=$lastError
-      pulled=false
-      passed=false
+      pulled=$false
+      passed=$false
     }
   }
 }
