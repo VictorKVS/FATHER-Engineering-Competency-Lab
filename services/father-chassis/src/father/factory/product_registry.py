@@ -35,7 +35,7 @@ class ProductRegistry:
 
     def _load(self, product_id: str, version: str) -> ProductRegistration | None:
         key = (product_id, version)
-        current = self._load(recipe.product_id, recipe.version)
+        current = self._products.get(key)
         if current is not None:
             return current
         if self.store is None:
@@ -81,7 +81,7 @@ class ProductRegistry:
             domain_pack_id=recipe.domain_pack_id,
             block_ids=recipe.block_ids,
         )
-        current = self._products.get(key)
+        current = self._load(recipe.product_id, recipe.version)
         if current is not None and current.recipe_hash != candidate.recipe_hash:
             raise ValueError(
                 f"product version conflict for {recipe.product_id}@{recipe.version}: "
