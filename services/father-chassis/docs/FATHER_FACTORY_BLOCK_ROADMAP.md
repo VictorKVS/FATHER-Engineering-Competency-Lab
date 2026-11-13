@@ -107,3 +107,5 @@ Both reference blocks are now B9 QUALIFIED by the G7 M2 persistent lifecycle gat
 | Knowledge Legal/Access + Provenance | B9 QUALIFIED by K2 | policy signing/jurisdiction packs/revocation (future) | Security/Legal / Knowledge Architect | KB-QUALIFICATION-EVIDENCE | disallowed source blocked + provenance binding |
 
 | Knowledge Structural Parser | B9 QUALIFIED by K3 | PDF/DOCX/HTML adapters + parser isolation (future) | Knowledge/System Architect | KB-SYSTEM-ANALYSIS | deterministic source structure + traceability |
+
+| Knowledge Chunk Normalization | B6 pre-code document pack | implementation + G7 K4 evidence | Knowledge/System Architect | KB-SYSTEM-ANALYSIS | deterministic chunks + lineage |
