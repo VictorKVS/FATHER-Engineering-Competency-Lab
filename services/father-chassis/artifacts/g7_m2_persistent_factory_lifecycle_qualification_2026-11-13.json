@@ -1,0 +1,24 @@
+{
+  "qualification": "G7_M2_PERSISTENT_FACTORY_LIFECYCLE",
+  "status": "PASS",
+  "regression": {
+    "passed": true,
+    "tests_passed": 85
+  },
+  "product_registry_restart": true,
+  "approval_restart": true,
+  "post_restart_execution": true,
+  "product_id": "FTH-PRODUCT-SECURITY-KII-001",
+  "version": "0.1.0",
+  "recipe_hash": "528e8cd2bc829468185234a5e09f9e72e56f02316e8999b5a1a159fa40053ade",
+  "assembly_hash": "f11b76d0f30c975a1f6813237b426506bfff5381e80e9a0970e17af61d14b5fb",
+  "approval_id": "01de3cbd-997c-4e38-a279-ab72aa601f9b",
+  "final_approval_status": "approved",
+  "trace_id": "c94ee2ab-f033-4d44-bdd3-8a04e502bafd",
+  "qualification_id": "FQ-442b6e780a805a25",
+  "qualification_hash": "442b6e780a805a254c5a70c5a67a1bfae529981c3022da1dd5b118c2471d052d",
+  "evidence_hash": "48b7c95b10f6b1e24ca6240040cd46fba0e77b63101c2822ccf9d3522cdb6d93",
+  "started_at_utc": "2026-11-13T12:33:19.7118967Z",
+  "completed_at_utc": "2026-11-13T12:33:27.8431505Z",
+  "source": "operator-provided local Windows qualification output"
+}

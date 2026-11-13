@@ -9,4 +9,4 @@ Non-goals: user identity proofing, MFA, organizational approval hierarchy, expir
 
 Dependencies: FactoryExecutor/ChassisRuntime upstream; StateStore persistence; audit/qualification downstream.
 
-Current maturity: B6 DEVELOPMENT READY / implementation exists; B9 pending successful M2 qualification.
+Current maturity: B9 QUALIFIED by G7 M2 persistent lifecycle evidence.

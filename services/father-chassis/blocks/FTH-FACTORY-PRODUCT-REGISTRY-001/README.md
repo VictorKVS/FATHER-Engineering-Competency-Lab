@@ -9,4 +9,4 @@ Non-goals: distributed consensus, package storage, signing, release promotion.
 
 Dependencies: ProductRecipe/ProductComposer upstream; ProductRuntime/Qualification downstream; StateStore persistence.
 
-Current maturity: B6 DEVELOPMENT READY / implementation exists; B9 pending successful M2 qualification.
+Current maturity: B9 QUALIFIED by G7 M2 persistent lifecycle evidence.
