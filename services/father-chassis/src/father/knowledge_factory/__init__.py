@@ -36,6 +36,13 @@ __all__ = [
     "ExtractionPolicy",
     "ExtractionSet",
     "RelationRecord",
+    "DeterministicEntityGraphBuilder",
+    "GraphBuildDecision",
+    "GraphEdge",
+    "GraphNode",
+    "GraphResolutionPolicy",
+    "KnowledgeGraphSnapshot",
+    "ResolutionConflict",
 ]
 
 from .legal_provenance import (
@@ -70,4 +77,14 @@ from .entity_relation import (
     ExtractionPolicy,
     ExtractionSet,
     RelationRecord,
+)
+
+from .entity_graph import (
+    DeterministicEntityGraphBuilder,
+    GraphBuildDecision,
+    GraphEdge,
+    GraphNode,
+    GraphResolutionPolicy,
+    KnowledgeGraphSnapshot,
+    ResolutionConflict,
 )
