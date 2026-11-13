@@ -112,4 +112,4 @@ Both reference blocks are now B9 QUALIFIED by the G7 M2 persistent lifecycle gat
 
 | Knowledge Entity Relation Extraction | B9 QUALIFIED by K5 | production NER/LLM extractors + calibration (future) | Knowledge/Algorithm Architect | KB-ALGORITHMS, KB-SYSTEM-ANALYSIS | typed entities/relations + evidence lineage |
 
-| Knowledge Entity Resolution Graph | B6 pre-code document pack | implementation + G7 K6 evidence | Knowledge/Graph Architect | KB-ALGORITHMS, KB-ARCHITECTURE | resolved graph + evidence lineage |
+| Knowledge Entity Resolution Graph | B6 document pack + implementation; K6 pending | G7 K6 evidence | Knowledge/Graph Architect | KB-ALGORITHMS, KB-ARCHITECTURE | resolved graph + evidence lineage |
