@@ -302,6 +302,15 @@ def create_app(runtime=None) -> FastAPI:
                 permission=body.permission,
                 approval_id=body.approval_id,
             )
+        except ApprovalRequired as exc:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "error": "approval_required",
+                    "approval_id": exc.approval_id,
+                    "action": exc.action,
+                },
+            ) from exc
         except PermissionError as exc:
             raise HTTPException(status_code=403, detail=str(exc)) from exc
         except ValueError as exc:
