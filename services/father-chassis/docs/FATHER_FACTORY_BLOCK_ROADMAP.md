@@ -4,7 +4,7 @@ This is the operational backlog for the remaining factory work.
 
 | Block | Current state | Next required artifact | Main owner | Required KB | Qualification focus |
 |---|---|---|---|---|---|
-| Engineering Workflow Orchestrator | foundation implemented | persistence architecture + test contract | Architect / System Analyst | KB-ARCHITECTURE, KB-SYSTEM-ANALYSIS | restart, stage order, no skip |
+| Engineering Workflow Orchestrator | B6 document pack + persistence implementation; M3 pending | G7 M3 evidence | Architect / System Analyst | KB-ARCHITECTURE, KB-SYSTEM-ANALYSIS | restart, stage order, no skip, tamper detect |
 | Stage Artifact Registry | foundation | typed schemas + provenance contract | System Analyst | KB-SYSTEM-ANALYSIS | schema integrity, hash integrity |
 | Competency Admission | not integrated | business/system/algorithm package | Trust Architect | KB-QUALIFICATION-EVIDENCE | wrong competency blocked |
 | Qualified KB Admission | not integrated | KB release contract | Knowledge Architect | KB-QUALIFICATION-EVIDENCE | unqualified KB blocked |
