@@ -16,11 +16,11 @@
 |---|---|
 | Business Analysis | ✅ PASS |
 | System Analysis | ✅ PASS |
-| Architecture | 🟡 IN PROGRESS |
-| Test Architecture | ⏳ Planned |
-| Development Packet | ⏳ Planned |
-| Senior Developer | ⏳ Blocked until gates |
-| Qualification | ⏳ Planned |
+| Architecture | ✅ PASS for FTH-BRAIN-SUPPLY-001 |
+| Test Architecture | ✅ PASS for FTH-BRAIN-SUPPLY-001 |
+| Development Packet | ✅ ISSUED |
+| Senior Developer | ✅ IMPLEMENTED — qualification candidate |
+| Qualification | 🟡 READY FOR LOCAL WINDOWS RUN |
 | Release | ⏳ Planned |
 
 > Правило FATHER: **никакой реализации до прохождения аналитических, архитектурных и тестовых gate.**
@@ -74,6 +74,26 @@ Brain Package должен быть:
 | **B4 Enterprise** | общая корпоративная knowledge fabric | multi-agent platform |
 | **B5 High Assurance** | защищённые/критичные контуры | SOC, КИИ |
 | **B6 Massive** | распределённая knowledge platform | Digital Twin, large OSINT |
+
+---
+
+## Agent Class × Brain Class
+
+<p align="center">
+  <img src="./assets/agent_brain_matrix.svg" alt="Agent Class by Brain Class matrix" width="92%">
+</p>
+
+**A-класс агента и B-класс мозга — независимые оси.**
+
+Например:
+
+```text
+A3 Analyst + B3 Analytical        типичный вариант
+A2 Standard + B5 High Assurance  допустимо при строгих требованиях доверия
+A5 Security + B2 RAG             допустимо для небольшого защищённого RAG
+```
+
+Brain Supply Resolver проверяет обе оси отдельно и не делает скрытого правила A3 → B3.
 
 ---
 
@@ -303,7 +323,7 @@ flowchart LR
     --> REL[Release]
 ```
 
-Текущий этап: **Architecture**.
+Текущий этап первого реализуемого блока: **готов к локальному qualification-run на Windows**.
 
 ---
 
@@ -311,6 +331,12 @@ flowchart LR
 
 - [01 — Business Analysis](./01_BUSINESS_ANALYSIS.md)
 - [02 — System Analysis](./02_SYSTEM_ANALYSIS.md)
+- [03 — Architecture](./03_ARCHITECTURE.md)
+- [04 — Test Architecture](./04_TEST_ARCHITECTURE.md)
+- [05 — Development Packet](./05_DEVELOPMENT_PACKET.md)
+- [06 — Local Qualification Runbook](./06_LOCAL_QUALIFICATION_RUNBOOK.md)
+- [07 — Architect & Operator Decision Guide](./07_ARCHITECT_DECISION_GUIDE.md)
+- [08 — Bench Test Program](./08_BENCH_TEST_PROGRAM.md)
 
 Следующие ожидаемые артефакты:
 
