@@ -1,0 +1,61 @@
+name: father-brain-storage-bench
+
+services:
+  postgres:
+    profiles: ["postgres"]
+    image: postgres:18-alpine
+    container_name: father-bench-postgres
+    environment:
+      POSTGRES_PASSWORD: father_bench
+      POSTGRES_USER: father
+      POSTGRES_DB: father_bench
+    ports: ["55432:5432"]
+    tmpfs: ["/var/lib/postgresql:rw,size=1g"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U father -d father_bench"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  pgvector:
+    profiles: ["pgvector"]
+    image: pgvector/pgvector:0.8.7-pg18-trixie
+    container_name: father-bench-pgvector
+    environment:
+      POSTGRES_PASSWORD: father_bench
+      POSTGRES_USER: father
+      POSTGRES_DB: father_bench
+    ports: ["55433:5432"]
+    tmpfs: ["/var/lib/postgresql:rw,size=1g"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U father -d father_bench"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  qdrant:
+    profiles: ["qdrant"]
+    image: qdrant/qdrant:latest
+    container_name: father-bench-qdrant
+    ports: ["56333:6333"]
+    tmpfs: ["/qdrant/storage:rw,size=1g"]
+
+  neo4j:
+    profiles: ["neo4j"]
+    image: neo4j:2026.10.2
+    container_name: father-bench-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/father_bench_2026
+    ports: ["57474:7474", "57687:7687"]
+    tmpfs: ["/data:rw,size=1g"]
+
+  opensearch:
+    profiles: ["opensearch"]
+    image: opensearchproject/opensearch:3.9.0
+    container_name: father-bench-opensearch
+    environment:
+      discovery.type: single-node
+      DISABLE_SECURITY_PLUGIN: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms1g -Xmx1g"
+    ports: ["59200:9200"]
+    tmpfs: ["/usr/share/opensearch/data:rw,size=2g"]
