@@ -30,6 +30,12 @@ __all__ = [
     "DeterministicStructuralChunker",
     "NormalizedChunk",
     "NormalizedChunkSet",
+    "DeterministicRuleExtractor",
+    "EntityRecord",
+    "ExtractionDecision",
+    "ExtractionPolicy",
+    "ExtractionSet",
+    "RelationRecord",
 ]
 
 from .legal_provenance import (
@@ -55,4 +61,13 @@ from .chunk_normalization import (
     DeterministicStructuralChunker,
     NormalizedChunk,
     NormalizedChunkSet,
+)
+
+from .entity_relation import (
+    DeterministicRuleExtractor,
+    EntityRecord,
+    ExtractionDecision,
+    ExtractionPolicy,
+    ExtractionSet,
+    RelationRecord,
 )
