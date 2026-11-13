@@ -4,7 +4,20 @@ Selects the **minimal sufficient abstract Storage Profile** for a Brain workload
 
 ## Status
 
-**Document pack + implementation candidate; local qualification pending.**
+**QUALIFIED by local Windows run.**
+
+Qualification:
+- Ruff: PASS
+- chassis regression: **208 passed**
+- edge profile selection: PASS
+- hard resource/security constraints: PASS
+- minimal-sufficient selection: PASS
+- rejected-alternative explanations: PASS
+- ambiguity handling: PASS
+- deterministic identity: PASS
+
+Canonical evidence:
+`artifacts/canonical/QUALIFICATION_EVIDENCE.json`
 
 ## Important rule
 
@@ -17,7 +30,6 @@ Concrete vendors are bound later through qualified adapters and benchmark eviden
 ## Output
 
 The decision contains:
-
 - selected profile;
 - reasons for selection;
 - rejected alternatives with explicit reasons;
