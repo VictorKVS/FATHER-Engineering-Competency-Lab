@@ -81,11 +81,19 @@ def test_approved_text_parses_with_order_and_locators():
     assert result.document.units[1].locator == "line:3-4"
 
 
-def test_same_input_produces_same_document_hash():
+def test_same_semantic_input_produces_same_document_hash_across_provenance_ids():
     parser = DeterministicTextStructuralParser()
-    first = parser.parse(_approved_request())
-    second = parser.parse(_approved_request())
+    first_request = _approved_request()
+    second_request = _approved_request()
+
+    assert first_request.provenance.provenance_id != second_request.provenance.provenance_id
+
+    first = parser.parse(first_request)
+    second = parser.parse(second_request)
+
     assert first.document.document_hash == second.document.document_hash
+    assert first.document.document_id == second.document.document_id
+    assert first.document.provenance_id != second.document.provenance_id
 
 
 def test_nonapproved_decision_is_rejected():

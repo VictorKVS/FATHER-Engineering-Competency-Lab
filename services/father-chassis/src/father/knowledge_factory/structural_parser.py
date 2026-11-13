@@ -207,7 +207,6 @@ class DeterministicTextStructuralParser:
         hash_payload = {
             "source_id": request.intake.source_id,
             "source_content_hash": request.intake.content_hash,
-            "provenance_id": request.provenance.provenance_id,
             "parser_id": self.parser_id,
             "parser_version": self.parser_version,
             "units": [asdict(unit) for unit in units],
