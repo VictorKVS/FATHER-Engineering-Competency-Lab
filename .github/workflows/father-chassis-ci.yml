@@ -1,0 +1,49 @@
+name: father-chassis-ci
+
+on:
+  push:
+    branches:
+      - father-chassis-development
+    paths:
+      - "services/father-chassis/**"
+      - ".github/workflows/father-chassis-ci.yml"
+  pull_request:
+    paths:
+      - "services/father-chassis/**"
+      - ".github/workflows/father-chassis-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  quality-security:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/father-chassis
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install project and quality tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+          python -m pip install bandit
+
+      - name: Dependency consistency
+        run: python -m pip check
+
+      - name: Compile all Python sources
+        run: python -m compileall -q src tests
+
+      - name: Unit and integration tests
+        run: pytest -q
+
+      - name: High-severity static security gate
+        run: bandit -q -r src -lll
