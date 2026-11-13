@@ -10,6 +10,12 @@ The factory must not create a product by ad-hoc coding alone. It must transform 
 
 ```text
 CUSTOMER REQUIREMENT
+    -> BUSINESS PROCESS
+    -> APPROVED ALGORITHM
+    -> ARCHITECTURE CONTRACT
+    -> SYSTEM ANALYSIS
+    -> TEST CONTRACT
+    -> DEVELOPMENT PACKET
     -> REQUIREMENT PLAN
     -> REQUIRED CAPABILITIES
     -> BLOCK CATALOG
@@ -73,3 +79,10 @@ The common chassis is a runtime dependency through contracts. Domain logic belon
 - G7.8 automatic product assembly: NOT YET QUALIFIED
 - G7.9 product runtime qualification: NOT YET RUN
 - G7.10 factory qualification: NOT YET RUN
+
+
+## Engineering entry gate
+
+Implementation work is downstream of the FATHER Engineering Delivery Standard.
+
+A factory feature is not DEVELOPMENT READY until an approved DevelopmentPacket exists. The packet binds business intent, algorithm, architecture, variables/interfaces, system-analysis approval and tester-owned acceptance criteria into one hash-addressed contract.
