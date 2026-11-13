@@ -29,7 +29,7 @@ This is the operational backlog for the remaining factory work.
 | Agent Factory | foundation | execution/competency binding | Architect | KB-ARCHITECTURE | correct role/tools/KB |
 | Product Recipe | implemented | full document pack | Architect/System Analyst | KB-ARCHITECTURE | deterministic identity |
 | Product Composer | implemented | full document pack | Architect | KB-ARCHITECTURE | composition correctness |
-| Product Registry | M2 in progress | concurrency/migration contract | System Analyst | KB-SYSTEM-ANALYSIS | restart/conflict/concurrency |
+| Product Registry | B6 document pack complete; M2 qualification pending | M2 evidence, then concurrency/migration extension | System Analyst | KB-SYSTEM-ANALYSIS | restart/conflict/concurrency |
 | Product Builder | planned | build algorithm + manifest schema | Architect/DevOps | KB-DEVSECOPS | reproducible product build |
 | Config Generator | planned | schema + merge rules | System Analyst | KB-SYSTEM-ANALYSIS | deterministic config |
 | Deployment Manifest Generator | planned | target abstraction | DevSecOps | KB-DEVSECOPS | valid/reproducible deploy |
@@ -39,6 +39,7 @@ This is the operational backlog for the remaining factory work.
 | Provenance Chain | planned | provenance schema | Trust Architect | KB-QUALIFICATION-EVIDENCE | artifact lineage |
 | Competency Engine | foundation | admission policy | Trust Architect | KB-QUALIFICATION-EVIDENCE | C-level enforcement |
 | UAG Policy Engine | planned/partial concept | action authority model | Security Architect | KB-ARCHITECTURE | reasoning != authority |
+| Human Approval Gate | B6 document pack complete; M2 qualification pending | M2 evidence, then approver identity/TTL/revocation design | Security Architect | KB-ARCHITECTURE | fail-closed authority + restart persistence |
 | Tool Permission Boundary | foundation | formal permission matrix | Security Architect | KB-ARCHITECTURE | least privilege |
 | POLYGON Scenario Catalog | planned | scenario schema | Test Architect | KB-TEST-ENGINEERING | coverage |
 | Functional Evaluator | planned | evaluator contract | Test Architect | KB-TEST-ENGINEERING | task correctness |
@@ -90,3 +91,13 @@ existing code
 ```
 
 If documentation and implementation disagree, implementation is not treated as truth automatically. The discrepancy is escalated to architecture/system analysis.
+
+
+## Reference block packages
+
+The first complete document-pack baselines are:
+
+- `blocks/FTH-FACTORY-PRODUCT-REGISTRY-001/`
+- `blocks/FTH-CORE-APPROVAL-001/`
+
+Both are currently B6 DEVELOPMENT READY with implementation present. Neither may be promoted to B9 QUALIFIED until the G7 M2 persistent lifecycle gate passes and canonical evidence is promoted.
