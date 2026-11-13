@@ -15,10 +15,33 @@ $out = Join-Path $artifactDir ("P0_smoke_" + $Candidate + "_" + $date + ".json")
 
 $container = "father-bench-$Candidate"
 $start = Get-Date
+$dockerReady=$false
+$started=$false
 
 try {
+  try {
+    $serverVersion = docker version --format '{{.Server.Version}}' 2>$null
+    if($LASTEXITCODE -eq 0 -and $serverVersion){ $dockerReady=$true }
+  } catch {}
+
+  if(-not $dockerReady){
+    $blocked=[ordered]@{
+      qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
+      candidate=$Candidate
+      status="ENVIRONMENT_BLOCKED"
+      reason="Docker Engine is not available"
+      started_at_utc=$start.ToUniversalTime().ToString("o")
+      passed=$false
+    }
+    $blocked | ConvertTo-Json -Depth 8 | Set-Content -Path $out -Encoding UTF8
+    $blocked | ConvertTo-Json -Depth 8
+    Write-Host "Evidence: $out"
+    exit 2
+  }
+
   docker compose -f $compose --profile $Candidate up -d $Candidate
   if($LASTEXITCODE -ne 0){ throw "docker compose up failed" }
+  $started=$true
 
   $deadline=(Get-Date).AddSeconds(90)
   $ready=$false
@@ -84,6 +107,7 @@ try {
   $result=[ordered]@{
     qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
     candidate=$Candidate
+    status=if($ready -and $functional){"PASS"}else{"FAIL"}
     image=$inspect[0].Config.Image
     image_id=$inspect[0].Image
     started_at_utc=$start.ToUniversalTime().ToString("o")
@@ -102,6 +126,25 @@ try {
   Write-Host "Evidence: $out"
   if(-not $result.passed){ exit 1 }
 }
+catch {
+  $failed=[ordered]@{
+    qualification="BRAIN_STORAGE_BENCH_P0_SMOKE"
+    candidate=$Candidate
+    status="FAIL"
+    reason=$_.Exception.Message
+    started_at_utc=$start.ToUniversalTime().ToString("o")
+    completed_at_utc=(Get-Date).ToUniversalTime().ToString("o")
+    passed=$false
+  }
+  $failed | ConvertTo-Json -Depth 8 | Set-Content -Path $out -Encoding UTF8
+  $failed | ConvertTo-Json -Depth 8
+  Write-Host "Evidence: $out"
+  exit 1
+}
 finally {
-  docker compose -f $compose --profile $Candidate down -v --remove-orphans *> $null
+  if($started -and $dockerReady){
+    try {
+      docker compose -f $compose --profile $Candidate down -v --remove-orphans *> $null
+    } catch {}
+  }
 }
