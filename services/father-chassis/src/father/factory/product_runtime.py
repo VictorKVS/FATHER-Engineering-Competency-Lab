@@ -47,7 +47,7 @@ class AssembledProductRuntime:
             build_reference_capabilities(),
             build_reference_providers(runtime),
         )
-        self.registry = ProductRegistry()
+        self.registry = ProductRegistry(store=runtime.state)
         self.composer = ProductComposer(
             planner=self.planner,
             recipe_builder=ProductRecipeBuilder(

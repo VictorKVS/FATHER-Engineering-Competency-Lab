@@ -88,7 +88,7 @@ def build_runtime(*, denied_actions: set[str] | None = None, config: ChassisConf
         registry=registry,
         emergency_stop=stop,
         tools=tools,
-        approval_gate=HumanApprovalGate(required),
+        approval_gate=HumanApprovalGate(required, store=state_impl),
         tracer=Tracer(),
         access_control=AccessControl(),
     )
