@@ -1,0 +1,32 @@
+{
+  "qualification": "G7_FACTORY_PREFLIGHT",
+  "status": "PASS",
+  "started_at_utc": "2026-11-13T09:32:15.1453982Z",
+  "completed_at_utc": "2026-11-13T09:32:23.9100902Z",
+  "environment": {
+    "platform": "Windows PowerShell",
+    "repository_branch": "father-chassis-development"
+  },
+  "checks": {
+    "chassis_compile": true,
+    "chassis_tests": {
+      "passed": true,
+      "count": 65
+    },
+    "product_recipe_smoke": {
+      "passed": true,
+      "recipe_hash": "5a7bca12801fac8a0298fbf063f2c1e63584f42930e4dde19fba3e881ee2e33b"
+    },
+    "trust_compile": true,
+    "trust_tests": {
+      "passed": true,
+      "count": 4
+    }
+  },
+  "passed": true,
+  "source": "operator-provided local qualification output",
+  "notes": [
+    "This artifact records the exact successful G7 preflight result supplied from the target Windows environment.",
+    "It does not yet qualify Docker, external model provider, Redis/PostgreSQL chaos, or a fully auto-assembled product runtime."
+  ]
+}
