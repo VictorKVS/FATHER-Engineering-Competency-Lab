@@ -79,7 +79,7 @@ class FactoryEngineeringWorkflow:
     """Fail-closed role orchestration for engineering delivery."""
 
     NAMESPACE = "factory_engineering_workflow"
-    SNAPSHOT_SCHEMA_VERSION = 1
+    SNAPSHOT_SCHEMA_VERSION = 2
 
     def __init__(
         self,

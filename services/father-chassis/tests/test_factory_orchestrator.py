@@ -284,3 +284,25 @@ def test_blocked_history_survives_restart(tmp_path):
     second = FactoryEngineeringWorkflow(store=store, workflow_id="WF-BLOCKED")
     assert second.status()["history"][-1]["status"] == "BLOCKED"
     assert second.available_stage().stage_id == "BUSINESS_ANALYSIS"
+
+
+def test_legacy_workflow_snapshot_schema_is_rejected(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    store.set(
+        FactoryEngineeringWorkflow.NAMESPACE,
+        "WF-LEGACY",
+        {
+            "schema_version": 1,
+            "workflow_id": "WF-LEGACY",
+            "artifacts": {},
+            "history": [],
+        },
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="unsupported factory engineering workflow snapshot schema",
+    ):
+        FactoryEngineeringWorkflow(store=store, workflow_id="WF-LEGACY")
