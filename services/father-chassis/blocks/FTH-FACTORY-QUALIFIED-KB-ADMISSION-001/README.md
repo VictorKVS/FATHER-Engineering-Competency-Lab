@@ -17,4 +17,4 @@ Non-goals:
 - full Knowledge Factory pipeline;
 - copyright/source-rights automation.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 M6 Qualified KB Admission evidence.

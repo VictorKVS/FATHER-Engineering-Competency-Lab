@@ -1,0 +1,26 @@
+{
+  "block_id": "FTH-FACTORY-QUALIFIED-KB-ADMISSION-001",
+  "qualification": "G7_M6_QUALIFIED_KB_ADMISSION",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 115
+  },
+  "qualified_kb_admitted": true,
+  "missing_kb_blocked": true,
+  "unqualified_kb_blocked": true,
+  "missing_provenance_blocked": true,
+  "missing_retrieval_blocked": true,
+  "kb_trace_preserved": true,
+  "restart_trace_preserved": true,
+  "strict_mode_fail_closed": true,
+  "snapshot_schema_version": 4,
+  "release_id": "REL-KB-BUSINESS-001",
+  "release_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "started_at_utc": "2026-11-13T19:36:06.0932126Z",
+  "completed_at_utc": "2026-11-13T19:36:15.4019098Z",
+  "source": "operator-provided local Windows qualification output"
+}

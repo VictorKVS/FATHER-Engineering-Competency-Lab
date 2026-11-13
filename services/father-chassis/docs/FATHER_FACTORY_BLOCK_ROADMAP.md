@@ -9,7 +9,7 @@ This is the operational backlog for the remaining factory work.
 | Typed Stage Artifacts | B9 QUALIFIED by M4 | migration adapters + signed schema releases (future) | System Analyst / Architect | KB-SYSTEM-ANALYSIS, KB-ARCHITECTURE | type safety, schema versioning, persistence roundtrip |
 | Trust Integration | B9 QUALIFIED by M5A | immutable package/signing/internal index (future) | DevSecOps / Trust Architect | KB-DEVSECOPS, KB-QUALIFICATION-EVIDENCE | reproducible package boundary |
 | Competency Admission | B9 QUALIFIED by M5 | persistent Trust source + policy calibration (future) | Trust Architect | KB-QUALIFICATION-EVIDENCE | wrong competency blocked |
-| Qualified KB Admission | B6 document pack + implementation; M6 pending | G7 M6 evidence | Knowledge Architect | KB-QUALIFICATION-EVIDENCE | unqualified KB blocked |
+| Qualified KB Admission | B9 QUALIFIED by M6 | persistent release registry + freshness/revocation (future) | Knowledge Architect | KB-QUALIFICATION-EVIDENCE | unqualified KB blocked |
 | Knowledge Source Intake | planned | business process + source contract | Business/System Analyst | KB-SYSTEM-ANALYSIS | source accepted/rejected correctly |
 | Rights/Access/Legal Check | planned | decision algorithm + evidence contract | Security/Legal adapter | KB-QUALIFICATION-EVIDENCE | illegal/unknown source blocked |
 | Fingerprint/Dedup | planned | algorithm benchmark | Algorithm Engineer | KB-ALGORITHMS | deterministic dedup |
