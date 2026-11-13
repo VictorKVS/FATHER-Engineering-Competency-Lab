@@ -1,0 +1,30 @@
+{
+  "block_id": "FTH-KNOWLEDGE-LEGAL-PROVENANCE-001",
+  "qualification": "G7_K2_LEGAL_ACCESS_PROVENANCE",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 133
+  },
+  "allowed_approved": true,
+  "denied_rejected": true,
+  "unknown_held": true,
+  "missing_evidence_held": true,
+  "no_hash_held": true,
+  "provenance_binding_valid": true,
+  "hash_substitution_detected": true,
+  "policy_version_preserved": true,
+  "no_raw_source_git_evidence": true,
+  "source_id": "SRC-K2",
+  "source_hash": "41cf6794ba4200b839c53531555f0f3998df4cbb01a4d5cb0b94e3ca5e23947d",
+  "decision_id": "DEC-a1887fda-b476-4048-96e6-8a9e27fcc276",
+  "provenance_id": "PRV-24ff7c3f-e8f0-46d7-b8e9-a907c83196c6",
+  "policy_id": "POL-K2-1",
+  "policy_version": "1.0.0",
+  "started_at_utc": "2026-11-13T20:04:28.0708370Z",
+  "completed_at_utc": "2026-11-13T20:04:36.8131338Z",
+  "source": "operator-provided local Windows qualification output"
+}

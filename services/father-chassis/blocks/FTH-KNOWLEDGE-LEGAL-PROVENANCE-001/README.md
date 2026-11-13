@@ -17,4 +17,4 @@ Non-goals:
 - malware scanning;
 - KB qualification.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 K2 Legal/Access + Provenance evidence.

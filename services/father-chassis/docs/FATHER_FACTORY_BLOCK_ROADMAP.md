@@ -104,4 +104,4 @@ The first complete document-pack baselines are:
 
 Both reference blocks are now B9 QUALIFIED by the G7 M2 persistent lifecycle gate. Canonical evidence records the 85-test regression and restart/recovery lifecycle.
 
-| Knowledge Legal/Access + Provenance | B6 document pack + implementation; K2 pending | G7 K2 evidence | Security/Legal / Knowledge Architect | KB-QUALIFICATION-EVIDENCE | disallowed source blocked + provenance binding |
+| Knowledge Legal/Access + Provenance | B9 QUALIFIED by K2 | policy signing/jurisdiction packs/revocation (future) | Security/Legal / Knowledge Architect | KB-QUALIFICATION-EVIDENCE | disallowed source blocked + provenance binding |
