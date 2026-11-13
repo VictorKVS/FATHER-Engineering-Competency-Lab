@@ -19,8 +19,8 @@
 | Architecture | ✅ PASS for FTH-BRAIN-SUPPLY-001 |
 | Test Architecture | ✅ PASS for FTH-BRAIN-SUPPLY-001 |
 | Development Packet | ✅ ISSUED |
-| Senior Developer | ✅ IMPLEMENTED — qualification candidate |
-| Qualification | 🟡 READY FOR LOCAL WINDOWS RUN |
+| Senior Developer | ✅ IMPLEMENTED |
+| Qualification | ✅ FTH-BRAIN-SUPPLY-001 PASS — 188 regression tests |
 | Release | ⏳ Planned |
 
 > Правило FATHER: **никакой реализации до прохождения аналитических, архитектурных и тестовых gate.**
@@ -323,7 +323,7 @@ flowchart LR
     --> REL[Release]
 ```
 
-Текущий этап первого реализуемого блока: **готов к локальному qualification-run на Windows**.
+Первый реализуемый блок **FTH-BRAIN-SUPPLY-001 QUALIFIED**. Следующий этап: Storage Profile / Storage Selection Engine.
 
 ---
 
