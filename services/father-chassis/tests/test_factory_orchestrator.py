@@ -96,3 +96,85 @@ def test_full_handoff_sequence_is_fail_closed_and_traceable():
     assert status["completed_stages"] == [item[0] for item in sequence]
     assert status["artifacts"]["QualificationDecision"]["approved"] is True
     assert workflow.workflow_hash()
+
+
+def test_workflow_persists_and_restores_next_stage(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    first = FactoryEngineeringWorkflow(store=store, workflow_id="WF-PERSIST-1")
+    first.add_external_artifact(
+        _artifact("REQ-PERSIST", "customer_request", "HUMAN_APPROVAL")
+    )
+    assert first.available_stage().stage_id == "BUSINESS_ANALYSIS"
+
+    first.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-PERSIST",
+            "BusinessProcessSpec",
+            "FTH-AGENT-BUSINESS-ANALYST",
+        ),
+    )
+    assert first.available_stage().stage_id == "SYSTEM_ANALYSIS"
+
+    second = FactoryEngineeringWorkflow(store=store, workflow_id="WF-PERSIST-1")
+
+    assert second.available_stage().stage_id == "SYSTEM_ANALYSIS"
+    assert second.status()["completed_stages"] == ["BUSINESS_ANALYSIS"]
+    assert second.status()["artifacts"]["BusinessProcessSpec"]["artifact_id"] == "BP-PERSIST"
+
+
+def test_workflow_ids_are_isolated(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    first = FactoryEngineeringWorkflow(store=store, workflow_id="WF-A")
+    first.add_external_artifact(
+        _artifact("REQ-A", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    second = FactoryEngineeringWorkflow(store=store, workflow_id="WF-B")
+
+    assert second.available_stage() is None
+    assert second.status()["artifacts"] == {}
+
+
+def test_workflow_restore_rejects_tampered_artifact_hash(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    workflow = FactoryEngineeringWorkflow(store=store, workflow_id="WF-TAMPER")
+    workflow.add_external_artifact(
+        _artifact("REQ-TAMPER", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    snapshot = store.get(FactoryEngineeringWorkflow.NAMESPACE, "WF-TAMPER")
+    snapshot["artifacts"]["customer_request"]["payload"]["artifact_type"] = "tampered"
+    store.set(FactoryEngineeringWorkflow.NAMESPACE, "WF-TAMPER", snapshot)
+
+    with pytest.raises(ValueError, match="stage artifact hash mismatch"):
+        FactoryEngineeringWorkflow(store=store, workflow_id="WF-TAMPER")
+
+
+def test_blocked_history_survives_restart(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    first = FactoryEngineeringWorkflow(store=store, workflow_id="WF-BLOCKED")
+    first.add_external_artifact(
+        _artifact("REQ-B", "customer_request", "HUMAN_APPROVAL")
+    )
+    blocked = first.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-WRONG",
+            "BusinessProcessSpec",
+            "FTH-AGENT-SENIOR-DEVELOPER",
+        ),
+    )
+    assert blocked.status == "BLOCKED"
+
+    second = FactoryEngineeringWorkflow(store=store, workflow_id="WF-BLOCKED")
+    assert second.status()["history"][-1]["status"] == "BLOCKED"
+    assert second.available_stage().stage_id == "BUSINESS_ANALYSIS"
