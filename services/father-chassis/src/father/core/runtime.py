@@ -163,13 +163,12 @@ class ChassisRuntime:
                             f"invalid or unapproved approval_id for action {plan.action}"
                         )
                 else:
-                    from .approval import ApprovalRequired, ApprovalRecord
-                    from uuid import uuid4
-                    new_id = str(uuid4())
-                    self.approval_gate._records[new_id] = ApprovalRecord(
-                        new_id, trace.trace_id, plan.action, "pending"
+                    from .approval import ApprovalRequired
+                    pending = self.approval_gate.request(
+                        trace_id=trace.trace_id,
+                        action=plan.action,
                     )
-                    raise ApprovalRequired(new_id, plan.action)
+                    raise ApprovalRequired(pending.approval_id, plan.action)
             else:
                 self.approval_gate.check(
                     trace_id=trace.trace_id,

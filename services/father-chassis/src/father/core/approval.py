@@ -39,6 +39,13 @@ class HumanApprovalGate:
             self._records[new_id] = ApprovalRecord(new_id, trace_id, action, "pending")
         raise ApprovalRequired(new_id, action)
 
+    def request(self, *, trace_id: str, action: str) -> ApprovalRecord:
+        with self._lock:
+            new_id = str(uuid4())
+            record = ApprovalRecord(new_id, trace_id, action, "pending")
+            self._records[new_id] = record
+            return record
+
     def approve(self, approval_id: str) -> ApprovalRecord:
         with self._lock:
             rec = self._records[approval_id]
