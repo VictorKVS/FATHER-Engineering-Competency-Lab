@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "knowledge_bases": [
+    {
+      "kb_id": "KB-BUSINESS-ANALYSIS",
+      "fill_with": ["business_strategy", "process_regulation", "stakeholder_interview", "kpi_catalog", "service_catalog", "financial_model"]
+    },
+    {
+      "kb_id": "KB-SYSTEM-ANALYSIS",
+      "fill_with": ["business_process_spec", "requirements_standard", "interface_catalog", "data_dictionary", "failure_catalog", "nonfunctional_requirements"]
+    },
+    {
+      "kb_id": "KB-ALGORITHMS",
+      "fill_with": ["algorithm_reference", "benchmark", "research_paper", "performance_report", "architecture_pattern", "failure_case"]
+    },
+    {
+      "kb_id": "KB-ARCHITECTURE",
+      "fill_with": ["architecture_standard", "adr", "reference_architecture", "integration_pattern", "security_architecture", "sizing_guide"]
+    },
+    {
+      "kb_id": "KB-TEST-ENGINEERING",
+      "fill_with": ["requirements", "architecture_spec", "algorithm_spec", "test_pattern", "incident_history", "slo_catalog"]
+    },
+    {
+      "kb_id": "KB-SOFTWARE-ENGINEERING",
+      "fill_with": ["language_reference", "library_documentation", "coding_standard", "design_pattern", "performance_guide", "security_guide"]
+    },
+    {
+      "kb_id": "KB-DEVSECOPS",
+      "fill_with": ["ci_cd_reference", "container_reference", "kubernetes_reference", "security_standard", "supply_chain_standard", "runbook"]
+    },
+    {
+      "kb_id": "KB-QUALIFICATION-EVIDENCE",
+      "fill_with": ["qualification_policy", "test_evidence", "security_evidence", "runtime_trace", "provenance_record", "competency_policy"]
+    }
+  ]
+}
