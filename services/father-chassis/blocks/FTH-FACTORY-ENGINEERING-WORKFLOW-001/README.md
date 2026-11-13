@@ -16,4 +16,4 @@ Non-goals:
 - LLM execution itself;
 - competency/KB admission (separate upcoming blocks).
 
-Current target: B6 after implementation; B9 only after restart qualification.
+Current maturity: B9 QUALIFIED by G7 M3 persistent engineering workflow evidence.

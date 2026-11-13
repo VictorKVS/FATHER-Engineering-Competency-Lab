@@ -1,0 +1,29 @@
+{
+  "block_id": "FTH-FACTORY-ENGINEERING-WORKFLOW-001",
+  "qualification": "G7_M3_PERSISTENT_ENGINEERING_WORKFLOW",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 89
+  },
+  "restart_restore": true,
+  "stage_authority_preserved": true,
+  "workflow_isolation": true,
+  "tamper_detection": true,
+  "blocked_history_preserved": true,
+  "workflow_id": "WF-G7-M3",
+  "next_stage_before_restart": "ALGORITHM_SELECTION",
+  "next_stage_after_restart": "ALGORITHM_SELECTION",
+  "workflow_hash_before_restart": "2fa3d9f4bae09c1984b0235ec41d2ccb2508642abe468e6a5a64b82f9daddd5b",
+  "workflow_hash_after_restore": "33903149ed1e8964682ab612e7e9956766894b28331d1d085ee57dedb370d7d0",
+  "completed_stages_after_restore": [
+    "BUSINESS_ANALYSIS",
+    "SYSTEM_ANALYSIS"
+  ],
+  "started_at_utc": "2026-11-13T14:31:47.0045562Z",
+  "completed_at_utc": "2026-11-13T14:31:57.8834618Z",
+  "source": "operator-provided local Windows qualification output"
+}
