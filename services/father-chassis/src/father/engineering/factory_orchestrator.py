@@ -10,6 +10,10 @@ from father.engineering.competency_admission import (
     CompetencyAdmissionRequest,
 )
 from father.engineering.factory_agents import FactoryAgentCatalog, build_factory_agent_catalog
+from father.engineering.knowledge_admission import (
+    KnowledgeAdmissionRequest,
+    QualifiedKnowledgeAdmissionGate,
+)
 from father.engineering.stage_artifacts import (
     StagePayload,
     deserialize_stage_payload,
@@ -79,13 +83,16 @@ class StageResult:
     blocking_findings: tuple[str, ...] = ()
     competency_qualification_id: str | None = None
     competency_evidence_ids: tuple[str, ...] = ()
+    knowledge_release_ids: tuple[str, ...] = ()
+    knowledge_release_hashes: tuple[str, ...] = ()
+    knowledge_evidence_refs: tuple[str, ...] = ()
 
 
 class FactoryEngineeringWorkflow:
     """Fail-closed role orchestration for engineering delivery."""
 
     NAMESPACE = "factory_engineering_workflow"
-    SNAPSHOT_SCHEMA_VERSION = 3
+    SNAPSHOT_SCHEMA_VERSION = 4
 
     def __init__(
         self,
@@ -95,6 +102,8 @@ class FactoryEngineeringWorkflow:
         workflow_id: str = "default",
         competency_gate: CompetencyAdmissionGate | None = None,
         require_competency_admission: bool = False,
+        knowledge_gate: QualifiedKnowledgeAdmissionGate | None = None,
+        require_knowledge_admission: bool = False,
     ) -> None:
         if not workflow_id.strip():
             raise ValueError("workflow_id is required")
@@ -105,6 +114,10 @@ class FactoryEngineeringWorkflow:
         self.require_competency_admission = require_competency_admission
         if self.require_competency_admission and self.competency_gate is None:
             raise ValueError("competency admission is required but no competency_gate is configured")
+        self.knowledge_gate = knowledge_gate
+        self.require_knowledge_admission = require_knowledge_admission
+        if self.require_knowledge_admission and self.knowledge_gate is None:
+            raise ValueError("knowledge admission is required but no knowledge_gate is configured")
         self.stages = (
             StageDefinition(
                 "BUSINESS_ANALYSIS",
@@ -229,6 +242,9 @@ class FactoryEngineeringWorkflow:
                     "blocking_findings": list(result.blocking_findings),
                     "competency_qualification_id": result.competency_qualification_id,
                     "competency_evidence_ids": list(result.competency_evidence_ids),
+                    "knowledge_release_ids": list(result.knowledge_release_ids),
+                    "knowledge_release_hashes": list(result.knowledge_release_hashes),
+                    "knowledge_evidence_refs": list(result.knowledge_evidence_refs),
                 }
                 for result in self._history
             ],
@@ -286,6 +302,15 @@ class FactoryEngineeringWorkflow:
                     ),
                     competency_evidence_ids=tuple(
                         str(x) for x in item.get("competency_evidence_ids", ())
+                    ),
+                    knowledge_release_ids=tuple(
+                        str(x) for x in item.get("knowledge_release_ids", ())
+                    ),
+                    knowledge_release_hashes=tuple(
+                        str(x) for x in item.get("knowledge_release_hashes", ())
+                    ),
+                    knowledge_evidence_refs=tuple(
+                        str(x) for x in item.get("knowledge_evidence_refs", ())
                     ),
                 )
             )
@@ -346,6 +371,26 @@ class FactoryEngineeringWorkflow:
                     f"competency admission: {reason}" for reason in decision.reasons
                 )
 
+        knowledge_release_ids: tuple[str, ...] = ()
+        knowledge_release_hashes: tuple[str, ...] = ()
+        knowledge_evidence_refs: tuple[str, ...] = ()
+        if self.require_knowledge_admission:
+            assert self.knowledge_gate is not None
+            knowledge_decision = self.knowledge_gate.evaluate(
+                KnowledgeAdmissionRequest(
+                    workflow_id=self.workflow_id,
+                    stage_id=stage.stage_id,
+                    agent_id=stage.agent_id,
+                )
+            )
+            knowledge_release_ids = knowledge_decision.release_ids
+            knowledge_release_hashes = knowledge_decision.release_hashes
+            knowledge_evidence_refs = knowledge_decision.evidence_refs
+            if not knowledge_decision.admitted:
+                blockers.extend(
+                    f"knowledge admission: {reason}" for reason in knowledge_decision.reasons
+                )
+
         if blockers:
             result = StageResult(
                 stage_id=stage.stage_id,
@@ -355,6 +400,9 @@ class FactoryEngineeringWorkflow:
                 blocking_findings=tuple(blockers),
                 competency_qualification_id=competency_qualification_id,
                 competency_evidence_ids=competency_evidence_ids,
+                knowledge_release_ids=knowledge_release_ids,
+                knowledge_release_hashes=knowledge_release_hashes,
+                knowledge_evidence_refs=knowledge_evidence_refs,
             )
             self._history.append(result)
             self._persist()
@@ -368,6 +416,9 @@ class FactoryEngineeringWorkflow:
             artifact=artifact,
             competency_qualification_id=competency_qualification_id,
             competency_evidence_ids=competency_evidence_ids,
+            knowledge_release_ids=knowledge_release_ids,
+            knowledge_release_hashes=knowledge_release_hashes,
+            knowledge_evidence_refs=knowledge_evidence_refs,
         )
         self._history.append(result)
         self._persist()
@@ -398,6 +449,9 @@ class FactoryEngineeringWorkflow:
                     "blocking_findings": result.blocking_findings,
                     "competency_qualification_id": result.competency_qualification_id,
                     "competency_evidence_ids": result.competency_evidence_ids,
+                    "knowledge_release_ids": result.knowledge_release_ids,
+                    "knowledge_release_hashes": result.knowledge_release_hashes,
+                    "knowledge_evidence_refs": result.knowledge_evidence_refs,
                 }
                 for result in self._history
             ],

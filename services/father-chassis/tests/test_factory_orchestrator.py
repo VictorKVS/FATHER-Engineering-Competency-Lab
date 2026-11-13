@@ -478,3 +478,114 @@ def test_snapshot_v2_is_rejected_after_competency_history_contract_change(tmp_pa
         match="unsupported factory engineering workflow snapshot schema",
     ):
         FactoryEngineeringWorkflow(store=store, workflow_id="WF-V2")
+
+
+def _qualified_business_kb_gate():
+    from father.engineering.factory_agents import build_factory_agent_catalog
+    from father.engineering.knowledge_admission import (
+        InMemoryKnowledgeReleaseRegistry,
+        KnowledgeBaseRelease,
+        QualifiedKnowledgeAdmissionGate,
+    )
+
+    release = KnowledgeBaseRelease(
+        release_id="REL-KB-BUSINESS-001",
+        kb_id="KB-BUSINESS-ANALYSIS",
+        version="1.0.0",
+        release_hash="a" * 64,
+        status="QUALIFIED",
+        source_set_hashes=("b" * 64,),
+        provenance_refs=("provenance://business",),
+        retrieval_evidence_refs=("evidence://retrieval-business",),
+        retrieval_metrics={"recall_at_5": 0.91},
+        created_at="2026-11-13T00:00:00+00:00",
+    )
+    return QualifiedKnowledgeAdmissionGate(
+        catalog=build_factory_agent_catalog(),
+        registry=InMemoryKnowledgeReleaseRegistry((release,)),
+    )
+
+
+def test_required_knowledge_gate_allows_qualified_release():
+    workflow = FactoryEngineeringWorkflow(
+        knowledge_gate=_qualified_business_kb_gate(),
+        require_knowledge_admission=True,
+    )
+    workflow.add_external_artifact(
+        _artifact("REQ-KB", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    result = workflow.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-KB",
+            "BusinessProcessSpec",
+            "FTH-AGENT-BUSINESS-ANALYST",
+        ),
+    )
+
+    assert result.status == "PASS"
+    assert result.knowledge_release_ids == ("REL-KB-BUSINESS-001",)
+    assert result.knowledge_release_hashes == ("a" * 64,)
+    assert "evidence://retrieval-business" in result.knowledge_evidence_refs
+
+
+def test_required_knowledge_gate_blocks_missing_release():
+    from father.engineering.factory_agents import build_factory_agent_catalog
+    from father.engineering.knowledge_admission import (
+        InMemoryKnowledgeReleaseRegistry,
+        QualifiedKnowledgeAdmissionGate,
+    )
+
+    gate = QualifiedKnowledgeAdmissionGate(
+        catalog=build_factory_agent_catalog(),
+        registry=InMemoryKnowledgeReleaseRegistry(),
+    )
+    workflow = FactoryEngineeringWorkflow(
+        knowledge_gate=gate,
+        require_knowledge_admission=True,
+    )
+    workflow.add_external_artifact(
+        _artifact("REQ-KB-MISS", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    result = workflow.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-KB-MISS",
+            "BusinessProcessSpec",
+            "FTH-AGENT-BUSINESS-ANALYST",
+        ),
+    )
+
+    assert result.status == "BLOCKED"
+    assert any("knowledge admission:" in item for item in result.blocking_findings)
+
+
+def test_required_knowledge_mode_without_gate_fails_closed():
+    with pytest.raises(
+        ValueError,
+        match="knowledge admission is required but no knowledge_gate is configured",
+    ):
+        FactoryEngineeringWorkflow(require_knowledge_admission=True)
+
+
+def test_snapshot_v3_is_rejected_after_knowledge_history_contract_change(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    store.set(
+        FactoryEngineeringWorkflow.NAMESPACE,
+        "WF-V3",
+        {
+            "schema_version": 3,
+            "workflow_id": "WF-V3",
+            "artifacts": {},
+            "history": [],
+        },
+    )
+    with pytest.raises(
+        ValueError,
+        match="unsupported factory engineering workflow snapshot schema",
+    ):
+        FactoryEngineeringWorkflow(store=store, workflow_id="WF-V3")
