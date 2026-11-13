@@ -20,6 +20,11 @@ __all__ = [
     "SourceAdmissibilityDecision",
     "SourceUsePolicy",
     "verify_provenance_binding",
+    "DeterministicTextStructuralParser",
+    "StructuralDocument",
+    "StructuralParseDecision",
+    "StructuralParseRequest",
+    "StructuralUnit",
 ]
 
 from .legal_provenance import (
@@ -29,4 +34,12 @@ from .legal_provenance import (
     SourceAdmissibilityDecision,
     SourceUsePolicy,
     verify_provenance_binding,
+)
+
+from .structural_parser import (
+    DeterministicTextStructuralParser,
+    StructuralDocument,
+    StructuralParseDecision,
+    StructuralParseRequest,
+    StructuralUnit,
 )
