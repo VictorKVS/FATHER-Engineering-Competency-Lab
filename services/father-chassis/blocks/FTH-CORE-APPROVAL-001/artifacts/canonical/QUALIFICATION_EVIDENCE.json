@@ -1,0 +1,9 @@
+{
+  "block_id": "FTH-CORE-APPROVAL-001",
+  "qualification": "G7_M2_PERSISTENT_FACTORY_LIFECYCLE",
+  "status": "PENDING",
+  "canonical_evidence": false,
+  "reason": "Integrated M2 rerun required",
+  "blocking_finding": "Previous M2 stopped on ProductRegistry regression before approval lifecycle could be qualified.",
+  "target_gate": "B9"
+}
