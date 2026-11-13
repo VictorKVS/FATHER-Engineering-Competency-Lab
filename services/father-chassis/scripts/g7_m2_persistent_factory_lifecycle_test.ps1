@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $serviceDir = Split-Path -Parent $PSScriptRoot
-$artifactDir = Join-Path $serviceDir "artifacts"
+$artifactDir = Join-Path $serviceDir "artifacts\local"
 $artifactPath = Join-Path $artifactDir "g7_m2_persistent_factory_lifecycle_qualification_2026-11-13.json"
 
 function Invoke-Step {

@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 $serviceDir = Split-Path -Parent $PSScriptRoot
 $repoRoot = (Resolve-Path (Join-Path $serviceDir "..\..")).Path
 $trustDir = Join-Path $repoRoot "projects\FATHER-TRUST-COMPETENCY-0001"
-$artifactDir = Join-Path $serviceDir "artifacts"
+$artifactDir = Join-Path $serviceDir "artifacts\local"
 $artifactPath = Join-Path $artifactDir "g7_m1_dual_product_factory_qualification_2026-11-13.json"
 
 function Invoke-Step {

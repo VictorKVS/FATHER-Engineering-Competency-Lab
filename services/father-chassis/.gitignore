@@ -27,3 +27,6 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local qualification outputs; canonical evidence is promoted separately
+artifacts/local/
