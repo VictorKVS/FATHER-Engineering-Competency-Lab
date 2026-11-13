@@ -1,0 +1,57 @@
+{
+  "project_id": "FATHER-TRUST-COMPETENCY-0001",
+  "name": "FATHER Trust & Competency Lab",
+  "version": "0.0.1",
+  "status": "FOUNDATION_DESIGN",
+  "parent_project": "FATHER Engineering Competency Lab",
+  "standalone_target": true,
+  "core_entities": [
+    "subject",
+    "claim",
+    "evidence",
+    "contract",
+    "qualification",
+    "competency",
+    "provenance_record"
+  ],
+  "subject_types": [
+    "person",
+    "agent",
+    "component",
+    "subsystem",
+    "chassis",
+    "product",
+    "factory",
+    "dataset",
+    "model",
+    "knowledge_source",
+    "release"
+  ],
+  "contract_classes": [
+    "component",
+    "data",
+    "security",
+    "qualification",
+    "ownership_provenance"
+  ],
+  "competency_scopes": [
+    "person",
+    "product"
+  ],
+  "competency_levels": {
+    "C0": "CLAIMED",
+    "C1": "LEARNED",
+    "C2": "DEMONSTRATED",
+    "C3": "REPEATABLE",
+    "C4": "INTEGRATED",
+    "C5": "QUALIFIED",
+    "C6": "INDUSTRIAL_PROFESSIONAL"
+  },
+  "principles": [
+    "claims_require_evidence",
+    "qualification_is_separate_from_declaration",
+    "provenance_is_verifiable",
+    "father_is_first_consumer_not_core_dependency",
+    "standalone_extraction_must_be_testable"
+  ]
+}
