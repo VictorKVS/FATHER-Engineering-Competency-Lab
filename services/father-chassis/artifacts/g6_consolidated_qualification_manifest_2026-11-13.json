@@ -1,8 +1,8 @@
 {
   "qualification": "G6_CONSOLIDATED_INDUSTRIAL",
   "date": "2026-11-13",
-  "status": "PENDING_FINAL_8H_SOAK",
-  "final_industrial_pass": false,
+  "status": "PASS_G6_INDUSTRIAL",
+  "final_industrial_pass": true,
   "gates": {
     "G6.1": {
       "status": "PASS",
@@ -26,10 +26,17 @@
       "caveat": "Current qualification proves legacy schema migration, failed deployment observation, rollback lifecycle and data preservation. It does not strictly prove downgrade from a newer application binary B to an older application binary A."
     },
     "G6.5": {
-      "status": "PASS_120_MINUTE_SOAK_PREQUALIFICATION",
+      "status": "PASS_FINAL_8H_SOAK",
       "artifact": "g6_5_endurance_soak_qualification_2026-11-13.json",
-      "blocking_for_final": true,
-      "caveat": "120-minute soak passed and showed stable readiness, zero real-run failures and small memory growth. Final Industrial designation still requires an extended 8-hour soak with numeric memory-drift evidence."
+      "blocking_for_final": false,
+      "evidence": {
+        "duration_minutes": 480,
+        "real_runs": 10,
+        "failed_real_runs": 0,
+        "memory_growth_mib": 0.58,
+        "memory_slope_mib_per_hour": 0.0631,
+        "runtime_ready_after_soak": true
+      }
     },
     "G6.6": {
       "status": "PASS",
@@ -38,14 +45,15 @@
     }
   },
   "known_nonblocking_risks": [
-    "Local LLM inference latency remains high; prior endurance measurements show model path dominates response time.",
+    "Local LLM inference latency remains high; the model path remains the dominant performance bottleneck.",
     "G6.3 retains 47 HIGH vulnerabilities without vendor FixedVersion in the upstream risk backlog.",
-    "G6.4 binary downgrade semantics remain a qualification scope caveat.",
-    "G6.5 currently covers 120-minute soak, not extended 8-hour soak."
+    "G6.4 true binary downgrade from newer application binary B to older binary A remains a scope caveat and recommended strengthening item."
   ],
-  "finalization_requirements": [
-    "Run final G6.5 extended soak for 480 minutes with numeric memory drift/slope evidence.",
-    "If the 8-hour soak passes, update the consolidated manifest and issue the final G6 Industrial qualification package.",
-    "G6.4b true versioned-binary downgrade fixture remains a recommended strengthening item, not a current blocker."
-  ]
+  "finalization_requirements": [],
+  "final_decision": {
+    "level": "G6_INDUSTRIAL",
+    "result": "PASS",
+    "rationale": "All mandatory G6.1-G6.6 technical qualification gates have committed evidence and no remaining blocking findings. Extended 8-hour endurance has passed with stable readiness and memory drift far below operational thresholds.",
+    "caveats_are_non_blocking": true
+  }
 }
