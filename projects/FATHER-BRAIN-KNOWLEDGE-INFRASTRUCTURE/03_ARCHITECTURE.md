@@ -17,7 +17,35 @@ FATHER separates five concerns:
 
 The first implementation slice is Brain Supply because storage selection is meaningless until FATHER knows what it is supplying, to whom, and under which authority.
 
-## 2. Agent supply model
+## 2. Two independent class axes
+
+FATHER must never collapse Agent Class and Brain Class into one scale.
+
+```text
+AGENT CLASS                     BRAIN CLASS
+
+A1 Simple                       B1 Embedded
+A2 Standard                     B2 RAG
+A3 Analyst                      B3 Analytical
+A4 Enterprise                   B4 Enterprise
+A5 Security / High-control      B5 High Assurance
+A6 Distributed / Complex        B6 Massive
+```
+
+These are **independent axes**, not fixed pairs.
+
+Examples:
+
+```text
+A2 + B5   valid when a simple agent requires a highly assured brain
+A5 + B2   valid when a security-controlled agent needs a small RAG brain
+A3 + B3   common but not mandatory
+```
+
+Every Brain Package explicitly declares `compatible_agent_classes`.
+Every request explicitly declares `requested_brain_class`.
+
+## 3. Agent supply model
 
 An agent does not connect directly to a database.
 
@@ -25,17 +53,16 @@ An agent does not connect directly to a database.
 Agent / Task
    ↓
 BrainSupplyRequest
-   ↓
-Brain Supply Resolver
-   ├─ identity
-   ├─ agent class
+   ├─ agent_class A*
+   ├─ requested_brain_class B*
    ├─ role
-   ├─ domain
+   ├─ domains
    ├─ required capabilities
    ├─ supply mode
    ├─ tenant
-   ├─ security clearance
-   └─ compatibility policy
+   └─ security clearance
+   ↓
+Brain Supply Resolver
    ↓
 AUTHORIZED BrainBinding
    ↓
@@ -44,38 +71,35 @@ Retrieval / Knowledge Access Boundary
 Storage adapters
 ```
 
-## 3. Supply modes
-
-The architecture recognizes separate supply modes:
+## 4. Supply modes
 
 - **BASELINE** — stable brain attached to an agent profile.
-- **ROLE_SCOPED** — added because the active role requires it.
-- **DOMAIN_SCOPED** — added for a specific knowledge domain.
+- **ROLE_SCOPED** — brain added for the active role.
+- **DOMAIN_SCOPED** — brain added for a knowledge domain.
 - **TASK_SCOPED** — temporary brain for a task/workflow.
 - **SESSION_SCOPED** — temporary brain for a controlled session.
-- **INCIDENT_SCOPED** — security/operations brain bound to a specific incident.
+- **INCIDENT_SCOPED** — security/operations brain bound to an incident.
 
 A Brain Package explicitly declares supported supply modes.
 
-## 4. Matching dimensions
+## 5. Matching dimensions
 
 No package is eligible unless all mandatory dimensions pass:
 
 | Dimension | Rule |
 |---|---|
 | Release state | package must be QUALIFIED or RELEASED according to policy |
-| Brain class | exact class in v1; no silent up-class/down-class |
-| Agent class | agent class must be declared compatible |
-| Role | request role must intersect allowed roles where restricted |
+| Brain class | package B-class must match requested B-class in reference v1 |
+| Agent class | requester A-class must be declared compatible |
+| Role | request role must be allowed where restricted |
 | Domain | requested domains must be covered |
 | Capability | all required capabilities must be present |
 | Supply mode | requested mode must be supported |
 | Classification | agent must be authorized for package classification |
 | Tenant | package must be global or match tenant |
-| Compatibility | package compatibility policy must pass |
 | Revocation | revoked/superseded package must not be selected |
 
-## 5. Fail-closed decisions
+## 6. Fail-closed decisions
 
 The resolver returns one of:
 
@@ -86,34 +110,27 @@ The resolver returns one of:
 
 It never silently substitutes a “close enough” brain.
 
-If two candidates remain equally eligible and deterministic ranking cannot distinguish them, v1 returns `AMBIGUOUS`.
+## 7. Minimal sufficient selection
 
-## 6. Minimal sufficient selection
+Within the requested Brain Class:
 
-Within the exact requested Brain Class, ranking prefers:
-
-1. exact tenant over global;
-2. exact domain fit;
-3. fewer unnecessary capabilities;
-4. highest compatible semantic version only after compatibility rules;
-5. deterministic package identity tie-break only when policy explicitly permits.
+1. exact tenant is preferred over global;
+2. fewer unnecessary capabilities are preferred;
+3. unresolved equal candidates produce `AMBIGUOUS`.
 
 No larger Brain Class is selected merely because it has more capabilities.
 
-## 7. Brain classes
+## 8. Brain Class is not clearance
 
-- B1 Embedded
-- B2 RAG
-- B3 Analytical
-- B4 Enterprise
-- B5 High Assurance
-- B6 Massive
+B1…B6 express knowledge-system complexity/assurance profile.
+Security classification and authorization are separate properties.
 
-Brain Class is not a security clearance. A B2 brain may be highly protected; a B5 designation describes assurance requirements, not permission to read arbitrary data.
+A B2 brain may contain protected information.
+A B5 designation never grants permission to read information.
 
-## 8. Storage boundary
+## 9. Storage boundary
 
-Brain Supply Resolver knows **capabilities and package identity**, not PostgreSQL/Qdrant/Neo4j details.
+Brain Supply Resolver knows capabilities and package identity, not PostgreSQL/Qdrant/Neo4j implementation details.
 
 ```text
 BrainBinding
@@ -127,20 +144,16 @@ KnowledgeAccessContract
   └─ MemoryStoreContract
 ```
 
-This preserves vendor independence.
+## 10. Security architecture
 
-## 9. Security architecture
-
-Policy enforcement is split:
-
-- Supply Resolver decides whether a package may be bound.
-- UAG / Knowledge Access Policy decides whether a concrete retrieval/action is authorized.
+- Supply Resolver decides package binding eligibility.
+- UAG / Knowledge Access Policy decides concrete retrieval/action authority.
 - Storage adapters enforce technical credentials and tenant boundaries.
-- Evidence Ledger records decision identity and evidence.
+- Evidence Ledger records the decision identity.
 
 Reasoning permission is not action authority.
 
-## 10. First implementation slice
+## 11. First implementation slice
 
 Block ID: **FTH-BRAIN-SUPPLY-001**
 
@@ -156,16 +169,14 @@ Required properties:
 - deterministic;
 - fail-closed;
 - input-order independent;
-- no vendor dependency;
-- no network dependency;
-- no database dependency;
+- independent A-class and B-class checks;
+- no vendor/network/database dependency;
 - policy/version-bound identity;
 - qualification harness.
 
-## 11. Deferred architecture
+## 12. Deferred architecture
 
-Not in the first slice:
-
+Deferred:
 - physical DB topology;
 - vector benchmark;
 - embedding selection;
@@ -175,17 +186,7 @@ Not in the first slice:
 - package signing;
 - dynamic entitlement service.
 
-These remain later gates.
+## 13. Architecture gate
 
-## 12. Architecture gate
-
-Architecture is acceptable for the first slice when:
-
-- supply semantics are explicit;
-- agent/package matching dimensions are explicit;
-- fail-closed behavior is explicit;
-- Brain Class is separated from security clearance;
-- storage is behind contracts;
-- first implementation slice is bounded and testable.
-
-**Decision: ARCH PASS for FTH-BRAIN-SUPPLY-001 → Test Architecture authorized.**
+**ARCH PASS for FTH-BRAIN-SUPPLY-001.**
+The A-class × B-class independence is now an explicit invariant and qualification target.
