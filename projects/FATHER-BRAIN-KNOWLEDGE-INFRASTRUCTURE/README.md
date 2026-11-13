@@ -323,7 +323,7 @@ flowchart LR
     --> REL[Release]
 ```
 
-Первый реализуемый блок **FTH-BRAIN-SUPPLY-001 QUALIFIED**. Следующий этап: Storage Profile / Storage Selection Engine.
+**FTH-BRAIN-SUPPLY-001 QUALIFIED.** Storage Selection Engine и Block Materializer подготовлены к локальной qualification; P0 Docker-стенд реальных хранилищ готов.
 
 ---
 
@@ -337,6 +337,8 @@ flowchart LR
 - [06 — Local Qualification Runbook](./06_LOCAL_QUALIFICATION_RUNBOOK.md)
 - [07 — Architect & Operator Decision Guide](./07_ARCHITECT_DECISION_GUIDE.md)
 - [08 — Bench Test Program](./08_BENCH_TEST_PROGRAM.md)
+- [09 — Real Storage Bench Execution](./09_REAL_STORAGE_BENCH_EXECUTION.md)
+- [10 — Qualified Block Delivery & Agent Composition](./10_BLOCK_DELIVERY_AND_COMPOSITION.md)
 
 Следующие ожидаемые артефакты:
 
