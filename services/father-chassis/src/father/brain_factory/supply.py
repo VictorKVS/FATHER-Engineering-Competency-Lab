@@ -18,6 +18,7 @@ class AgentBrainRequest:
     request_id: str
     agent_id: str
     agent_class: str
+    requested_brain_class: str
     role: str
     domains: tuple[str, ...]
     required_capabilities: tuple[str, ...]
@@ -31,6 +32,7 @@ class AgentBrainRequest:
             ("request_id", self.request_id),
             ("agent_id", self.agent_id),
             ("agent_class", self.agent_class),
+            ("requested_brain_class", self.requested_brain_class),
             ("role", self.role),
             ("supply_mode", self.supply_mode),
             ("tenant_id", self.tenant_id),
@@ -127,6 +129,7 @@ class DeterministicBrainSupplyResolver:
                 "request_id": request.request_id,
                 "agent_id": request.agent_id,
                 "agent_class": request.agent_class,
+                "requested_brain_class": request.requested_brain_class,
                 "role": request.role,
                 "domains": _stable_tuple(request.domains),
                 "required_capabilities": _stable_tuple(request.required_capabilities),
@@ -170,7 +173,10 @@ class DeterministicBrainSupplyResolver:
         reasons: list[str] = []
         if package.lifecycle_state not in _stable_tuple(policy.eligible_states):
             reasons.append("lifecycle_state")
-        if policy.require_exact_brain_class and package.brain_class != request.agent_class:
+        if (
+            policy.require_exact_brain_class
+            and package.brain_class != request.requested_brain_class
+        ):
             reasons.append("brain_class")
         if request.agent_class not in _stable_tuple(package.compatible_agent_classes):
             reasons.append("agent_class")
@@ -195,10 +201,7 @@ class DeterministicBrainSupplyResolver:
             reasons.append("classification")
 
         tenant_ok = package.tenant_scope == request.tenant_id
-        if (
-            package.tenant_scope == "*"
-            and policy.allow_global_tenant_packages
-        ):
+        if package.tenant_scope == "*" and policy.allow_global_tenant_packages:
             tenant_ok = True
         if not tenant_ok:
             reasons.append("tenant")
@@ -234,8 +237,7 @@ class DeterministicBrainSupplyResolver:
                 eligible.append(package)
             else:
                 rejected_reasons.append(
-                    f"{package.package_id}@{package.version}:"
-                    + ",".join(reasons)
+                    f"{package.package_id}@{package.version}:" + ",".join(reasons)
                 )
 
         if not eligible:
@@ -257,7 +259,10 @@ class DeterministicBrainSupplyResolver:
             )
             return exact_tenant_penalty, excess_capabilities
 
-        ranked = sorted(eligible, key=lambda package: (rank(package), package.package_id, package.version))
+        ranked = sorted(
+            eligible,
+            key=lambda package: (rank(package), package.package_id, package.version),
+        )
         best_rank = rank(ranked[0])
         best = tuple(package for package in ranked if rank(package) == best_rank)
 
