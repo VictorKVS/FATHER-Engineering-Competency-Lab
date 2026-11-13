@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+<rect width="1280" height="720" rx="28" fill="#0d1625"/>
+<text x="60" y="64" fill="#fff" font-family="Segoe UI,Arial" font-size="34" font-weight="700">Agent Class × Brain Class — независимая матрица снабжения</text>
+<text x="60" y="101" fill="#9fb4ce" font-family="Segoe UI,Arial" font-size="18">A-класс определяет тип агента; B-класс — профиль мозга. Совместимость задаётся явно.</text>
+<g font-family="Segoe UI,Arial">
+<text x="230" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B1</text>
+<text x="370" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B2</text>
+<text x="510" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B3</text>
+<text x="650" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B4</text>
+<text x="790" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B5</text>
+<text x="930" y="150" fill="#8fb8ff" font-size="20" font-weight="700">B6</text>
+<text x="70" y="220" fill="#fff" font-size="20" font-weight="700">A1</text>
+<text x="70" y="300" fill="#fff" font-size="20" font-weight="700">A2</text>
+<text x="70" y="380" fill="#fff" font-size="20" font-weight="700">A3</text>
+<text x="70" y="460" fill="#fff" font-size="20" font-weight="700">A4</text>
+<text x="70" y="540" fill="#fff" font-size="20" font-weight="700">A5</text>
+<text x="70" y="620" fill="#fff" font-size="20" font-weight="700">A6</text>
+</g>
+<g fill="#17283f" stroke="#395878">
+<rect x="170" y="175" width="105" height="50" rx="10"/><rect x="310" y="175" width="105" height="50" rx="10"/><rect x="450" y="175" width="105" height="50" rx="10"/><rect x="590" y="175" width="105" height="50" rx="10"/><rect x="730" y="175" width="105" height="50" rx="10"/><rect x="870" y="175" width="105" height="50" rx="10"/><rect x="170" y="255" width="105" height="50" rx="10"/><rect x="310" y="255" width="105" height="50" rx="10"/><rect x="450" y="255" width="105" height="50" rx="10"/><rect x="590" y="255" width="105" height="50" rx="10"/><rect x="730" y="255" width="105" height="50" rx="10"/><rect x="870" y="255" width="105" height="50" rx="10"/><rect x="170" y="335" width="105" height="50" rx="10"/><rect x="310" y="335" width="105" height="50" rx="10"/><rect x="450" y="335" width="105" height="50" rx="10"/><rect x="590" y="335" width="105" height="50" rx="10"/><rect x="730" y="335" width="105" height="50" rx="10"/><rect x="870" y="335" width="105" height="50" rx="10"/><rect x="170" y="415" width="105" height="50" rx="10"/><rect x="310" y="415" width="105" height="50" rx="10"/><rect x="450" y="415" width="105" height="50" rx="10"/><rect x="590" y="415" width="105" height="50" rx="10"/><rect x="730" y="415" width="105" height="50" rx="10"/><rect x="870" y="415" width="105" height="50" rx="10"/><rect x="170" y="495" width="105" height="50" rx="10"/><rect x="310" y="495" width="105" height="50" rx="10"/><rect x="450" y="495" width="105" height="50" rx="10"/><rect x="590" y="495" width="105" height="50" rx="10"/><rect x="730" y="495" width="105" height="50" rx="10"/><rect x="870" y="495" width="105" height="50" rx="10"/><rect x="170" y="575" width="105" height="50" rx="10"/><rect x="310" y="575" width="105" height="50" rx="10"/><rect x="450" y="575" width="105" height="50" rx="10"/><rect x="590" y="575" width="105" height="50" rx="10"/><rect x="730" y="575" width="105" height="50" rx="10"/><rect x="870" y="575" width="105" height="50" rx="10"/>
+</g>
+<g font-family="Segoe UI,Arial" text-anchor="middle" font-size="16">
+<rect x="450" y="335" width="105" height="50" rx="10" fill="#285a45" stroke="#5cb48d"/><text x="502" y="366" fill="#fff">часто</text>
+<rect x="730" y="255" width="105" height="50" rx="10" fill="#5a4828" stroke="#c19a50"/><text x="782" y="286" fill="#fff">возможно</text>
+<rect x="310" y="495" width="105" height="50" rx="10" fill="#5a4828" stroke="#c19a50"/><text x="362" y="526" fill="#fff">возможно</text>
+</g>
+<text x="60" y="690" fill="#b9c8da" font-family="Segoe UI,Arial" font-size="17">Нет диагонального правила A1→B1, A2→B2… Решение принимает Brain Supply Resolver по политике и контексту.</text>
+</svg>
