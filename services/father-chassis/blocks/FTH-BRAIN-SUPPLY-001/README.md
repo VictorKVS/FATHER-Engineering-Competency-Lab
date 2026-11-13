@@ -4,7 +4,7 @@ Determines which qualified Brain Package may be supplied to a specific FATHER ag
 
 ## Status
 
-**B6 document pack + implementation candidate; qualification pending local Windows run.**
+**QUALIFIED by local Windows G7 Brain Supply run; canonical evidence recorded.**
 
 ## Why this block exists
 
@@ -34,6 +34,15 @@ BrainSupplyDecision
 - no silent fallback;
 - deterministic decision identity.
 
-## Qualification target
+## Qualification
 
-A local qualification harness must prove matching, denial, ambiguity, deterministic identity and full chassis regression before this block may be promoted.
+Local Windows qualification: **PASS**
+
+- Ruff: PASS
+- full chassis regression: **188 passed**
+- Agent Class A* / Brain Class B* separation: PASS
+- fail-closed matching and security negatives: PASS
+- deterministic identity: PASS
+
+Canonical evidence:
+`artifacts/canonical/QUALIFICATION_EVIDENCE.json`
