@@ -225,6 +225,18 @@ def call_local_llm(prompt: str) -> dict:
     }
 
 
+
+def create_app(runtime=None) -> FastAPI:
+    """Compatibility factory for callers of the historical father.api contract.
+
+    The canonical application factory lives in father.api_modular.  Keep this
+    public entry point stable so older integrations and qualification tests do
+    not have to know about the internal cutover.
+    """
+    from father.api_modular import create_app as create_modular_app
+
+    return create_modular_app(runtime)
+
 runtime = Runtime()
 app = FastAPI(title="FATHER Chassis / Factory", version=VERSION)
 
