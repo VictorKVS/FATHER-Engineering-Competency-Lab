@@ -1,3 +1,11 @@
+from .storage_selection import (
+    DeterministicStorageProfileSelector,
+    RejectedStorageAlternative,
+    StorageProfileDescriptor,
+    StorageSelectionDecision,
+    StorageSelectionPolicy,
+    StorageSelectionRequest,
+)
 from .supply import (
     AgentBrainRequest,
     BrainPackageDescriptor,
@@ -12,4 +20,10 @@ __all__ = [
     "BrainSupplyDecision",
     "BrainSupplyPolicy",
     "DeterministicBrainSupplyResolver",
+    "DeterministicStorageProfileSelector",
+    "RejectedStorageAlternative",
+    "StorageProfileDescriptor",
+    "StorageSelectionDecision",
+    "StorageSelectionPolicy",
+    "StorageSelectionRequest",
 ]
