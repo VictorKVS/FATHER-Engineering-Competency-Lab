@@ -5,6 +5,10 @@ from hashlib import sha256
 import json
 from typing import Any
 
+from father.engineering.competency_admission import (
+    CompetencyAdmissionGate,
+    CompetencyAdmissionRequest,
+)
 from father.engineering.factory_agents import FactoryAgentCatalog, build_factory_agent_catalog
 from father.engineering.stage_artifacts import (
     StagePayload,
@@ -73,13 +77,15 @@ class StageResult:
     status: str
     artifact: StageArtifact | None
     blocking_findings: tuple[str, ...] = ()
+    competency_qualification_id: str | None = None
+    competency_evidence_ids: tuple[str, ...] = ()
 
 
 class FactoryEngineeringWorkflow:
     """Fail-closed role orchestration for engineering delivery."""
 
     NAMESPACE = "factory_engineering_workflow"
-    SNAPSHOT_SCHEMA_VERSION = 2
+    SNAPSHOT_SCHEMA_VERSION = 3
 
     def __init__(
         self,
@@ -87,12 +93,18 @@ class FactoryEngineeringWorkflow:
         *,
         store=None,
         workflow_id: str = "default",
+        competency_gate: CompetencyAdmissionGate | None = None,
+        require_competency_admission: bool = False,
     ) -> None:
         if not workflow_id.strip():
             raise ValueError("workflow_id is required")
         self.catalog = catalog or build_factory_agent_catalog()
         self.store = store
         self.workflow_id = workflow_id
+        self.competency_gate = competency_gate
+        self.require_competency_admission = require_competency_admission
+        if self.require_competency_admission and self.competency_gate is None:
+            raise ValueError("competency admission is required but no competency_gate is configured")
         self.stages = (
             StageDefinition(
                 "BUSINESS_ANALYSIS",
@@ -215,6 +227,8 @@ class FactoryEngineeringWorkflow:
                         result.artifact.artifact_type if result.artifact is not None else None
                     ),
                     "blocking_findings": list(result.blocking_findings),
+                    "competency_qualification_id": result.competency_qualification_id,
+                    "competency_evidence_ids": list(result.competency_evidence_ids),
                 }
                 for result in self._history
             ],
@@ -265,6 +279,14 @@ class FactoryEngineeringWorkflow:
                     blocking_findings=tuple(
                         str(x) for x in item.get("blocking_findings", ())
                     ),
+                    competency_qualification_id=(
+                        None
+                        if item.get("competency_qualification_id") is None
+                        else str(item["competency_qualification_id"])
+                    ),
+                    competency_evidence_ids=tuple(
+                        str(x) for x in item.get("competency_evidence_ids", ())
+                    ),
                 )
             )
         self._history = restored_history
@@ -306,6 +328,24 @@ class FactoryEngineeringWorkflow:
         if stage.requires_approval and not artifact.approved:
             blockers.append("artifact is not approved")
 
+        competency_qualification_id: str | None = None
+        competency_evidence_ids: tuple[str, ...] = ()
+        if self.require_competency_admission:
+            assert self.competency_gate is not None
+            decision = self.competency_gate.evaluate(
+                CompetencyAdmissionRequest(
+                    workflow_id=self.workflow_id,
+                    stage_id=stage.stage_id,
+                    agent_id=stage.agent_id,
+                )
+            )
+            competency_qualification_id = decision.trust_qualification_id
+            competency_evidence_ids = decision.evidence_ids
+            if not decision.admitted:
+                blockers.extend(
+                    f"competency admission: {reason}" for reason in decision.reasons
+                )
+
         if blockers:
             result = StageResult(
                 stage_id=stage.stage_id,
@@ -313,6 +353,8 @@ class FactoryEngineeringWorkflow:
                 status="BLOCKED",
                 artifact=None,
                 blocking_findings=tuple(blockers),
+                competency_qualification_id=competency_qualification_id,
+                competency_evidence_ids=competency_evidence_ids,
             )
             self._history.append(result)
             self._persist()
@@ -324,6 +366,8 @@ class FactoryEngineeringWorkflow:
             agent_id=stage.agent_id,
             status="PASS",
             artifact=artifact,
+            competency_qualification_id=competency_qualification_id,
+            competency_evidence_ids=competency_evidence_ids,
         )
         self._history.append(result)
         self._persist()
@@ -352,6 +396,8 @@ class FactoryEngineeringWorkflow:
                     "agent_id": result.agent_id,
                     "status": result.status,
                     "blocking_findings": result.blocking_findings,
+                    "competency_qualification_id": result.competency_qualification_id,
+                    "competency_evidence_ids": result.competency_evidence_ids,
                 }
                 for result in self._history
             ],

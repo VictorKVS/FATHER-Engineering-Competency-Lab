@@ -306,3 +306,175 @@ def test_legacy_workflow_snapshot_schema_is_rejected(tmp_path):
         match="unsupported factory engineering workflow snapshot schema",
     ):
         FactoryEngineeringWorkflow(store=store, workflow_id="WF-LEGACY")
+
+
+def test_required_competency_gate_blocks_underqualified_stage():
+    trust_competency = pytest.importorskip("trust_competency")
+    from trust_competency import Claim, EvidenceRecord
+
+    from father.engineering.competency_admission import (
+        CompetencyAdmissionGate,
+        InMemoryTrustCompetencySource,
+        StageCompetencyPolicy,
+    )
+
+    claim = Claim(
+        "CLM-BA",
+        "FTH-AGENT-BUSINESS-ANALYST",
+        "business_analysis",
+        "process_design",
+        "C1",
+    )
+    evidence = (
+        EvidenceRecord(
+            "E1",
+            claim.subject_id,
+            claim.claim_id,
+            "implementation",
+            "E1.json",
+            "E1",
+            "2026-11-13T00:00:00+00:00",
+            "test",
+        ),
+        EvidenceRecord(
+            "E2",
+            claim.subject_id,
+            claim.claim_id,
+            "qualification",
+            "E2.json",
+            "E2",
+            "2026-11-13T00:00:00+00:00",
+            "test",
+        ),
+    )
+    gate = CompetencyAdmissionGate(
+        source=InMemoryTrustCompetencySource((claim,), evidence),
+        policies=(
+            StageCompetencyPolicy(
+                "BUSINESS_ANALYSIS",
+                "business_analysis",
+                "process_design",
+                "C3",
+                2,
+                frozenset({"implementation", "qualification"}),
+            ),
+        ),
+    )
+    workflow = FactoryEngineeringWorkflow(
+        competency_gate=gate,
+        require_competency_admission=True,
+    )
+    workflow.add_external_artifact(
+        _artifact("REQ-COMP", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    result = workflow.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-COMP",
+            "BusinessProcessSpec",
+            "FTH-AGENT-BUSINESS-ANALYST",
+        ),
+    )
+
+    assert result.status == "BLOCKED"
+    assert result.competency_qualification_id == "QUAL-CLM-BA-C3"
+    assert result.competency_evidence_ids == ("E1", "E2")
+    assert any("competency admission:" in item for item in result.blocking_findings)
+
+
+def test_required_competency_gate_allows_qualified_stage():
+    trust_competency = pytest.importorskip("trust_competency")
+    from trust_competency import Claim, EvidenceRecord
+
+    from father.engineering.competency_admission import (
+        CompetencyAdmissionGate,
+        InMemoryTrustCompetencySource,
+        StageCompetencyPolicy,
+    )
+
+    claim = Claim(
+        "CLM-BA-Q",
+        "FTH-AGENT-BUSINESS-ANALYST",
+        "business_analysis",
+        "process_design",
+        "C3",
+    )
+    evidence = tuple(
+        EvidenceRecord(
+            eid,
+            claim.subject_id,
+            claim.claim_id,
+            evidence_type,
+            f"{eid}.json",
+            eid,
+            "2026-11-13T00:00:00+00:00",
+            "test",
+        )
+        for eid, evidence_type in (
+            ("E1", "implementation"),
+            ("E2", "qualification"),
+        )
+    )
+    gate = CompetencyAdmissionGate(
+        source=InMemoryTrustCompetencySource((claim,), evidence),
+        policies=(
+            StageCompetencyPolicy(
+                "BUSINESS_ANALYSIS",
+                "business_analysis",
+                "process_design",
+                "C3",
+                2,
+                frozenset({"implementation", "qualification"}),
+            ),
+        ),
+    )
+    workflow = FactoryEngineeringWorkflow(
+        competency_gate=gate,
+        require_competency_admission=True,
+    )
+    workflow.add_external_artifact(
+        _artifact("REQ-COMP-Q", "customer_request", "HUMAN_APPROVAL")
+    )
+
+    result = workflow.submit_stage_artifact(
+        "BUSINESS_ANALYSIS",
+        _artifact(
+            "BP-COMP-Q",
+            "BusinessProcessSpec",
+            "FTH-AGENT-BUSINESS-ANALYST",
+        ),
+    )
+
+    assert result.status == "PASS"
+    assert result.competency_qualification_id == "QUAL-CLM-BA-Q-C3"
+    assert result.competency_evidence_ids == ("E1", "E2")
+
+
+def test_required_competency_mode_without_gate_fails_closed():
+    with pytest.raises(
+        ValueError,
+        match="competency admission is required but no competency_gate is configured",
+    ):
+        FactoryEngineeringWorkflow(require_competency_admission=True)
+
+
+def test_snapshot_v2_is_rejected_after_competency_history_contract_change(tmp_path):
+    from father.core.state import SQLiteStateStore
+
+    store = SQLiteStateStore(tmp_path / "workflow.db")
+    store.set(
+        FactoryEngineeringWorkflow.NAMESPACE,
+        "WF-V2",
+        {
+            "schema_version": 2,
+            "workflow_id": "WF-V2",
+            "artifacts": {},
+            "history": [],
+        },
+    )
+    with pytest.raises(
+        ValueError,
+        match="unsupported factory engineering workflow snapshot schema",
+    ):
+        FactoryEngineeringWorkflow(store=store, workflow_id="WF-V2")
