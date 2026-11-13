@@ -1,0 +1,16 @@
+{
+  "qualification": "G7_BLOCK_MATERIALIZER",
+  "source": "local Windows qualification run supplied by operator",
+  "started_at_utc": "2026-11-13T21:41:13.0408718Z",
+  "completed_at_utc": "2026-11-13T21:41:22.6496910Z",
+  "toolchain_ready": true,
+  "regression": true,
+  "regression_tests_passed": 208,
+  "embedded_copy_verified": true,
+  "unqualified_block_rejected": true,
+  "tamper_rejected": true,
+  "shared_binding_without_copy": true,
+  "conflict_rejected": true,
+  "passed": true,
+  "evidence_local_path": "artifacts/local/g7_block_materializer_qualification_2026-11-14.json"
+}
