@@ -1,7 +1,26 @@
 {
   "block_id": "FTH-KNOWLEDGE-SOURCE-INTAKE-001",
   "qualification": "G7_K1_SOURCE_INTAKE",
-  "status": "PENDING",
-  "canonical_evidence": false,
-  "target_gate": "B9"
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 125
+  },
+  "deterministic_fingerprint": true,
+  "required_metadata_enforced": true,
+  "duplicate_detected_without_merge": true,
+  "changed_content_changes_hash": true,
+  "declared_rights_not_legal_approval": true,
+  "immutable_record": true,
+  "no_raw_source_git_evidence": true,
+  "source_id": "SRC-K1-1",
+  "content_hash": "cae1b3faaa5e4ac7c3306bd164b36dcfdff98294b8024c9c949639b4c480bf6b",
+  "duplicate_source_id": "SRC-K1-2",
+  "duplicate_of_source_id": "SRC-K1-1",
+  "started_at_utc": "2026-11-13T19:59:01.0986592Z",
+  "completed_at_utc": "2026-11-13T19:59:10.1365323Z",
+  "source": "operator-provided local Windows qualification output"
 }

@@ -10,7 +10,7 @@ This is the operational backlog for the remaining factory work.
 | Trust Integration | B9 QUALIFIED by M5A | immutable package/signing/internal index (future) | DevSecOps / Trust Architect | KB-DEVSECOPS, KB-QUALIFICATION-EVIDENCE | reproducible package boundary |
 | Competency Admission | B9 QUALIFIED by M5 | persistent Trust source + policy calibration (future) | Trust Architect | KB-QUALIFICATION-EVIDENCE | wrong competency blocked |
 | Qualified KB Admission | B9 QUALIFIED by M6 | persistent release registry + freshness/revocation (future) | Knowledge Architect | KB-QUALIFICATION-EVIDENCE | unqualified KB blocked |
-| Knowledge Source Intake | B6 document pack + implementation; K1 pending | G7 K1 evidence | Business/System Analyst | KB-SYSTEM-ANALYSIS | source accepted/rejected correctly |
+| Knowledge Source Intake | B9 QUALIFIED by K1 | durable source registry + object storage (future) | Business/System Analyst | KB-SYSTEM-ANALYSIS | source accepted/rejected correctly |
 | Rights/Access/Legal Check | planned | decision algorithm + evidence contract | Security/Legal adapter | KB-QUALIFICATION-EVIDENCE | illegal/unknown source blocked |
 | Fingerprint/Dedup | planned | algorithm benchmark | Algorithm Engineer | KB-ALGORITHMS | deterministic dedup |
 | Metadata/Provenance | partial | typed schema + lifecycle | System Analyst | KB-SYSTEM-ANALYSIS | required metadata complete |

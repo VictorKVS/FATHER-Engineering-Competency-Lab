@@ -20,4 +20,4 @@ Non-goals:
 - deciding final legal admissibility;
 - qualifying the KB release.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 K1 Source Intake evidence.
