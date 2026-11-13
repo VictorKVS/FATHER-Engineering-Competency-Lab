@@ -1,0 +1,23 @@
+{
+  "block_id": "FTH-FACTORY-TYPED-STAGE-ARTIFACTS-001",
+  "qualification": "G7_M4_TYPED_STAGE_ARTIFACTS",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 96
+  },
+  "typed_roundtrip": true,
+  "wrong_type_rejected": true,
+  "unknown_version_rejected": true,
+  "persisted_typed_restore": true,
+  "tamper_detection": true,
+  "snapshot_schema_v2": true,
+  "development_packet_nested_types_preserved": true,
+  "next_stage_after_restore": "ALGORITHM_SELECTION",
+  "started_at_utc": "2026-11-13T17:44:20.9235586Z",
+  "completed_at_utc": "2026-11-13T17:44:31.6475114Z",
+  "source": "operator-provided local Windows qualification output"
+}

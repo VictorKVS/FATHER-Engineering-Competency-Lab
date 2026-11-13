@@ -16,4 +16,4 @@ Non-goals:
 - arbitrary plugin serialization;
 - distributed schema registry.
 
-Current target: B6 DEVELOPMENT READY before implementation; B9 after dedicated qualification.
+Current maturity: B9 QUALIFIED by G7 M4 typed stage artifacts evidence.
