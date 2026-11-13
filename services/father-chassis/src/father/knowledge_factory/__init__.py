@@ -14,4 +14,19 @@ __all__ = [
     "SourceIntakeRecord",
     "SourceIntakeRegistry",
     "SourceIntakeService",
+    "LegalAccessEvaluator",
+    "PolicyEvidence",
+    "ProvenanceRecord",
+    "SourceAdmissibilityDecision",
+    "SourceUsePolicy",
+    "verify_provenance_binding",
 ]
+
+from .legal_provenance import (
+    LegalAccessEvaluator,
+    PolicyEvidence,
+    ProvenanceRecord,
+    SourceAdmissibilityDecision,
+    SourceUsePolicy,
+    verify_provenance_binding,
+)
