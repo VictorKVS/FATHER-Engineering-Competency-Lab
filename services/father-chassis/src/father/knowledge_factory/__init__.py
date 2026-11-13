@@ -25,6 +25,11 @@ __all__ = [
     "StructuralParseDecision",
     "StructuralParseRequest",
     "StructuralUnit",
+    "ChunkPolicy",
+    "ChunkingDecision",
+    "DeterministicStructuralChunker",
+    "NormalizedChunk",
+    "NormalizedChunkSet",
 ]
 
 from .legal_provenance import (
@@ -42,4 +47,12 @@ from .structural_parser import (
     StructuralParseDecision,
     StructuralParseRequest,
     StructuralUnit,
+)
+
+from .chunk_normalization import (
+    ChunkPolicy,
+    ChunkingDecision,
+    DeterministicStructuralChunker,
+    NormalizedChunk,
+    NormalizedChunkSet,
 )
