@@ -73,6 +73,7 @@ class CustomerRequirementBody(BaseModel):
 class FactoryExecuteBody(BaseModel):
     requirement: CustomerRequirementBody
     input: str = Field(min_length=1)
+    approval_id: str | None = None
     subject_id: str | None = None
     roles: list[str] = []
     clearance: str | None = None
@@ -299,6 +300,7 @@ def create_app(runtime=None) -> FastAPI:
                 subject=subject,
                 resource=resource,
                 permission=body.permission,
+                approval_id=body.approval_id,
             )
         except PermissionError as exc:
             raise HTTPException(status_code=403, detail=str(exc)) from exc

@@ -58,6 +58,7 @@ class FactoryExecutor:
         subject: SubjectContext | None = None,
         resource: ResourceContext | None = None,
         permission: str = "execute:analysis",
+        approval_id: str | None = None,
     ) -> FactoryExecutionResult:
         solution = self.solution_factory.plan(requirement)
         if not solution["ready"]:
@@ -72,6 +73,8 @@ class FactoryExecutor:
             "factory_requirement_id": requirement.requirement_id,
             "approval_required_for": tuple(sorted(profile.manifest.approval_required_for)),
         }
+        if approval_id:
+            metadata["approval_id"] = approval_id
         if subject is not None or resource is not None:
             if subject is None or resource is None:
                 raise ValueError("subject and resource must be provided together")
