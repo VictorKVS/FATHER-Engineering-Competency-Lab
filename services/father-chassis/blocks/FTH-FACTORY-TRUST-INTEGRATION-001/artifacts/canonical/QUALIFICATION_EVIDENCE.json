@@ -1,7 +1,22 @@
 {
   "block_id": "FTH-FACTORY-TRUST-INTEGRATION-001",
   "qualification": "G7_M5A_TRUST_INTEGRATION_PACKAGING",
-  "status": "PENDING",
-  "canonical_evidence": false,
-  "target_gate": "B9"
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "trust_install": true,
+  "chassis_install": true,
+  "trust_api": true,
+  "trust_tests": {
+    "passed": true,
+    "tests_passed": 4
+  },
+  "chassis_tests": {
+    "passed": true,
+    "tests_passed": 105
+  },
+  "cross_package_call": true,
+  "started_at_utc": "2026-11-13T18:13:16.8928538Z",
+  "completed_at_utc": "2026-11-13T18:13:40.3311420Z",
+  "source": "operator-provided local Windows qualification output"
 }

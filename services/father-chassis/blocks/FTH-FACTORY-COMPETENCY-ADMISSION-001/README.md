@@ -19,4 +19,4 @@ Non-goals:
 Integration rule:
 Trust core stays FATHER-independent. FATHER imports/adapts Trust; Trust never imports FATHER.
 
-Current target: B6 DEVELOPMENT READY before implementation.
+Current maturity: B9 QUALIFIED by G7 M5 Competency Admission evidence.

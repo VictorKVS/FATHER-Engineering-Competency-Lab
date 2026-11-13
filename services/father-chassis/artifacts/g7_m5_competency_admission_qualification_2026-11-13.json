@@ -1,0 +1,24 @@
+{
+  "block_id": "FTH-FACTORY-COMPETENCY-ADMISSION-001",
+  "qualification": "G7_M5_COMPETENCY_ADMISSION",
+  "status": "PASS",
+  "block_gate": "B9",
+  "canonical_evidence": true,
+  "toolchain_ready": true,
+  "regression": {
+    "passed": true,
+    "tests_passed": 105
+  },
+  "trust_tests": {
+    "passed": true,
+    "tests_passed": 4
+  },
+  "qualified_admitted": true,
+  "underqualified_blocked": true,
+  "missing_evidence_blocked": true,
+  "trust_trace_preserved": true,
+  "strict_mode_fail_closed": true,
+  "started_at_utc": "2026-11-13T18:13:41.0206951Z",
+  "completed_at_utc": "2026-11-13T18:13:52.7568745Z",
+  "source": "operator-provided local Windows qualification output"
+}

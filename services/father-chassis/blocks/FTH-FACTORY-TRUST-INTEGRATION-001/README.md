@@ -18,3 +18,5 @@ Non-goals:
 Dependency direction:
 father-chassis -> father-trust-competency
 father-trust-competency -X-> father-chassis.
+
+Current maturity: B9 QUALIFIED by G7 M5A Trust Integration Packaging evidence.
