@@ -3,7 +3,8 @@
 ## AgentBrainRequest
 - request_id
 - agent_id
-- agent_class
+- agent_class — класс агента A1…A6
+- requested_brain_class — требуемый класс мозга B1…B6
 - role
 - domains[]
 - required_capabilities[]
@@ -14,11 +15,11 @@
 ## BrainPackageDescriptor
 - package_id
 - version
-- brain_class
+- brain_class — класс Brain Package B1…B6
 - domains[]
 - capabilities[]
 - supported_supply_modes[]
-- compatible_agent_classes[]
+- compatible_agent_classes[] — допустимые A-классы агентов
 - allowed_roles[]
 - classification
 - tenant_scope
