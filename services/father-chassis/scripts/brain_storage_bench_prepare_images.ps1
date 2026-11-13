@@ -12,6 +12,26 @@ New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 $date = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $out = Join-Path $artifactDir ("P0A_image_acquisition_" + $Candidate + "_" + $date + ".json")
 
+function Invoke-NativeCapture {
+  param(
+    [Parameter(Mandatory=$true)][string]$FilePath,
+    [Parameter(Mandatory=$true)][string[]]$Arguments
+  )
+  $previousPreference = $ErrorActionPreference
+  try {
+    $ErrorActionPreference = "Continue"
+    $lines = & $FilePath @Arguments 2>&1
+    $exitCode = $LASTEXITCODE
+    [pscustomobject]@{
+      ExitCode = $exitCode
+      Output = ($lines | Out-String).Trim()
+    }
+  }
+  finally {
+    $ErrorActionPreference = $previousPreference
+  }
+}
+
 $images=[ordered]@{
   postgres="postgres:18-alpine"
   pgvector="pgvector/pgvector:0.8.7-pg18-trixie"
@@ -25,12 +45,10 @@ $results=@()
 
 foreach($name in $selected){
   $image=$images[$name]
-  $alreadyLocal=$false
-  docker image inspect $image *> $null
-  if($LASTEXITCODE -eq 0){ $alreadyLocal=$true }
 
-  if($alreadyLocal){
-    $inspect=docker image inspect $image | ConvertFrom-Json
+  $inspectResult = Invoke-NativeCapture -FilePath "docker" -Arguments @("image","inspect",$image)
+  if($inspectResult.ExitCode -eq 0){
+    $inspect = $inspectResult.Output | ConvertFrom-Json
     $results += [ordered]@{
       candidate=$name
       image=$image
@@ -51,17 +69,26 @@ foreach($name in $selected){
   while($attempt -lt $Retries -and -not $ok){
     $attempt++
     Write-Host "[P0A] Pull $name ($image) attempt $attempt/$Retries"
-    $output = docker pull $image 2>&1 | Out-String
-    if($LASTEXITCODE -eq 0){
+
+    $pullResult = Invoke-NativeCapture -FilePath "docker" -Arguments @("pull",$image)
+    if($pullResult.ExitCode -eq 0){
       $ok=$true
       break
     }
-    $lastError=$output.Trim()
-    if($attempt -lt $Retries){ Start-Sleep -Seconds (5 * $attempt) }
+
+    $lastError=$pullResult.Output
+    if($attempt -lt $Retries){
+      Start-Sleep -Seconds (5 * $attempt)
+    }
   }
 
   if($ok){
-    $inspect=docker image inspect $image | ConvertFrom-Json
+    $inspectResult = Invoke-NativeCapture -FilePath "docker" -Arguments @("image","inspect",$image)
+    if($inspectResult.ExitCode -ne 0){
+      throw "Image pull reported success but inspect failed for $image"
+    }
+    $inspect = $inspectResult.Output | ConvertFrom-Json
+
     $results += [ordered]@{
       candidate=$name
       image=$image
@@ -72,13 +99,17 @@ foreach($name in $selected){
       pulled=$true
       passed=$true
     }
-  } else {
+  }
+  else {
     $networkBlocked = (
       $lastError -match "TLS handshake timeout" -or
       $lastError -match "timeout awaiting response headers" -or
       $lastError -match "failed to fetch anonymous token" -or
-      $lastError -match "i/o timeout"
+      $lastError -match "i/o timeout" -or
+      $lastError -match "connection reset" -or
+      $lastError -match "context deadline exceeded"
     )
+
     $results += [ordered]@{
       candidate=$name
       image=$image
@@ -102,6 +133,7 @@ $payload=[ordered]@{
   blocked_count=@($results | Where-Object {-not $_.passed}).Count
   passed=(@($results | Where-Object {-not $_.passed}).Count -eq 0)
 }
+
 $payload | ConvertTo-Json -Depth 10 | Set-Content -Path $out -Encoding UTF8
 $payload | ConvertTo-Json -Depth 10
 Write-Host "Evidence: $out"
