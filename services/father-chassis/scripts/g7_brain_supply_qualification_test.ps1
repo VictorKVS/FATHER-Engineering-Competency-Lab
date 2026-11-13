@@ -13,8 +13,10 @@ $result=[ordered]@{
  started_at_utc=(Get-Date).ToUniversalTime().ToString("o")
  toolchain_ready=$false
  regression=$false
+ agent_brain_class_separated=$false
  exact_binding=$false
  wrong_class_blocked=$false
+ wrong_agent_compatibility_blocked=$false
  capability_gap_blocked=$false
  domain_role_mode_enforced=$false
  classification_blocked=$false
@@ -64,20 +66,24 @@ resolver=DeterministicBrainSupplyResolver()
 policy=BrainSupplyPolicy("POL-BRAIN-SUPPLY","1.0")
 
 req=AgentBrainRequest(
-    "REQ-Q","AGENT-Q","B3","ANALYST",("SECURITY",),
+    "REQ-Q","AGENT-Q","A3","B3","ANALYST",("SECURITY",),
     ("VECTOR","GRAPH"),"TASK_SCOPED","TENANT-A",("PUBLIC","INTERNAL")
 )
 pkg=BrainPackageDescriptor(
     "FBP-SEC-Q","1.0.0","B3",("SECURITY","OSINT"),
     ("VECTOR","GRAPH","LEXICAL"),("BASELINE","TASK_SCOPED"),
-    ("B3",),("ANALYST",),"INTERNAL","TENANT-A","QUALIFIED"
+    ("A3",),("ANALYST",),"INTERNAL","TENANT-A","QUALIFIED"
 )
 
 ok=resolver.resolve(req,(pkg,),policy)
+assert req.agent_class=="A3" and req.requested_brain_class=="B3"
 assert ok.status=="BOUND"
 
 wrong_class=resolver.resolve(req,(replace(pkg,brain_class="B4"),),policy)
 assert wrong_class.status=="NO_MATCH"
+
+wrong_agent=resolver.resolve(req,(replace(pkg,compatible_agent_classes=("A4",)),),policy)
+assert wrong_agent.status=="NO_MATCH"
 
 cap_gap=resolver.resolve(req,(replace(pkg,capabilities=("VECTOR",)),),policy)
 assert cap_gap.status=="NO_MATCH"
@@ -112,12 +118,14 @@ assert forward.decision_hash==reverse.decision_hash
 v2=resolver.resolve(req,(pkg,),BrainSupplyPolicy("POL-BRAIN-SUPPLY","2.0"))
 assert ok.decision_hash!=v2.decision_hash
 
-higher=resolver.resolve(req,(replace(pkg,brain_class="B4",compatible_agent_classes=("B3",)),),policy)
+higher=resolver.resolve(req,(replace(pkg,brain_class="B4",compatible_agent_classes=("A3",)),),policy)
 assert higher.status=="NO_MATCH"
 
 payload={
+ "agent_brain_class_separated":True,
  "exact_binding":True,
  "wrong_class_blocked":True,
+ "wrong_agent_compatibility_blocked":True,
  "capability_gap_blocked":True,
  "domain_role_mode_enforced":True,
  "classification_blocked":True,
@@ -127,6 +135,8 @@ payload={
  "input_order_independent":True,
  "policy_version_changes_identity":True,
  "no_silent_class_fallback":True,
+ "agent_class":req.agent_class,
+ "requested_brain_class":req.requested_brain_class,
  "decision_id":ok.decision_id,
  "decision_hash":ok.decision_hash,
  "selected_package_id":ok.selected_package_id,
@@ -141,7 +151,8 @@ print(json.dumps(payload,ensure_ascii=False,indent=2))
 
   $runtime=Get-Content $artifactPath -Raw | ConvertFrom-Json
   foreach($name in @(
-    "exact_binding","wrong_class_blocked","capability_gap_blocked",
+    "agent_brain_class_separated","exact_binding","wrong_class_blocked",
+    "wrong_agent_compatibility_blocked","capability_gap_blocked",
     "domain_role_mode_enforced","classification_blocked","cross_tenant_blocked",
     "revoked_blocked","ambiguity_explicit","input_order_independent",
     "policy_version_changes_identity","no_silent_class_fallback"
@@ -150,7 +161,8 @@ print(json.dumps(payload,ensure_ascii=False,indent=2))
   }
 
   $result.passed=$result.toolchain_ready -and $result.regression -and
-    $result.exact_binding -and $result.wrong_class_blocked -and
+    $result.agent_brain_class_separated -and $result.exact_binding -and
+    $result.wrong_class_blocked -and $result.wrong_agent_compatibility_blocked -and
     $result.capability_gap_blocked -and $result.domain_role_mode_enforced -and
     $result.classification_blocked -and $result.cross_tenant_blocked -and
     $result.revoked_blocked -and $result.ambiguity_explicit -and
