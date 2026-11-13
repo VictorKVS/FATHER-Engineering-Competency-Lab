@@ -6,6 +6,7 @@ This is the operational backlog for the remaining factory work.
 |---|---|---|---|---|---|
 | Engineering Workflow Orchestrator | B9 QUALIFIED by M3 | typed artifact schemas + schema migration contract | Architect / System Analyst | KB-ARCHITECTURE, KB-SYSTEM-ANALYSIS | restart, stage order, no skip, tamper detect |
 | Stage Artifact Registry | foundation | typed schemas + provenance contract | System Analyst | KB-SYSTEM-ANALYSIS | schema integrity, hash integrity |
+| Typed Stage Artifacts | B6 document pack + implementation; M4 pending | G7 M4 evidence | System Analyst / Architect | KB-SYSTEM-ANALYSIS, KB-ARCHITECTURE | type safety, schema versioning, persistence roundtrip |
 | Competency Admission | not integrated | business/system/algorithm package | Trust Architect | KB-QUALIFICATION-EVIDENCE | wrong competency blocked |
 | Qualified KB Admission | not integrated | KB release contract | Knowledge Architect | KB-QUALIFICATION-EVIDENCE | unqualified KB blocked |
 | Knowledge Source Intake | planned | business process + source contract | Business/System Analyst | KB-SYSTEM-ANALYSIS | source accepted/rejected correctly |
