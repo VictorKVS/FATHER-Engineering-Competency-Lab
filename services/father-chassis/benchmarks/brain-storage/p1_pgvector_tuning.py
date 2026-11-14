@@ -130,7 +130,7 @@ def main() -> int:
 
         for ef in EF_VALUES:
             with conn.cursor() as cur:
-                cur.execute("SET hnsw.ef_search = %s", (ef,))
+                cur.execute("SELECT set_config('hnsw.ef_search', %s, false)", (str(ef),))
 
                 # warm-up
                 for qid in qids:
