@@ -1,0 +1,50 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P0B_RUNTIME_BATCH",
+  "source": "local Windows operator run",
+  "timestamp_utc": "2026-11-14T09:10:57.2683637Z",
+  "status": "PARTIAL",
+  "pass_count": 2,
+  "fail_count": 3,
+  "results": [
+    {
+      "candidate": "postgres",
+      "status": "PASS",
+      "image": "postgres:18-alpine",
+      "runtime_startup_seconds": 2.331,
+      "functional_smoke": true,
+      "cpu_percent": "3.25%",
+      "memory_usage": "103.1MiB / 15.54GiB",
+      "passed": true
+    },
+    {
+      "candidate": "pgvector",
+      "status": "RETEST_REQUIRED",
+      "original_reason": "psql socket not ready during warm-up probe",
+      "passed": false
+    },
+    {
+      "candidate": "qdrant",
+      "status": "PASS",
+      "image": "qdrant/qdrant:latest",
+      "runtime_startup_seconds": 1.504,
+      "functional_smoke": true,
+      "cpu_percent": "0.15%",
+      "memory_usage": "71.84MiB / 15.54GiB",
+      "passed": true
+    },
+    {
+      "candidate": "neo4j",
+      "status": "RETEST_REQUIRED",
+      "original_reason": "Bolt connection refused during warm-up probe",
+      "passed": false
+    },
+    {
+      "candidate": "opensearch",
+      "status": "RETEST_REQUIRED",
+      "original_reason": "not ready within 90 seconds; host prerequisite and logs were not captured by old harness",
+      "passed": false
+    }
+  ],
+  "promotion_allowed": false,
+  "note": "Only PostgreSQL and Qdrant have valid P0B runtime PASS from this run. Other candidates require rerun with warm-up tolerant probes and diagnostics."
+}
