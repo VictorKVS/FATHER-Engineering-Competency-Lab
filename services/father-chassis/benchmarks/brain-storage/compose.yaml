@@ -58,4 +58,9 @@ services:
       DISABLE_SECURITY_PLUGIN: "true"
       OPENSEARCH_JAVA_OPTS: "-Xms1g -Xmx1g"
     ports: ["59200:9200"]
-    tmpfs: ["/usr/share/opensearch/data:rw,size=2g"]
+    volumes:
+      - opensearch-bench-data:/usr/share/opensearch/data
+
+
+volumes:
+  opensearch-bench-data:
