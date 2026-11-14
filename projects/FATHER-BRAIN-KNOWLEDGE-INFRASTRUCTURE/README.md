@@ -20,7 +20,7 @@
 | Test Architecture | ✅ PASS for FTH-BRAIN-SUPPLY-001 |
 | Development Packet | ✅ ISSUED |
 | Senior Developer | ✅ IMPLEMENTED |
-| Qualification | ✅ FTH-BRAIN-SUPPLY-001 PASS — 188 regression tests |
+| Qualification | ✅ Brain Supply + Storage Selection + Block Materializer QUALIFIED; Storage Bench P0B 5/5 PASS |
 | Release | ⏳ Planned |
 
 > Правило FATHER: **никакой реализации до прохождения аналитических, архитектурных и тестовых gate.**
@@ -323,7 +323,7 @@ flowchart LR
     --> REL[Release]
 ```
 
-**FTH-BRAIN-SUPPLY-001 QUALIFIED.** Storage Selection Engine и Block Materializer подготовлены к локальной qualification; P0 Docker-стенд реальных хранилищ готов.
+**QUALIFIED:** FTH-BRAIN-SUPPLY-001, FTH-BRAIN-STORAGE-SELECTION-001, FTH-FACTORY-BLOCK-MATERIALIZER-001. **Storage Bench P0B:** 5/5 runtime candidates PASS (PostgreSQL, pgvector, Qdrant, Neo4j, OpenSearch). Следующий gate — P1 comparative workload benchmark.
 
 ---
 
@@ -339,6 +339,7 @@ flowchart LR
 - [08 — Bench Test Program](./08_BENCH_TEST_PROGRAM.md)
 - [09 — Real Storage Bench Execution](./09_REAL_STORAGE_BENCH_EXECUTION.md)
 - [10 — Qualified Block Delivery & Agent Composition](./10_BLOCK_DELIVERY_AND_COMPOSITION.md)
+- [11 — P0 Storage Bench Qualification Status](./11_P0_STORAGE_BENCH_STATUS.md)
 
 Следующие ожидаемые артефакты:
 
