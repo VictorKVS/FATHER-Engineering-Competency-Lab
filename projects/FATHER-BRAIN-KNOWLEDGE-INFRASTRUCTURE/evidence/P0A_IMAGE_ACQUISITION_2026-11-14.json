@@ -1,0 +1,62 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P0A_IMAGE_ACQUISITION",
+  "source": "local Windows operator run",
+  "timestamp_utc": "2026-11-14T07:37:26.3691100Z",
+  "candidate": "all",
+  "retries": 3,
+  "ready_count": 5,
+  "blocked_count": 0,
+  "passed": true,
+  "results": [
+    {
+      "candidate": "postgres",
+      "image": "postgres:18-alpine",
+      "status": "READY_LOCAL",
+      "attempts": 0,
+      "image_id": "sha256:1018733457011bf88d81db98cf43aac6d5150afc18787dbe204771fedf80ff95",
+      "pulled": false,
+      "passed": true
+    },
+    {
+      "candidate": "pgvector",
+      "image": "pgvector/pgvector:0.8.7-pg18-trixie",
+      "status": "PULLED",
+      "attempts": 1,
+      "acquisition_seconds": 155.629,
+      "image_id": "sha256:ab49524d18df7200b74ac9a475e1db6297fc1eb57da4c214c63d10ecc4b754fa",
+      "pulled": true,
+      "passed": true
+    },
+    {
+      "candidate": "qdrant",
+      "image": "qdrant/qdrant:latest",
+      "status": "PULLED",
+      "attempts": 1,
+      "acquisition_seconds": 67.066,
+      "image_id": "sha256:d18c8e5061be3eaea2f53fbee1f0bf0382dc59cbb9b7112e41ffcc937ec14220",
+      "pulled": true,
+      "passed": true
+    },
+    {
+      "candidate": "neo4j",
+      "image": "neo4j:2026.10.2",
+      "status": "PULLED",
+      "attempts": 1,
+      "acquisition_seconds": 119.222,
+      "image_id": "sha256:4a2fd4f41ce384aa7d6a74b399f22c202e154f3966119c28a18ed9a500904f5e",
+      "pulled": true,
+      "passed": true
+    },
+    {
+      "candidate": "opensearch",
+      "image": "opensearchproject/opensearch:3.9.0",
+      "status": "PULLED",
+      "attempts": 1,
+      "acquisition_seconds": 32341.369,
+      "image_id": "sha256:3b55f6b6249cfdb92b52ee59adc8a266203ba9ef9f5d82544fad6f1af2f3609e",
+      "pulled": true,
+      "passed": true
+    }
+  ],
+  "note": "Image acquisition timings are supply-chain/network evidence only and MUST NOT be used as runtime performance metrics."
+}
