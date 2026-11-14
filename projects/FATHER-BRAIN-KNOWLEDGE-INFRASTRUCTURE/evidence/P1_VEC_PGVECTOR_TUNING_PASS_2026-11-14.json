@@ -1,0 +1,29 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_VEC_PGVECTOR_TUNING",
+  "date": "2026-11-14",
+  "status": "PASS",
+  "records": 10000,
+  "dimensions": 384,
+  "top_k": 10,
+  "recall_threshold": 0.95,
+  "tested": [
+    {"ef_search":100,"recall_mean":0.936667,"recall_min":0.9,"p95_ms":1.6722,"passed":false},
+    {"ef_search":150,"recall_mean":0.936667,"recall_min":0.9,"p95_ms":1.8429,"passed":false},
+    {"ef_search":200,"recall_mean":0.936667,"recall_min":0.9,"p95_ms":1.8886,"passed":false},
+    {"ef_search":300,"recall_mean":0.953333,"recall_min":0.9,"p95_ms":7.6939,"p99_ms":12.4475,"passed":true},
+    {"ef_search":400,"recall_mean":0.953333,"recall_min":0.9,"p95_ms":7.298,"p99_ms":7.8035,"passed":true}
+  ],
+  "selected_minimum_passing_configuration": {
+    "index": "HNSW vector_cosine_ops",
+    "ef_search": 300,
+    "recall_at_10_mean": 0.953333,
+    "recall_at_10_min": 0.9,
+    "p50_ms": 5.9755,
+    "p95_ms": 7.6939,
+    "p99_ms": 12.4475,
+    "max_ms": 12.6683
+  },
+  "image_digest": "sha256:ab49524d18df7200b74ac9a475e1db6297fc1eb57da4c214c63d10ecc4b754fa",
+  "evidence_hash": "a245ad324ae636d5024c889d1a776d1a312cd2aaf767f8d25712cc275880a697",
+  "qualification_scope": "Valid only for S profile: 10k vectors, 384 dimensions, current hardware/image/configuration. M/L profiles are not yet qualified."
+}
