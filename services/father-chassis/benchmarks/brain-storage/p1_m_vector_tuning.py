@@ -23,7 +23,7 @@ RECALL_THRESHOLD = 0.95
 A = 7919
 B = 104729
 
-PG_EF_VALUES = [300, 500, 800, 1200, 2000]
+PG_EF_VALUES = [300, 500, 800, 1000]
 QDRANT_EF_VALUES = [64, 128, 256, 512, 1024]
 
 
@@ -149,7 +149,7 @@ def evaluate(query_fn, expected: dict[int, list[int]]) -> dict[str, Any]:
 
 
 def tune_pgvector() -> dict[str, Any]:
-    expected = {qid: exact_topk(qid) for qid in query_ids()}
+    theoretical_expected = {qid: exact_topk(qid) for qid in query_ids()}
 
     with psycopg.connect(
         host="127.0.0.1",
@@ -183,6 +183,29 @@ def tune_pgvector() -> dict[str, Any]:
             index_seconds = time.perf_counter() - t1
             cur.execute("ANALYZE bench_vec_m_tuning")
 
+        # Ground truth must be calculated from the vectors as actually stored
+        # by pgvector. At 100k, float32 representation makes several theoretical
+        # neighbors effectively tied, so pre-storage double-precision geometry
+        # is diagnostic only and must not be the ANN qualification oracle.
+        stored_exact: dict[int, list[int]] = {}
+        with conn.cursor() as cur:
+            cur.execute("SET enable_indexscan = off")
+            cur.execute("SET enable_bitmapscan = off")
+            for qid in query_ids():
+                cur.execute(
+                    "SELECT id FROM bench_vec_m_tuning "
+                    "ORDER BY v <=> %s::vector LIMIT %s",
+                    (vector_text(vector_for(qid)), TOP_K),
+                )
+                stored_exact[qid] = [row[0] for row in cur.fetchall()]
+            cur.execute("SET enable_indexscan = on")
+            cur.execute("SET enable_bitmapscan = on")
+
+        representation_recalls = [
+            recall_at_k(theoretical_expected[qid], stored_exact[qid])
+            for qid in query_ids()
+        ]
+
         results = []
         selected = None
 
@@ -201,7 +224,7 @@ def tune_pgvector() -> dict[str, Any]:
                     )
                     return [row[0] for row in cur.fetchall()]
 
-                item = {"ef_search": ef, **evaluate(query, expected)}
+                item = {"ef_search": ef, **evaluate(query, stored_exact)}
 
             results.append(item)
             if selected is None and item["passes_recall_threshold"]:
@@ -215,6 +238,16 @@ def tune_pgvector() -> dict[str, Any]:
         "top_k": TOP_K,
         "index": "HNSW vector_cosine_ops",
         "tested_ef_search": PG_EF_VALUES,
+        "ground_truth": {
+            "method": "exact sequential scan over stored pgvector values",
+            "theoretical_pre_storage_agreement_mean": round(
+                statistics.fmean(representation_recalls), 6
+            ),
+            "theoretical_pre_storage_agreement_min": round(
+                min(representation_recalls), 6
+            ),
+            "qualification_uses_theoretical_pre_storage_reference": False,
+        },
         "ingest_seconds": round(ingest_seconds, 4),
         "index_build_seconds": round(index_seconds, 4),
         "results": results,
@@ -261,7 +294,7 @@ def wait_qdrant_index(base: str, collection: str, timeout_seconds: int = 180) ->
 def tune_qdrant() -> dict[str, Any]:
     base = "http://127.0.0.1:56333"
     collection = "father_p1_m_tuning"
-    expected = {qid: exact_topk(qid) for qid in query_ids()}
+    theoretical_expected = {qid: exact_topk(qid) for qid in query_ids()}
 
     try:
         http_json("DELETE", f"{base}/collections/{collection}", timeout=20)
@@ -319,12 +352,21 @@ def tune_qdrant() -> dict[str, Any]:
             return qdrant_ids(payload)
         return query
 
-    exact_control = evaluate(query_with(None, exact=True), expected)
+    exact_query = query_with(None, exact=True)
+    stored_exact = {qid: exact_query(qid) for qid in query_ids()}
+    representation_recalls = [
+        recall_at_k(theoretical_expected[qid], stored_exact[qid])
+        for qid in query_ids()
+    ]
+    exact_control = evaluate(exact_query, stored_exact)
 
     results = []
     selected = None
     for ef in QDRANT_EF_VALUES:
-        item = {"hnsw_ef": ef, **evaluate(query_with(ef, exact=False), expected)}
+        item = {
+            "hnsw_ef": ef,
+            **evaluate(query_with(ef, exact=False), stored_exact),
+        }
         results.append(item)
         if selected is None and item["passes_recall_threshold"]:
             selected = item
@@ -339,6 +381,16 @@ def tune_qdrant() -> dict[str, Any]:
         "hnsw_config": {"m": 16, "ef_construct": 100, "full_scan_threshold": 10000},
         "index_state_before_measurement": index_state,
         "ingest_seconds": round(ingest_seconds, 4),
+        "ground_truth": {
+            "method": "Qdrant exact=true over stored float32 vectors",
+            "theoretical_pre_storage_agreement_mean": round(
+                statistics.fmean(representation_recalls), 6
+            ),
+            "theoretical_pre_storage_agreement_min": round(
+                min(representation_recalls), 6
+            ),
+            "qualification_uses_theoretical_pre_storage_reference": False,
+        },
         "exact_control": exact_control,
         "tested_hnsw_ef": QDRANT_EF_VALUES,
         "results": results,
