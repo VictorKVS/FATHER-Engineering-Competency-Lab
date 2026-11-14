@@ -190,9 +190,15 @@ def main() -> int:
             results = []
             selected = None
 
-            for config in BUILD_MATRIX:
+            total_configs = len(BUILD_MATRIX)
+            for config_index, config in enumerate(BUILD_MATRIX, start=1):
                 m = config["m"]
                 efc = config["ef_construction"]
+                print(
+                    f"[{config_index}/{total_configs}] build HNSW "
+                    f"m={m} ef_construction={efc} ...",
+                    flush=True,
+                )
 
                 with conn.cursor() as cur:
                     cur.execute("DROP INDEX IF EXISTS bench_vec_m_build_hnsw")
@@ -210,6 +216,15 @@ def main() -> int:
                     )
 
                     measured = evaluate(cur, exact_expected)
+
+                print(
+                    f"[{config_index}/{total_configs}] result "
+                    f"m={m} ef_construction={efc} "
+                    f"Recall@{TOP_K}={measured['recall_at_k_mean']} "
+                    f"p95={measured['latency']['p95_ms']} ms "
+                    f"PASS={measured['passes_recall_threshold']}",
+                    flush=True,
+                )
 
                 item = {
                     "m": m,
