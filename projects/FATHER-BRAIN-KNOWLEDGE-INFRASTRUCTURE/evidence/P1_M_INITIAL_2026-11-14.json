@@ -1,0 +1,14 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_M_INITIAL",
+  "date": "2026-11-14",
+  "profile": "M",
+  "records": 100000,
+  "results": [
+    {"league":"REL-M","candidate":"postgres","status":"PASS","evidence_hash":"4c5ace3b76b4c1bc1138f2c85a31ea5b937829c18cdc9f585b71f821856fb5c4"},
+    {"league":"REL-M","candidate":"pgvector","status":"PASS","evidence_hash":"15bc49b22f83f1f5f4148178b402b48a38ff4f5134a84b93c0c92654e0464433"},
+    {"league":"VEC-M","candidate":"pgvector","status":"TUNING_REQUIRED","recall_at_10_mean":0.833333,"ef_search":300,"evidence_hash":"debcf298fa7dc48455917dffdb5c9db0959131d91bc7ce4b5ae5d4de4600ba74"},
+    {"league":"VEC-M","candidate":"qdrant","status":"TUNING_REQUIRED","recall_at_10_mean":0.856667,"evidence_hash":"984536e74cbd25e20de8e70ad9192e5ae942c33902a0022a9ac23a600580f790"}
+  ],
+  "promotion_to_L_allowed": false,
+  "reason": "REL-M passed; VEC-M requires quality tuning before 1M qualification."
+}
