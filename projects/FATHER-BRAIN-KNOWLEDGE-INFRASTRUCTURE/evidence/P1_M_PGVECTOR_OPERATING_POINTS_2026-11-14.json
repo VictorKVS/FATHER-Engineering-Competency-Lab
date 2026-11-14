@@ -1,0 +1,41 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_M_PGVECTOR_OPERATING_POINTS",
+  "date": "2026-11-14",
+  "profile": "M",
+  "records": 100000,
+  "dimensions": 384,
+  "top_k": 10,
+  "status": "PASS",
+  "ground_truth": "exact search over persisted pgvector values before ANN index",
+  "minimal_passing_configuration": {
+    "m": 48,
+    "ef_construction": 256,
+    "ef_search": 1000,
+    "index_build_seconds": 224.0015,
+    "recall_at_10_mean": 0.95,
+    "recall_at_10_min": 0.8,
+    "p50_ms": 39.0697,
+    "p95_ms": 53.8959,
+    "p99_ms": 71.7234
+  },
+  "preferred_next_scale_configuration": {
+    "m": 48,
+    "ef_construction": 512,
+    "ef_search": 1000,
+    "index_build_seconds": 270.6275,
+    "recall_at_10_mean": 0.952222,
+    "recall_at_10_min": 0.8,
+    "p50_ms": 31.516,
+    "p95_ms": 34.7516,
+    "p99_ms": 36.4573
+  },
+  "rejected_more_is_better_assumption": {
+    "m": 64,
+    "ef_construction": 512,
+    "ef_search": 1000,
+    "recall_at_10_mean": 0.941111,
+    "reason": "larger graph connectivity did not improve qualification result"
+  },
+  "image_digest": "sha256:ab49524d18df7200b74ac9a475e1db6297fc1eb57da4c214c63d10ecc4b754fa",
+  "source_evidence_hash": "412093cf5e40df3532cc6fdee69a9e899a965654b05c27a257d12799e5ea03c5"
+}
