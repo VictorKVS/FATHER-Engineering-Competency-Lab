@@ -22,8 +22,13 @@ foreach($candidate in $candidates){
     Sort-Object LastWriteTime -Descending |
     Select-Object -First 1
 
-  & $runner $candidate
-  $exitCode = $LASTEXITCODE
+  $child = Start-Process -FilePath "powershell.exe" -ArgumentList @(
+    "-NoProfile",
+    "-ExecutionPolicy","Bypass",
+    "-File",$runner,
+    $candidate
+  ) -Wait -PassThru -NoNewWindow
+  $exitCode = $child.ExitCode
 
   $after = Get-ChildItem $artifactDir -Filter ("P0B_runtime_smoke_" + $candidate + "_*.json") -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending |
