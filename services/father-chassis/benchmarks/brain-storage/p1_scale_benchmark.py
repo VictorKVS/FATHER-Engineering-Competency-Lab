@@ -508,6 +508,8 @@ def main() -> int:
             "contract_version": "1.0",
             "profile": profile,
             "records": n,
+            "storage_mode": "docker_named_volume",
+            "compose_profile": "scale",
             "seed": SEED,
             "started_epoch": started,
             "completed_epoch": time.time(),
