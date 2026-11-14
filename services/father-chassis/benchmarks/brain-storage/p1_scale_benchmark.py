@@ -21,7 +21,10 @@ QUERY_COUNT = 30
 REPETITIONS = 3
 SEED = 20261114
 RECALL_THRESHOLD = 0.95
-PGVECTOR_EF_SEARCH = 300
+PGVECTOR_M = 48
+PGVECTOR_EF_CONSTRUCTION = 512
+PGVECTOR_EF_SEARCH = 1000
+QDRANT_HNSW_EF = 64
 PROFILES = {
     "M": 100_000,
     "L": 1_000_000,
@@ -288,7 +291,6 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
     container = "father-bench-pgvector"
     before = docker_stats(container)
     ids = query_ids(n)
-    expected = {qid: exact_topk(qid, n) for qid in ids}
 
     with pg_connect(55433) as conn:
         with conn.cursor() as cur:
@@ -306,11 +308,29 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
                     copy.write_row((i, f"domain-{i % 17}", vector_text(vector_for(i, n))))
         ingest_seconds = time.perf_counter() - t0
 
+        # Exact persisted ground truth is captured before ANN index creation.
+        exact_expected: dict[int, list[int]] = {}
+        exact_latencies: list[float] = []
+        with conn.cursor() as cur:
+            for qid in ids:
+                t_exact = time.perf_counter_ns()
+                cur.execute(
+                    "SELECT id FROM bench_vec_scale "
+                    "ORDER BY v <=> %s::vector LIMIT %s",
+                    (vector_text(vector_for(qid, n)), TOP_K),
+                )
+                exact_expected[qid] = [r[0] for r in cur.fetchall()]
+                exact_latencies.append(
+                    (time.perf_counter_ns() - t_exact) / 1_000_000
+                )
+
         with conn.cursor() as cur:
             t_idx = time.perf_counter()
             cur.execute(
                 "CREATE INDEX bench_vec_scale_hnsw "
-                "ON bench_vec_scale USING hnsw (v vector_cosine_ops)"
+                "ON bench_vec_scale USING hnsw (v vector_cosine_ops) "
+                f"WITH (m = {PGVECTOR_M}, "
+                f"ef_construction = {PGVECTOR_EF_CONSTRUCTION})"
             )
             index_seconds = time.perf_counter() - t_idx
             cur.execute("ANALYZE bench_vec_scale")
@@ -334,7 +354,10 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
     for c in CONCURRENCY_LEVELS:
         perf = run_concurrency(query, ids, c)
         actual_by_id = {qid: query(qid) for qid in ids}
-        recalls = [recall_at_k(expected[qid], actual_by_id[qid]) for qid in ids]
+        recalls = [
+            recall_at_k(exact_expected[qid], actual_by_id[qid])
+            for qid in ids
+        ]
         mean_recall = statistics.fmean(recalls)
         perf["recall_at_k_mean"] = round(mean_recall, 6)
         perf["recall_at_k_min"] = round(min(recalls), 6)
@@ -354,7 +377,13 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
         "dimensions": DIM,
         "top_k": TOP_K,
         "index": "HNSW vector_cosine_ops",
+        "m": PGVECTOR_M,
+        "ef_construction": PGVECTOR_EF_CONSTRUCTION,
         "ef_search": PGVECTOR_EF_SEARCH,
+        "ground_truth": {
+            "method": "exact search over persisted pgvector values before ANN index",
+            "exact_latency": latency_summary_ms(exact_latencies),
+        },
         "ingest_seconds": round(ingest_seconds, 4),
         "ingest_records_per_second": round(n / ingest_seconds, 2),
         "index_build_seconds": round(index_seconds, 4),
@@ -390,7 +419,6 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
     base = "http://127.0.0.1:56333"
     before = docker_stats(container)
     ids = query_ids(n)
-    expected = {qid: exact_topk(qid, n) for qid in ids}
 
     try:
         http_json("DELETE", f"{base}/collections/father_p1_scale", timeout=20)
@@ -400,7 +428,14 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
     http_json(
         "PUT",
         f"{base}/collections/father_p1_scale",
-        {"vectors": {"size": DIM, "distance": "Cosine"}},
+        {
+            "vectors": {"size": DIM, "distance": "Cosine"},
+            "hnsw_config": {
+                "m": 16,
+                "ef_construct": 100,
+                "full_scan_threshold": 10000,
+            },
+        },
     )
 
     batch_size = 500
@@ -423,7 +458,10 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
         )
     ingest_seconds = time.perf_counter() - t0
 
-    def query(qid: int):
+    def query_with(qid: int, *, exact: bool) -> list[int]:
+        params: dict[str, Any] = {"exact": exact}
+        if not exact:
+            params["hnsw_ef"] = QDRANT_HNSW_EF
         payload = http_json(
             "POST",
             f"{base}/collections/father_p1_scale/points/query",
@@ -432,10 +470,16 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
                 "limit": TOP_K,
                 "with_payload": False,
                 "with_vector": False,
+                "params": params,
             },
-            timeout=60,
+            timeout=120,
         )
         return qdrant_ids(payload)
+
+    exact_expected = {qid: query_with(qid, exact=True) for qid in ids}
+
+    def query(qid: int):
+        return query_with(qid, exact=False)
 
     for qid in ids:
         query(qid)
@@ -445,7 +489,10 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
     for c in CONCURRENCY_LEVELS:
         perf = run_concurrency(query, ids, c)
         actual_by_id = {qid: query(qid) for qid in ids}
-        recalls = [recall_at_k(expected[qid], actual_by_id[qid]) for qid in ids]
+        recalls = [
+            recall_at_k(exact_expected[qid], actual_by_id[qid])
+            for qid in ids
+        ]
         mean_recall = statistics.fmean(recalls)
         perf["recall_at_k_mean"] = round(mean_recall, 6)
         perf["recall_at_k_min"] = round(min(recalls), 6)
@@ -464,7 +511,16 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
         "records": n,
         "dimensions": DIM,
         "top_k": TOP_K,
-        "index": "Qdrant default vector index/config",
+        "index": "Qdrant HNSW",
+        "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+        },
+        "hnsw_ef": QDRANT_HNSW_EF,
+        "ground_truth": {
+            "method": "Qdrant exact=true over persisted vectors",
+        },
         "ingest_seconds": round(ingest_seconds, 4),
         "ingest_records_per_second": round(n / ingest_seconds, 2),
         "index_build_seconds": None,
