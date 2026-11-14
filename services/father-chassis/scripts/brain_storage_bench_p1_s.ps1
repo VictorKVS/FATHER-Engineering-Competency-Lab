@@ -11,9 +11,29 @@ $pythonBench = Join-Path $serviceDir "benchmarks\brain-storage\p1_s_benchmark.py
 $artifactDir = Join-Path $serviceDir "artifacts\local\brain-storage-bench\p1"
 New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 
+function Invoke-NativeCapture {
+  param(
+    [Parameter(Mandatory=$true)][string]$FilePath,
+    [Parameter(Mandatory=$true)][string[]]$Arguments
+  )
+  $previousPreference = $ErrorActionPreference
+  try {
+    $ErrorActionPreference = "Continue"
+    $lines = & $FilePath @Arguments 2>&1
+    $exitCode = $LASTEXITCODE
+    [pscustomobject]@{
+      ExitCode = $exitCode
+      Output = ($lines | Out-String).Trim()
+    }
+  }
+  finally {
+    $ErrorActionPreference = $previousPreference
+  }
+}
+
 $python = (Get-Command python -ErrorAction Stop).Source
-$dependencyCheck = & $python -c "import psycopg; print(psycopg.__version__)" 2>&1
-if($LASTEXITCODE -ne 0){
+$dependencyCheck = Invoke-NativeCapture -FilePath $python -Arguments @("-c","import psycopg; print(psycopg.__version__)")
+if($dependencyCheck.ExitCode -ne 0){
   Write-Host "P1_ENVIRONMENT_BLOCKED: psycopg is not installed."
   Write-Host 'Install: python -m pip install "psycopg[binary]>=3.2"'
   exit 2
@@ -41,9 +61,18 @@ foreach($item in $matrix){
   Write-Host "[P1] $($league.ToUpper())-S : $candidate"
   Write-Host "============================================================"
 
-  docker compose -f $compose --profile $candidate up -d --pull never $candidate
-  if($LASTEXITCODE -ne 0){
-    $results += [ordered]@{league=$league; candidate=$candidate; status="START_FAILED"; passed=$false}
+  $up = Invoke-NativeCapture -FilePath "docker" -Arguments @(
+    "compose","-f",$compose,"--profile",$candidate,"up","-d","--pull","never",$candidate
+  )
+  if($up.ExitCode -ne 0){
+    Write-Host $up.Output
+    $results += [ordered]@{
+      league=$league
+      candidate=$candidate
+      status="START_FAILED"
+      reason=$up.Output
+      passed=$false
+    }
     continue
   }
 
@@ -54,12 +83,16 @@ foreach($item in $matrix){
       Start-Sleep -Seconds 1
       switch($candidate){
         "postgres" {
-          docker exec father-bench-postgres pg_isready -U father -d father_bench *> $null
-          $ready=($LASTEXITCODE -eq 0)
+          $probe = Invoke-NativeCapture -FilePath "docker" -Arguments @(
+            "exec","father-bench-postgres","pg_isready","-U","father","-d","father_bench"
+          )
+          $ready=($probe.ExitCode -eq 0)
         }
         "pgvector" {
-          docker exec father-bench-pgvector pg_isready -U father -d father_bench *> $null
-          $ready=($LASTEXITCODE -eq 0)
+          $probe = Invoke-NativeCapture -FilePath "docker" -Arguments @(
+            "exec","father-bench-pgvector","pg_isready","-U","father","-d","father_bench"
+          )
+          $ready=($probe.ExitCode -eq 0)
         }
         "qdrant" {
           try {
@@ -71,7 +104,12 @@ foreach($item in $matrix){
     }
 
     if(-not $ready){
-      $results += [ordered]@{league=$league; candidate=$candidate; status="READINESS_FAILED"; passed=$false}
+      $results += [ordered]@{
+        league=$league
+        candidate=$candidate
+        status="READINESS_FAILED"
+        passed=$false
+      }
       continue
     }
 
@@ -86,7 +124,13 @@ foreach($item in $matrix){
     if(Test-Path $out){
       $payload=Get-Content $out -Raw | ConvertFrom-Json
     }
-    $passed=($child.ExitCode -eq 0 -and $null -ne $payload -and $payload.result.passed)
+
+    $payloadPassed=$false
+    if($null -ne $payload -and $null -ne $payload.PSObject.Properties["result"]){
+      $payloadPassed=[bool]$payload.result.passed
+    }
+
+    $passed=($child.ExitCode -eq 0 -and $payloadPassed)
 
     $results += [ordered]@{
       league=$league
@@ -97,7 +141,12 @@ foreach($item in $matrix){
     }
   }
   finally {
-    docker compose -f $compose --profile $candidate down -v --remove-orphans *> $null
+    $down = Invoke-NativeCapture -FilePath "docker" -Arguments @(
+      "compose","-f",$compose,"--profile",$candidate,"down","-v","--remove-orphans"
+    )
+    if($down.ExitCode -ne 0){
+      Write-Warning "Cleanup failed for $candidate : $($down.Output)"
+    }
   }
 }
 
