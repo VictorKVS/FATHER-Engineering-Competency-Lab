@@ -1,0 +1,49 @@
+name: father-brain-storage-bench-scale
+
+services:
+  postgres:
+    profiles: ["postgres"]
+    image: postgres:18-alpine
+    container_name: father-bench-postgres
+    environment:
+      POSTGRES_PASSWORD: father_bench
+      POSTGRES_USER: father
+      POSTGRES_DB: father_bench
+    ports: ["55432:5432"]
+    volumes:
+      - postgres-scale-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U father -d father_bench"]
+      interval: 2s
+      timeout: 2s
+      retries: 60
+
+  pgvector:
+    profiles: ["pgvector"]
+    image: pgvector/pgvector:0.8.7-pg18-trixie
+    container_name: father-bench-pgvector
+    environment:
+      POSTGRES_PASSWORD: father_bench
+      POSTGRES_USER: father
+      POSTGRES_DB: father_bench
+    ports: ["55433:5432"]
+    volumes:
+      - pgvector-scale-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U father -d father_bench"]
+      interval: 2s
+      timeout: 2s
+      retries: 60
+
+  qdrant:
+    profiles: ["qdrant"]
+    image: qdrant/qdrant:latest
+    container_name: father-bench-qdrant
+    ports: ["56333:6333"]
+    volumes:
+      - qdrant-scale-data:/qdrant/storage
+
+volumes:
+  postgres-scale-data:
+  pgvector-scale-data:
+  qdrant-scale-data:
