@@ -229,6 +229,8 @@ def main() -> int:
             "contract_version": "1.0",
             "seed": SEED,
             "records": N,
+            "storage_mode": "docker_named_volume",
+            "compose_profile": "scale",
             "dimensions": DIM,
             "top_k": TOP_K,
             "recall_threshold": RECALL_THRESHOLD,
