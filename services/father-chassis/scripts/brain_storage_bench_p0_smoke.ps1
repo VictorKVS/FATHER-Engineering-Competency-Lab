@@ -139,7 +139,7 @@ try {
     started_at_utc=$start.ToUniversalTime().ToString("o")
     ready_at_utc=$readyAt.ToUniversalTime().ToString("o")
     runtime_startup_seconds=[math]::Round(($readyAt-$start).TotalSeconds,3)
-    image_pull_excluded=true
+    image_pull_excluded=$true
     functional_smoke=$functional
     cpu_percent=$stats.CPUPerc
     memory_usage=$stats.MemUsage
