@@ -238,6 +238,8 @@ def run_rel(candidate: str, n: int, profile: str) -> dict[str, Any]:
                         (i * 37) % 1000,
                         f"father deterministic scale record {i}",
                     ))
+                    if i % 100_000 == 0 or i == n:
+                        print(f"[REL-{profile}] ingest {i}/{n}", flush=True)
         ingest_seconds = time.perf_counter() - t0
 
         with conn.cursor() as cur:
@@ -306,6 +308,8 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
             with cur.copy("COPY bench_vec_scale (id, domain, v) FROM STDIN") as copy:
                 for i in range(1, n + 1):
                     copy.write_row((i, f"domain-{i % 17}", vector_text(vector_for(i, n))))
+                    if i % 100_000 == 0 or i == n:
+                        print(f"[VEC-{profile} pgvector] ingest {i}/{n}", flush=True)
         ingest_seconds = time.perf_counter() - t0
 
         # Exact persisted ground truth is captured before ANN index creation.
@@ -324,6 +328,11 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
                     (time.perf_counter_ns() - t_exact) / 1_000_000
                 )
 
+        print(
+            f"[VEC-{profile} pgvector] build HNSW "
+            f"m={PGVECTOR_M} ef_construction={PGVECTOR_EF_CONSTRUCTION} ...",
+            flush=True,
+        )
         with conn.cursor() as cur:
             t_idx = time.perf_counter()
             cur.execute(
@@ -334,6 +343,11 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
             )
             index_seconds = time.perf_counter() - t_idx
             cur.execute("ANALYZE bench_vec_scale")
+        print(
+            f"[VEC-{profile} pgvector] HNSW built in "
+            f"{index_seconds:.2f}s; starting query phases",
+            flush=True,
+        )
 
     def query(qid: int):
         conn = pg_thread_connection(55433, PGVECTOR_EF_SEARCH)
@@ -456,7 +470,17 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
             {"points": points},
             timeout=180,
         )
+        if (end - 1) % 100_000 == 0 or end == n + 1:
+            print(
+                f"[VEC-{profile} qdrant] ingest {end - 1}/{n}",
+                flush=True,
+            )
     ingest_seconds = time.perf_counter() - t0
+    print(
+        f"[VEC-{profile} qdrant] ingest complete in "
+        f"{ingest_seconds:.2f}s; capturing exact ground truth",
+        flush=True,
+    )
 
     def query_with(qid: int, *, exact: bool) -> list[int]:
         params: dict[str, Any] = {"exact": exact}
