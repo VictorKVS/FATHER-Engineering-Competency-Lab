@@ -33,6 +33,9 @@ PROFILES = {
 CONCURRENCY_LEVELS = [1, 4, 16]
 A = 7919
 B = 104729
+SCALE_VECTOR_CORPUS_VERSION = "v2-deterministic-32d"
+ACTIVE_VECTOR_DIMS = 32
+VECTOR_MODULUS = 2147483647
 _thread_local = threading.local()
 
 
@@ -62,8 +65,26 @@ def latency_summary_ms(samples: list[float]) -> dict[str, float]:
 
 
 def vector_for(i: int, n: int) -> list[float]:
-    theta = (2.0 * math.pi * ((i * A + B) % n)) / n
-    return [math.cos(theta), math.sin(theta)] + [0.0] * (DIM - 2)
+    # Scale Corpus v2: deterministic pseudo-random high-dimensional geometry.
+    # The previous unit-circle corpus became numerically degenerate at L=1M:
+    # adjacent cosine distances fell below float32 ranking resolution.
+    # v2 keeps 384 dimensions but uses 32 independent active dimensions with
+    # deterministic modular mixing, then L2-normalizes the vector.
+    values: list[float] = []
+    norm_sq = 0.0
+    for d in range(ACTIVE_VECTOR_DIMS):
+        mixed = (
+            (i * (104729 + d * 15485863))
+            + ((d + 1) * 32452843)
+            + (i * i * (d + 3))
+        ) % VECTOR_MODULUS
+        value = (mixed / VECTOR_MODULUS) * 2.0 - 1.0
+        values.append(value)
+        norm_sq += value * value
+
+    norm = math.sqrt(norm_sq) or 1.0
+    active = [value / norm for value in values]
+    return active + [0.0] * (DIM - ACTIVE_VECTOR_DIMS)
 
 
 def vector_text(v: list[float]) -> str:
@@ -389,6 +410,8 @@ def run_vec_pgvector(n: int, profile: str) -> dict[str, Any]:
         "candidate": "pgvector",
         "records": n,
         "dimensions": DIM,
+        "active_vector_dimensions": ACTIVE_VECTOR_DIMS,
+        "vector_corpus_version": SCALE_VECTOR_CORPUS_VERSION,
         "top_k": TOP_K,
         "index": "HNSW vector_cosine_ops",
         "m": PGVECTOR_M,
@@ -534,6 +557,8 @@ def run_vec_qdrant(n: int, profile: str) -> dict[str, Any]:
         "candidate": "qdrant",
         "records": n,
         "dimensions": DIM,
+        "active_vector_dimensions": ACTIVE_VECTOR_DIMS,
+        "vector_corpus_version": SCALE_VECTOR_CORPUS_VERSION,
         "top_k": TOP_K,
         "index": "Qdrant HNSW",
         "hnsw_config": {
@@ -590,6 +615,7 @@ def main() -> int:
             "records": n,
             "storage_mode": "docker_named_volume",
             "compose_profile": "scale",
+            "vector_corpus_version": SCALE_VECTOR_CORPUS_VERSION if args.league == "vec" else None,
             "seed": SEED,
             "started_epoch": started,
             "completed_epoch": time.time(),
