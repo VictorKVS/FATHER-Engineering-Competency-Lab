@@ -9,6 +9,16 @@ New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
 $date = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $summaryPath = Join-Path $artifactDir ("P0B_runtime_summary_" + $date + ".json")
 
+function Get-OptionalProperty {
+  param(
+    [Parameter(Mandatory=$true)]$Object,
+    [Parameter(Mandatory=$true)][string]$Name
+  )
+  $property = $Object.PSObject.Properties[$Name]
+  if($null -eq $property){ return $null }
+  return $property.Value
+}
+
 $candidates = @("postgres","pgvector","qdrant","neo4j","opensearch")
 $results = @()
 
@@ -38,6 +48,7 @@ foreach($candidate in $candidates){
     $results += [ordered]@{
       candidate=$candidate
       status="NO_EVIDENCE"
+      reason="runner produced no new evidence file"
       exit_code=$exitCode
       passed=$false
     }
@@ -47,19 +58,20 @@ foreach($candidate in $candidates){
   $payload = Get-Content $after.FullName -Raw | ConvertFrom-Json
   $results += [ordered]@{
     candidate=$candidate
-    status=$payload.status
-    image=$payload.image
-    image_id=$payload.image_id
-    runtime_startup_seconds=$payload.runtime_startup_seconds
-    functional_smoke=$payload.functional_smoke
-    cpu_percent=$payload.cpu_percent
-    memory_usage=$payload.memory_usage
-    memory_percent=$payload.memory_percent
-    network_io=$payload.network_io
-    block_io=$payload.block_io
+    status=Get-OptionalProperty $payload "status"
+    reason=Get-OptionalProperty $payload "reason"
+    image=Get-OptionalProperty $payload "image"
+    image_id=Get-OptionalProperty $payload "image_id"
+    runtime_startup_seconds=Get-OptionalProperty $payload "runtime_startup_seconds"
+    functional_smoke=Get-OptionalProperty $payload "functional_smoke"
+    cpu_percent=Get-OptionalProperty $payload "cpu_percent"
+    memory_usage=Get-OptionalProperty $payload "memory_usage"
+    memory_percent=Get-OptionalProperty $payload "memory_percent"
+    network_io=Get-OptionalProperty $payload "network_io"
+    block_io=Get-OptionalProperty $payload "block_io"
     evidence_path=$after.FullName
     exit_code=$exitCode
-    passed=[bool]$payload.passed
+    passed=[bool](Get-OptionalProperty $payload "passed")
   }
 }
 
@@ -80,7 +92,7 @@ Write-Host "Summary evidence: $summaryPath"
 Write-Host ""
 Write-Host "P0B TABLE"
 $results |
-  Select-Object candidate,status,runtime_startup_seconds,memory_usage,cpu_percent,functional_smoke |
+  Select-Object candidate,status,runtime_startup_seconds,memory_usage,cpu_percent,functional_smoke,reason |
   Format-Table -AutoSize
 
 if(-not $summary.passed){ exit 1 }
