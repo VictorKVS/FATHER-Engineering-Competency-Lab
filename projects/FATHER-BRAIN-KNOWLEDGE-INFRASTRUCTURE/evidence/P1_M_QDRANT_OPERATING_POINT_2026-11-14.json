@@ -1,0 +1,25 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_M_QDRANT_OPERATING_POINT",
+  "date": "2026-11-14",
+  "profile": "M",
+  "status": "PASS",
+  "records": 100000,
+  "dimensions": 384,
+  "top_k": 10,
+  "ground_truth": "Qdrant exact=true over persisted float32 vectors",
+  "exact_control_recall_at_10": 1.0,
+  "selected_configuration": {
+    "hnsw_ef": 64,
+    "m": 16,
+    "ef_construct": 100,
+    "full_scan_threshold": 10000,
+    "recall_at_10_mean": 0.98,
+    "recall_at_10_min": 0.9,
+    "p50_ms": 4.2158,
+    "p95_ms": 26.5489,
+    "p99_ms": 28.5557
+  },
+  "image_digest": "sha256:d18c8e5061be3eaea2f53fbee1f0bf0382dc59cbb9b7112e41ffcc937ec14220",
+  "source_evidence_hash": "ec14d4eadfa16ffd3c2d7f2d697f3f719be1fe0890f309f9d4a455abed752a05",
+  "qualification_scope": "M profile only; concurrency and L/XL scale remain separate gates."
+}
