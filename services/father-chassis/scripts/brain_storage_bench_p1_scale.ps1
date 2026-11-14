@@ -8,7 +8,7 @@ $ErrorActionPreference="Stop"
 Set-StrictMode -Version Latest
 
 $serviceDir=Split-Path -Parent $PSScriptRoot
-$compose=Join-Path $serviceDir "benchmarks\brain-storage\compose.yaml"
+$compose=Join-Path $serviceDir "benchmarks\brain-storage\compose.scale.yaml"
 $bench=Join-Path $serviceDir "benchmarks\brain-storage\p1_scale_benchmark.py"
 $artifactDir=Join-Path $serviceDir "artifacts\local\brain-storage-bench\p1-scale"
 New-Item -ItemType Directory -Path $artifactDir -Force | Out-Null
