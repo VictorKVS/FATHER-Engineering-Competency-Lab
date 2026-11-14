@@ -1,0 +1,26 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_L_VECTOR_V1_INVALIDATION",
+  "date": "2026-11-14",
+  "profile": "L",
+  "records": 1000000,
+  "status": "BENCHMARK_INVALID_FOR_RANKING",
+  "reason": "unit-circle corpus becomes numerically degenerate for ID-based Recall@10 at float32 precision",
+  "invalidated_vector_results": [
+    {
+      "candidate": "pgvector",
+      "recall_at_10_mean": 0.133333,
+      "evidence_hash": "ef565bcb89ea1089c437d81ec0afa2f6e66c6ada06939997453bca014ef847d3"
+    },
+    {
+      "candidate": "qdrant",
+      "recall_at_10_mean": 0.043333,
+      "evidence_hash": "908c29663d7dc59588b2875dfcacdf6af7de1981cdbb3ad0928701c630ec6ebe"
+    }
+  ],
+  "valid_results": [
+    {"league":"REL-L","candidate":"postgres","status":"PASS"},
+    {"league":"REL-L","candidate":"pgvector","status":"PASS"}
+  ],
+  "replacement_vector_corpus_version": "v2-deterministic-32d",
+  "promotion_to_XL_allowed": false
+}
