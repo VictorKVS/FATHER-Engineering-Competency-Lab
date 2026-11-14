@@ -1,0 +1,69 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P0B_RUNTIME_COMPLETE",
+  "source": "local Windows operator runs",
+  "date": "2026-11-14",
+  "hardware_profile": {
+    "cpu": "Intel Core i5-10400F",
+    "cores": 6,
+    "logical_processors": 12,
+    "ram_gb": 31.84,
+    "docker_engine": "29.9.2"
+  },
+  "results": [
+    {
+      "candidate": "postgres",
+      "image": "postgres:18-alpine",
+      "runtime_startup_seconds": 2.913,
+      "functional_smoke": true,
+      "cpu_percent": "4.35%",
+      "memory_usage": "97.07MiB / 15.54GiB",
+      "memory_percent": "0.61%",
+      "passed": true
+    },
+    {
+      "candidate": "pgvector",
+      "image": "pgvector/pgvector:0.8.7-pg18-trixie",
+      "runtime_startup_seconds": 2.042,
+      "functional_smoke": true,
+      "cpu_percent": "5.59%",
+      "memory_usage": "104.4MiB / 15.54GiB",
+      "memory_percent": "0.66%",
+      "passed": true
+    },
+    {
+      "candidate": "qdrant",
+      "image": "qdrant/qdrant:latest",
+      "runtime_startup_seconds": 1.75,
+      "functional_smoke": true,
+      "cpu_percent": "0.16%",
+      "memory_usage": "71.84MiB / 15.54GiB",
+      "memory_percent": "0.45%",
+      "passed": true
+    },
+    {
+      "candidate": "neo4j",
+      "image": "neo4j:2026.10.2",
+      "runtime_startup_seconds": 19.572,
+      "functional_smoke": true,
+      "cpu_percent": "19.36%",
+      "memory_usage": "1.253GiB / 15.54GiB",
+      "memory_percent": "8.07%",
+      "passed": true
+    },
+    {
+      "candidate": "opensearch",
+      "image": "opensearchproject/opensearch:3.9.0",
+      "runtime_startup_seconds": 24.586,
+      "functional_smoke": true,
+      "cpu_percent": "6.62%",
+      "memory_usage": "1.484GiB / 15.54GiB",
+      "memory_percent": "9.55%",
+      "passed": true
+    }
+  ],
+  "pass_count": 5,
+  "fail_count": 0,
+  "passed": true,
+  "qualification_scope": "P0B proves runtime startup and minimal functional smoke only. It does not prove comparative performance, retrieval quality, scalability, durability, recovery, or production suitability.",
+  "promotion_allowed_to": "P1_COMPARATIVE_WORKLOAD_BENCHMARK"
+}
