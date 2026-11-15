@@ -1,0 +1,32 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_M_V2_INITIAL_PASS",
+  "date": "2026-11-15",
+  "profile": "M",
+  "records": 100000,
+  "vector_corpus_version": "v2-deterministic-32d",
+  "status": "PASS",
+  "results": [
+    {
+      "candidate": "pgvector",
+      "configuration": {"m":48,"ef_construction":512,"ef_search":1000},
+      "recall_at_10_mean": 1.0,
+      "recall_at_10_min": 1.0,
+      "index_build_seconds": 26813.2433,
+      "p95_c1_ms": 41.2748,
+      "p95_c4_ms": 124.4096,
+      "p95_c16_ms": 608.0581,
+      "evidence_hash": "cae6a3ba6df86608a033a763dd519496ca0a6dbf1bad3a88a7dd56de16c901c5"
+    },
+    {
+      "candidate": "qdrant",
+      "configuration": {"m":16,"ef_construct":100,"hnsw_ef":64},
+      "recall_at_10_mean": 1.0,
+      "recall_at_10_min": 1.0,
+      "p95_c1_ms": 13.5717,
+      "p95_c4_ms": 8.5096,
+      "p95_c16_ms": 33.0048,
+      "evidence_hash": "130ee77134f0950ab9c294622c54e4aa26d6eb2c4ecb106dbd5b5438409caad5"
+    }
+  ],
+  "decision": "Corpus v2 validated. Before L, pgvector requires cost-oriented retuning because current build cost is excessive."
+}
