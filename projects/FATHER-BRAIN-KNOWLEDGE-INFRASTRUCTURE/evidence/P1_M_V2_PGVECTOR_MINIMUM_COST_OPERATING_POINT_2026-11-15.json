@@ -1,0 +1,25 @@
+{
+  "qualification": "BRAIN_STORAGE_BENCH_P1_M_V2_PGVECTOR_MINIMUM_COST_OPERATING_POINT",
+  "date": "2026-11-15",
+  "profile": "M",
+  "records": 100000,
+  "vector_corpus_version": "v2-deterministic-32d",
+  "status": "PASS",
+  "selected_configuration": {
+    "m": 16,
+    "ef_construction": 64,
+    "ef_search": 64,
+    "index_build_seconds": 31.3226,
+    "recall_at_10_mean": 0.963333,
+    "recall_at_10_min": 0.1,
+    "latency_ms": {
+      "mean": 1.4932,
+      "p50": 1.412,
+      "p95": 2.1579,
+      "p99": 2.318,
+      "max": 2.6114
+    }
+  },
+  "source_evidence_hash": "7d71a1c360edda83821074badfacbd1eeba0a961765fb431c4c20b3f41bb7289",
+  "decision": "Promote this minimum-cost passing configuration to L qualification."
+}
