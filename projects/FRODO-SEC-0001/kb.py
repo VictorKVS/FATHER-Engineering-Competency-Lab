@@ -40,8 +40,8 @@ def search(text, limit=12):
     if not needle:
         return []
     nodes = read("llm_concepts.json")
-    matches = [(4 if needle in n["title"].casefold() else 0) +
-               (1 if needle in n["definition_ru"].casefold() else 0), n]
+    matches = [((4 if needle in n["title"].casefold() else 0) +
+                (1 if needle in n["definition_ru"].casefold() else 0), n)
                for n in nodes]
     ranked = [(score, n) for score, n in matches if score > 0]
     ranked.sort(key=lambda x: (-x[0], -x[1]["weight"], x[1]["id"]))
