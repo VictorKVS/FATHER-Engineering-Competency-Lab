@@ -1,0 +1,92 @@
+{
+  "project": "FRODO-SEC-0001",
+  "status": "KNOWLEDGE_BOOTSTRAPPED_NOT_OPERATIONAL",
+  "source": {
+    "id": "FRODO-SRC-B002",
+    "title": "Designing Large Language Model Applications",
+    "author": "Suhas Pai",
+    "book_id": "BOOK-002",
+    "source_ref": "SRC-BOOK002-PRIMARY",
+    "source_repo": "VictorKVS/alina-knowledge-worker",
+    "source_path": "library/books/BOOK-002_Designing_LLM_Applications/alina_kb/knowledge_graph.json",
+    "source_commit": "2dc97586ab4286b3aff2032483c31c1d305904b5",
+    "original_pdf": "user-supplied; not copied here",
+    "copyright": "Original book text not redistributed",
+    "reviewed_chapters": [
+      "CH01",
+      "CH02",
+      "CH03",
+      "CH04",
+      "CH05",
+      "CH06",
+      "CH07",
+      "CH08",
+      "CH09",
+      "CH10",
+      "CH11",
+      "CH12"
+    ],
+    "reviewed_pdf_ranges": {
+      "CH01": [
+        27,
+        91
+      ],
+      "CH02": [
+        92,
+        167
+      ],
+      "CH03": [
+        168,
+        203
+      ],
+      "CH04": [
+        204,
+        262
+      ],
+      "CH05": [
+        264,
+        328
+      ],
+      "CH06": [
+        329,
+        377
+      ],
+      "CH07": [
+        378,
+        413
+      ],
+      "CH08": [
+        414,
+        458
+      ],
+      "CH09": [
+        459,
+        491
+      ],
+      "CH10": [
+        493,
+        552
+      ],
+      "CH11": [
+        553,
+        603
+      ],
+      "CH12": [
+        604,
+        682
+      ]
+    },
+    "source_sha256_status": "NOT_CALCULATED",
+    "ingestion_type": "ALINA_PARAPHRASED_GRAPH_SNAPSHOT"
+  },
+  "imported_nodes": 307,
+  "imported_edges": 321,
+  "threat_scenarios": 12,
+  "scope": "LLM_AGENT_SECURITY",
+  "network_access": false,
+  "active_scanning": false,
+  "autonomous_actions": false,
+  "learning_status": "NOT_TRAINED",
+  "polygon_status": "NOT_EXAMINED",
+  "created": "2026-11-23"
+}

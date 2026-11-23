@@ -1,0 +1,5845 @@
+[
+  {
+    "id": "B002-LLM",
+    "title": "LLM",
+    "definition_ru": "крупная языковая модель, работающая с последовательностями токенов",
+    "chapter": "CH01",
+    "pages": [
+      28,
+      31
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_ARCHITECTURE",
+      "B002-TOKENIZATION",
+      "B002-NEXT_TOKEN_PREDICTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NEXT_TOKEN_PREDICTION",
+    "title": "Next-token prediction",
+    "definition_ru": "задача прогнозирования распределения вероятностей следующего токена",
+    "chapter": "CH01",
+    "pages": [
+      29,
+      31
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NEXT_TOKEN_PREDICTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM",
+      "B002-PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKEN",
+    "title": "Token",
+    "definition_ru": "элемент словаря модели: слово, часть слова или другой код",
+    "chapter": "CH01",
+    "pages": [
+      29,
+      30
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKEN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKENIZATION",
+    "title": "Tokenization",
+    "definition_ru": "процедура превращения текста в последовательность элементов словаря",
+    "chapter": "CH02",
+    "pages": [
+      93,
+      95
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKENIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VOCABULARY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-VOCABULARY",
+    "title": "Vocabulary",
+    "definition_ru": "набор дискретных элементов, которыми оперирует токенизатор и модель",
+    "chapter": "CH02",
+    "pages": [
+      93,
+      95
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-VOCABULARY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_ARCHITECTURE",
+    "title": "Model architecture",
+    "definition_ru": "организация вычислительных блоков модели",
+    "chapter": "CH02",
+    "pages": [
+      94,
+      96
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_ARCHITECTURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LEARNING_OBJECTIVE",
+    "title": "Learning objective",
+    "definition_ru": "критерий задачи, по которой обучается модель",
+    "chapter": "CH02",
+    "pages": [
+      94,
+      96
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LEARNING_OBJECTIVE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-NEXT_TOKEN_PREDICTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PRETRAINING",
+    "title": "Pre-training",
+    "definition_ru": "обучение модели на большом корпусе данных до специализации",
+    "chapter": "CH02",
+    "pages": [
+      92,
+      99
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PRETRAINING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATASET",
+      "B002-LEARNING_OBJECTIVE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATASET",
+    "title": "Dataset",
+    "definition_ru": "набор записей, выделенный для обучения или оценки",
+    "chapter": "CH02",
+    "pages": [
+      92,
+      94
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATASET",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CORPUS",
+    "title": "Corpus",
+    "definition_ru": "коллекция текстовых источников и полученного из них содержимого",
+    "chapter": "CH02",
+    "pages": [
+      99,
+      108
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CORPUS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SOURCE_PROVENANCE",
+    "title": "Source provenance",
+    "definition_ru": "происхождение документа и информация о его источнике; термин FATHER",
+    "chapter": "CH02",
+    "pages": [
+      92,
+      93
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SOURCE_PROVENANCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATASET",
+      "B002-DATA_PREPROCESSING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATA_QUALITY",
+    "title": "Data quality",
+    "definition_ru": "пригодность данных для выбранной задачи; зависит от контекста и метода измерения",
+    "chapter": "CH02",
+    "pages": [
+      103,
+      105
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATA_QUALITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-QUALITY_FILTERING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATA_COVERAGE",
+    "title": "Data requirements",
+    "definition_ru": "какие знания, языки, задачи и формы информации требуются модели",
+    "chapter": "CH02",
+    "pages": [
+      99,
+      104
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATA_COVERAGE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATA_MIXTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SYNTHETIC_DATA",
+    "title": "Synthetic pre-training data",
+    "definition_ru": "материалы, сформированные генератором и требующие контроля качества",
+    "chapter": "CH02",
+    "pages": [
+      116,
+      119
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SYNTHETIC_DATA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DATA_QUALITY",
+      "B002-PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COMMON_CRAWL",
+    "title": "Common Crawl",
+    "definition_ru": "масштабный источник веб-страниц для построения корпусов",
+    "chapter": "CH02",
+    "pages": [
+      107,
+      108
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COMMON_CRAWL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-C4",
+    "title": "C4",
+    "definition_ru": "подготовленный очищенный веб-корпус на основе Common Crawl",
+    "chapter": "CH02",
+    "pages": [
+      107,
+      108
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-C4",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-COMMON_CRAWL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-THE_PILE",
+    "title": "The Pile",
+    "definition_ru": "многодоменный корпус EleutherAI",
+    "chapter": "CH02",
+    "pages": [
+      108,
+      110
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-THE_PILE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATA_PREPROCESSING",
+    "title": "Training data preprocessing",
+    "definition_ru": "обработка данных перед обучением: извлечение, фильтрация, очистка и контроль",
+    "chapter": "CH02",
+    "pages": [
+      120,
+      121
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATA_PREPROCESSING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CORPUS",
+      "B002-QUALITY_FILTERING",
+      "B002-DEDUPLICATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BOILERPLATE",
+    "title": "Boilerplate",
+    "definition_ru": "повторяющиеся навигационные и служебные блоки веб-страницы",
+    "chapter": "CH02",
+    "pages": [
+      121,
+      125
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BOILERPLATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-EXTRACTION_CLEANING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EXTRACTION_CLEANING",
+    "title": "Data extraction and cleaning",
+    "definition_ru": "выделение содержательного текста и удаление технического мусора",
+    "chapter": "CH02",
+    "pages": [
+      120,
+      127
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EXTRACTION_CLEANING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BOILERPLATE",
+      "B002-QUALITY_FILTERING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LANGUAGE_IDENTIFICATION",
+    "title": "Language identification",
+    "definition_ru": "определение языка документа для отбора и обработки",
+    "chapter": "CH02",
+    "pages": [
+      127,
+      131
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LANGUAGE_IDENTIFICATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUALITY_FILTERING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUALITY_FILTERING",
+    "title": "Quality filtering",
+    "definition_ru": "отбор по измеряемым признакам качества с риском ложного исключения",
+    "chapter": "CH02",
+    "pages": [
+      130,
+      137
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUALITY_FILTERING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATA_QUALITY",
+      "B002-PERPLEXITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PERPLEXITY",
+    "title": "Perplexity",
+    "definition_ru": "мера неожиданности последовательности для языковой модели; сама по себе не гарантирует качество",
+    "chapter": "CH02",
+    "pages": [
+      133,
+      137
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PERPLEXITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUALITY_FILTERING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DEDUPLICATION",
+    "title": "Deduplication",
+    "definition_ru": "выявление повторных документов или последовательностей",
+    "chapter": "CH02",
+    "pages": [
+      138,
+      143
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DEDUPLICATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXACT_DUPLICATE",
+      "B002-NEAR_DUPLICATE",
+      "B002-SEMANTIC_DUPLICATE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EXACT_DUPLICATE",
+    "title": "Exact match duplicate",
+    "definition_ru": "совпадение текста по выбранному способу нормализации",
+    "chapter": "CH02",
+    "pages": [
+      139,
+      140
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EXACT_DUPLICATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NEAR_DUPLICATE",
+    "title": "Approximate duplicate",
+    "definition_ru": "почти повторяющийся текст с небольшими отличиями",
+    "chapter": "CH02",
+    "pages": [
+      139,
+      140
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NEAR_DUPLICATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SEMANTIC_DUPLICATE",
+    "title": "Semantic duplicate",
+    "definition_ru": "разные формулировки примерно одного содержания",
+    "chapter": "CH02",
+    "pages": [
+      139,
+      140
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SEMANTIC_DUPLICATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MINHASH",
+    "title": "MinHash",
+    "definition_ru": "приближённое оценивание сходства множеств для выявления кандидатов на дубликаты",
+    "chapter": "CH02",
+    "pages": [
+      140,
+      141
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MINHASH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-NEAR_DUPLICATE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MEMORIZATION",
+    "title": "Memorization",
+    "definition_ru": "сохранение в модели способности воспроизводить фрагменты обучающих данных",
+    "chapter": "CH02",
+    "pages": [
+      141,
+      143
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MEMORIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PRIVACY_ATTACK",
+      "B002-DEDUPLICATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PRIVACY_ATTACK",
+    "title": "Training data privacy attack",
+    "definition_ru": "попытки выяснить присутствие записи в обучении или извлечь запомненный текст",
+    "chapter": "CH02",
+    "pages": [
+      142,
+      146
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PRIVACY_ATTACK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MEMORIZATION",
+      "B002-PII"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PII",
+    "title": "PII",
+    "definition_ru": "сведения, позволяющие определить или установить личность человека",
+    "chapter": "CH02",
+    "pages": [
+      143,
+      145
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PII",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PII_REMEDIATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PII_REMEDIATION",
+    "title": "PII remediation",
+    "definition_ru": "удаление, замена либо иная обработка чувствительных персональных сведений",
+    "chapter": "CH02",
+    "pages": [
+      151,
+      154
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PII_REMEDIATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PII"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DP_SGD",
+    "title": "DP-SGD",
+    "definition_ru": "частно-дифференциальный метод оптимизации с ограничением градиента и шумом",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      154
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DP_SGD",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-PII_REMEDIATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TEST_CONTAMINATION",
+    "title": "Training set contamination",
+    "definition_ru": "присутствие экзаменационных примеров или их частей в обучающем корпусе",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TEST_CONTAMINATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DECONTAMINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DECONTAMINATION",
+    "title": "Training set decontamination",
+    "definition_ru": "обнаружение и снижение пересечений train с оценочными наборами",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DECONTAMINATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEST_CONTAMINATION",
+      "B002-NGRAM_OVERLAP"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NGRAM_OVERLAP",
+    "title": "N-gram overlap",
+    "definition_ru": "совпадение последовательностей из N соседних токенов/слов по заданной схеме",
+    "chapter": "CH02",
+    "pages": [
+      155,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NGRAM_OVERLAP",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DECONTAMINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATA_MIXTURE",
+    "title": "Data mixtures",
+    "definition_ru": "выбранные пропорции данных разных предметных областей",
+    "chapter": "CH02",
+    "pages": [
+      156,
+      157
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATA_MIXTURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATA_COVERAGE",
+      "B002-CURRICULUM_LEARNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CURRICULUM_LEARNING",
+    "title": "Curriculum learning",
+    "definition_ru": "целенаправленный порядок предъявления обучающих примеров",
+    "chapter": "CH02",
+    "pages": [
+      157,
+      157
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CURRICULUM_LEARNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DATA_MIXTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOWNSTREAM_TASKS",
+    "title": "Downstream tasks",
+    "definition_ru": "задачи, на которых проверяется полезность ранее обученной модели",
+    "chapter": "CH02",
+    "pages": [
+      161,
+      163
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOWNSTREAM_TASKS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BIAS_FAIRNESS",
+    "title": "Bias and fairness",
+    "definition_ru": "искажения и несбалансированность результатов, связанные в том числе с составом и отбором данных",
+    "chapter": "CH02",
+    "pages": [
+      163,
+      166
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BIAS_FAIRNESS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATA_QUALITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG",
+    "title": "RAG",
+    "definition_ru": "подход с внешним извлечением документов; не меняет веса модели при обычном retrieval",
+    "chapter": "CH01",
+    "pages": [
+      80,
+      87
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CORPUS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PROMPT",
+    "title": "Prompt",
+    "definition_ru": "инструкция и контекст, подаваемые LLM для ответа",
+    "chapter": "CH01",
+    "pages": [
+      55,
+      59
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PROMPT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FEW_SHOT",
+    "title": "Few-shot prompting",
+    "definition_ru": "примеры входа/выхода внутри промпта без обновления весов",
+    "chapter": "CH01",
+    "pages": [
+      59,
+      61
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FEW_SHOT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PROMPT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT",
+    "title": "Agent",
+    "definition_ru": "приложение с моделью, способное использовать инструменты в рабочем процессе",
+    "chapter": "CH01",
+    "pages": [
+      52,
+      54
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-F_DATASET_ROLE",
+    "title": "Dataset roles",
+    "definition_ru": "разделение knowledge, train, validation, test, holdout в FATHER; проектная схема",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-F_DATASET_ROLE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DECONTAMINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-F_SOURCE_SPAN",
+    "title": "Source span",
+    "definition_ru": "привязка утверждения к странице, документу и версии для цитирования; проектная схема FATHER",
+    "chapter": "CH02",
+    "pages": [
+      92,
+      93
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-F_SOURCE_SPAN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SOURCE_PROVENANCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-F_QUALITY_GATE",
+    "title": "Quality gate",
+    "definition_ru": "формальный запрет перехода без доказательств; проектная схема FATHER",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-F_QUALITY_GATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DATA_QUALITY",
+      "B002-DECONTAMINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-F_POLYGON",
+    "title": "POLYGON qualification",
+    "definition_ru": "независимая проверка навыков агента на закрытых заданиях; проект FATHER",
+    "chapter": "CH02",
+    "pages": [
+      154,
+      155
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-F_POLYGON",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-F_DATASET_ROLE",
+      "B002-F_QUALITY_GATE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SUBWORD",
+    "title": "Subword",
+    "definition_ru": "часть слова, используемая как единица токенизации",
+    "chapter": "CH03",
+    "pages": [
+      169,
+      176
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SUBWORD",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKEN_ID",
+    "title": "Token ID",
+    "definition_ru": "числовой идентификатор токена в словаре модели",
+    "chapter": "CH03",
+    "pages": [
+      169,
+      170
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKEN_ID",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKEN"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-OOV",
+    "title": "Out-of-vocabulary",
+    "definition_ru": "элемент, отсутствующий в словаре токенизатора",
+    "chapter": "CH03",
+    "pages": [
+      174,
+      176
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-OOV",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-VOCABULARY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-VOCAB_SIZE",
+    "title": "Vocabulary size",
+    "definition_ru": "число единиц словаря и компромисс между сжатием и редкими токенами",
+    "chapter": "CH03",
+    "pages": [
+      177,
+      178
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-VOCAB_SIZE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VOCABULARY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NORMALIZATION",
+    "title": "Text normalization",
+    "definition_ru": "предобработка формы текста: регистр, Unicode, диакритика",
+    "chapter": "CH03",
+    "pages": [
+      186,
+      188
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NORMALIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PRETOKENIZATION",
+    "title": "Pre-tokenization",
+    "definition_ru": "предварительное разбиение на элементы перед основным токенизатором",
+    "chapter": "CH03",
+    "pages": [
+      188,
+      190
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PRETOKENIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-NORMALIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BPE",
+    "title": "Byte Pair Encoding",
+    "definition_ru": "обучение словаря объединением самых частых соседних пар элементов",
+    "chapter": "CH03",
+    "pages": [
+      190,
+      194
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BPE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BYTE_BPE",
+    "title": "Byte-level BPE",
+    "definition_ru": "вариант BPE на байтовых исходных элементах, покрывающий Unicode без неизвестного символа",
+    "chapter": "CH03",
+    "pages": [
+      193,
+      194
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BYTE_BPE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BPE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-WORDPIECE",
+    "title": "WordPiece",
+    "definition_ru": "подход к субсловной токенизации с выбором объединений на основе нормализованной частоты",
+    "chapter": "CH03",
+    "pages": [
+      194,
+      196
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-WORDPIECE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BPE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-UNIGRAM",
+    "title": "Unigram LM",
+    "definition_ru": "упомянутый в главе вероятностный подход к субсловной токенизации; подробный алгоритм в изученном разделе не раскрыт",
+    "chapter": "CH03",
+    "pages": [
+      190,
+      190
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-UNIGRAM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-POSTPROCESSING",
+    "title": "Postprocessing",
+    "definition_ru": "добавление специальных маркеров после токенизации",
+    "chapter": "CH03",
+    "pages": [
+      196,
+      199
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-POSTPROCESSING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SPECIAL_TOKEN",
+    "title": "Special tokens",
+    "definition_ru": "служебные токены модели: завершение, заполнение, разделители и маркеры инструментов",
+    "chapter": "CH03",
+    "pages": [
+      196,
+      199
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SPECIAL_TOKEN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-POSTPROCESSING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FERTILITY",
+    "title": "Fertility",
+    "definition_ru": "среднее число токенов на слово для заданного корпуса",
+    "chapter": "CH03",
+    "pages": [
+      200,
+      200
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FERTILITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PARITY",
+    "title": "Tokenizer parity",
+    "definition_ru": "отношение чисел токенов для эквивалентного текста на двух языках",
+    "chapter": "CH03",
+    "pages": [
+      200,
+      201
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PARITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FERTILITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKEN_DOMAIN",
+    "title": "Domain-specific vocabulary",
+    "definition_ru": "технические термины могут дробиться на дополнительные токены, что отражается на стоимости и качестве",
+    "chapter": "CH03",
+    "pages": [
+      201,
+      202
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKEN_DOMAIN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VOCABULARY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EMBED_RESIZE",
+    "title": "Token embedding resize",
+    "definition_ru": "после добавления токенов меняется размер таблицы представлений; новые векторы требуют обучения",
+    "chapter": "CH03",
+    "pages": [
+      201,
+      202
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EMBED_RESIZE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKEN_DOMAIN"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BYTE_MODELS",
+    "title": "Byte and character models",
+    "definition_ru": "исследованные автором примеры CANINE, ByT5, Charformer без обычной субсловной схемы",
+    "chapter": "CH03",
+    "pages": [
+      185,
+      186
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BYTE_MODELS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-TOKENIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GLITCH_TOKEN",
+    "title": "Undertrained token",
+    "definition_ru": "редкий элемент словаря, чьё представление могло получить недостаточно тренировочного сигнала",
+    "chapter": "CH03",
+    "pages": [
+      197,
+      198
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GLITCH_TOKEN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-VOCABULARY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NEURAL_NETWORK",
+    "title": "Neural network",
+    "definition_ru": "система обучаемых связанных вычислительных преобразований",
+    "chapter": "CH04",
+    "pages": [
+      205,
+      207
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NEURAL_NETWORK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_PARAMETER",
+    "title": "Model parameter",
+    "definition_ru": "обучаемое числовое значение, влияющее на вычисления модели",
+    "chapter": "CH04",
+    "pages": [
+      205,
+      207
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_PARAMETER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-NEURAL_NETWORK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REPRESENTATION_LEARNING",
+    "title": "Representation learning",
+    "definition_ru": "обучение числовых представлений входных данных",
+    "chapter": "CH04",
+    "pages": [
+      208,
+      211
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REPRESENTATION_LEARNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-NEURAL_NETWORK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EMBEDDING_LAYER",
+    "title": "Embedding layer",
+    "definition_ru": "таблица обучаемых векторов, индексируемых token ID",
+    "chapter": "CH04",
+    "pages": [
+      212,
+      214
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EMBEDDING_LAYER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOKEN_ID"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SELF_ATTENTION",
+    "title": "Self-attention",
+    "definition_ru": "вычисление контекстных представлений по весам соответствия токенов",
+    "chapter": "CH04",
+    "pages": [
+      215,
+      221
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SELF_ATTENTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EMBEDDING_LAYER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QKV",
+    "title": "Q/K/V",
+    "definition_ru": "запросы, ключи и значения в механизме внимания",
+    "chapter": "CH04",
+    "pages": [
+      218,
+      221
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QKV",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SELF_ATTENTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MULTI_HEAD_ATTENTION",
+    "title": "Multi-head attention",
+    "definition_ru": "несколько параллельных голов внимания с разными обучаемыми проекциями",
+    "chapter": "CH04",
+    "pages": [
+      219,
+      221
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MULTI_HEAD_ATTENTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SELF_ATTENTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-POSITION_ENCODING",
+    "title": "Positional encoding",
+    "definition_ru": "способ учёта порядка токенов в Transformer",
+    "chapter": "CH04",
+    "pages": [
+      221,
+      223
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-POSITION_ENCODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SELF_ATTENTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ROPE",
+    "title": "RoPE",
+    "definition_ru": "rotary positional embedding: позиционное вращение представлений запросов и ключей",
+    "chapter": "CH04",
+    "pages": [
+      222,
+      223
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ROPE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-POSITION_ENCODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FFN",
+    "title": "Feedforward network",
+    "definition_ru": "поэлементная нелинейная сеть внутри блока Transformer",
+    "chapter": "CH04",
+    "pages": [
+      223,
+      224
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FFN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-NEURAL_NETWORK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LAYER_NORM",
+    "title": "Layer normalization",
+    "definition_ru": "нормировка скрытых представлений для устойчивого обучения",
+    "chapter": "CH04",
+    "pages": [
+      224,
+      226
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LAYER_NORM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-NEURAL_NETWORK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CROSS_ENTROPY",
+    "title": "Cross-entropy loss",
+    "definition_ru": "минус логарифм вероятности правильного токена при one-hot цели",
+    "chapter": "CH04",
+    "pages": [
+      226,
+      227
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CROSS_ENTROPY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_PARAMETER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BACKPROP",
+    "title": "Backpropagation",
+    "definition_ru": "вычисление градиентов функции потерь по параметрам сети",
+    "chapter": "CH04",
+    "pages": [
+      206,
+      208
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BACKPROP",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CROSS_ENTROPY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INTRINSIC_EVAL",
+    "title": "Intrinsic model evaluation",
+    "definition_ru": "внутренняя оценка качества моделирования последовательностей, например perplexity",
+    "chapter": "CH04",
+    "pages": [
+      227,
+      228
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INTRINSIC_EVAL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PERPLEXITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EXTRINSIC_EVAL",
+    "title": "Extrinsic model evaluation",
+    "definition_ru": "оценка качества на реальных прикладных задачах",
+    "chapter": "CH04",
+    "pages": [
+      227,
+      228
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EXTRINSIC_EVAL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOWNSTREAM_TASKS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ENCODER_ONLY",
+    "title": "Encoder-only",
+    "definition_ru": "архитектура преимущественно для представлений и понимания входного текста",
+    "chapter": "CH04",
+    "pages": [
+      229,
+      232
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ENCODER_ONLY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ENCODER_DECODER",
+    "title": "Encoder-decoder",
+    "definition_ru": "архитектура преобразования входной последовательности в выходную",
+    "chapter": "CH04",
+    "pages": [
+      229,
+      234
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ENCODER_DECODER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MODEL_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DECODER_ONLY",
+    "title": "Decoder-only",
+    "definition_ru": "авторегрессионная генеративная архитектура семейства GPT",
+    "chapter": "CH04",
+    "pages": [
+      229,
+      234
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DECODER_ONLY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MOE",
+    "title": "Mixture of Experts",
+    "definition_ru": "условное вычисление с маршрутизацией токенов к подмножеству нейросетевых экспертов",
+    "chapter": "CH04",
+    "pages": [
+      234,
+      238
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MOE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-FFN"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FLM",
+    "title": "Full language modeling",
+    "definition_ru": "обучение предсказывать следующий токен в причинной последовательности",
+    "chapter": "CH04",
+    "pages": [
+      239,
+      247
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FLM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-NEXT_TOKEN_PREDICTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PREFIX_LM",
+    "title": "Prefix language modeling",
+    "definition_ru": "обучение с двунаправленным prefix и предсказанием suffix",
+    "chapter": "CH04",
+    "pages": [
+      247,
+      248
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PREFIX_LM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LEARNING_OBJECTIVE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MLM",
+    "title": "Masked language modeling",
+    "definition_ru": "обучение восстанавливать скрытые токены или интервалы",
+    "chapter": "CH04",
+    "pages": [
+      248,
+      253
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MLM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LEARNING_OBJECTIVE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DENOISING",
+    "title": "Denoising objective",
+    "definition_ru": "обучение восстанавливать исходные данные из искажённого входа",
+    "chapter": "CH04",
+    "pages": [
+      251,
+      255
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DENOISING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-UL2",
+    "title": "UL2 Mixture of Denoisers",
+    "definition_ru": "объединение разных заданий восстановления текста в рамках предобучения",
+    "chapter": "CH04",
+    "pages": [
+      253,
+      255
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-UL2",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-DENOISING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOMAIN_SPECIFIC_LANGUAGE",
+    "title": "Domain-specific language",
+    "definition_ru": "специализированная запись предметных объектов и операций для эффективного моделирования",
+    "chapter": "CH04",
+    "pages": [
+      256,
+      262
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOMAIN_SPECIFIC_LANGUAGE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LEARNING_OBJECTIVE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PGN",
+    "title": "Portable Game Notation",
+    "definition_ru": "структурированная запись последовательностей шахматных ходов",
+    "chapter": "CH04",
+    "pages": [
+      257,
+      261
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PGN",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DOMAIN_SPECIFIC_LANGUAGE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_PROVIDER",
+    "title": "Model provider",
+    "definition_ru": "поставщик готовой LLM, открытых весов или сервиса API",
+    "chapter": "CH05",
+    "pages": [
+      265,
+      269
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_PROVIDER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BASE_MODEL",
+    "title": "Base model",
+    "definition_ru": "предобученная модель без последующей настройки на пользовательские инструкции",
+    "chapter": "CH05",
+    "pages": [
+      269,
+      270
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BASE_MODEL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INSTRUCT_TUNING",
+    "title": "Instruction tuning",
+    "definition_ru": "адаптация весов на примерах инструкций и ответов для лучшего выполнения задач",
+    "chapter": "CH05",
+    "pages": [
+      270,
+      274
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INSTRUCT_TUNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BASE_MODEL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CHAT_MODEL",
+    "title": "Chat-tuned model",
+    "definition_ru": "вариант модели, настроенный на диалоговый формат",
+    "chapter": "CH05",
+    "pages": [
+      274,
+      275
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CHAT_MODEL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INSTRUCT_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LONG_CONTEXT",
+    "title": "Long-context model",
+    "definition_ru": "модель, способная принимать большие последовательности, качество использования которых требует проверки",
+    "chapter": "CH05",
+    "pages": [
+      275,
+      277
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LONG_CONTEXT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOMAIN_ADAPTATION",
+    "title": "Domain-adapted model",
+    "definition_ru": "модель с дополнительной специализацией для предметной области",
+    "chapter": "CH05",
+    "pages": [
+      276,
+      277
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOMAIN_ADAPTATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INSTRUCT_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_LICENSE",
+    "title": "Model licensing",
+    "definition_ru": "правовые разрешения и ограничения использования, изменения и распространения модели",
+    "chapter": "CH05",
+    "pages": [
+      278,
+      286
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_LICENSE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_PROVIDER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_SELECTION",
+    "title": "Task-driven model selection",
+    "definition_ru": "выбор LLM по качеству на задаче, стоимости, задержке, безопасности и лицензии",
+    "chapter": "CH05",
+    "pages": [
+      286,
+      288
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_SELECTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXTRINSIC_EVAL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TPOT",
+    "title": "Time per output token",
+    "definition_ru": "время генерации одного выходного токена в выбранном измерении",
+    "chapter": "CH05",
+    "pages": [
+      286,
+      287
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TPOT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MODEL_SELECTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LLM_BENCHMARK",
+    "title": "LLM benchmark",
+    "definition_ru": "стандартизированный набор задач для сравнительной оценки моделей",
+    "chapter": "CH05",
+    "pages": [
+      291,
+      306
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLM_BENCHMARK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXTRINSIC_EVAL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EVAL_CONTAMINATION",
+    "title": "Benchmark contamination",
+    "definition_ru": "пересечение оценочных заданий с данными обучения, искажающее измерения",
+    "chapter": "CH05",
+    "pages": [
+      298,
+      301
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EVAL_CONTAMINATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEST_CONTAMINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HELM",
+    "title": "HELM",
+    "definition_ru": "Holistic Evaluation of Language Models: оценка нескольких аспектов работы модели",
+    "chapter": "CH05",
+    "pages": [
+      299,
+      300
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HELM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM_BENCHMARK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ELO",
+    "title": "Elo rating",
+    "definition_ru": "относительная оценка по результатам парных человеческих сравнений",
+    "chapter": "CH05",
+    "pages": [
+      302,
+      304
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ELO",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-LLM_BENCHMARK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUANTIZATION",
+    "title": "Quantization",
+    "definition_ru": "представление весов модели пониженной точностью ради экономии памяти и ресурсов",
+    "chapter": "CH05",
+    "pages": [
+      307,
+      309
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUANTIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MODEL_SELECTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INFERENCE",
+    "title": "Inference",
+    "definition_ru": "применение обученной модели для выдачи предсказаний без обычного обновления её весов",
+    "chapter": "CH05",
+    "pages": [
+      307,
+      318
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INFERENCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GREEDY_DECODING",
+    "title": "Greedy decoding",
+    "definition_ru": "выбор наиболее вероятного следующего токена на каждом шаге",
+    "chapter": "CH05",
+    "pages": [
+      312,
+      313
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GREEDY_DECODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BEAM_SEARCH",
+    "title": "Beam search",
+    "definition_ru": "поиск нескольких вероятных вариантов продолжения последовательности",
+    "chapter": "CH05",
+    "pages": [
+      313,
+      315
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BEAM_SEARCH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOP_K",
+    "title": "Top-k sampling",
+    "definition_ru": "случайный выбор среди k наиболее вероятных токенов",
+    "chapter": "CH05",
+    "pages": [
+      315,
+      316
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOP_K",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOP_P",
+    "title": "Top-p/nucleus sampling",
+    "definition_ru": "выбор токена из минимального набора с заданной суммарной массой вероятности",
+    "chapter": "CH05",
+    "pages": [
+      316,
+      317
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOP_P",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TEMPERATURE",
+    "title": "Sampling temperature",
+    "definition_ru": "параметр, меняющий степень концентрации распределения при генерации",
+    "chapter": "CH05",
+    "pages": [
+      318,
+      320
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TEMPERATURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NONDETERMINISM",
+    "title": "Inference nondeterminism",
+    "definition_ru": "изменчивость генерации даже при одинаковых запросах вследствие вычислений и режима выбора",
+    "chapter": "CH05",
+    "pages": [
+      318,
+      320
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NONDETERMINISM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEMPERATURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SELF_CONSISTENCY",
+    "title": "Self-consistency",
+    "definition_ru": "сравнение нескольких путей генерации и выбор итогового ответа по агрегированию",
+    "chapter": "CH05",
+    "pages": [
+      319,
+      320
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SELF_CONSISTENCY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-STRUCTURED_OUTPUT",
+    "title": "Structured output",
+    "definition_ru": "машинно-обрабатываемый ответ с явной схемой и ограничениями",
+    "chapter": "CH05",
+    "pages": [
+      320,
+      323
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-STRUCTURED_OUTPUT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-JSON_SCHEMA_OUTPUT",
+    "title": "JSON Schema",
+    "definition_ru": "структура проверки допустимых ключей и типов сгенерированного JSON",
+    "chapter": "CH05",
+    "pages": [
+      320,
+      322
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-JSON_SCHEMA_OUTPUT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-STRUCTURED_OUTPUT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CONSTRAINED_DECODING",
+    "title": "Constrained decoding",
+    "definition_ru": "ограничение допустимых генерируемых последовательностей правилами/грамматикой",
+    "chapter": "CH05",
+    "pages": [
+      321,
+      323
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CONSTRAINED_DECODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-STRUCTURED_OUTPUT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CFG",
+    "title": "Context-free grammar",
+    "definition_ru": "формальная грамматика для описания допустимых последовательностей",
+    "chapter": "CH05",
+    "pages": [
+      322,
+      323
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CFG",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CONSTRAINED_DECODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_INTERPRETABILITY",
+    "title": "Model interpretability",
+    "definition_ru": "методы исследования внутренних представлений и влияния входов на модель",
+    "chapter": "CH05",
+    "pages": [
+      324,
+      328
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_INTERPRETABILITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LIT_NLP",
+    "title": "LIT-NLP",
+    "definition_ru": "инструмент исследования поведения языковых моделей и их представлений",
+    "chapter": "CH05",
+    "pages": [
+      324,
+      326
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LIT_NLP",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MODEL_INTERPRETABILITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FINE_TUNING",
+    "title": "Fine-tuning",
+    "definition_ru": "дополнительное обучение модели на задачах с обновлением обучаемых параметров",
+    "chapter": "CH06",
+    "pages": [
+      329,
+      331
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FINE_TUNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INSTRUCT_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SUPERVISED_FINETUNE",
+    "title": "Supervised fine-tuning",
+    "definition_ru": "обучение на примерах инструкций, входов и правильных выходов",
+    "chapter": "CH06",
+    "pages": [
+      332,
+      335
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SUPERVISED_FINETUNE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TRAINING_ARGUMENTS",
+    "title": "TrainingArguments",
+    "definition_ru": "настройки процедуры обучения и её оптимизации",
+    "chapter": "CH06",
+    "pages": [
+      334,
+      335
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TRAINING_ARGUMENTS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-OPTIMIZER",
+    "title": "Optimizer",
+    "definition_ru": "алгоритм обновления параметров по градиентам",
+    "chapter": "CH06",
+    "pages": [
+      335,
+      341
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-OPTIMIZER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BACKPROP"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ADAMW",
+    "title": "AdamW",
+    "definition_ru": "адаптивный оптимизатор с регуляризацией weight decay",
+    "chapter": "CH06",
+    "pages": [
+      335,
+      343
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ADAMW",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-OPTIMIZER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LEARNING_RATE",
+    "title": "Learning rate",
+    "definition_ru": "величина шага обновления обучаемых параметров",
+    "chapter": "CH06",
+    "pages": [
+      339,
+      343
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LEARNING_RATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-OPTIMIZER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LR_SCHEDULER",
+    "title": "Learning rate scheduler",
+    "definition_ru": "расписание изменения темпа обучения, в том числе warmup/cosine/linear",
+    "chapter": "CH06",
+    "pages": [
+      341,
+      343
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LR_SCHEDULER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LEARNING_RATE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GRAD_CHECKPOINT",
+    "title": "Gradient checkpointing",
+    "definition_ru": "уменьшение памяти за счёт повторного вычисления активаций",
+    "chapter": "CH06",
+    "pages": [
+      344,
+      345
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GRAD_CHECKPOINT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GRAD_ACCUM",
+    "title": "Gradient accumulation",
+    "definition_ru": "накопление градиентов нескольких mini-batches до обновления весов",
+    "chapter": "CH06",
+    "pages": [
+      344,
+      345
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GRAD_ACCUM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-OPTIMIZER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LABEL_SMOOTHING",
+    "title": "Label smoothing",
+    "definition_ru": "смягчение целевых меток для уменьшения переуверенности и переобучения",
+    "chapter": "CH06",
+    "pages": [
+      346,
+      349
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LABEL_SMOOTHING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CROSS_ENTROPY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CALIBRATION",
+    "title": "Calibration",
+    "definition_ru": "соответствие вероятностных оценок фактической доле верных решений",
+    "chapter": "CH06",
+    "pages": [
+      346,
+      347
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CALIBRATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXTRINSIC_EVAL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NEFTUNE",
+    "title": "NEFTune",
+    "definition_ru": "регуляризация через шум в embeddings во время обучения",
+    "chapter": "CH06",
+    "pages": [
+      348,
+      349
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NEFTUNE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-EMBEDDING_LAYER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BATCH_SIZE",
+    "title": "Batch size",
+    "definition_ru": "количество обучающих примеров в одном пакете",
+    "chapter": "CH06",
+    "pages": [
+      350,
+      352
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BATCH_SIZE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PEFT",
+    "title": "Parameter-efficient fine-tuning",
+    "definition_ru": "дообучение ограниченного набора параметров вместо всех весов",
+    "chapter": "CH06",
+    "pages": [
+      352,
+      355
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PEFT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LORA",
+    "title": "LoRA",
+    "definition_ru": "low-rank adaptation: параметроэффективное дообучение посредством низкоранговых изменений",
+    "chapter": "CH06",
+    "pages": [
+      353,
+      355
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LORA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PEFT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QLORA",
+    "title": "Quantized LoRA",
+    "definition_ru": "параметроэффективная адаптация с квантованной основной моделью",
+    "chapter": "CH06",
+    "pages": [
+      354,
+      359
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QLORA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LORA"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SFT_DATASET",
+    "title": "Instruction-tuning dataset",
+    "definition_ru": "набор проверенных примеров инструкция-вход-ответ для обучения",
+    "chapter": "CH06",
+    "pages": [
+      360,
+      364
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SFT_DATASET",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SUPERVISED_FINETUNE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PUBLIC_INSTRUCTION_DATA",
+    "title": "Public instruction datasets",
+    "definition_ru": "готовые корпуса инструкций, требующие лицензирования и проверки применимости",
+    "chapter": "CH06",
+    "pages": [
+      364,
+      370
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PUBLIC_INSTRUCTION_DATA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SFT_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FLAN_INSTRUCTION",
+    "title": "FLAN instruction collection",
+    "definition_ru": "коллекция instruction-tuning примеров с заданиями и шаблонами",
+    "chapter": "CH06",
+    "pages": [
+      366,
+      370
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FLAN_INSTRUCTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-SFT_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SUPERNATURAL_INSTRUCTIONS",
+    "title": "Super-NaturalInstructions",
+    "definition_ru": "формат с определениями задач, положительными и отрицательными примерами",
+    "chapter": "CH06",
+    "pages": [
+      370,
+      372
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SUPERNATURAL_INSTRUCTIONS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SFT_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SELF_INSTRUCT",
+    "title": "Self-Instruct",
+    "definition_ru": "синтез новых инструкций и примеров из набора качественных затравок",
+    "chapter": "CH06",
+    "pages": [
+      372,
+      374
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SELF_INSTRUCT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SFT_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-OUTPUT_FIRST",
+    "title": "Output-first sampling",
+    "definition_ru": "сначала выбрать целевую метку, затем сгенерировать вход для неё во избежание дисбаланса",
+    "chapter": "CH06",
+    "pages": [
+      372,
+      374
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-OUTPUT_FIRST",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SELF_INSTRUCT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EVOL_INSTRUCT",
+    "title": "Evol-Instruct",
+    "definition_ru": "управляемое расширение сложности и разнообразия синтетических заданий с фильтрацией",
+    "chapter": "CH06",
+    "pages": [
+      374,
+      375
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EVOL_INSTRUCT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SELF_INSTRUCT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ABLATION_STUDY",
+    "title": "Ablation study",
+    "definition_ru": "эксперимент по исключению одного компонента для измерения его вклада",
+    "chapter": "CH06",
+    "pages": [
+      359,
+      360
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ABLATION_STUDY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXTRINSIC_EVAL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REGRESSION_RISK",
+    "title": "Fine-tuning regression risk",
+    "definition_ru": "ухудшение прежних возможностей модели после изменения параметров",
+    "chapter": "CH06",
+    "pages": [
+      331,
+      331
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REGRESSION_RISK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CONTINUAL_PRETRAINING",
+    "title": "Continual pre-training",
+    "definition_ru": "продолжение самоконтролируемого предобучения с уже имеющегося checkpoint",
+    "chapter": "CH07",
+    "pages": [
+      380,
+      384
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CONTINUAL_PRETRAINING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DAPT",
+    "title": "Domain-adaptive pre-training",
+    "definition_ru": "дополнительное предобучение на массиве текстов выбранной предметной области",
+    "chapter": "CH07",
+    "pages": [
+      380,
+      384
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DAPT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CONTINUAL_PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TAPT",
+    "title": "Task-adaptive pre-training",
+    "definition_ru": "продолженное предобучение на данных, близких к конкретной целевой задаче",
+    "chapter": "CH07",
+    "pages": [
+      381,
+      390
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TAPT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DAPT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LIFELONG_LEARNING",
+    "title": "Lifelong learning",
+    "definition_ru": "периодическое обновление модели через дальнейшее обучение на новых данных",
+    "chapter": "CH07",
+    "pages": [
+      381,
+      390
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LIFELONG_LEARNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CONTINUAL_PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CATASTROPHIC_FORGETTING",
+    "title": "Catastrophic forgetting",
+    "definition_ru": "утрата ранее усвоенных способностей при обучении на новых данных",
+    "chapter": "CH07",
+    "pages": [
+      382,
+      387
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CATASTROPHIC_FORGETTING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-REGRESSION_RISK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REPLAY",
+    "title": "Experience replay",
+    "definition_ru": "смешивание старых и новых тренировочных данных для уменьшения забывания",
+    "chapter": "CH07",
+    "pages": [
+      385,
+      387
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REPLAY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CATASTROPHIC_FORGETTING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DISTILLATION",
+    "title": "Knowledge distillation",
+    "definition_ru": "использование старого checkpoint для ограничения расхождения представлений новой модели",
+    "chapter": "CH07",
+    "pages": [
+      385,
+      386
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DISTILLATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CATASTROPHIC_FORGETTING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PARAM_EXPANSION",
+    "title": "Parameter expansion",
+    "definition_ru": "добавление обучаемых параметров при дальнейшей адаптации модели",
+    "chapter": "CH07",
+    "pages": [
+      385,
+      389
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PARAM_EXPANSION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CONTINUAL_PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DEMIX",
+    "title": "DEMix domain experts",
+    "definition_ru": "внутренние предметные нейросетевые эксперты как варианты FFN",
+    "chapter": "CH07",
+    "pages": [
+      388,
+      390
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DEMIX",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MOE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PEFT_ADAPTER",
+    "title": "Bottleneck adapter",
+    "definition_ru": "обучаемый узкий модуль с down- и up-проекциями внутри Transformer",
+    "chapter": "CH07",
+    "pages": [
+      391,
+      398
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PEFT_ADAPTER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PEFT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PREFIX_TUNING",
+    "title": "Prefix-tuning",
+    "definition_ru": "обучаемые векторы-префиксы внутри слоёв модели",
+    "chapter": "CH07",
+    "pages": [
+      398,
+      400
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PREFIX_TUNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PEFT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SOFT_PROMPT",
+    "title": "Soft prompt tuning",
+    "definition_ru": "обучаемые виртуальные векторы на входе, а не текст системного промпта",
+    "chapter": "CH07",
+    "pages": [
+      400,
+      402
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SOFT_PROMPT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PREFIX_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SUBSET_FINETUNE",
+    "title": "Subset fine-tuning",
+    "definition_ru": "адаптация ограниченного подмножества существующих параметров",
+    "chapter": "CH07",
+    "pages": [
+      402,
+      403
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SUBSET_FINETUNE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PEFT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BITFIT",
+    "title": "BitFit bias tuning",
+    "definition_ru": "дообучение только bias-параметров как частный случай subset methods",
+    "chapter": "CH07",
+    "pages": [
+      402,
+      403
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BITFIT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-SUBSET_FINETUNE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_ENSEMBLE",
+    "title": "Model ensembling",
+    "definition_ru": "агрегация результатов нескольких отдельных моделей без объединения весов",
+    "chapter": "CH07",
+    "pages": [
+      404,
+      408
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_ENSEMBLE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PAIRRANKER",
+    "title": "PairRanker",
+    "definition_ru": "компонент LLM-Blender для сравнения кандидатных ответов моделей попарно",
+    "chapter": "CH07",
+    "pages": [
+      405,
+      407
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PAIRRANKER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MODEL_ENSEMBLE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GENFUSER",
+    "title": "GenFuser",
+    "definition_ru": "компонент LLM-Blender для синтеза итогового ответа из кандидатов",
+    "chapter": "CH07",
+    "pages": [
+      405,
+      408
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GENFUSER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MODEL_ENSEMBLE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MODEL_FUSION",
+    "title": "Model merging/fusion",
+    "definition_ru": "объединение совместимых параметров нескольких моделей",
+    "chapter": "CH07",
+    "pages": [
+      408,
+      413
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MODEL_FUSION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MODEL_PARAMETER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-WEIGHT_AVERAGING",
+    "title": "Weight averaging",
+    "definition_ru": "усреднение или взвешенное объединение параметров моделей",
+    "chapter": "CH07",
+    "pages": [
+      409,
+      411
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-WEIGHT_AVERAGING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MODEL_FUSION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ADAPTER_MERGING",
+    "title": "Adapter merging",
+    "definition_ru": "объединение параметров нескольких адаптеров, включая AdapterSoup/AdaMix",
+    "chapter": "CH07",
+    "pages": [
+      411,
+      413
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ADAPTER_MERGING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MODEL_FUSION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INTERTRAINING",
+    "title": "Intertraining",
+    "definition_ru": "использование адаптированного checkpoint как начальной точки для другой задачи",
+    "chapter": "CH07",
+    "pages": [
+      410,
+      411
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INTERTRAINING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-CONTINUAL_PRETRAINING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ALIGNMENT",
+    "title": "Alignment training",
+    "definition_ru": "методы повышения управляемости и соответствия модели ожидаемым человеческим принципам",
+    "chapter": "CH08",
+    "pages": [
+      414,
+      416
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ALIGNMENT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MODEL_SELECTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HHH",
+    "title": "Helpful, Honest, Harmless",
+    "definition_ru": "три целевых свойства согласованного поведения модели: полезность, честность и безопасность",
+    "chapter": "CH08",
+    "pages": [
+      414,
+      415
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HHH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-ALIGNMENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RLHF",
+    "title": "Reinforcement Learning from Human Feedback",
+    "definition_ru": "обучение поведения с учётом человеческих сравнений или предпочтений и модели награды",
+    "chapter": "CH08",
+    "pages": [
+      416,
+      422
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RLHF",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-ALIGNMENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HUMAN_FEEDBACK",
+    "title": "Human feedback types",
+    "definition_ru": "бинарный отзыв, парное предпочтение, ранжирование, корректирующий отзыв",
+    "chapter": "CH08",
+    "pages": [
+      417,
+      418
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HUMAN_FEEDBACK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RLHF"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REWARD_MODEL",
+    "title": "Reward model",
+    "definition_ru": "модель, оценивающая предпочтительность ответа для заданного запроса",
+    "chapter": "CH08",
+    "pages": [
+      418,
+      420
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REWARD_MODEL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RLHF"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PPO",
+    "title": "Proximal Policy Optimization",
+    "definition_ru": "метод оптимизации политики с наградой и ограничением отклонения",
+    "chapter": "CH08",
+    "pages": [
+      419,
+      422
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PPO",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RLHF"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-KL_REGULARIZATION",
+    "title": "KL divergence regularization",
+    "definition_ru": "штраф за отклонение от reference policy при RLHF",
+    "chapter": "CH08",
+    "pages": [
+      419,
+      420
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-KL_REGULARIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PPO"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HALLUCINATION",
+    "title": "Hallucination",
+    "definition_ru": "необоснованная относительно контекста или обучающих данных генерация",
+    "chapter": "CH08",
+    "pages": [
+      423,
+      425
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HALLUCINATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-KNOWLEDGE_QUADRANT",
+    "title": "Knowledge and awareness quadrant",
+    "definition_ru": "классы known knowns, unknown knowns, known unknowns и unknown unknowns",
+    "chapter": "CH08",
+    "pages": [
+      425,
+      428
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-KNOWLEDGE_QUADRANT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-HALLUCINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-UNCERTAINTY_CALIBRATION",
+    "title": "Output uncertainty calibration",
+    "definition_ru": "оценка согласованности уверенности модели с фактической корректностью",
+    "chapter": "CH08",
+    "pages": [
+      427,
+      429
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-UNCERTAINTY_CALIBRATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CALIBRATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_GROUNDING",
+    "title": "Grounding by retrieval",
+    "definition_ru": "снижение риска галлюцинаций через релевантный подтверждённый контекст",
+    "chapter": "CH08",
+    "pages": [
+      428,
+      429
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_GROUNDING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COVE",
+    "title": "Chain-of-Verification",
+    "definition_ru": "составление отдельных проверочных вопросов, ответы на них и исправление исходного вывода",
+    "chapter": "CH08",
+    "pages": [
+      429,
+      432
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COVE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-HALLUCINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RECITATION",
+    "title": "Recitation",
+    "definition_ru": "генерация промежуточных текстовых фрагментов перед ответом",
+    "chapter": "CH08",
+    "pages": [
+      432,
+      434
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RECITATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-HALLUCINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FACTUAL_NUCLEUS",
+    "title": "Factual-nucleus sampling",
+    "definition_ru": "регулирование порога top-p в процессе генерации для уменьшения риска фактических ошибок",
+    "chapter": "CH08",
+    "pages": [
+      434,
+      435
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FACTUAL_NUCLEUS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-TOP_P"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOLA",
+    "title": "DoLa contrastive decoding",
+    "definition_ru": "контрастирование logits верхнего и промежуточных слоёв модели",
+    "chapter": "CH08",
+    "pages": [
+      436,
+      438
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOLA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LOOKBACK_LENS",
+    "title": "Lookback Lens",
+    "definition_ru": "использование отношения внимания к контекстным и сгенерированным токенам для оценки риска ошибок",
+    "chapter": "CH08",
+    "pages": [
+      439,
+      441
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LOOKBACK_LENS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-SELF_ATTENTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-KNOWLEDGE_OVERSHADOWING",
+    "title": "Knowledge overshadowing",
+    "definition_ru": "доминирование одного условия, ведущее к игнорированию другого",
+    "chapter": "CH08",
+    "pages": [
+      442,
+      443
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-KNOWLEDGE_OVERSHADOWING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-HALLUCINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-S2A",
+    "title": "System 2 Attention",
+    "definition_ru": "очистка контекста от нерелевантной информации перед ответом",
+    "chapter": "CH08",
+    "pages": [
+      443,
+      445
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-S2A",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-HALLUCINATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DEDUCTIVE_REASONING",
+    "title": "Deductive reasoning",
+    "definition_ru": "логическое следствие из заданных предпосылок",
+    "chapter": "CH08",
+    "pages": [
+      446,
+      447
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DEDUCTIVE_REASONING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INDUCTIVE_REASONING",
+    "title": "Inductive reasoning",
+    "definition_ru": "обобщение наблюдений с вероятностным выводом",
+    "chapter": "CH08",
+    "pages": [
+      447,
+      447
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INDUCTIVE_REASONING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ABDUCTIVE_REASONING",
+    "title": "Abductive reasoning",
+    "definition_ru": "выбор правдоподобного объяснения наблюдаемого",
+    "chapter": "CH08",
+    "pages": [
+      447,
+      448
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ABDUCTIVE_REASONING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-VERIFIER",
+    "title": "External verifier",
+    "definition_ru": "проверка кандидата на решение отдельным алгоритмом, моделью или формальными правилами",
+    "chapter": "CH08",
+    "pages": [
+      451,
+      452
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-VERIFIER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXTRINSIC_EVAL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ITERATIVE_BACKPROMPTING",
+    "title": "Iterative backprompting",
+    "definition_ru": "итеративное исправление решения с обратной связью проверяющего компонента",
+    "chapter": "CH08",
+    "pages": [
+      451,
+      452
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ITERATIVE_BACKPROMPTING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VERIFIER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BEST_OF_K",
+    "title": "Top-k guessing / best-of-k",
+    "definition_ru": "генерация нескольких кандидатов с выбором после проверки",
+    "chapter": "CH08",
+    "pages": [
+      452,
+      454
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BEST_OF_K",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-VERIFIER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TEST_TIME_COMPUTE",
+    "title": "Inference-time computation",
+    "definition_ru": "выделение дополнительных вычислений для поиска и проверки решения во время инференса",
+    "chapter": "CH08",
+    "pages": [
+      452,
+      455
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TEST_TIME_COMPUTE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MCTS",
+    "title": "Monte Carlo Tree Search",
+    "definition_ru": "метод поиска, упомянутый как вариант inference-time search",
+    "chapter": "CH08",
+    "pages": [
+      455,
+      456
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MCTS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-TEST_TIME_COMPUTE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REASONING_SFT",
+    "title": "Fine-tuning for reasoning",
+    "definition_ru": "дообучение на наборах задач с размеченными промежуточными шагами",
+    "chapter": "CH08",
+    "pages": [
+      456,
+      457
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REASONING_SFT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INFERENCE_OPTIMIZATION",
+    "title": "Inference optimization",
+    "definition_ru": "уменьшение стоимости, памяти и задержки выполнения модели при сохранении нужного качества",
+    "chapter": "CH09",
+    "pages": [
+      459,
+      462
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INFERENCE_OPTIMIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AUTOREGRESSIVE_BOTTLENECK",
+    "title": "Autoregressive decoding bottleneck",
+    "definition_ru": "последовательная генерация токенов ограничивает скорость вывода",
+    "chapter": "CH09",
+    "pages": [
+      459,
+      461
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AUTOREGRESSIVE_BOTTLENECK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DECODER_ONLY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-KV_CACHE",
+    "title": "Key-value cache",
+    "definition_ru": "повторное использование вычисленных K и V self-attention для уже обработанных токенов",
+    "chapter": "CH09",
+    "pages": [
+      462,
+      466
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-KV_CACHE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SELF_ATTENTION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PROMPT_PREFIX_CACHE",
+    "title": "Prompt prefix caching",
+    "definition_ru": "повторное использование неизменного префикса запросов с учётом политики кэша",
+    "chapter": "CH09",
+    "pages": [
+      463,
+      466
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PROMPT_PREFIX_CACHE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-KV_CACHE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EARLY_EXIT",
+    "title": "Early exit",
+    "definition_ru": "завершение вычисления на части слоёв для экономии ресурсов",
+    "chapter": "CH09",
+    "pages": [
+      466,
+      472
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EARLY_EXIT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-INFERENCE_OPTIMIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SEQUENCE_EARLY_EXIT",
+    "title": "Sequence-level early exit",
+    "definition_ru": "выход на промежуточном слое сразу для всей последовательности",
+    "chapter": "CH09",
+    "pages": [
+      468,
+      470
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SEQUENCE_EARLY_EXIT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-EARLY_EXIT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKEN_EARLY_EXIT",
+    "title": "Token-level early exit",
+    "definition_ru": "динамический выбор глубины сети отдельно для токенов",
+    "chapter": "CH09",
+    "pages": [
+      470,
+      472
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKEN_EARLY_EXIT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-EARLY_EXIT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DYNAMIC_INFERENCE",
+    "title": "Dynamic inference",
+    "definition_ru": "выбор объёма вычислений в зависимости от свойств входа",
+    "chapter": "CH09",
+    "pages": [
+      472,
+      473
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DYNAMIC_INFERENCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-EARLY_EXIT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DISTILL_TEACHER_STUDENT",
+    "title": "Teacher-student distillation",
+    "definition_ru": "обучение компактной модели по выходам или представлениям другой модели",
+    "chapter": "CH09",
+    "pages": [
+      472,
+      479
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DISTILL_TEACHER_STUDENT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DISTILLATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BLACK_BOX_DISTILL",
+    "title": "Black-box knowledge distillation",
+    "definition_ru": "адаптация ученика по наблюдаемым ответам учителя",
+    "chapter": "CH09",
+    "pages": [
+      473,
+      479
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BLACK_BOX_DISTILL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DISTILL_TEACHER_STUDENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-WHITE_BOX_DISTILL",
+    "title": "White-box knowledge distillation",
+    "definition_ru": "сопоставление logits или внутренних представлений учителя и ученика",
+    "chapter": "CH09",
+    "pages": [
+      474,
+      479
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-WHITE_BOX_DISTILL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-DISTILL_TEACHER_STUDENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-WEAK_TO_STRONG",
+    "title": "Weak-to-strong generalization",
+    "definition_ru": "обучение более сильного ученика на метках слабого учителя",
+    "chapter": "CH09",
+    "pages": [
+      478,
+      479
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-WEAK_TO_STRONG",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-DISTILL_TEACHER_STUDENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SPECULATIVE_DECODING",
+    "title": "Speculative decoding",
+    "definition_ru": "проверка большой моделью нескольких токенов, предложенных меньшей draft-моделью",
+    "chapter": "CH09",
+    "pages": [
+      480,
+      482
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SPECULATIVE_DECODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AUTOREGRESSIVE_BOTTLENECK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DRAFT_MODEL",
+    "title": "Draft model",
+    "definition_ru": "модель-кандидат для генерации последовательности при speculative decoding",
+    "chapter": "CH09",
+    "pages": [
+      480,
+      482
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DRAFT_MODEL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SPECULATIVE_DECODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOKEN_ACCEPTANCE",
+    "title": "Draft token acceptance rate",
+    "definition_ru": "доля предложенных токенов, принятых проверяющей моделью",
+    "chapter": "CH09",
+    "pages": [
+      480,
+      482
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOKEN_ACCEPTANCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SPECULATIVE_DECODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PARALLEL_DECODING",
+    "title": "Parallel decoding",
+    "definition_ru": "параллельное получение независимых частей или нескольких токенов",
+    "chapter": "CH09",
+    "pages": [
+      482,
+      485
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PARALLEL_DECODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-AUTOREGRESSIVE_BOTTLENECK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MULTI_TOKEN_DECODING",
+    "title": "Multi-token decoding",
+    "definition_ru": "предсказание нескольких последующих токенов через дополнительные головы",
+    "chapter": "CH09",
+    "pages": [
+      483,
+      484
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MULTI_TOKEN_DECODING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PARALLEL_DECODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MEDUSA",
+    "title": "Medusa decoding",
+    "definition_ru": "архитектура с дополнительными decoding heads для multi-token prediction",
+    "chapter": "CH09",
+    "pages": [
+      483,
+      484
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MEDUSA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-MULTI_TOKEN_DECODING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FP32",
+    "title": "FP32",
+    "definition_ru": "32-битный формат с плавающей точкой",
+    "chapter": "CH09",
+    "pages": [
+      485,
+      486
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FP32",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FP16",
+    "title": "FP16",
+    "definition_ru": "16-битный формат с плавающей точкой с ограниченным диапазоном чисел",
+    "chapter": "CH09",
+    "pages": [
+      485,
+      487
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FP16",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BF16",
+    "title": "BF16",
+    "definition_ru": "16-битный формат с диапазоном экспоненты, близким FP32, и меньшей точностью мантиссы",
+    "chapter": "CH09",
+    "pages": [
+      486,
+      487
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BF16",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INT8",
+    "title": "INT8",
+    "definition_ru": "целочисленное 8-битное представление весов или активаций",
+    "chapter": "CH09",
+    "pages": [
+      487,
+      490
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INT8",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SYMMETRIC_QUANT",
+    "title": "Symmetric quantization",
+    "definition_ru": "отображение вещественного нуля в целочисленный ноль с масштабом",
+    "chapter": "CH09",
+    "pages": [
+      487,
+      488
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SYMMETRIC_QUANT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ASYMMETRIC_QUANT",
+    "title": "Asymmetric quantization",
+    "definition_ru": "аффинное отображение диапазона значений с zero point",
+    "chapter": "CH09",
+    "pages": [
+      488,
+      490
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ASYMMETRIC_QUANT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUANT_CALIBRATION",
+    "title": "Quantization calibration",
+    "definition_ru": "определение диапазона и масштабов с использованием контрольных данных",
+    "chapter": "CH09",
+    "pages": [
+      489,
+      490
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUANT_CALIBRATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PASSIVE_APPROACH",
+    "title": "Passive interaction",
+    "definition_ru": "извлечение внешнего контекста программой с последующей передачей данных LLM без самостоятельного выбора инструментов",
+    "chapter": "CH10",
+    "pages": [
+      496,
+      498
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PASSIVE_APPROACH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EXPLICIT_APPROACH",
+    "title": "Explicit interaction",
+    "definition_ru": "предопределённая последовательность обращений к инструментам в фиксированном workflow",
+    "chapter": "CH10",
+    "pages": [
+      499,
+      500
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EXPLICIT_APPROACH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-INFERENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AUTONOMOUS_APPROACH",
+    "title": "Autonomous interaction",
+    "definition_ru": "LLM декомпозирует задачу и самостоятельно выбирает действия и инструменты",
+    "chapter": "CH10",
+    "pages": [
+      501,
+      505
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AUTONOMOUS_APPROACH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EXPLICIT_APPROACH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT_AUTONOMY",
+    "title": "Agent autonomy",
+    "definition_ru": "возможность определять дальнейшие действия без детального предписания человеком",
+    "chapter": "CH10",
+    "pages": [
+      503,
+      505
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT_AUTONOMY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AUTONOMOUS_APPROACH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TASK_DECOMPOSITION",
+    "title": "Task decomposition",
+    "definition_ru": "разделение пользовательской цели на последовательность зависимых подзадач",
+    "chapter": "CH10",
+    "pages": [
+      505,
+      508
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TASK_DECOMPOSITION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AUTONOMOUS_APPROACH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT_COMPONENTS",
+    "title": "Agentic system components",
+    "definition_ru": "набор моделей, инструментов, хранилищ, loop prompt, guardrails/verifiers и оркестратора",
+    "chapter": "CH10",
+    "pages": [
+      508,
+      511
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT_COMPONENTS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AUTONOMOUS_APPROACH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOOL_INTERFACE",
+    "title": "Tool interface",
+    "definition_ru": "объявление вызываемой функции и аргументов для взаимодействия LLM и приложения",
+    "chapter": "CH10",
+    "pages": [
+      511,
+      520
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOOL_INTERFACE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_COMPONENTS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-WEB_SEARCH_TOOL",
+    "title": "Web search tool",
+    "definition_ru": "подключение к поисковым системам для извлечения внешних материалов",
+    "chapter": "CH10",
+    "pages": [
+      512,
+      513
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-WEB_SEARCH_TOOL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-API_CONNECTOR",
+    "title": "API connector",
+    "definition_ru": "программный адаптер для получения данных из внешнего API",
+    "chapter": "CH10",
+    "pages": [
+      512,
+      514
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-API_CONNECTOR",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CODE_INTERPRETER",
+    "title": "Code interpreter",
+    "definition_ru": "изолированный вычислитель для исполнения проверяемых программных фрагментов",
+    "chapter": "CH10",
+    "pages": [
+      513,
+      514
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CODE_INTERPRETER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DATABASE_CONNECTOR",
+    "title": "Database connector",
+    "definition_ru": "интерфейс к БД с известной схемой и параметризованными операциями",
+    "chapter": "CH10",
+    "pages": [
+      514,
+      515
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DATABASE_CONNECTOR",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOOL_SELECTION",
+    "title": "Tool selection",
+    "definition_ru": "выбор нужного инструмента из перечня по задаче",
+    "chapter": "CH10",
+    "pages": [
+      515,
+      520
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOOL_SELECTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOOL_CALL_JSON",
+    "title": "Structured tool call",
+    "definition_ru": "машиночитаемое описание операции и её аргументов для оркестратора",
+    "chapter": "CH10",
+    "pages": [
+      518,
+      520
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOOL_CALL_JSON",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-STRUCTURED_OUTPUT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PROMPT_REPOSITORY",
+    "title": "Prompt repository",
+    "definition_ru": "хранилище специализированных инструкций и примеров для выполнения задач",
+    "chapter": "CH10",
+    "pages": [
+      523,
+      525
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PROMPT_REPOSITORY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_COMPONENTS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SESSION_MEMORY",
+    "title": "Session memory",
+    "definition_ru": "журнал состояния, предыдущих действий и наблюдений в процессе работы агента",
+    "chapter": "CH10",
+    "pages": [
+      525,
+      528
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SESSION_MEMORY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_COMPONENTS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TOOL_DOC_STORE",
+    "title": "Tool documentation store",
+    "definition_ru": "хранилище схем БД и документации API для корректного обращения к инструментам",
+    "chapter": "CH10",
+    "pages": [
+      528,
+      530
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TOOL_DOC_STORE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TOOL_INTERFACE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT_LOOP_PROMPT",
+    "title": "Agent loop prompt",
+    "definition_ru": "инструкция по циклу использования инструментов, наблюдений и завершения задачи",
+    "chapter": "CH10",
+    "pages": [
+      530,
+      533
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT_LOOP_PROMPT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_COMPONENTS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REACT",
+    "title": "ReAct",
+    "definition_ru": "схема итераций планирования, действия и наблюдения при работе агента",
+    "chapter": "CH10",
+    "pages": [
+      530,
+      532
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REACT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-AGENT_LOOP_PROMPT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REFLEXION",
+    "title": "Reflexion",
+    "definition_ru": "механизм исправления решений на основе обратной связи и истории действий",
+    "chapter": "CH10",
+    "pages": [
+      532,
+      533
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REFLEXION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-AGENT_LOOP_PROMPT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT_GUARDRAIL",
+    "title": "Agent guardrail",
+    "definition_ru": "контроль допустимости входов, выходов и действий модели во время работы",
+    "chapter": "CH10",
+    "pages": [
+      533,
+      538
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT_GUARDRAIL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-ALIGNMENT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PII_DETECTION",
+    "title": "PII detection",
+    "definition_ru": "обнаружение персональных данных при входном и выходном контроле",
+    "chapter": "CH10",
+    "pages": [
+      534,
+      538
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PII_DETECTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_GUARDRAIL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PROMPT_INJECTION",
+    "title": "Prompt injection",
+    "definition_ru": "попытка подменить допустимые инструкции через недоверенный текст",
+    "chapter": "CH10",
+    "pages": [
+      535,
+      538
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PROMPT_INJECTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_GUARDRAIL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GUARDRAIL_FAIL_ACTION",
+    "title": "Guardrail failure actions",
+    "definition_ru": "повторный запрос, исправление, фильтрация, отказ, исключение или журналирование",
+    "chapter": "CH10",
+    "pages": [
+      536,
+      538
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GUARDRAIL_FAIL_ACTION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-AGENT_GUARDRAIL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-NLI_VERIFICATION",
+    "title": "Natural language inference verification",
+    "definition_ru": "проверка, следует ли гипотеза из предоставленного источника",
+    "chapter": "CH10",
+    "pages": [
+      543,
+      545
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-NLI_VERIFICATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VERIFIER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SUMMARY_VERIFICATION",
+    "title": "Summary verification criteria",
+    "definition_ru": "оценка фактичности, полноты, релевантности, структуры и других свойств сводки",
+    "chapter": "CH10",
+    "pages": [
+      540,
+      548
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SUMMARY_VERIFICATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-VERIFIER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-AGENT_ORCHESTRATION",
+    "title": "Agent orchestration",
+    "definition_ru": "управление состоянием, инструментами, маршрутом данных и журналами агента",
+    "chapter": "CH10",
+    "pages": [
+      549,
+      550
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-AGENT_ORCHESTRATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-AGENT_COMPONENTS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COMPUTER_USE_AGENT",
+    "title": "Computer-use agent",
+    "definition_ru": "взаимодействие с GUI/DOM интерфейсом при отсутствии подходящего API",
+    "chapter": "CH10",
+    "pages": [
+      550,
+      552
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COMPUTER_USE_AGENT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-AUTONOMOUS_APPROACH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TEXT_EMBEDDING",
+    "title": "Text embedding",
+    "definition_ru": "числовой вектор, кодирующий свойства слова, предложения или документа",
+    "chapter": "CH11",
+    "pages": [
+      555,
+      559
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TEXT_EMBEDDING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EMBEDDING_LAYER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EMBEDDING_POOLING",
+    "title": "Embedding pooling",
+    "definition_ru": "агрегация токенных представлений в вектор фрагмента",
+    "chapter": "CH11",
+    "pages": [
+      557,
+      559
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EMBEDDING_POOLING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MEAN_POOLING",
+    "title": "Mean pooling",
+    "definition_ru": "усреднение выходных векторов токенов для представления фрагмента",
+    "chapter": "CH11",
+    "pages": [
+      557,
+      558
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MEAN_POOLING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-EMBEDDING_POOLING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MAX_POOLING",
+    "title": "Max pooling",
+    "definition_ru": "выбор максимального значения каждой координаты токенных векторов",
+    "chapter": "CH11",
+    "pages": [
+      557,
+      558
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MAX_POOLING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-EMBEDDING_POOLING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CLS_POOLING",
+    "title": "CLS pooling",
+    "definition_ru": "использование представления начального специального токена",
+    "chapter": "CH11",
+    "pages": [
+      557,
+      558
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CLS_POOLING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-EMBEDDING_POOLING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SEMANTIC_SEARCH",
+    "title": "Semantic search",
+    "definition_ru": "поиск по близости смысловых векторов запроса и документов",
+    "chapter": "CH11",
+    "pages": [
+      559,
+      563
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SEMANTIC_SEARCH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-ASYMMETRIC_SEARCH",
+    "title": "Asymmetric semantic search",
+    "definition_ru": "поиск коротким запросом по более длинным документам",
+    "chapter": "CH11",
+    "pages": [
+      563,
+      564
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-ASYMMETRIC_SEARCH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COSINE_SIMILARITY",
+    "title": "Cosine similarity",
+    "definition_ru": "метрика сходства по углу между двумя векторами",
+    "chapter": "CH11",
+    "pages": [
+      563,
+      565
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COSINE_SIMILARITY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOT_PRODUCT",
+    "title": "Dot product",
+    "definition_ru": "скалярное произведение векторов для измерения сходства",
+    "chapter": "CH11",
+    "pages": [
+      563,
+      564
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOT_PRODUCT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-COSINE_SIMILARITY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EUCLIDEAN_DISTANCE",
+    "title": "Euclidean distance",
+    "definition_ru": "геометрическое расстояние в векторном пространстве",
+    "chapter": "CH11",
+    "pages": [
+      563,
+      564
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EUCLIDEAN_DISTANCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SEMANTIC_NEGATION",
+    "title": "Negation sensitivity",
+    "definition_ru": "риск высокой семантической близости высказываний с противоположным смыслом",
+    "chapter": "CH11",
+    "pages": [
+      564,
+      567
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SEMANTIC_NEGATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-EMBEDDING_FINETUNING",
+    "title": "Embedding fine-tuning",
+    "definition_ru": "адаптация embedding-модели на предметных парах и тройках",
+    "chapter": "CH11",
+    "pages": [
+      567,
+      575
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-EMBEDDING_FINETUNING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TRIPLET_DATASET",
+    "title": "Triplet dataset",
+    "definition_ru": "набор троек anchor positive negative для обучения сходства",
+    "chapter": "CH11",
+    "pages": [
+      569,
+      573
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TRIPLET_DATASET",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-EMBEDDING_FINETUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HARD_NEGATIVE",
+    "title": "Hard negative",
+    "definition_ru": "релевантный на вид, но неверный ответ для обучения и оценки поиска",
+    "chapter": "CH11",
+    "pages": [
+      571,
+      573
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HARD_NEGATIVE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TRIPLET_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TRIPLET_LOSS",
+    "title": "Triplet loss",
+    "definition_ru": "обучающая функция, сближающая anchor-positive и раздвигающая anchor-negative",
+    "chapter": "CH11",
+    "pages": [
+      572,
+      573
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TRIPLET_LOSS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TRIPLET_DATASET"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MNR_LOSS",
+    "title": "Multiple Negatives Ranking Loss",
+    "definition_ru": "ранжирующая функция, использующая остальные элементы батча как отрицательные",
+    "chapter": "CH11",
+    "pages": [
+      573,
+      575
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MNR_LOSS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-EMBEDDING_FINETUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INSTRUCTION_EMBEDDING",
+    "title": "Instruction embedding",
+    "definition_ru": "генерация embedding с явным описанием назначения текста и запроса",
+    "chapter": "CH11",
+    "pages": [
+      576,
+      578
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INSTRUCTION_EMBEDDING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MTEB",
+    "title": "Massive Text Embedding Benchmark",
+    "definition_ru": "набор задач сравнительной оценки embedding-моделей",
+    "chapter": "CH11",
+    "pages": [
+      579,
+      580
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MTEB",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM_BENCHMARK"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MATRYOSHKA",
+    "title": "Matryoshka Representation Learning",
+    "definition_ru": "обучение векторов так, чтобы префиксы разной размерности сохраняли полезные признаки",
+    "chapter": "CH11",
+    "pages": [
+      580,
+      584
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MATRYOSHKA",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BINARY_EMBEDDING",
+    "title": "Binary embedding",
+    "definition_ru": "представление координат вектора двоичными значениями",
+    "chapter": "CH11",
+    "pages": [
+      584,
+      586
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BINARY_EMBEDDING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PRODUCT_QUANTIZATION",
+    "title": "Product quantization",
+    "definition_ru": "компрессия векторов путем кластеризации их подпространств",
+    "chapter": "CH11",
+    "pages": [
+      586,
+      588
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PRODUCT_QUANTIZATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUANTIZATION"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DOCUMENT_CHUNKING",
+    "title": "Document chunking",
+    "definition_ru": "разделение текста на фрагменты для индексации и извлечения",
+    "chapter": "CH11",
+    "pages": [
+      588,
+      592
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DOCUMENT_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-CORPUS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SLIDING_WINDOW_CHUNKING",
+    "title": "Sliding window chunking",
+    "definition_ru": "перекрывающееся разбиение текста для сохранения соседнего контекста",
+    "chapter": "CH11",
+    "pages": [
+      592,
+      593
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SLIDING_WINDOW_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOCUMENT_CHUNKING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-METADATA_CHUNKING",
+    "title": "Metadata-aware chunking",
+    "definition_ru": "учёт секций, заголовков и метаданных при определении фрагментов",
+    "chapter": "CH11",
+    "pages": [
+      593,
+      594
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-METADATA_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOCUMENT_CHUNKING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LAYOUT_CHUNKING",
+    "title": "Layout-aware chunking",
+    "definition_ru": "использование визуальной структуры страницы и областей документа",
+    "chapter": "CH11",
+    "pages": [
+      593,
+      594
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LAYOUT_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOCUMENT_CHUNKING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SEMANTIC_CHUNKING",
+    "title": "Semantic chunking",
+    "definition_ru": "группировка семантически связанных фрагментов текста",
+    "chapter": "CH11",
+    "pages": [
+      594,
+      596
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SEMANTIC_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOCUMENT_CHUNKING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LATE_CHUNKING",
+    "title": "Late chunking",
+    "definition_ru": "контекстуализация токенов длинного текста до pooling по отдельным сегментам",
+    "chapter": "CH11",
+    "pages": [
+      596,
+      597
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LATE_CHUNKING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DOCUMENT_CHUNKING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-VECTOR_DATABASE",
+    "title": "Vector database",
+    "definition_ru": "хранилище векторов с поиском и фильтрами метаданных",
+    "chapter": "CH11",
+    "pages": [
+      598,
+      600
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-VECTOR_DATABASE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MULTILEVEL_EMBEDDINGS",
+    "title": "Multi-level embeddings",
+    "definition_ru": "векторы разной гранулярности от предложения до документа",
+    "chapter": "CH11",
+    "pages": [
+      600,
+      601
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MULTILEVEL_EMBEDDINGS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SPARSE_AUTOENCODER",
+    "title": "Sparse autoencoder",
+    "definition_ru": "разреженный автоэнкодер для анализа интерпретируемых признаков представлений",
+    "chapter": "CH11",
+    "pages": [
+      601,
+      603
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SPARSE_AUTOENCODER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TEXT_EMBEDDING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_PIPELINE",
+    "title": "RAG pipeline",
+    "definition_ru": "этапный конвейер извлечения данных и ответа модели с дополнительными проверками",
+    "chapter": "CH12",
+    "pages": [
+      604,
+      618
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_PIPELINE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_EXTERNAL_KNOWLEDGE",
+    "title": "External knowledge retrieval",
+    "definition_ru": "извлечение внешних фактов и обновляемых данных во время использования модели",
+    "chapter": "CH12",
+    "pages": [
+      605,
+      610
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_EXTERNAL_KNOWLEDGE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_HISTORY",
+    "title": "Conversation history retrieval",
+    "definition_ru": "извлечение нужных фрагментов прошлых взаимодействий при ограничении контекста",
+    "chapter": "CH12",
+    "pages": [
+      609,
+      610
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_HISTORY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_FEWSHOT",
+    "title": "In-context example retrieval",
+    "definition_ru": "подбор учебных примеров по текущему запросу",
+    "chapter": "CH12",
+    "pages": [
+      610,
+      611
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_FEWSHOT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_TOOL_DOCS",
+    "title": "Tool information retrieval",
+    "definition_ru": "поиск документации, схем и описаний инструментов по ситуации",
+    "chapter": "CH12",
+    "pages": [
+      610,
+      611
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_TOOL_DOCS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-TOOL_DOC_STORE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RETRIEVAL_GATE",
+    "title": "Decision when to retrieve",
+    "definition_ru": "динамический выбор между памятью модели и внешним извлечением",
+    "chapter": "CH12",
+    "pages": [
+      610,
+      613
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RETRIEVAL_GATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUERY_REWRITE",
+    "title": "Query rewriting",
+    "definition_ru": "переформулирование пользовательского запроса для согласования с корпусом",
+    "chapter": "CH12",
+    "pages": [
+      614,
+      625
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUERY_REWRITE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PRF",
+    "title": "Pseudo relevance feedback",
+    "definition_ru": "уточнение запроса с опорой на предварительно найденные документы",
+    "chapter": "CH12",
+    "pages": [
+      616,
+      621
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PRF",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUERY_REWRITE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HYDE",
+    "title": "Hypothetical document embeddings",
+    "definition_ru": "создание гипотетического документа для приближения запроса к документному пространству",
+    "chapter": "CH12",
+    "pages": [
+      619,
+      623
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HYDE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUERY_REWRITE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUERY_DRIFT",
+    "title": "Query topic drift",
+    "definition_ru": "отклонение расширенного поискового запроса от исходного смысла",
+    "chapter": "CH12",
+    "pages": [
+      622,
+      624
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUERY_DRIFT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-QUERY_REWRITE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-QUERY_DECOMPOSITION",
+    "title": "Query decomposition",
+    "definition_ru": "разбиение сложного вопроса на подзапросы с зависимостями",
+    "chapter": "CH12",
+    "pages": [
+      624,
+      625
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-QUERY_DECOMPOSITION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-QUERY_REWRITE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-BM25",
+    "title": "BM25 keyword retrieval",
+    "definition_ru": "вероятностная поисковая модель ранжирования по словам и частотам",
+    "chapter": "CH12",
+    "pages": [
+      625,
+      628
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-BM25",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SEMANTIC_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-HYBRID_SEARCH",
+    "title": "Hybrid retrieval",
+    "definition_ru": "объединение лексического поиска и поиска по векторам",
+    "chapter": "CH12",
+    "pages": [
+      627,
+      629
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-HYBRID_SEARCH",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-BM25"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_METADATA_FILTER",
+    "title": "Retrieval metadata filtering",
+    "definition_ru": "ограничение документов по дате, роли, корпусу, версии и другим атрибутам",
+    "chapter": "CH12",
+    "pages": [
+      628,
+      629
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_METADATA_FILTER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-HYBRID_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GENERATIVE_RETRIEVAL",
+    "title": "Generative retrieval",
+    "definition_ru": "генерация идентификаторов документов моделью вместо обычного индексного поиска",
+    "chapter": "CH12",
+    "pages": [
+      629,
+      632
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GENERATIVE_RETRIEVAL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TIGHT_RETRIEVER",
+    "title": "Tightly coupled retriever",
+    "definition_ru": "retriever, обученный совместно или под конкретную целевую языковую модель",
+    "chapter": "CH12",
+    "pages": [
+      632,
+      634
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TIGHT_RETRIEVER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-GRAPHRAG",
+    "title": "GraphRAG",
+    "definition_ru": "поиск с использованием связей сущностей и извлечённых графовых структур",
+    "chapter": "CH12",
+    "pages": [
+      634,
+      636
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-GRAPHRAG",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RERANKER",
+    "title": "Reranker",
+    "definition_ru": "повторное ранжирование небольшого множества кандидатов более точной моделью",
+    "chapter": "CH12",
+    "pages": [
+      636,
+      644
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RERANKER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-HYBRID_SEARCH"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CROSS_ENCODER",
+    "title": "Cross encoder reranking",
+    "definition_ru": "совместное кодирование запроса и документа при проверке релевантности",
+    "chapter": "CH12",
+    "pages": [
+      637,
+      639
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CROSS_ENCODER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RERANKER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COLBERT",
+    "title": "ColBERT late-interaction retrieval",
+    "definition_ru": "ранжирование по позднему взаимодействию токенных представлений",
+    "chapter": "CH12",
+    "pages": [
+      638,
+      639
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COLBERT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RERANKER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LISTWISE_RERANK",
+    "title": "Listwise reranking",
+    "definition_ru": "модель оценивает и упорядочивает группу документов за один запрос",
+    "chapter": "CH12",
+    "pages": [
+      641,
+      644
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LISTWISE_RERANK",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RERANKER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_REFINE",
+    "title": "RAG refine stage",
+    "definition_ru": "сокращение, очистка и улучшение извлечённого материала перед генерацией",
+    "chapter": "CH12",
+    "pages": [
+      645,
+      656
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_REFINE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CHAIN_OF_NOTE",
+    "title": "Chain-of-Note",
+    "definition_ru": "создание заметок о том, отвечает ли каждый документ на вопрос или лишь содержит контекст",
+    "chapter": "CH12",
+    "pages": [
+      651,
+      656
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CHAIN_OF_NOTE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_REFINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_INSERT",
+    "title": "RAG context insertion",
+    "definition_ru": "размещение кандидатов в контексте с учётом порядка и ограничения окна",
+    "chapter": "CH12",
+    "pages": [
+      656,
+      659
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_INSERT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_GENERATE",
+    "title": "RAG generation",
+    "definition_ru": "формирование ответа моделью на базе подготовленного контекста",
+    "chapter": "CH12",
+    "pages": [
+      658,
+      665
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_GENERATE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-FLARE",
+    "title": "Forward-Looking Active REtrieval",
+    "definition_ru": "инициирование дополнительных retrieval при генерации по потребности",
+    "chapter": "CH12",
+    "pages": [
+      660,
+      664
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-FLARE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RAG_GENERATE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_MEMORY_MGMT",
+    "title": "RAG memory management",
+    "definition_ru": "извлечение важной истории и состояния для поддержания длительных задач",
+    "chapter": "CH12",
+    "pages": [
+      665,
+      670
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_MEMORY_MGMT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_HISTORY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LLMR",
+    "title": "LLM-R example retriever",
+    "definition_ru": "подбор few-shot примеров по ожидаемому улучшению ответов модели",
+    "chapter": "CH12",
+    "pages": [
+      670,
+      672
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLMR",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-RAG_FEWSHOT"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-REALM",
+    "title": "Retrieval-Augmented Language Model",
+    "definition_ru": "совместное обучение retriever и языкового компонента при masked-language objective",
+    "chapter": "CH12",
+    "pages": [
+      672,
+      674
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-REALM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 3,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_CONTEXT_CONFLICT",
+    "title": "Retrieved context contradiction",
+    "definition_ru": "противоречие найденного контекста знаниям модели или другим источникам",
+    "chapter": "CH12",
+    "pages": [
+      674,
+      676
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_CONTEXT_CONFLICT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_LONG_CONTEXT",
+    "title": "RAG versus long context",
+    "definition_ru": "сравнение избирательного поиска с передачей длинного контекста целиком",
+    "chapter": "CH12",
+    "pages": [
+      676,
+      679
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_LONG_CONTEXT",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-RAG_PIPELINE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_VS_FINETUNE",
+    "title": "RAG versus fine-tuning",
+    "definition_ru": "выбор обновляемого контекста либо изменения параметров в зависимости от задачи",
+    "chapter": "CH12",
+    "pages": [
+      679,
+      682
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_VS_FINETUNE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-FINE_TUNING"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  }
+]

@@ -1,0 +1,1928 @@
+[
+  {
+    "from": "B002-LLM",
+    "to": "B002-MODEL_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM",
+    "to": "B002-NEXT_TOKEN_PREDICTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NEXT_TOKEN_PREDICTION",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NEXT_TOKEN_PREDICTION",
+    "to": "B002-PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKEN",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKENIZATION",
+    "to": "B002-VOCABULARY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-VOCABULARY",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LEARNING_OBJECTIVE",
+    "to": "B002-NEXT_TOKEN_PREDICTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRETRAINING",
+    "to": "B002-DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRETRAINING",
+    "to": "B002-LEARNING_OBJECTIVE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATASET",
+    "to": "B002-PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CORPUS",
+    "to": "B002-DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SOURCE_PROVENANCE",
+    "to": "B002-DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SOURCE_PROVENANCE",
+    "to": "B002-DATA_PREPROCESSING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_QUALITY",
+    "to": "B002-QUALITY_FILTERING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_COVERAGE",
+    "to": "B002-DATA_MIXTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SYNTHETIC_DATA",
+    "to": "B002-DATA_QUALITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SYNTHETIC_DATA",
+    "to": "B002-PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COMMON_CRAWL",
+    "to": "B002-DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-C4",
+    "to": "B002-COMMON_CRAWL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-THE_PILE",
+    "to": "B002-DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_PREPROCESSING",
+    "to": "B002-CORPUS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_PREPROCESSING",
+    "to": "B002-QUALITY_FILTERING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_PREPROCESSING",
+    "to": "B002-DEDUPLICATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BOILERPLATE",
+    "to": "B002-EXTRACTION_CLEANING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EXTRACTION_CLEANING",
+    "to": "B002-BOILERPLATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EXTRACTION_CLEANING",
+    "to": "B002-QUALITY_FILTERING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LANGUAGE_IDENTIFICATION",
+    "to": "B002-QUALITY_FILTERING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUALITY_FILTERING",
+    "to": "B002-DATA_QUALITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUALITY_FILTERING",
+    "to": "B002-PERPLEXITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PERPLEXITY",
+    "to": "B002-QUALITY_FILTERING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DEDUPLICATION",
+    "to": "B002-EXACT_DUPLICATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DEDUPLICATION",
+    "to": "B002-NEAR_DUPLICATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DEDUPLICATION",
+    "to": "B002-SEMANTIC_DUPLICATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MINHASH",
+    "to": "B002-NEAR_DUPLICATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MEMORIZATION",
+    "to": "B002-PRIVACY_ATTACK",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MEMORIZATION",
+    "to": "B002-DEDUPLICATION",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRIVACY_ATTACK",
+    "to": "B002-MEMORIZATION",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRIVACY_ATTACK",
+    "to": "B002-PII",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PII",
+    "to": "B002-PII_REMEDIATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PII_REMEDIATION",
+    "to": "B002-PII",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DP_SGD",
+    "to": "B002-PII_REMEDIATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TEST_CONTAMINATION",
+    "to": "B002-DECONTAMINATION",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DECONTAMINATION",
+    "to": "B002-TEST_CONTAMINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DECONTAMINATION",
+    "to": "B002-NGRAM_OVERLAP",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NGRAM_OVERLAP",
+    "to": "B002-DECONTAMINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_MIXTURE",
+    "to": "B002-DATA_COVERAGE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATA_MIXTURE",
+    "to": "B002-CURRICULUM_LEARNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CURRICULUM_LEARNING",
+    "to": "B002-DATA_MIXTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOWNSTREAM_TASKS",
+    "to": "B002-PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BIAS_FAIRNESS",
+    "to": "B002-DATA_QUALITY",
+    "type": "RISKS_OR_RELATES_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG",
+    "to": "B002-CORPUS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PROMPT",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FEW_SHOT",
+    "to": "B002-PROMPT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_DATASET_ROLE",
+    "to": "B002-DECONTAMINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_SOURCE_SPAN",
+    "to": "B002-SOURCE_PROVENANCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_QUALITY_GATE",
+    "to": "B002-DATA_QUALITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_QUALITY_GATE",
+    "to": "B002-DECONTAMINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_POLYGON",
+    "to": "B002-F_DATASET_ROLE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-F_POLYGON",
+    "to": "B002-F_QUALITY_GATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SUBWORD",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKEN_ID",
+    "to": "B002-TOKEN",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-OOV",
+    "to": "B002-VOCABULARY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-VOCAB_SIZE",
+    "to": "B002-VOCABULARY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NORMALIZATION",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRETOKENIZATION",
+    "to": "B002-NORMALIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BPE",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BYTE_BPE",
+    "to": "B002-BPE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-WORDPIECE",
+    "to": "B002-BPE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-UNIGRAM",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-POSTPROCESSING",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SPECIAL_TOKEN",
+    "to": "B002-POSTPROCESSING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FERTILITY",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PARITY",
+    "to": "B002-FERTILITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKEN_DOMAIN",
+    "to": "B002-VOCABULARY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EMBED_RESIZE",
+    "to": "B002-TOKEN_DOMAIN",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BYTE_MODELS",
+    "to": "B002-TOKENIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GLITCH_TOKEN",
+    "to": "B002-VOCABULARY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NEURAL_NETWORK",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_PARAMETER",
+    "to": "B002-NEURAL_NETWORK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REPRESENTATION_LEARNING",
+    "to": "B002-NEURAL_NETWORK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EMBEDDING_LAYER",
+    "to": "B002-TOKEN_ID",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SELF_ATTENTION",
+    "to": "B002-EMBEDDING_LAYER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QKV",
+    "to": "B002-SELF_ATTENTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MULTI_HEAD_ATTENTION",
+    "to": "B002-SELF_ATTENTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-POSITION_ENCODING",
+    "to": "B002-SELF_ATTENTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ROPE",
+    "to": "B002-POSITION_ENCODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FFN",
+    "to": "B002-NEURAL_NETWORK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LAYER_NORM",
+    "to": "B002-NEURAL_NETWORK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CROSS_ENTROPY",
+    "to": "B002-MODEL_PARAMETER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BACKPROP",
+    "to": "B002-CROSS_ENTROPY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INTRINSIC_EVAL",
+    "to": "B002-PERPLEXITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EXTRINSIC_EVAL",
+    "to": "B002-DOWNSTREAM_TASKS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ENCODER_ONLY",
+    "to": "B002-MODEL_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ENCODER_DECODER",
+    "to": "B002-MODEL_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DECODER_ONLY",
+    "to": "B002-MODEL_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MOE",
+    "to": "B002-FFN",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FLM",
+    "to": "B002-NEXT_TOKEN_PREDICTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PREFIX_LM",
+    "to": "B002-LEARNING_OBJECTIVE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MLM",
+    "to": "B002-LEARNING_OBJECTIVE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DENOISING",
+    "to": "B002-MLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-UL2",
+    "to": "B002-DENOISING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOMAIN_SPECIFIC_LANGUAGE",
+    "to": "B002-LEARNING_OBJECTIVE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PGN",
+    "to": "B002-DOMAIN_SPECIFIC_LANGUAGE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_PROVIDER",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BASE_MODEL",
+    "to": "B002-PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INSTRUCT_TUNING",
+    "to": "B002-BASE_MODEL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CHAT_MODEL",
+    "to": "B002-INSTRUCT_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LONG_CONTEXT",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOMAIN_ADAPTATION",
+    "to": "B002-INSTRUCT_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_LICENSE",
+    "to": "B002-MODEL_PROVIDER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_SELECTION",
+    "to": "B002-EXTRINSIC_EVAL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TPOT",
+    "to": "B002-MODEL_SELECTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM_BENCHMARK",
+    "to": "B002-EXTRINSIC_EVAL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EVAL_CONTAMINATION",
+    "to": "B002-TEST_CONTAMINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HELM",
+    "to": "B002-LLM_BENCHMARK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ELO",
+    "to": "B002-LLM_BENCHMARK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUANTIZATION",
+    "to": "B002-MODEL_SELECTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INFERENCE",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GREEDY_DECODING",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BEAM_SEARCH",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOP_K",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOP_P",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TEMPERATURE",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NONDETERMINISM",
+    "to": "B002-TEMPERATURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SELF_CONSISTENCY",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-STRUCTURED_OUTPUT",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-JSON_SCHEMA_OUTPUT",
+    "to": "B002-STRUCTURED_OUTPUT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CONSTRAINED_DECODING",
+    "to": "B002-STRUCTURED_OUTPUT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CFG",
+    "to": "B002-CONSTRAINED_DECODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_INTERPRETABILITY",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LIT_NLP",
+    "to": "B002-MODEL_INTERPRETABILITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FINE_TUNING",
+    "to": "B002-INSTRUCT_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SUPERVISED_FINETUNE",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TRAINING_ARGUMENTS",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-OPTIMIZER",
+    "to": "B002-BACKPROP",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ADAMW",
+    "to": "B002-OPTIMIZER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LEARNING_RATE",
+    "to": "B002-OPTIMIZER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LR_SCHEDULER",
+    "to": "B002-LEARNING_RATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GRAD_CHECKPOINT",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GRAD_ACCUM",
+    "to": "B002-OPTIMIZER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LABEL_SMOOTHING",
+    "to": "B002-CROSS_ENTROPY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CALIBRATION",
+    "to": "B002-EXTRINSIC_EVAL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NEFTUNE",
+    "to": "B002-EMBEDDING_LAYER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BATCH_SIZE",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PEFT",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LORA",
+    "to": "B002-PEFT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QLORA",
+    "to": "B002-LORA",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SFT_DATASET",
+    "to": "B002-SUPERVISED_FINETUNE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PUBLIC_INSTRUCTION_DATA",
+    "to": "B002-SFT_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FLAN_INSTRUCTION",
+    "to": "B002-SFT_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SUPERNATURAL_INSTRUCTIONS",
+    "to": "B002-SFT_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SELF_INSTRUCT",
+    "to": "B002-SFT_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-OUTPUT_FIRST",
+    "to": "B002-SELF_INSTRUCT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EVOL_INSTRUCT",
+    "to": "B002-SELF_INSTRUCT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ABLATION_STUDY",
+    "to": "B002-EXTRINSIC_EVAL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REGRESSION_RISK",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CONTINUAL_PRETRAINING",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DAPT",
+    "to": "B002-CONTINUAL_PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TAPT",
+    "to": "B002-DAPT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LIFELONG_LEARNING",
+    "to": "B002-CONTINUAL_PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CATASTROPHIC_FORGETTING",
+    "to": "B002-REGRESSION_RISK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REPLAY",
+    "to": "B002-CATASTROPHIC_FORGETTING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DISTILLATION",
+    "to": "B002-CATASTROPHIC_FORGETTING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PARAM_EXPANSION",
+    "to": "B002-CONTINUAL_PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DEMIX",
+    "to": "B002-MOE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PEFT_ADAPTER",
+    "to": "B002-PEFT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PREFIX_TUNING",
+    "to": "B002-PEFT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SOFT_PROMPT",
+    "to": "B002-PREFIX_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SUBSET_FINETUNE",
+    "to": "B002-PEFT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BITFIT",
+    "to": "B002-SUBSET_FINETUNE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_ENSEMBLE",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PAIRRANKER",
+    "to": "B002-MODEL_ENSEMBLE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GENFUSER",
+    "to": "B002-MODEL_ENSEMBLE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MODEL_FUSION",
+    "to": "B002-MODEL_PARAMETER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-WEIGHT_AVERAGING",
+    "to": "B002-MODEL_FUSION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ADAPTER_MERGING",
+    "to": "B002-MODEL_FUSION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INTERTRAINING",
+    "to": "B002-CONTINUAL_PRETRAINING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ALIGNMENT",
+    "to": "B002-MODEL_SELECTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HHH",
+    "to": "B002-ALIGNMENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RLHF",
+    "to": "B002-ALIGNMENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HUMAN_FEEDBACK",
+    "to": "B002-RLHF",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REWARD_MODEL",
+    "to": "B002-RLHF",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PPO",
+    "to": "B002-RLHF",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-KL_REGULARIZATION",
+    "to": "B002-PPO",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HALLUCINATION",
+    "to": "B002-RAG",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-KNOWLEDGE_QUADRANT",
+    "to": "B002-HALLUCINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-UNCERTAINTY_CALIBRATION",
+    "to": "B002-CALIBRATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_GROUNDING",
+    "to": "B002-RAG",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COVE",
+    "to": "B002-HALLUCINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RECITATION",
+    "to": "B002-HALLUCINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FACTUAL_NUCLEUS",
+    "to": "B002-TOP_P",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOLA",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LOOKBACK_LENS",
+    "to": "B002-SELF_ATTENTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-KNOWLEDGE_OVERSHADOWING",
+    "to": "B002-HALLUCINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-S2A",
+    "to": "B002-HALLUCINATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DEDUCTIVE_REASONING",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INDUCTIVE_REASONING",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ABDUCTIVE_REASONING",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-VERIFIER",
+    "to": "B002-EXTRINSIC_EVAL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ITERATIVE_BACKPROMPTING",
+    "to": "B002-VERIFIER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BEST_OF_K",
+    "to": "B002-VERIFIER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TEST_TIME_COMPUTE",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MCTS",
+    "to": "B002-TEST_TIME_COMPUTE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REASONING_SFT",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INFERENCE_OPTIMIZATION",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AUTOREGRESSIVE_BOTTLENECK",
+    "to": "B002-DECODER_ONLY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-KV_CACHE",
+    "to": "B002-SELF_ATTENTION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PROMPT_PREFIX_CACHE",
+    "to": "B002-KV_CACHE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EARLY_EXIT",
+    "to": "B002-INFERENCE_OPTIMIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SEQUENCE_EARLY_EXIT",
+    "to": "B002-EARLY_EXIT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKEN_EARLY_EXIT",
+    "to": "B002-EARLY_EXIT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DYNAMIC_INFERENCE",
+    "to": "B002-EARLY_EXIT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DISTILL_TEACHER_STUDENT",
+    "to": "B002-DISTILLATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BLACK_BOX_DISTILL",
+    "to": "B002-DISTILL_TEACHER_STUDENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-WHITE_BOX_DISTILL",
+    "to": "B002-DISTILL_TEACHER_STUDENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-WEAK_TO_STRONG",
+    "to": "B002-DISTILL_TEACHER_STUDENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SPECULATIVE_DECODING",
+    "to": "B002-AUTOREGRESSIVE_BOTTLENECK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DRAFT_MODEL",
+    "to": "B002-SPECULATIVE_DECODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOKEN_ACCEPTANCE",
+    "to": "B002-SPECULATIVE_DECODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PARALLEL_DECODING",
+    "to": "B002-AUTOREGRESSIVE_BOTTLENECK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MULTI_TOKEN_DECODING",
+    "to": "B002-PARALLEL_DECODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MEDUSA",
+    "to": "B002-MULTI_TOKEN_DECODING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FP32",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FP16",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BF16",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INT8",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SYMMETRIC_QUANT",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ASYMMETRIC_QUANT",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUANT_CALIBRATION",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PASSIVE_APPROACH",
+    "to": "B002-RAG",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EXPLICIT_APPROACH",
+    "to": "B002-INFERENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AUTONOMOUS_APPROACH",
+    "to": "B002-EXPLICIT_APPROACH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT_AUTONOMY",
+    "to": "B002-AUTONOMOUS_APPROACH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TASK_DECOMPOSITION",
+    "to": "B002-AUTONOMOUS_APPROACH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT_COMPONENTS",
+    "to": "B002-AUTONOMOUS_APPROACH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOOL_INTERFACE",
+    "to": "B002-AGENT_COMPONENTS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-WEB_SEARCH_TOOL",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-API_CONNECTOR",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CODE_INTERPRETER",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DATABASE_CONNECTOR",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOOL_SELECTION",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOOL_CALL_JSON",
+    "to": "B002-STRUCTURED_OUTPUT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PROMPT_REPOSITORY",
+    "to": "B002-AGENT_COMPONENTS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SESSION_MEMORY",
+    "to": "B002-AGENT_COMPONENTS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TOOL_DOC_STORE",
+    "to": "B002-TOOL_INTERFACE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT_LOOP_PROMPT",
+    "to": "B002-AGENT_COMPONENTS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REACT",
+    "to": "B002-AGENT_LOOP_PROMPT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REFLEXION",
+    "to": "B002-AGENT_LOOP_PROMPT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT_GUARDRAIL",
+    "to": "B002-ALIGNMENT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PII_DETECTION",
+    "to": "B002-AGENT_GUARDRAIL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PROMPT_INJECTION",
+    "to": "B002-AGENT_GUARDRAIL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GUARDRAIL_FAIL_ACTION",
+    "to": "B002-AGENT_GUARDRAIL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-NLI_VERIFICATION",
+    "to": "B002-VERIFIER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SUMMARY_VERIFICATION",
+    "to": "B002-VERIFIER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-AGENT_ORCHESTRATION",
+    "to": "B002-AGENT_COMPONENTS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COMPUTER_USE_AGENT",
+    "to": "B002-AUTONOMOUS_APPROACH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TEXT_EMBEDDING",
+    "to": "B002-EMBEDDING_LAYER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EMBEDDING_POOLING",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MEAN_POOLING",
+    "to": "B002-EMBEDDING_POOLING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MAX_POOLING",
+    "to": "B002-EMBEDDING_POOLING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CLS_POOLING",
+    "to": "B002-EMBEDDING_POOLING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SEMANTIC_SEARCH",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-ASYMMETRIC_SEARCH",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COSINE_SIMILARITY",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOT_PRODUCT",
+    "to": "B002-COSINE_SIMILARITY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EUCLIDEAN_DISTANCE",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SEMANTIC_NEGATION",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-EMBEDDING_FINETUNING",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TRIPLET_DATASET",
+    "to": "B002-EMBEDDING_FINETUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HARD_NEGATIVE",
+    "to": "B002-TRIPLET_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TRIPLET_LOSS",
+    "to": "B002-TRIPLET_DATASET",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MNR_LOSS",
+    "to": "B002-EMBEDDING_FINETUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INSTRUCTION_EMBEDDING",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MTEB",
+    "to": "B002-LLM_BENCHMARK",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MATRYOSHKA",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BINARY_EMBEDDING",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRODUCT_QUANTIZATION",
+    "to": "B002-QUANTIZATION",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DOCUMENT_CHUNKING",
+    "to": "B002-CORPUS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SLIDING_WINDOW_CHUNKING",
+    "to": "B002-DOCUMENT_CHUNKING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-METADATA_CHUNKING",
+    "to": "B002-DOCUMENT_CHUNKING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LAYOUT_CHUNKING",
+    "to": "B002-DOCUMENT_CHUNKING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SEMANTIC_CHUNKING",
+    "to": "B002-DOCUMENT_CHUNKING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LATE_CHUNKING",
+    "to": "B002-DOCUMENT_CHUNKING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-VECTOR_DATABASE",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MULTILEVEL_EMBEDDINGS",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SPARSE_AUTOENCODER",
+    "to": "B002-TEXT_EMBEDDING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_PIPELINE",
+    "to": "B002-RAG",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_EXTERNAL_KNOWLEDGE",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_HISTORY",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_FEWSHOT",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_TOOL_DOCS",
+    "to": "B002-TOOL_DOC_STORE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RETRIEVAL_GATE",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUERY_REWRITE",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PRF",
+    "to": "B002-QUERY_REWRITE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HYDE",
+    "to": "B002-QUERY_REWRITE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUERY_DRIFT",
+    "to": "B002-QUERY_REWRITE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-QUERY_DECOMPOSITION",
+    "to": "B002-QUERY_REWRITE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-BM25",
+    "to": "B002-SEMANTIC_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-HYBRID_SEARCH",
+    "to": "B002-BM25",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_METADATA_FILTER",
+    "to": "B002-HYBRID_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GENERATIVE_RETRIEVAL",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TIGHT_RETRIEVER",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-GRAPHRAG",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RERANKER",
+    "to": "B002-HYBRID_SEARCH",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CROSS_ENCODER",
+    "to": "B002-RERANKER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COLBERT",
+    "to": "B002-RERANKER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LISTWISE_RERANK",
+    "to": "B002-RERANKER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_REFINE",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CHAIN_OF_NOTE",
+    "to": "B002-RAG_REFINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_INSERT",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_GENERATE",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-FLARE",
+    "to": "B002-RAG_GENERATE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_MEMORY_MGMT",
+    "to": "B002-RAG_HISTORY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLMR",
+    "to": "B002-RAG_FEWSHOT",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-REALM",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_CONTEXT_CONFLICT",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_LONG_CONTEXT",
+    "to": "B002-RAG_PIPELINE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_VS_FINETUNE",
+    "to": "B002-FINE_TUNING",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  }
+]
