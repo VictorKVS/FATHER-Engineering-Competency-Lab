@@ -12,7 +12,7 @@
 | F06 | CH10 | agent loop, tools, guardrails, API, SQL | проверить разрешения mock tool call | POLYGON: tool-use competence |
 | F07 | CH11 | embeddings, negation, chunking | определить ложное совпадение в тестовых документах | POLYGON: retrieval evidence |
 | F08 | CH12 | full RAG, hybrid, reranking, provenance | диагностировать retrieval miss vs generation error | POLYGON: source chain |
-| F09 | CH13 | архитектура систем | **ожидает чтения оригинала** | NOT_READY |
+| F09 | CH13 | архитектура систем | маршрутизация моделей, каскады, специализированные LLM, DSPy, LMQL | LAB_DESIGNED_NOT_RUN |
 
 ## Роль
 

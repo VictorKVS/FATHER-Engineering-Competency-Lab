@@ -1924,5 +1924,119 @@
     "to": "B002-FINE_TUNING",
     "type": "RELATED_TO",
     "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SYSTEM_ARCHITECTURE",
+    "to": "B002-LLM",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MULTI_LLM_ARCHITECTURE",
+    "to": "B002-SYSTEM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM_ENSEMBLE",
+    "to": "B002-MULTI_LLM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM_CASCADE",
+    "to": "B002-MULTI_LLM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CASCADE_CONFIDENCE",
+    "to": "B002-LLM_CASCADE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-MARGIN_SAMPLING",
+    "to": "B002-CASCADE_CONFIDENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-SELF_CONSISTENCY_ROUTING",
+    "to": "B002-CASCADE_CONFIDENCE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LLM_ROUTER",
+    "to": "B002-MULTI_LLM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-INTENT_ROUTING",
+    "to": "B002-LLM_ROUTER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-COMPLEXITY_ROUTING",
+    "to": "B002-LLM_ROUTER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-RAG_ROUTER",
+    "to": "B002-LLM_ROUTER",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-TASK_SPECIALIZED_LLM",
+    "to": "B002-MULTI_LLM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-PROGRAMMING_PARADIGMS",
+    "to": "B002-SYSTEM_ARCHITECTURE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DSPY",
+    "to": "B002-PROGRAMMING_PARADIGMS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DSPY_MODULE",
+    "to": "B002-DSPY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DSPY_SIGNATURE",
+    "to": "B002-DSPY_MODULE",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-DSPY_OPTIMIZER",
+    "to": "B002-DSPY",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-LMQL",
+    "to": "B002-PROGRAMMING_PARADIGMS",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
+  },
+  {
+    "from": "B002-CONSTRAINED_GENERATION",
+    "to": "B002-LMQL",
+    "type": "RELATED_TO",
+    "status": "INHERITED_UNVALIDATED_RELATION"
   }
 ]

@@ -9,7 +9,7 @@
     "source_ref": "SRC-BOOK002-PRIMARY",
     "source_repo": "VictorKVS/alina-knowledge-worker",
     "source_path": "library/books/BOOK-002_Designing_LLM_Applications/alina_kb/knowledge_graph.json",
-    "source_commit": "2dc97586ab4286b3aff2032483c31c1d305904b5",
+    "source_commit": "81af5a79af606c951761686219abcd5bbe528f41",
     "original_pdf": "user-supplied; not copied here",
     "copyright": "Original book text not redistributed",
     "reviewed_chapters": [
@@ -24,7 +24,8 @@
       "CH09",
       "CH10",
       "CH11",
-      "CH12"
+      "CH12",
+      "CH13"
     ],
     "reviewed_pdf_ranges": {
       "CH01": [
@@ -74,13 +75,17 @@
       "CH12": [
         604,
         682
+      ],
+      "CH13": [
+        683,
+        700
       ]
     },
     "source_sha256_status": "NOT_CALCULATED",
     "ingestion_type": "ALINA_PARAPHRASED_GRAPH_SNAPSHOT"
   },
-  "imported_nodes": 307,
-  "imported_edges": 321,
+  "imported_nodes": 326,
+  "imported_edges": 340,
   "threat_scenarios": 12,
   "scope": "LLM_AGENT_SECURITY",
   "network_access": false,

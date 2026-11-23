@@ -5841,5 +5841,366 @@
       "B002-FINE_TUNING"
     ],
     "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SYSTEM_ARCHITECTURE",
+    "title": "System architecture",
+    "definition_ru": "композиция программных и модельных компонентов для достижения надёжности, качества, стоимости и задержки",
+    "chapter": "CH13",
+    "pages": [
+      683,
+      684
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SYSTEM_ARCHITECTURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MULTI_LLM_ARCHITECTURE",
+    "title": "Multi-LLM architecture",
+    "definition_ru": "совместное применение нескольких языковых моделей для подзадач или выбора модели на запрос",
+    "chapter": "CH13",
+    "pages": [
+      684,
+      685
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MULTI_LLM_ARCHITECTURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-SYSTEM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LLM_ENSEMBLE",
+    "title": "LLM ensemble",
+    "definition_ru": "объединение выходов нескольких моделей методами агрегирования",
+    "chapter": "CH13",
+    "pages": [
+      685,
+      686
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLM_ENSEMBLE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-MULTI_LLM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LLM_CASCADE",
+    "title": "LLM cascade",
+    "definition_ru": "последовательная передача задачи моделям возрастающей мощности при недостаточной уверенности",
+    "chapter": "CH13",
+    "pages": [
+      686,
+      689
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLM_CASCADE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MULTI_LLM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CASCADE_CONFIDENCE",
+    "title": "Cascade confidence calibration",
+    "definition_ru": "оценивание достаточности ответа для остановки каскада с учётом калибровки",
+    "chapter": "CH13",
+    "pages": [
+      687,
+      689
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CASCADE_CONFIDENCE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM_CASCADE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-MARGIN_SAMPLING",
+    "title": "Margin sampling",
+    "definition_ru": "использование разницы вероятностей двух наиболее вероятных токенов как эвристики уверенности",
+    "chapter": "CH13",
+    "pages": [
+      688,
+      689
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-MARGIN_SAMPLING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CASCADE_CONFIDENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-SELF_CONSISTENCY_ROUTING",
+    "title": "Self-consistency for routing",
+    "definition_ru": "сравнение нескольких ответов модели как эвристики уверенности",
+    "chapter": "CH13",
+    "pages": [
+      687,
+      689
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-SELF_CONSISTENCY_ROUTING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-CASCADE_CONFIDENCE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LLM_ROUTER",
+    "title": "LLM router",
+    "definition_ru": "модель или программа предварительного распределения запросов по исполнителям",
+    "chapter": "CH13",
+    "pages": [
+      689,
+      691
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LLM_ROUTER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MULTI_LLM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-INTENT_ROUTING",
+    "title": "Intent routing",
+    "definition_ru": "направление запроса по распознанному намерению к соответствующей модели",
+    "chapter": "CH13",
+    "pages": [
+      689,
+      690
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-INTENT_ROUTING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM_ROUTER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-COMPLEXITY_ROUTING",
+    "title": "Complexity-based routing",
+    "definition_ru": "направление запроса к наименьшей модели с достаточным ожидаемым качеством",
+    "chapter": "CH13",
+    "pages": [
+      689,
+      691
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-COMPLEXITY_ROUTING",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LLM_ROUTER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-RAG_ROUTER",
+    "title": "RAG retrieval routing",
+    "definition_ru": "выбор вида поискового механизма по характеристикам запроса",
+    "chapter": "CH13",
+    "pages": [
+      690,
+      691
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-RAG_ROUTER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-LLM_ROUTER"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-TASK_SPECIALIZED_LLM",
+    "title": "Task-specialized LLM",
+    "definition_ru": "использование предметных или функциональных моделей для отдельных подзадач",
+    "chapter": "CH13",
+    "pages": [
+      691,
+      692
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-TASK_SPECIALIZED_LLM",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-MULTI_LLM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-PROGRAMMING_PARADIGMS",
+    "title": "LLM programming paradigms",
+    "definition_ru": "программное описание логики приложения с отделением потока исполнения от текстовых инструкций",
+    "chapter": "CH13",
+    "pages": [
+      692,
+      693
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-PROGRAMMING_PARADIGMS",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-SYSTEM_ARCHITECTURE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DSPY",
+    "title": "DSPy",
+    "definition_ru": "фреймворк декларативной разработки LLM-программ с модулями и оптимизаторами",
+    "chapter": "CH13",
+    "pages": [
+      693,
+      697
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DSPY",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-PROGRAMMING_PARADIGMS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DSPY_MODULE",
+    "title": "DSPy module",
+    "definition_ru": "компонент программы с декларативной сигнатурой входов и выходов",
+    "chapter": "CH13",
+    "pages": [
+      694,
+      696
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DSPY_MODULE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DSPY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DSPY_SIGNATURE",
+    "title": "DSPy signature",
+    "definition_ru": "декларативная спецификация входных и выходных полей задачи",
+    "chapter": "CH13",
+    "pages": [
+      694,
+      696
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DSPY_SIGNATURE",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DSPY_MODULE"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-DSPY_OPTIMIZER",
+    "title": "DSPy optimizer",
+    "definition_ru": "модуль экспериментальной настройки инструкций, примеров или параметров модели по метрике",
+    "chapter": "CH13",
+    "pages": [
+      696,
+      697
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-DSPY_OPTIMIZER",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-DSPY"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-LMQL",
+    "title": "Language Model Query Language",
+    "definition_ru": "декларативный подход для промптов, ограничений генерации и управления программным потоком",
+    "chapter": "CH13",
+    "pages": [
+      697,
+      700
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-LMQL",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 4,
+    "relations": [
+      "B002-PROGRAMMING_PARADIGMS"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
+  },
+  {
+    "id": "B002-CONSTRAINED_GENERATION",
+    "title": "Constrained generation",
+    "definition_ru": "ограничение возможного вывода модели заданными программными правилами",
+    "chapter": "CH13",
+    "pages": [
+      698,
+      699
+    ],
+    "source_id": "FRODO-SRC-B002",
+    "origin_node_id": "B002-CONSTRAINED_GENERATION",
+    "origin": "SOURCE_DERIVED_PARAPHRASE",
+    "trust": "SECONDARY_DERIVED_NOT_PRIMARY_VERIFIED_FOR_FRODO",
+    "weight": 5,
+    "relations": [
+      "B002-LMQL"
+    ],
+    "status": "INHERITED_LEARNING_NOT_QUALIFIED"
   }
 ]
